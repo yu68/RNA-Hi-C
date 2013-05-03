@@ -34,17 +34,18 @@ linkers:
 
 ###  recover fragment   ###
 
-
-* type1:
 ```
+* type1:
+
                                                         (reverse primer)
        forward reads:                      XXXX...XXXXNAGATCGGAAGAGCGGTTCAG
                                            ||||...||||
        reverse reads: TGTGCTGCGAGAAGGCTAGANXXXX...XXXX
                        (forward primer)
 ```
-* type2:
 ```
+* type2:
+
        forward reads: XXXXX...XXXXXXXXXXX...XXXX
                                      ||||...||||
        reverse reads:                XXXX...XXXXXXXXXXX...XXXX

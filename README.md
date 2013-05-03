@@ -36,16 +36,3 @@ linkers:
 ###  recover fragment   ###
 ###########################
 
-type1:
-> "
-       forward reads:                      XXXX...XXXXNAGATCGGAAGAGCGGTTCAG  
-                                           ||||...||||  
-       reverse reads: TGTGCTGCGAGAAGGCTAGANXXXX...XXXX
-"
-type2:
-> "
-       forward reads: XXXXX...XXXXXXXXXXX...XXXX  
-                                     ||||...||||  
-       reverse reads:                XXXX...XXXXXXXXXXX...XXXX
-"
-

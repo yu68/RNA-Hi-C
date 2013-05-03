@@ -3,7 +3,7 @@ stitch-seq
 
 ## program fror stitch-seq ##
 
-### pipeline ### (start from pair-end fastq file):
+### pipeline (start from pair-end fastq file): ###
 1. Remove duplicates
 2. Remove phiX (using bowtie)
 3. Split libraries based on barcode.txt
@@ -35,15 +35,17 @@ linkers:
 ###########################
 ###  recover fragment   ###
 ###########################
-> "
-type1:
-       forward reads:                      XXXX...XXXXNAGATCGGAAGAGCGGTTCAG
-                                           ||||...||||
-       reverse reads: TGTGCTGCGAGAAGGCTAGANXXXX...XXXX
 
+type1:
+> "
+       forward reads:                      XXXX...XXXXNAGATCGGAAGAGCGGTTCAG  
+                                           ||||...||||  
+       reverse reads: TGTGCTGCGAGAAGGCTAGANXXXX...XXXX
+"
 type2:
-       forward reads: XXXXX...XXXXXXXXXXX...XXXX
-                                     ||||...||||
+> "
+       forward reads: XXXXX...XXXXXXXXXXX...XXXX  
+                                     ||||...||||  
        reverse reads:                XXXX...XXXXXXXXXXX...XXXX
 "
 

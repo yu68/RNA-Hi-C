@@ -1,7 +1,7 @@
 Recover fragment
 ================
 
-* recover\_fragment-2.py detect _first three_ types
+* recover\_fragment.py detect _first three_ types
 * recover\_fragment-2.py detect all _four_ types
 
 ```

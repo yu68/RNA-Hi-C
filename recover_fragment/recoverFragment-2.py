@@ -1,10 +1,12 @@
 #-------------------------------------------------------------------------------
-# Name:        recoverFragment
-# Purpose:
+# Name:        recoverFragment-2
+# Purpose:     classify stitch-seq reads based on fragment lengths. contain wier
+#              d read pairs with one end aligned to primer, but not the other
 #
 # Author:      Pengfei
 #
 # Created:     25/09/2012
+# Updated:     06/08/2013
 # Copyright:   (c) Pengfei 2012
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
@@ -118,6 +120,12 @@ type2:
        forward reads: XXXXX...XXXXXXXXXXX...XXXX
                                      ||||...||||
        reverse reads:                XXXX...XXXXXXXXXXX...XXXX
+
+type3: 
+       forward reads: XXXXXXXXXXXXX
+
+       reverse reads:                      XXXXXXXXXXXXX
+
 '''
 
 

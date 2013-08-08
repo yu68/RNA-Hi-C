@@ -62,7 +62,8 @@ def batch_iterator(iterator, batch_size) :
 def main():
     #initialization
     n=0 # total number of query seq
-    align_linker=0
+    align_linker=0 # aligned_reads
+    counts={}  # store number of alignment to different linkers
     os.system("mkdir temp") # create temp folder
 
     args=ParseArg()
@@ -97,30 +98,39 @@ def main():
         print "Wrote %i records to %s" % (count,filename)
         
         linker_records = blast_align(filename,blast_path,linker_db)
-        print "BLAST aligned for %s ." % (filename)
+        print "BLAST aligned for %s." % (filename)
         
         
         print "Start to parse BLAST results for %s" %(filename)
         for linker_record in linker_records:
             temp_output=''
             n=n+1
-            expect=evalue
             line=''
+            align=False
             temp_output=linker_record.query+'\t'
             for alignment in linker_record.alignments:
+                expect=evalue
+                temp_output=linker_record.query+'\t'
                 for hsp in alignment.hsps:
                     if hsp.expect < expect:
                         expect=hsp.expect
                         line="\t".join (str(f) for f in [hsp.query_start,hsp.query_end,alignment.title,hsp.sbjct,hsp.sbjct_start,hsp.sbjct_end,hsp.expect,hsp.score])
-            temp_output=temp_output+line+'\n'
+                temp_output=temp_output+line+'\n'
                 
-            if expect<evalue:
-                output.write(temp_output)
-                print temp_output
+                if expect<evalue:
+                    output.write(temp_output)
+                    if alignment.hit_def in counts.keys():
+                        counts[alignment.hit_def]+=1
+                    else:
+                        counts[alignment.hit_def]=1
+                    align=True
+            if align==True: 
                 align_linker+=1
-        print "After %s, got %i sequences, %i align to linkers." % (filename,n,align_linker)
+        stat=''
+        for i in counts.keys():
+            stat=stat+' '+i+':%d'%(counts[i])
         t1=time()
-        print "Processing %s takes %f min. \n" %(filename,(t1-t0)/60)
+        print "After %s, got %i sequences, %i align to linkers. %s. This batch takes %.2f min."%(filename,n,align_linker,stat,(t1-t0)/60)
 
     output.close()
 

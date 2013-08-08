@@ -145,7 +145,8 @@ def main():
                             temp_output2=temp_output2+line+'\n'
             if mi_indic+m_indic>=2:
                 out_both.write(temp_output)
-                out_string.write(temp_output2)
+                if len(temp_output2.split("\n"))>=4:
+                    out_string.write(temp_output2)
             if mi_indic==1:
                 align_mi+=1
             if m_indic==1:

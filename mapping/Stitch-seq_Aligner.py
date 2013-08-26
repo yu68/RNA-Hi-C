@@ -40,10 +40,10 @@ def bowtie_align(b_path,read,ref,s_path):
         base=ref.split("/")[-1].split(".")[0]
         os.system("rm "+read+".log")
         os.system(b_path+"-build "+ref+" "+base+" >> "+read+".log 2>&1")
-        os.system(b_path+ " -n 1 -l 15 -e 200 -p 6 -q -S "+base+" "+read+" "+sam+" >> "+read+".log 2>&1")
+        os.system(b_path+ " -f -n 1 -l 15 -e 200 -p 6 -S "+base+" "+read+" "+sam+" >> "+read+".log 2>&1")
     else:
         os.system("rm "+read+".log")
-        os.system(b_path+ " -n 1 -l 15 -e 200 -p 6 -q -S "+ref+" "+read+" "+sam+" >> "+read+".log 2>&1")
+        os.system(b_path+ " -f -n 1 -l 15 -e 200 -p 6 -S "+ref+" "+read+" "+sam+" >> "+read+".log 2>&1")
     bam=read.split("/")[-1].split(".")[0]+".bam"
     os.system(s_path+ " view -Sb -o "+bam +" "+sam)
     os.system("rm "+sam)
@@ -55,18 +55,12 @@ def bowtie_align(b_path,read,ref,s_path):
 def Main():
     args=ParseArg()
 
-    hairpin=SeqIO.parse(args.miRNA_ref,"fasta")
-    hairpin_mouse=open("hairpin_mouse.fa","w")
-    for record in hairpin:
-        if record.id[:3] == 'mmu':
-            SeqIO.write(record,hairpin_mouse,"fasta")
-    miRNA_align=bowtie_align(args.bowtie_path,args.input1,"hairpin_mouse.fa",args.spath)
+    miRNA_align=bowtie_align(args.bowtie_path,args.input1,args.miRNA_ref,args.spath)
     mRNA_align=bowtie_align(args.bowtie_path,args.input2,args.mRNA_ref,args.spath)
     for record1, record2 in itertools.izip(miRNA_align, mRNA_align):
         #print record1.qname, record2.qname
         if ( not record1.is_unmapped) & ( not record2.is_unmapped):
-            print miRNA_align.getrname(record1.tid),record1.aend-record1.alen+1,record1.aend,record1.seq
-            print mRNA_align.getrname(record2.tid),record2.aend-record2.alen+1,record2.aend,record2.seq
+            print '\t'.join(str(f) for f in [miRNA_align.getrname(record1.tid),record1.aend-record1.alen+1,record1.aend,record1.seq,record1.qname,mRNA_align.getrname(record2.tid),record2.aend-record2.alen+1,record2.aend,record2.seq,record2.qname])
     miRNA_align.close()
     mRNA_align.close()
 

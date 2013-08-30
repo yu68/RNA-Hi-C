@@ -23,7 +23,7 @@ def ParseArg():
     p.add_argument("-o","--output",dest="output",type=str,help="output file containing sequences of two sepatated parts")
     p.add_argument("-t","--trim",type=int,default=10,help="trim off the first this number of nt as index, default:10")
     p.add_argument("-b","--batch",type=int,default=200000,help="batch this number of fragments for BLAST at a time. default: 100000")
-    p.add_argument("-l","--length",type=int,default=15,help="shortest length to be considered for each part of the pair, default: 15")
+    p.add_argument("-l","--length",type=int,default=15,help="shortest length to be considered for each part of the pair")
     if len(sys.argv)==1:
         print >>sys.stderr,p.print_help()
         exit(0)

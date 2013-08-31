@@ -136,19 +136,21 @@ def main():
     '''
     THis loop is for recovered fragment (type1&2)
     '''
+    print "split partners for recovered fragments"
     for i, batch in enumerate(batch_iterator(seq_file, args.batch)):
         t0=time()
         filename=name+"group_%i.fasta" % (i+1)
         handle=open("./temp/"+filename, "w")
         count=SeqIO.write(batch,handle,"fasta")
         handle.close()
-        print "Wrote %i records to %s" % (count,filename)
+        #print "Wrote %i records to %s" % (count,filename)
         
         linker_records = blast_align(filename,blast_path,linker_db)
-        print "BLAST aligned for %s." % (filename)
+        #print "BLAST aligned for %s." % (filename)
         
 
-        print "Start to parse BLAST results for %s" %(filename)
+        #print "Start to parse BLAST results for %s" %(filename)
+        j=0
         for linker_record, fragment in itertools.izip(linker_records,batch):
             n=n+1
             line=''
@@ -181,7 +183,7 @@ def main():
             elif (start>trim_n+min_l) and (end<len(fragment)-min_l):
                 #XXXXXXXXXX111111LLLLLLL2222222
                 SeqIO.write(fragment[trim_n:start],output4, types)
-                SeqIO.write(fragment[end:].reverse_complement(),output5, types)
+                SeqIO.write(fragment[end:].reverse_complement(fragment.id),output5, types)
                 Types="Paired"
             elif (start>trim_n+min_l):
                 #XXXXXXXXXX1111111LLLLLLL
@@ -189,12 +191,15 @@ def main():
                 Types="FrontOnly"
             elif (end<len(fragment)-min_l):
                 #XXXXXXXXXXLLLLLL22222222
-                SeqIO.write(fragment[end:].reverse_complement(),output3,types)
+                SeqIO.write(fragment[end:].reverse_complement(fragment.id),output3,types)
                 Types="BackOnly"
-
+            j=j+1
+            if (j+1)%(args.batch/100)==0:
+                sys.stdout.write('#'+'->'+"\b\b")
+                sys.stdout.flush()
             print >> output, "\t".join (str(f) for f in [fragment.id,stat,pos_order,Types,order])
         t1=time()
-        print "After %s, got %i sequences, %i align to linkers. This batch takes %.2f min."%(filename,n,n-align_no_linker,(t1-t0)/60)     
+        print >>sys.stderr,"After %s, got %i, %i align to linkers. This batch takes %.2f min.\r"%(filename,n,n-align_no_linker,(t1-t0)/60),
     
     '''
     This loop is for evenlong(type3) reads to find "Paired"/"BackOnly"/"FrontOnly"    
@@ -202,6 +207,7 @@ def main():
     i=0    
     align_no_linker=0
     n=0
+    print "split partners for type3 paired reads"
     for batch1, batch2 in batch_iterator2(seq_type3_1, seq_type3_2, args.batch):
         t0=time()
         filename1="type3_group_%i_1.fasta" % (i+1)
@@ -212,12 +218,12 @@ def main():
         handle2=open("./temp/"+filename2, "w")
         count2=SeqIO.write(batch2,handle2,"fasta")
         handle2.close()
-        if count1==count2:
-            print "Wrote %i records to %s and %s" % (count1,filename1,filename2)
+        #if count1==count2:
+            #print "Wrote %i records to %s and %s" % (count1,filename1,filename2)
         
         linker_records1 = blast_align(filename1,blast_path,linker_db)
         linker_records2 = blast_align(filename2,blast_path,linker_db)
-        print "BLAST aligned for %s.and %s" % (filename1, filename2)
+        #print "BLAST aligned for %s.and %s" % (filename1, filename2)
         i=i+1
         j=0
         for linker_record1, linker_record2 in itertools.izip(linker_records1,linker_records2):
@@ -253,9 +259,11 @@ def main():
                 SeqIO.write(read2[:start2],output3,types)
                 Types="BackOnly"
             j=j+1
-            
+            if (j+1)%(args.batch/100)==0:
+                sys.stdout.write('#'+'->'+"\b\b")
+                sys.stdout.flush()
         t1=time()
-        print "After %s, got %i sequences, %i align to linkers. This batch takes %.2f min."%(filename1,n,n-align_no_linker,(t1-t0)/60)
+        print >>sys.stderr,"After %s, got %i, %i align to linkers. This batch takes %.2f min.\r"%(filename1,n,n-align_no_linker,(t1-t0)/60),
                 
 
             

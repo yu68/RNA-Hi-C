@@ -124,9 +124,9 @@ def cluster_regions(part,min_clusterS):
 def ParseArg():
     p=argparse.ArgumentParser(description="find strong interactions from paired genomic location data",epilog="need Scipy for hypergeometric distribution")
     p.add_argument("-i","--input",type=str,required=True,help="input file which is the output file of Stitch-seq-Aligner.py")
-    p.add_argument("-M","--min_clusterS",type=int,default=5,help="minimum number of segments allowed in each cluster")
-    p.add_argument("-m","--min_interaction",type=int,default=3,help="minimum number of interactions to support a strong interaction")
-    p.add_argument('-p',"--p_value",type=float,default=0.05,help="the p-value based on hypergeometric distribution to call strong interactions")
+    p.add_argument("-M","--min_clusterS",type=int,default=5,help="minimum number of segments allowed in each cluster, default:5")
+    p.add_argument("-m","--min_interaction",type=int,default=3,help="minimum number of interactions to support a strong interaction, default:3")
+    p.add_argument('-p',"--p_value",type=float,default=0.05,help="the p-value based on hypergeometric distribution to call strong interactions, default: 0.05")
     p.add_argument('-o','--output',type=str,help="specify output file")
     if len(sys.argv)==1:
         print >>sys.stderr,p.print_help()
@@ -150,6 +150,8 @@ def Main():
 
 
     k=0
+    
+    print >> sys.stderr,"# Inputing data..."
     for line in inp.read().split('\n'):
         if line=='': continue
         line=line.strip().split('\t')
@@ -183,7 +185,6 @@ def Main():
     for i in range(len(part1)):
         region1=str(part1[i])
         region2=str(part2[i])
-        print region1+'\t'+region2
         c_interaction.append("%d--%d"%(part1[i].cluster,part2[i].cluster))
 
     print >> sys.stderr,"# finding strong interactions from clusters..."

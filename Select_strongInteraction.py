@@ -103,6 +103,7 @@ def cluster_regions(part,min_clusterS):
                 cluster_loc[get_root(List,j)].Update(min(part[i].start,part[j].start),max(part[i].end,part[j].end))
             if part[i]<part[j]:
                 break
+        if i%10000==0: print >> sys.stderr, "  Merging segment for clusters (%d/%d)\r"%(i,N),
     
     c_pool=[] # cluster pool
     for i in range(N):
@@ -158,9 +159,12 @@ def Main():
         k=k+1
         part1.append(annotated_bed(line[0:7],id=k))
         part2.append(annotated_bed(line[8:],id=k))
+        if k%20000==0: 
+            print >> sys.stderr,"  Reading %d pairs of segments\r"%(k),
+    print >> sys.stderr,"Get total %d pairs."%(k)
     
     if len(part1)!=len(part2):
-        print >> sys.stderr, "number of regions in two part not match!!"
+        print >> sys.stderr, "## ERROR: number of regions in two part not match!!"
         sys.exit(0)
 
     # sort in genomic order, easy for clustering
@@ -170,37 +174,49 @@ def Main():
     part2=sorted(part2, key=attrgetter('chr'))
 
 
-    print >>sys.stderr,"# Generating clusters for two parts...\n"
+    print >>sys.stderr,"# Generating clusters for two parts..."
+    print >>sys.stderr,"  Part1:"
     cluster_pool1=cluster_regions(part1,min_clusterS)
+    print >>sys.stderr,"   cluster number for part1 is %d          "%(len(cluster_pool1))
+    print >>sys.stderr,"  Part2:"
     cluster_pool2=cluster_regions(part2,min_clusterS)
+    print >>sys.stderr,"   cluster number for part2 is %d          "%(len(cluster_pool2))
 
     # sort back to pair two parts
     part1=sorted(part1, key=attrgetter('id'))
     part2=sorted(part2, key=attrgetter('id'))
 
-    print >>sys.stderr,"# cluster number for part1 is %d"%(len(cluster_pool1))
-    print >>sys.stderr,"# cluster number for part1 is %d"%(len(cluster_pool2))
-
-    c_interaction=[]
+    c_interaction={}
     for i in range(len(part1)):
         region1=str(part1[i])
         region2=str(part2[i])
-        c_interaction.append("%d--%d"%(part1[i].cluster,part2[i].cluster))
+        inter="%d--%d"%(part1[i].cluster,part2[i].cluster)
+        if c_interaction.has_key(inter):
+            c_interaction[inter]+=1
+        else:
+            c_interaction[inter]=0
 
     print >> sys.stderr,"# finding strong interactions from clusters..."
-    for i in cluster_pool1:
-        for j in cluster_pool2:
-            interaction="%d--%d"%(i,j)
-            count=c_interaction.count(interaction)
-            if count<min_interaction: continue
+    k=0 # record for strong interactions
+    n=0
+    for interaction in c_interaction:
+        n=n+1
+        count=c_interaction[interaction]
+        if count<min_interaction: continue
+        i=int(interaction.split("--")[0])
+        j=int(interaction.split("--")[1])
+        try:  # we select clusters with size no less than 5, so some interactions cannot be found in clusters
             count1=cluster_pool1[i].cluster
             count2=cluster_pool2[j].cluster
-            real_p=1-hypergeom.cdf(count,len(part1),count1,count2)
-            if real_p<=p_value:
-                print >> output,str(cluster_pool1[i])+'\t'+str(cluster_pool2[j])+'\t%d\t%.5f'%(count,real_p)
-    
+        except:
+            continue
+        real_p=1-hypergeom.cdf(count,len(part1),count1,count2)
+        if real_p<=p_value:
+            k=k+1
+            print >> output,str(cluster_pool1[i])+'\t'+str(cluster_pool2[j])+'\t%d\t%.5f'%(count,real_p)
+        if n%1000==0: print >> sys.stderr, "  Progress ( %d / %d )\r"%(n,len(c_interaction)),
 
-    print >> sys.stderr,"# Cost time: %.2f s"%(time()-t1)
+    print >> sys.stderr,"# Find %d strong interactions. Cost time: %.2f s"%(k,time()-t1)
 
 
 if __name__=="__main__":

@@ -51,3 +51,6 @@ linkers:
        reverse reads:                XXXX...XXXXXXXXXXX...XXXX
 ```
 
+
+#### Notes: ####
+1. the Annotation feature need the development version of PyCogent [install instruction](http://pycogent.org/install.html#to-use-the-development-version-of-pycogent). Since we need the getTranscriptByStableId function which is described [here](https://github.com/pycogent/pycogent/issues/21).

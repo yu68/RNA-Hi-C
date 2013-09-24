@@ -2,6 +2,8 @@ import sys, argparse
 from time import time
 from operator import attrgetter
 from scipy.stats import hypergeom
+from random import shuffle
+
 
 class annotated_bed():
     def __init__(self,x=None,**kwargs):
@@ -120,6 +122,37 @@ def cluster_regions(part,min_clusterS):
     return (cluster_pool)
 
 
+def Random_strongInteraction(part1,part2,cluster_pool1,cluster_pool2):
+    global min_interaction, p_value
+    ''' This is for counputing FDR using random permutation '''
+    c_interaction={}
+    for i in range(len(part1)):
+        region1=str(part1[i])
+        region2=str(part2[i])
+        inter="%d--%d"%(part1[i].cluster,part2[i].cluster)
+        if c_interaction.has_key(inter):
+            c_interaction[inter]+=1
+        else:
+            c_interaction[inter]=0
+
+    k=0 # record for strong interactions
+    n=0
+    for interaction in c_interaction:
+        n=n+1
+        count=c_interaction[interaction]
+        if count<min_interaction: continue
+        i=int(interaction.split("--")[0])
+        j=int(interaction.split("--")[1])
+        try:  # we select clusters with size no less than 5, so some interactions cannot be found in clusters
+            count1=cluster_pool1[i].cluster
+            count2=cluster_pool2[j].cluster
+        except:
+            continue
+        real_p=1-hypergeom.cdf(count,len(part1),count1,count2)
+        if real_p<=p_value:
+            k=k+1
+    return [n,k]
+
 #parameters
 
 def ParseArg():
@@ -129,6 +162,7 @@ def ParseArg():
     p.add_argument("-m","--min_interaction",type=int,default=3,help="minimum number of interactions to support a strong interaction, default:3")
     p.add_argument('-p',"--p_value",type=float,default=0.05,help="the p-value based on hypergeometric distribution to call strong interactions, default: 0.05")
     p.add_argument('-o','--output',type=str,help="specify output file")
+    p.add_argument("-F","--FDR",action='store_true', help="Compute FDR if specified")
     if len(sys.argv)==1:
         print >>sys.stderr,p.print_help()
         sys.exit(0)
@@ -144,6 +178,8 @@ def Main():
     min_interaction=args.min_interaction
     p_value=args.p_value
     output=open(args.output,'w')
+
+    global min_interaction, p_value
 
     #store genomic location of part1 and part2
     part1=[]
@@ -218,6 +254,13 @@ def Main():
 
     print >> sys.stderr,"# Find %d strong interactions. Cost time: %.2f s"%(k,time()-t1)
 
+    if args.FDR:
+        print >> sys.stderr, "# Permutated results:"
+        for i in range(10):
+            shuffle(part2)
+            [n_r_I,n_r_SI]=Random_strongInteraction(part1,part2,cluster_pool1,cluster_pool2)
+            print >> sys.stderr, "  ",i, n_r_I, n_r_SI, n_r_SI*1.0/n_r_I
+            
 
 if __name__=="__main__":
     Main()

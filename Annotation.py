@@ -1,4 +1,5 @@
 from xplib import DBI
+from cogent.db.ensembl import HostAccount, Genome
 
 def overlap(bed1,bed2):
     '''
@@ -29,13 +30,14 @@ def Subtype(bed1,genebed):
                 break
     return subtype
     
-    
+mouse=Genome('mouse', Release=67, account=None)
+
 def annotation(bed,ref_allRNA,ref_detail):
     '''
     ref_allRNA is the DBI init file for bed6 file of all kinds of RNA
     ref_detail is the DBI init file for bed12 file of lincRNA and mRNA with intron, exon, UTR 
     '''
-    
+    global mouse
     flag=0
     typ="non"
     name="."
@@ -49,8 +51,24 @@ def annotation(bed,ref_allRNA,ref_detail):
         flag=0
         for hit in ref_detail.query(bed):
             if flag==0:
+                tempname=hit.id
                 subtype=Subtype(bed,hit)
-                flag=1
+                if subtype!="intron":
+                    flag=1
+        try:
+            tran=mouse.getTranscriptByStableId(StableId=tempname).Gene
+            typ=tran.BioType
+            name=tran.Symbol
+        except: pass
+    if typ=="non":
+        try:
+            repeats=mouse.getFeatures(CoordName=bed.chr[3:], Start=bed.start, End=bed.stop, feature_types='repeat')
+            for r in repeats:
+               if r.RepeatClass!='dust':
+                   typ=r.RepeatType
+                   name=r.Symbol
+                   break 
+        except: pass
     return [typ,name,subtype]
                     
            

@@ -1,0 +1,39 @@
+========================================
+Stitch-seq-tools |version| documentation
+========================================
+
+Installation
+============
+
+step 1: Install the dependent prerequisites:
+--------------------------------------------
+1. Python libraries [for python 2.x]:
+
+  * `Biopython <http://biopython.org/wiki/Main_Page>`_
+  * `Pysam <https://code.google.com/p/pysam/>`_
+  * `BAM2X <http://bam2xwiki.appspot.com/Welcome>`_
+  * `Numpy <http://www.numpy.org/>`_, `scipy <http://www.scipy.org/scipylib/index.html>`_
+  * `Parallel python <http://www.parallelpython.com/>`_ (Only for ``Select_strongInteraction_pp.py``)
+  * `PyCogent <http://pycogent.org/>`_ (for annotation of RNA types) [see note] 
+
+2. The Boost.Python C++ library
+.. note::
+
+   the Annotation feature need the development version of PyCogent install `instruction <http://pycogent.org/install.html#to-use-the-development-version-of-pycogent>`_. Since we need the getTranscriptByStableId function which is described `here <https://github.com/pycogent/pycogent/issues/21>`_.
+
+
+Step 2: download the package
+----------------------------
+Clone the package from GitHub
+
+
+Step 3: Add library source to your python path
+----------------------------------------------
+
+
+
+Support
+=======
+
+For issues related to the use of Stitch-seq-tools, or if you want to **report a bug or request a feature**, please contact Pengfei Yu <p3yu at ucsd dot edu>
+

@@ -65,18 +65,32 @@
 <li><a class="reference external" href="http://pycogent.org/">PyCogent</a> (for annotation of RNA types) [see note]</li>
 </ul>
 </div></blockquote>
-<p>2. The Boost.Python C++ library
-.. note:</p>
-<div class="highlight-python"><pre>the Annotation feature need the development version of PyCogent install `instruction &lt;http://pycogent.org/install.html#to-use-the-development-version-of-pycogent&gt;`_. Since we need the getTranscriptByStableId function which is described `here &lt;https://github.com/pycogent/pycogent/issues/21&gt;`_.</pre>
+<ol class="arabic simple" start="2">
+<li>The <a class="reference external" href="http://www.boost.org/doc/libs/1_54_0/libs/python/doc/index.html">Boost.Python</a> C++ library</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">the Annotation feature need the development version of PyCogent (<a class="reference external" href="http://pycogent.org/install.html#to-use-the-development-version-of-pycogent">install instruction</a>). Since we need the getTranscriptByStableId function which is described <a class="reference external" href="https://github.com/pycogent/pycogent/issues/21">here</a>.</p>
 </div>
 </div>
 <div class="section" id="step-2-download-the-package">
 <h3>Step 2: download the package<a class="headerlink" href="#step-2-download-the-package" title="Permalink to this headline">¶</a></h3>
-<p>Clone the package from GitHub</p>
+<p>Clone the package from GitHub:</p>
+<div class="highlight-python"><pre>git clone http://github.com/yu68/stitch-seq.git</pre>
+</div>
 </div>
 <div class="section" id="step-3-add-library-source-to-your-python-path">
 <h3>Step 3: Add library source to your python path<a class="headerlink" href="#step-3-add-library-source-to-your-python-path" title="Permalink to this headline">¶</a></h3>
+<p>Add these lines into your ~/.bash_profile or ~/.profile</p>
+<div class="highlight-python"><pre>Location="/path/of/Stitch-seq-tools" # change accordingly
+export PYTHONPATH="$Location/src:$PYTHONPATH"
+export PATH="$PATH:$Location/bin"</pre>
 </div>
+</div>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p><strong>Stitch-seq-tools</strong> is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome.</p>
 </div>
 <div class="section" id="support">
 <h2>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h2>
@@ -99,6 +113,7 @@
 <li><a class="reference internal" href="#step-3-add-library-source-to-your-python-path">Step 3: Add library source to your python path</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#support">Support</a></li>
 </ul>
 </li>

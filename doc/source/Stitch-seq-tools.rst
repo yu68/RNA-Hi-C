@@ -7,6 +7,7 @@ Installation
 
 step 1: Install the dependent prerequisites:
 --------------------------------------------
+
 1. Python libraries [for python 2.x]:
 
   * `Biopython <http://biopython.org/wiki/Main_Page>`_
@@ -16,21 +17,35 @@ step 1: Install the dependent prerequisites:
   * `Parallel python <http://www.parallelpython.com/>`_ (Only for ``Select_strongInteraction_pp.py``)
   * `PyCogent <http://pycogent.org/>`_ (for annotation of RNA types) [see note] 
 
-2. The Boost.Python C++ library
+2. The `Boost.Python <http://www.boost.org/doc/libs/1_54_0/libs/python/doc/index.html>`_ C++ library
+
+
 .. note::
 
-   the Annotation feature need the development version of PyCogent install `instruction <http://pycogent.org/install.html#to-use-the-development-version-of-pycogent>`_. Since we need the getTranscriptByStableId function which is described `here <https://github.com/pycogent/pycogent/issues/21>`_.
+  the Annotation feature need the development version of PyCogent (`install instruction <http://pycogent.org/install.html#to-use-the-development-version-of-pycogent>`_). Since we need the getTranscriptByStableId function which is described `here <https://github.com/pycogent/pycogent/issues/21>`_.
 
 
-Step 2: download the package
+Step 2: Download the package
 ----------------------------
-Clone the package from GitHub
+
+Clone the package from GitHub::
+
+  git clone http://github.com/yu68/stitch-seq.git
 
 
 Step 3: Add library source to your python path
 ----------------------------------------------
 
+Add these lines into your ~/.bash_profile or ~/.profile ::
 
+  Location="/path/of/Stitch-seq-tools" # change accordingly
+  export PYTHONPATH="$Location/src:$PYTHONPATH"
+  export PATH="$PATH:$Location/bin"
+
+Overview
+========
+
+**Stitch-seq-tools** is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome.
 
 Support
 =======

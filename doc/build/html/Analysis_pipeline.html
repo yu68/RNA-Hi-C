@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Analysis pipeline &mdash; Stitch-seq-tools 1.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Stitch-seq-tools 1.0.1 documentation" href="index.html" />
+    <link rel="prev" title="Stitch-seq-tools 1.0 documentation" href="Stitch-seq-tools.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Stitch-seq-tools.html" title="Stitch-seq-tools 1.0 documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Stitch-seq-tools 1.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="analysis-pipeline">
+<h1>Analysis pipeline<a class="headerlink" href="#analysis-pipeline" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The next generation DNA sequencing based technology utilize RNA proximity ligation to transfrom RNA-RNA interactions into chimeric DNAs. Through sequencing and mapping these chimeric DNAs, it is able to achieve high-throughput mapping of nearly entire interaction networks. RNA linkers were introduced to mark the junction of the ligation and help to split the chimeric RNAs into two interacting RNAs.
+This bioinformatic pipeline is trying to obtain the strong interactions from raw fastq sequencing data. The major steps are:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#step1"><em>Step 1: Remove PCR duplicates.</em></a></li>
+<li><a class="reference internal" href="#step2"><em>Step 2: Split library based on barcode.txt.</em></a></li>
+<li><a class="reference internal" href="#step3"><em>Step 3: Recover fragments for each library.</em></a></li>
+<li><a class="reference internal" href="#step4"><em>Step 4: Split partners and classify different types of fragments.</em></a></li>
+<li><a class="reference internal" href="#step5"><em>Step 5: Align both parts of &#8220;Paired&#8221; fragment to the genome.</em></a></li>
+<li><a class="reference internal" href="#step6"><em>Step 6: Determine strong interactions.</em></a></li>
+</ul>
+<p>Other functions:</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="#rna-types"><em>Determine the RNA types of different parts within fragments.</em></a></li>
+<li><a class="reference internal" href="#find-linker"><em>Find linker sequences within the library.</em></a></li>
+</ol>
+</div>
+<div class="section" id="pipeline">
+<h2>Pipeline<a class="headerlink" href="#pipeline" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="step-1-remove-pcr-duplicates">
+<span id="step1"></span><h3>Step 1: Remove PCR duplicates.<a class="headerlink" href="#step-1-remove-pcr-duplicates" title="Permalink to this headline">¶</a></h3>
+<p>Starting from the raw pair-end sequencing data, PCR duplicates should be removed as the first step if both the 10nt random indexes and the remaining sequences are exactly the same for two pairs.</p>
+</div>
+<div class="section" id="step-2-split-library-based-on-barcode-txt">
+<span id="step2"></span><h3>Step 2: Split library based on barcode.txt.<a class="headerlink" href="#step-2-split-library-based-on-barcode-txt" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="step-3-recover-fragments-for-each-library">
+<span id="step3"></span><h3>Step 3: Recover fragments for each library.<a class="headerlink" href="#step-3-recover-fragments-for-each-library" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="step-4-split-partners-and-classify-different-types-of-fragments">
+<span id="step4"></span><h3>Step 4: Split partners and classify different types of fragments.<a class="headerlink" href="#step-4-split-partners-and-classify-different-types-of-fragments" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="step-5-align-both-parts-of-paired-fragment-to-the-genome">
+<span id="step5"></span><h3>Step 5: Align both parts of &#8220;Paired&#8221; fragment to the genome.<a class="headerlink" href="#step-5-align-both-parts-of-paired-fragment-to-the-genome" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="step-6-determine-strong-interactions">
+<span id="step6"></span><h3>Step 6: Determine strong interactions.<a class="headerlink" href="#step-6-determine-strong-interactions" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="other-functions">
+<h2>Other functions<a class="headerlink" href="#other-functions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="determine-the-rna-types-of-different-parts-within-fragments">
+<span id="rna-types"></span><h3>Determine the RNA types of different parts within fragments.<a class="headerlink" href="#determine-the-rna-types-of-different-parts-within-fragments" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="find-linker-sequences-within-the-library">
+<span id="find-linker"></span><h3>Find linker sequences within the library.<a class="headerlink" href="#find-linker-sequences-within-the-library" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Analysis pipeline</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#pipeline">Pipeline</a><ul>
+<li><a class="reference internal" href="#step-1-remove-pcr-duplicates">Step 1: Remove PCR duplicates.</a></li>
+<li><a class="reference internal" href="#step-2-split-library-based-on-barcode-txt">Step 2: Split library based on barcode.txt.</a></li>
+<li><a class="reference internal" href="#step-3-recover-fragments-for-each-library">Step 3: Recover fragments for each library.</a></li>
+<li><a class="reference internal" href="#step-4-split-partners-and-classify-different-types-of-fragments">Step 4: Split partners and classify different types of fragments.</a></li>
+<li><a class="reference internal" href="#step-5-align-both-parts-of-paired-fragment-to-the-genome">Step 5: Align both parts of &#8220;Paired&#8221; fragment to the genome.</a></li>
+<li><a class="reference internal" href="#step-6-determine-strong-interactions">Step 6: Determine strong interactions.</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-functions">Other functions</a><ul>
+<li><a class="reference internal" href="#determine-the-rna-types-of-different-parts-within-fragments">Determine the RNA types of different parts within fragments.</a></li>
+<li><a class="reference internal" href="#find-linker-sequences-within-the-library">Find linker sequences within the library.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Stitch-seq-tools.html"
+                        title="previous chapter">Stitch-seq-tools 1.0 documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Analysis_pipeline.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Stitch-seq-tools.html" title="Stitch-seq-tools 1.0 documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">Stitch-seq-tools 1.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Pengfei Yu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+  </body>
+</html>

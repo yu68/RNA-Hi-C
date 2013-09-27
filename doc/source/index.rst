@@ -12,6 +12,11 @@ Contents:
    :maxdepth: 2
 
    Stitch-seq-tools
+   
+.. toctree::
+   :maxdepth: 2
+   
+   Analysis_pipeline
 
 Indices and tables
 ==================

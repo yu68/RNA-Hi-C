@@ -25,7 +25,7 @@ step 1: Install the dependent prerequisites:
   the Annotation feature need the development version of PyCogent (`install instruction <http://pycogent.org/install.html#to-use-the-development-version-of-pycogent>`_). Since we need the getTranscriptByStableId function which is described `here <https://github.com/pycogent/pycogent/issues/21>`_.
 
 
-Step 2: download the package
+Step 2: Download the package
 ----------------------------
 
 Clone the package from GitHub::

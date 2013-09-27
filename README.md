@@ -4,16 +4,16 @@ stitch-seq
 ## program fror stitch-seq ##
 
 ### pipeline (start from pair-end fastq file): ###
-1. Remove duplicates
-2. Split libraries based on barcode.txt
-3. Recover fragment for each library
-4. Split partners and classify different types of fragments.
-5. Algin to the genome for both parts of "paired" fragments.
-6. Determine the RNA types of different parts within fragment.
-7. (Alternative) Find liner sequences within the library.
+1. Remove duplicates  `rm_dup\remove_dup_PE.py`
+2. Split libraries based on barcode.txt `split_library_pairend.py`
+3. Recover fragment for each library `recoverFragment`
+4. Split partners and classify different types of fragments. `split_partner.py`
+5. Algn to the genome for both parts of "paired" fragments. `Stitch-seq_Aligner.py`
+6. Determine the RNA types of different parts within fragment. `RNA_composition.py`
+7. (Alternative) Find liner sequences within the library. `find_linker_new.py`
+8. Determine strong interactions from output of step 5. `Select_strongInteraction_pp.py` for parallel computing; `Select_strongInteraction.py` regular.
 
-
-we can also do bed annotation on different cis-features.
+we can also do bed annotation on different cis-features. `bed_annotation.py`
 
 
 

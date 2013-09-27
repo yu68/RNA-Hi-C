@@ -13,7 +13,7 @@ def ParseArg():
     p.add_argument('-b','--barcode',dest='barcode',type=str,help='barcode file')
     p.add_argument('-r','--range',dest='range',nargs='+',default=0,help='set range for barcode location within reads,default is full read')
     p.add_argument('-t','--trim',action='store_true',help='trim sequence before and within barcode')
-    p.add_argument('-m','--max_score',dest='max_score',type=int,default=2, help="max(mismatch+indel) allowed for barcode match, otherwise move reads into 'unassigned' file") 
+    p.add_argument('-m','--max_score',dest='max_score',type=int,default=2, help="max(mismatch+indel) allowed for barcode match, otherwise move reads into 'unassigned' file. default: 2") 
     if len(sys.argv)==1:
         print >>sys.stderr,p.print_help()
         exit(0)

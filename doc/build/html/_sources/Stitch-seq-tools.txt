@@ -13,7 +13,7 @@ step 1: Install the dependent prerequisites:
   * `Biopython <http://biopython.org/wiki/Main_Page>`_
   * `Pysam <https://code.google.com/p/pysam/>`_
   * `BAM2X <http://bam2xwiki.appspot.com/Welcome>`_
-  * `Numpy <http://www.numpy.org/>`_, `scipy <http://www.scipy.org/scipylib/index.html>`_
+  * `Numpy <http://www.numpy.org/>`_, `Scipy <http://www.scipy.org/scipylib/index.html>`_
   * `Parallel python <http://www.parallelpython.com/>`_ (Only for ``Select_strongInteraction_pp.py``)
   * `PyCogent <http://pycogent.org/>`_ (for annotation of RNA types) [see note] 
 

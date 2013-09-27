@@ -5,11 +5,12 @@ stitch-seq
 
 ### pipeline (start from pair-end fastq file): ###
 1. Remove duplicates
-2. Remove phiX (using bowtie)
-3. Split libraries based on barcode.txt
-4. Recover fragment for each library
-5. Do BLAST find linked miRNA and mRNA
-6. Find liner sequences within the library
+2. Split libraries based on barcode.txt
+3. Recover fragment for each library
+4. Split partners and classify different types of fragments.
+5. Algin to the genome for both parts of "paired" fragments.
+6. Determine the RNA types of different parts within fragment.
+7. (Alternative) Find liner sequences within the library.
 
 
 we can also do bed annotation on different cis-features.

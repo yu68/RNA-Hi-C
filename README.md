@@ -54,15 +54,15 @@ linkers:
 
 
 #### Library Dependency #####
-1. python libraries [python 2.x]: 
-..* Biopython
-..* Pysam
-..* BAM2X
-..* numpy, scipy
-..* parallel python (only for `Select_strongInteraction_pp.py`)
-..* PyCogent (for annotation of RNA types) [see Notes]
+1. python libraries [python 2.x]:   
+..* Biopython  
+..* Pysam  
+..* BAM2X  
+..* numpy, scipy  
+..* parallel python (only for `Select_strongInteraction_pp.py`)  
+..* PyCogent (for annotation of RNA types) [see Notes]  
 
-2. Boost.Python
+2. Boost.Python  
 
 #### Notes: ####
 1. the Annotation feature need the development version of PyCogent [install instruction](http://pycogent.org/install.html#to-use-the-development-version-of-pycogent). Since we need the getTranscriptByStableId function which is described [here](https://github.com/pycogent/pycogent/issues/21).

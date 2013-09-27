@@ -4,6 +4,10 @@ from operator import attrgetter
 from scipy.stats import hypergeom
 from random import shuffle
 
+# import c++ unionfind module
+sys.path.append("/data/yu68/git/stitch-seq/src")
+from UnionFind import *
+# include functions UF, find, merge, connected, count
 
 class annotated_bed():
     def __init__(self,x=None,**kwargs):
@@ -28,9 +32,9 @@ class annotated_bed():
             return (self.chr<other.chr)
     def overlap(self,other): # for the purpose of finding overlap between regions
         return ((self.chr==other.chr)&(self.end>other.start)&(self.start<other.end))
-    def Cluster(self,c,c_info):
+    def Cluster(self,c):
         self.cluster=c
-        self.c_info=c_info
+        #self.c_info=c_info
     def Update(self,S,E): # used for update or expand cluster locations
         self.start=min(self.start,S)
         self.end=max(self.end,E)
@@ -39,86 +43,36 @@ class annotated_bed():
     # self.cluster become number of regions within cluster for cluster_pool object
 
 
-################################################
-## implement of weighted quick union ##########
-
-def get_root(lis,item):
-    """
-    return the root of an item
-    """
-    root=item
-    while lis[root] != root:
-        root = lis[root]
-    return root    
-def connected(lis,item1,item2):
-    """
-    Checks if two items are connected
-    or not.
-    Connected means both items have the
-    same root
-    """
-    root1=get_root(lis,item1)
-    root2= get_root(lis,item2)
-    return True if root1==root2 else False
- 
-def quick_union(lis,tree_sz,item1,item2):
-    """
-    Join two nodes(join the root of smaller tree to root of bigger tree)
-    """
-    root1=get_root(lis,item1)
-    root2= get_root(lis,item2)
-    
-    if root1 != root2:
-        if tree_sz[root1]==tree_sz[root2]:       #if size of both tree is same
-            lis[root2]=root1
-            tree_sz[root1]+=tree_sz[root2]
-            tree_sz[root2]=0                      # set the size of tree was merged to 0
- 
-        elif tree_sz[root1] < tree_sz[root2]:   
-            lis[root1]=root2
-            tree_sz[root2]+=tree_sz[root1]
-            tree_sz[root1]=0
- 
-        elif tree_sz[root1] > tree_sz[root2]:
-            lis[root2]=root1
-            tree_sz[root1]+=tree_sz[root2]
-            tree_sz[root2]=0    
-    #else:
-       # print "Already connected"
-    return [lis,tree_sz]
-
-###########################################################
-
 
 ##########################################################
 #cluster the regions together if they are connected (overlapped) using Union-find approach
 def cluster_regions(part,min_clusterS):
     N=len(part)
-    List=range(N)
-    tree_sz=[1]*N
     cluster_loc=part
+    uf_object=UF(N) # union find object
     for i in range(N):
         for j in range(i+1,N):
             if part[i].overlap(part[j]):
-                [List,tree_sz]=quick_union(List,tree_sz,i,j)
+                uf_object.merge(i,j)
                 #update cluster location (expand)
-                cluster_loc[get_root(List,j)].Update(min(part[i].start,part[j].start),max(part[i].end,part[j].end))
+                cluster_loc[uf_object.find(j)].Update(min(part[i].start,part[j].start),max(part[i].end,part[j].end))
             if part[i]<part[j]:
                 break
         if i%10000==0: print >> sys.stderr, "  Merging segment for clusters (%d/%d)\r"%(i,N),
     
     c_pool=[] # cluster pool
     for i in range(N):
-        c=get_root(List,i)
-        c_info="%d:%d"%(cluster_loc[c].start,cluster_loc[c].end)
-        part[i].Cluster(get_root(List,i),c_info)
+        c=uf_object.find(i)
+        #c_info="%d:%d"%(cluster_loc[c].start,cluster_loc[c].end)
+        part[i].Cluster(uf_object.find(i))
         c_pool.append(c)
 
     cluster_pool={}
     for c in set(c_pool):
-        if c_pool.count(c)>=min_clusterS:
+        count=c_pool.count(c)
+        if count>=min_clusterS:
             cluster_pool[c]=cluster_loc[c]
-            cluster_pool[c].cluster=c_pool.count(c)
+            cluster_pool[c].cluster=count
     return (cluster_pool)
 
 
@@ -171,7 +125,8 @@ def ParseArg():
 
 def Main():
     t1=time()
-
+    
+    global min_interaction, p_value
     args=ParseArg()
     inp = open(args.input, 'r')
     min_clusterS=args.min_clusterS
@@ -179,7 +134,6 @@ def Main():
     p_value=args.p_value
     output=open(args.output,'w')
 
-    global min_interaction, p_value
 
     #store genomic location of part1 and part2
     part1=[]

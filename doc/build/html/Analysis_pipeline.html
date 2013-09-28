@@ -226,7 +226,9 @@ AGGAGCGTAACGTACCCGATGATC</pre>
 </div>
 <p>The output fasta files will be the input file name with different prefix (&#8220;NoLinker&#8221;, &#8220;LinkerOnly&#8221;, &#8220;BackOnly&#8221;, &#8220;FrontOnly&#8221;, &#8220;Paired&#8221;) for different types. The other output file specified by <tt class="docutils literal"><span class="pre">-o</span></tt> contains information of aligned linker sequences for each Type1/2 fragment.</p>
 <p>For example, if the commend is</p>
-<div class="highlight-python"><pre>split_partner.py fragment_ACCT.fasta evenlong_ACCTRm_dupPE_stitch_seq_1.fastq evenlong_ACCTRm_dupPE_stitch_seq_2.fastq -o fragment_ACCT_detail.txt --linker_db linker.fa</pre>
+<div class="highlight-python"><pre>split_partner.py fragment_ACCT.fasta evenlong_ACCTRm_dupPE_stitch_seq_1.fastq
+evenlong_ACCTRm_dupPE_stitch_seq_2.fastq
+-o fragment_ACCT_detail.txt --linker_db linker.fa</pre>
 </div>
 <dl class="docutils">
 <dt>Then, the output files will be:</dt>
@@ -240,7 +242,7 @@ AGGAGCGTAACGTACCCGATGATC</pre>
 </ul>
 </dd>
 </dl>
-<p>The format of the last output file <tt class="docutils literal"><span class="pre">fragment_ACCT_detail.txt</span></tt> will be &#8220;Name|linker_num|linker_loc|Type|linker_order&#8221;. Here are two examples:</p>
+<p>The format of the last output file <tt class="docutils literal"><span class="pre">fragment_ACCT_detail.txt</span></tt> will be &#8220;Name | linker_num | linker_loc | Type | linker_order&#8221;. Here are two examples:</p>
 <div class="highlight-python"><pre>HWI-ST1001:238:H0NYEADXX:1:1101:10221:1918      L1:2;L2:1  19,41;42,67;68,97       None    L2;L1;L1
 HWI-ST1001:238:H0NYEADXX:1:1101:4620:2609       L1:2 28,46;47,79     Paired  L1;L1</pre>
 </div>

@@ -208,7 +208,9 @@ The output fasta files will be the input file name with different prefix ("NoLin
 
 For example, if the commend is ::
 
-  split_partner.py fragment_ACCT.fasta evenlong_ACCTRm_dupPE_stitch_seq_1.fastq evenlong_ACCTRm_dupPE_stitch_seq_2.fastq -o fragment_ACCT_detail.txt --linker_db linker.fa
+  split_partner.py fragment_ACCT.fasta evenlong_ACCTRm_dupPE_stitch_seq_1.fastq 
+  evenlong_ACCTRm_dupPE_stitch_seq_2.fastq 
+  -o fragment_ACCT_detail.txt --linker_db linker.fa
 
 Then, the output files will be:
  * backOnly_fragment_ACCT.fasta 
@@ -218,7 +220,7 @@ Then, the output files will be:
  * Paired2_fragment_ACCT.fasta
  * fragment_ACCT_detail.txt
 
-The format of the last output file ``fragment_ACCT_detail.txt`` will be "Name|linker_num|linker_loc|Type|linker_order". Here are two examples: ::
+The format of the last output file ``fragment_ACCT_detail.txt`` will be "Name | linker_num | linker_loc | Type | linker_order". Here are two examples: ::
 
   HWI-ST1001:238:H0NYEADXX:1:1101:10221:1918      L1:2;L2:1  19,41;42,67;68,97       None    L2;L1;L1
   HWI-ST1001:238:H0NYEADXX:1:1101:4620:2609       L1:2 28,46;47,79     Paired  L1;L1

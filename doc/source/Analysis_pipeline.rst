@@ -103,7 +103,7 @@ For example, if the input fastq/fasta files are ``Rm_dupPE_example.F1.fastq`` an
 * GGCG_Rm_dupPE_example.F1.fastq
 * GGCG_Rm_dupPE_example.R1.fastq
 * unassigned_Rm_dupPE_example.F1.fastq
-* unassigned_Rm_dupPE_example.F1.fastq
+* unassigned_Rm_dupPE_example.R1.fastq
 
 .. _step3:
 

@@ -94,16 +94,16 @@ Here is a example for barcode.txt ::
 
 The output of this script are several pairs of fastq/fasta files prefixed with the 4nt barcode sequences, together with another pair of fastq/fasta files prefixed with 'unassigned'.
 
-For example, if the input fastq/fasta files are ``Rm_dupPE_example.F1.fastq`` and ``Rm_dupPE_example.R1.fastq``, and the barcode file is the same as above, then the output files are ::
+For example, if the input fastq/fasta files are ``Rm_dupPE_example.F1.fastq`` and ``Rm_dupPE_example.R1.fastq``, and the barcode file is the same as above, then the output files are:
 
-  ACCT_Rm_dupPE_example.F1.fastq
-  ACCT_Rm_dupPE_example.R1.fastq
-  CCGG_Rm_dupPE_example.F1.fastq
-  CCGG_Rm_dupPE_example.R1.fastq
-  GGCG_Rm_dupPE_example.F1.fastq
-  GGCG_Rm_dupPE_example.R1.fastq
-  unassigned_Rm_dupPE_example.F1.fastq
-  unassigned_Rm_dupPE_example.F1.fastq
+* ACCT_Rm_dupPE_example.F1.fastq
+* ACCT_Rm_dupPE_example.R1.fastq
+* CCGG_Rm_dupPE_example.F1.fastq
+* CCGG_Rm_dupPE_example.R1.fastq
+* GGCG_Rm_dupPE_example.F1.fastq
+* GGCG_Rm_dupPE_example.R1.fastq
+* unassigned_Rm_dupPE_example.F1.fastq
+* unassigned_Rm_dupPE_example.F1.fastq
 
 .. _step3:
 
@@ -223,9 +223,9 @@ The format of the last output file ``fragment_ACCT_detail.txt`` will be "Name|li
   HWI-ST1001:238:H0NYEADXX:1:1101:10221:1918      L1:2;L2:1  19,41;42,67;68,97       None    L2;L1;L1
   HWI-ST1001:238:H0NYEADXX:1:1101:4620:2609       L1:2 28,46;47,79     Paired  L1;L1
 
-In the **first** fragment, there are three regions can be aligned to linkers, 2 for L1 and 1 for L2, the order is L2, L1, L1. And they are aligned in region [19,41], [42,67], [68,97] of the fragment. ``None`` means this fragment is either 'LinkerOnly' or 'IndexOnly' (in this case it is 'LinkerOnly'). This fragment won't be written to any of the output fasta files.
+In the **first** fragment, there are three regions can be aligned to linkers, 2 for L1 and 1 for L2, the order is L2, L1, L1. And they are aligned in region [19,41], [42,67], [68,97] of the fragment. "None" means this fragment is either 'LinkerOnly' or 'IndexOnly' (in this case it is 'LinkerOnly'). This fragment won't be written to any of the output fasta files.
 
-In the **second** fragment, two regions can be aligned to linkers, and they are both aligned to L1. The two regions are in [28,46], [47,79] of the fragment. the fragmen is "Paired" because on both two sides flanking the linker aligned regions, the length is larger than 15nt. The left part will be writen in ``Paired1_fragment_ACCT.fasta`` and the right part in ``Paired2_fragment_ACCT.fasta``
+In the **second** fragment, two regions can be aligned to linkers, and they are both aligned to L1. The two regions are in [28,46], [47,79] of the fragment. the fragment is "Paired" because on both two sides flanking the linker aligned regions, the length is larger than 15nt. The left part will be writen in ``Paired1_fragment_ACCT.fasta`` and the right part in ``Paired2_fragment_ACCT.fasta``
 
 .. _step5:
 

@@ -131,17 +131,17 @@ Library dependency: Bio</pre>
 </pre></div>
 </div>
 <p>The output of this script are several pairs of fastq/fasta files prefixed with the 4nt barcode sequences, together with another pair of fastq/fasta files prefixed with &#8216;unassigned&#8217;.</p>
-<p>For example, if the input fastq/fasta files are <tt class="docutils literal"><span class="pre">Rm_dupPE_example.F1.fastq</span></tt> and <tt class="docutils literal"><span class="pre">Rm_dupPE_example.R1.fastq</span></tt>, and the barcode file is the same as above, then the output files are</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">ACCT_Rm_dupPE_example</span><span class="o">.</span><span class="n">F1</span><span class="o">.</span><span class="n">fastq</span>
-<span class="n">ACCT_Rm_dupPE_example</span><span class="o">.</span><span class="n">R1</span><span class="o">.</span><span class="n">fastq</span>
-<span class="n">CCGG_Rm_dupPE_example</span><span class="o">.</span><span class="n">F1</span><span class="o">.</span><span class="n">fastq</span>
-<span class="n">CCGG_Rm_dupPE_example</span><span class="o">.</span><span class="n">R1</span><span class="o">.</span><span class="n">fastq</span>
-<span class="n">GGCG_Rm_dupPE_example</span><span class="o">.</span><span class="n">F1</span><span class="o">.</span><span class="n">fastq</span>
-<span class="n">GGCG_Rm_dupPE_example</span><span class="o">.</span><span class="n">R1</span><span class="o">.</span><span class="n">fastq</span>
-<span class="n">unassigned_Rm_dupPE_example</span><span class="o">.</span><span class="n">F1</span><span class="o">.</span><span class="n">fastq</span>
-<span class="n">unassigned_Rm_dupPE_example</span><span class="o">.</span><span class="n">F1</span><span class="o">.</span><span class="n">fastq</span>
-</pre></div>
-</div>
+<p>For example, if the input fastq/fasta files are <tt class="docutils literal"><span class="pre">Rm_dupPE_example.F1.fastq</span></tt> and <tt class="docutils literal"><span class="pre">Rm_dupPE_example.R1.fastq</span></tt>, and the barcode file is the same as above, then the output files are:</p>
+<ul class="simple">
+<li>ACCT_Rm_dupPE_example.F1.fastq</li>
+<li>ACCT_Rm_dupPE_example.R1.fastq</li>
+<li>CCGG_Rm_dupPE_example.F1.fastq</li>
+<li>CCGG_Rm_dupPE_example.R1.fastq</li>
+<li>GGCG_Rm_dupPE_example.F1.fastq</li>
+<li>GGCG_Rm_dupPE_example.R1.fastq</li>
+<li>unassigned_Rm_dupPE_example.F1.fastq</li>
+<li>unassigned_Rm_dupPE_example.F1.fastq</li>
+</ul>
 </div>
 <div class="section" id="step-3-recover-fragments-for-each-library">
 <span id="step3"></span><h3>Step 3: Recover fragments for each library.<a class="headerlink" href="#step-3-recover-fragments-for-each-library" title="Permalink to this headline">¶</a></h3>
@@ -244,8 +244,8 @@ AGGAGCGTAACGTACCCGATGATC</pre>
 <div class="highlight-python"><pre>HWI-ST1001:238:H0NYEADXX:1:1101:10221:1918      L1:2;L2:1  19,41;42,67;68,97       None    L2;L1;L1
 HWI-ST1001:238:H0NYEADXX:1:1101:4620:2609       L1:2 28,46;47,79     Paired  L1;L1</pre>
 </div>
-<p>In the <strong>first</strong> fragment, there are three regions can be aligned to linkers, 2 for L1 and 1 for L2, the order is L2, L1, L1. And they are aligned in region [19,41], [42,67], [68,97] of the fragment. <tt class="docutils literal"><span class="pre">None</span></tt> means this fragment is either &#8216;LinkerOnly&#8217; or &#8216;IndexOnly&#8217; (in this case it is &#8216;LinkerOnly&#8217;). This fragment won&#8217;t be written to any of the output fasta files.</p>
-<p>In the <strong>second</strong> fragment, two regions can be aligned to linkers, and they are both aligned to L1. The two regions are in [28,46], [47,79] of the fragment. the fragmen is &#8220;Paired&#8221; because on both two sides flanking the linker aligned regions, the length is larger than 15nt. The left part will be writen in <tt class="docutils literal"><span class="pre">Paired1_fragment_ACCT.fasta</span></tt> and the right part in <tt class="docutils literal"><span class="pre">Paired2_fragment_ACCT.fasta</span></tt></p>
+<p>In the <strong>first</strong> fragment, there are three regions can be aligned to linkers, 2 for L1 and 1 for L2, the order is L2, L1, L1. And they are aligned in region [19,41], [42,67], [68,97] of the fragment. &#8220;None&#8221; means this fragment is either &#8216;LinkerOnly&#8217; or &#8216;IndexOnly&#8217; (in this case it is &#8216;LinkerOnly&#8217;). This fragment won&#8217;t be written to any of the output fasta files.</p>
+<p>In the <strong>second</strong> fragment, two regions can be aligned to linkers, and they are both aligned to L1. The two regions are in [28,46], [47,79] of the fragment. the fragment is &#8220;Paired&#8221; because on both two sides flanking the linker aligned regions, the length is larger than 15nt. The left part will be writen in <tt class="docutils literal"><span class="pre">Paired1_fragment_ACCT.fasta</span></tt> and the right part in <tt class="docutils literal"><span class="pre">Paired2_fragment_ACCT.fasta</span></tt></p>
 </div>
 <div class="section" id="step-5-align-both-parts-of-paired-fragment-to-the-genome">
 <span id="step5"></span><h3>Step 5: Align both parts of &#8220;Paired&#8221; fragment to the genome.<a class="headerlink" href="#step-5-align-both-parts-of-paired-fragment-to-the-genome" title="Permalink to this headline">¶</a></h3>

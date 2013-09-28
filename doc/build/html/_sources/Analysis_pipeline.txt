@@ -110,11 +110,13 @@ For example, if the input fastq/fasta files are ``Rm_dupPE_example.F1.fastq`` an
 Step 3: Recover fragments for each library.
 -------------------------------------------
 
-**After splitting the libraries, the later steps from here (Step 3-6) are executed parallelly for each sample.**
+**After splitting the libraries, the later steps from here (Step 3-6) are executed parallelly for each sample.** 
+ 
 In this step, we are trying to recover the fragments based on local alignment. The fragments are classifed as several different types as shown in the figure below. The flow chart is also clarified at the top. 
 
 .. image:: workflow_for_recoverFragment.jpg
    :width: 600 px
+
 
 We will use a complied program ``recoverFragment`` to do that ::
 
@@ -155,6 +157,7 @@ When we recovered the fragments, the next we are goting to do is to find parts t
 .. image:: summary.jpg
    :width: 600 px
 
+
 This will be done by ``split_partner.py`` ::
 
   usage: split_partner.py [-h] [-e EVALUE] [--linker_db LINKER_DB]
@@ -194,11 +197,42 @@ This will be done by ``split_partner.py`` ::
 
   Library dependency: Bio, itertools
 
+The linker fasta file contain sequences of all linkers ::
+
+  >L1
+  CTAGTAGCCCATGCAATGCGAGGA
+  >L2
+  AGGAGCGTAACGTACCCGATGATC
+
+The output fasta files will be the input file name with different prefix ("NoLinker", "LinkerOnly", "BackOnly", "FrontOnly", "Paired") for different types. The other output file specified by ``-o`` contains information of aligned linker sequences for each Type1/2 fragment.
+
+For example, if the commend is ::
+
+  split_partner.py fragment_ACCT.fasta evenlong_ACCTRm_dupPE_stitch_seq_1.fastq evenlong_ACCTRm_dupPE_stitch_seq_2.fastq -o fragment_ACCT_detail.txt --linker_db linker.fa
+
+Then, the output files will be:
+ * backOnly_fragment_ACCT.fasta 
+ * NoLinker_fragment_ACCT.fasta
+ * frontOnly_fragment_ACCT.fasta
+ * Paired1_fragment_ACCT.fasta
+ * Paired2_fragment_ACCT.fasta
+ * fragment_ACCT_detail.txt
+
+The format of the last output file ``fragment_ACCT_detail.txt`` will be "Name|linker_num|linker_loc|Type|linker_order". Here are two examples: ::
+
+  HWI-ST1001:238:H0NYEADXX:1:1101:10221:1918      L1:2;L2:1  19,41;42,67;68,97       None    L2;L1;L1
+  HWI-ST1001:238:H0NYEADXX:1:1101:4620:2609       L1:2 28,46;47,79     Paired  L1;L1
+
+In the **first** fragment, there are three regions can be aligned to linkers, 2 for L1 and 1 for L2, the order is L2, L1, L1. And they are aligned in region [19,41], [42,67], [68,97] of the fragment. ``None`` means this fragment is either 'LinkerOnly' or 'IndexOnly' (in this case it is 'LinkerOnly'). This fragment won't be written to any of the output fasta files.
+
+In the **second** fragment, two regions can be aligned to linkers, and they are both aligned to L1. The two regions are in [28,46], [47,79] of the fragment. the fragmen is "Paired" because on both two sides flanking the linker aligned regions, the length is larger than 15nt. The left part will be writen in ``Paired1_fragment_ACCT.fasta`` and the right part in ``Paired2_fragment_ACCT.fasta``
 
 .. _step5:
 
 Step 5: Align both parts of "Paired" fragment to the genome.
 ------------------------------------------------------------
+
+
 
 .. _step6:
 

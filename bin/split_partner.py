@@ -15,8 +15,8 @@ dir(hsp):
 
 def ParseArg():
     
-    p=argparse.ArgumentParser( description = 'DESCRIPTION: Run BLAST, find linker sequences and split two parts connected by linkers', epilog='')
-    p.add_argument("input",type=str,help="the input fasta file containing fragment sequences")
+    p=argparse.ArgumentParser( description = 'DESCRIPTION: Run BLAST, find linker sequences and split two parts connected by linkers', epilog='Library dependency: Bio, itertools')
+    p.add_argument("input",type=str,help="the input fasta file containing fragment sequences of type1 and type2")
     p.add_argument("type3_1",type=str,help="read_1 for evenlong (type3) fastq file")
     p.add_argument("type3_2",type=str,help="read_2 for evenlong (type3) fastq file")
     p.add_argument("-e","--evalue",dest="evalue",type=float,default=0.00001,help="cutoff evalues, only choose alignment with evalue less than this cutoffs (default: 1e-5).")

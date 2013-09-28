@@ -88,7 +88,7 @@ Library dependency: Bio, itertools</pre>
 <p>The program will generate two fastq/fasta files after removind PCR duplicates and report how many read pairs has been removed. The output are prefixed with &#8216;Rm_dupPE&#8217;</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The pair is considered as a PCR duplicate only when the sequences of both two ends (including the 10nt random index) are the exactly same as any of other pairs.</p>
+<p class="last">One pair is considered as a PCR duplicate only when the sequences of both two ends (including the 10nt random index) are the exactly same as any of other pairs.</p>
 </div>
 </div>
 <div class="section" id="step-2-split-library-based-on-barcode-txt">
@@ -145,9 +145,79 @@ Library dependency: Bio</pre>
 </div>
 <div class="section" id="step-3-recover-fragments-for-each-library">
 <span id="step3"></span><h3>Step 3: Recover fragments for each library.<a class="headerlink" href="#step-3-recover-fragments-for-each-library" title="Permalink to this headline">¶</a></h3>
+<p><strong>After splitting the libraries, the later steps from here (Step 3-6) are executed parallelly for each sample.</strong>
+In this step, we are trying to recover the fragments based on local alignment. The fragments are classifed as several different types as shown in the figure below. The flow chart is also clarified at the top.</p>
+<a class="reference internal image-reference" href="_images/workflow_for_recoverFragment.jpg"><img alt="_images/workflow_for_recoverFragment.jpg" src="_images/workflow_for_recoverFragment.jpg" style="width: 600px;" /></a>
+<p>We will use a complied program <tt class="docutils literal"><span class="pre">recoverFragment</span></tt> to do that</p>
+<div class="highlight-python"><pre>recoverFragment - recover fragment into 4 different categories from pair-end seq data
+=====================================================================================
+
+SYNOPSIS
+
+DESCRIPTION
+    -h, --help
+          Displays this help message.
+    --version
+          Display version information
+    -I, --inputs STR
+          input of forward and reverse fastq file, path of two files separated by SPACE
+    -p, --primer STR
+          fasta file contianing two primer sequences
+    -v, --verbose
+          print alignment information for each alignment
+
+EXAMPLES
+    recoverFragment -I read_1.fastq read_2.fastq -p primer.fasta
+          store fragment using fasta/fastq into 4 output files
+          'short_*', 'long_*','evenlong_*','wierd_*'
+
+VERSION
+    recoverFragment version: 0.1
+    Last update August 2013</pre>
+</div>
 </div>
 <div class="section" id="step-4-split-partners-and-classify-different-types-of-fragments">
 <span id="step4"></span><h3>Step 4: Split partners and classify different types of fragments.<a class="headerlink" href="#step-4-split-partners-and-classify-different-types-of-fragments" title="Permalink to this headline">¶</a></h3>
+<p>When we recovered the fragments, the next we are goting to do is to find parts that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: &#8220;IndexOnly&#8221;, &#8220;NoLinker&#8221;, &#8220;LinkerOnly&#8221;, &#8220;BackOnly&#8221;, &#8220;FrontOnly&#8221;, &#8220;Paired&#8221;. (see the figure below).</p>
+<a class="reference internal image-reference" href="_images/summary.jpg"><img alt="_images/summary.jpg" src="_images/summary.jpg" style="width: 600px;" /></a>
+<p>This will be done by <tt class="docutils literal"><span class="pre">split_partner.py</span></tt></p>
+<div class="highlight-python"><pre>usage: split_partner.py [-h] [-e EVALUE] [--linker_db LINKER_DB]
+                        [--blast_path BLAST_PATH] [-o OUTPUT] [-t TRIM]
+                        [-b BATCH] [-l LENGTH]
+                        input type3_1 type3_2
+
+DESCRIPTION: Run BLAST, find linker sequences and split two parts connected by
+linkers
+
+positional arguments:
+  input                 the input fasta file containing fragment sequences of
+                        type1 and type2
+  type3_1               read_1 for evenlong (type3) fastq file
+  type3_2               read_2 for evenlong (type3) fastq file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -e EVALUE, --evalue EVALUE
+                        cutoff evalues, only choose alignment with evalue less
+                        than this cutoffs (default: 1e-5).
+  --linker_db LINKER_DB
+                        BLAST database of linker sequences
+  --blast_path BLAST_PATH
+                        path for the local blast program
+  -o OUTPUT, --output OUTPUT
+                        output file containing sequences of two sepatated
+                        parts
+  -t TRIM, --trim TRIM  trim off the first this number of nt as index,
+                        default:10
+  -b BATCH, --batch BATCH
+                        batch this number of fragments for BLAST at a time.
+                        default: 100000
+  -l LENGTH, --length LENGTH
+                        shortest length to be considered for each part of the
+                        pair, default: 15
+
+Library dependency: Bio, itertools</pre>
+</div>
 </div>
 <div class="section" id="step-5-align-both-parts-of-paired-fragment-to-the-genome">
 <span id="step5"></span><h3>Step 5: Align both parts of &#8220;Paired&#8221; fragment to the genome.<a class="headerlink" href="#step-5-align-both-parts-of-paired-fragment-to-the-genome" title="Permalink to this headline">¶</a></h3>

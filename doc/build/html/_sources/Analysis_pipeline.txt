@@ -48,7 +48,7 @@ The program will generate two fastq/fasta files after removind PCR duplicates an
 
 .. note::
 
-  The pair is considered as a PCR duplicate only when the sequences of both two ends (including the 10nt random index) are the exactly same as any of other pairs.
+  One pair is considered as a PCR duplicate only when the sequences of both two ends (including the 10nt random index) are the exactly same as any of other pairs.
 
 .. _step2:
 
@@ -110,10 +110,90 @@ For example, if the input fastq/fasta files are ``Rm_dupPE_example.F1.fastq`` an
 Step 3: Recover fragments for each library.
 -------------------------------------------
 
+**After splitting the libraries, the later steps from here (Step 3-6) are executed parallelly for each sample.**
+In this step, we are trying to recover the fragments based on local alignment. The fragments are classifed as several different types as shown in the figure below. The flow chart is also clarified at the top. 
+
+.. image:: workflow_for_recoverFragment.jpg
+   :width: 600 px
+
+We will use a complied program ``recoverFragment`` to do that ::
+
+  recoverFragment - recover fragment into 4 different categories from pair-end seq data
+  =====================================================================================
+
+  SYNOPSIS
+
+  DESCRIPTION
+      -h, --help
+            Displays this help message.
+      --version
+            Display version information
+      -I, --inputs STR
+            input of forward and reverse fastq file, path of two files separated by SPACE
+      -p, --primer STR
+            fasta file contianing two primer sequences
+      -v, --verbose
+            print alignment information for each alignment
+
+  EXAMPLES
+      recoverFragment -I read_1.fastq read_2.fastq -p primer.fasta
+            store fragment using fasta/fastq into 4 output files 
+            'short_*', 'long_*','evenlong_*','wierd_*'
+
+  VERSION
+      recoverFragment version: 0.1
+      Last update August 2013
+
+
+
 .. _step4:
 
 Step 4: Split partners and classify different types of fragments.
 -----------------------------------------------------------------
+When we recovered the fragments, the next we are goting to do is to find parts that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: "IndexOnly", "NoLinker", "LinkerOnly", "BackOnly", "FrontOnly", "Paired". (see the figure below).
+
+.. image:: summary.jpg
+   :width: 600 px
+
+This will be done by ``split_partner.py`` ::
+
+  usage: split_partner.py [-h] [-e EVALUE] [--linker_db LINKER_DB]
+                          [--blast_path BLAST_PATH] [-o OUTPUT] [-t TRIM]
+                          [-b BATCH] [-l LENGTH]
+                          input type3_1 type3_2
+
+  DESCRIPTION: Run BLAST, find linker sequences and split two parts connected by
+  linkers
+
+  positional arguments:
+    input                 the input fasta file containing fragment sequences of
+                          type1 and type2
+    type3_1               read_1 for evenlong (type3) fastq file
+    type3_2               read_2 for evenlong (type3) fastq file
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -e EVALUE, --evalue EVALUE
+                          cutoff evalues, only choose alignment with evalue less
+                          than this cutoffs (default: 1e-5).
+    --linker_db LINKER_DB
+                          BLAST database of linker sequences
+    --blast_path BLAST_PATH
+                          path for the local blast program
+    -o OUTPUT, --output OUTPUT
+                          output file containing sequences of two sepatated
+                          parts
+    -t TRIM, --trim TRIM  trim off the first this number of nt as index,
+                          default:10
+    -b BATCH, --batch BATCH
+                          batch this number of fragments for BLAST at a time.
+                          default: 100000
+    -l LENGTH, --length LENGTH
+                          shortest length to be considered for each part of the
+                          pair, default: 15
+
+  Library dependency: Bio, itertools
+
 
 .. _step5:
 

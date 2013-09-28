@@ -4,7 +4,7 @@ stitch-seq
 ## program for RNA-RNA interactome and RNA-chromatin interactome ##
 
 ### Documentation ###
-[HTML] | (http://stitch-seq-tools.readthedocs.org/)
+[HTML](http://stitch-seq-tools.readthedocs.org/)
 
 ### pipeline (start from pair-end fastq file): ###
 1. Remove duplicates  `rm_dup\remove_dup_PE.py`

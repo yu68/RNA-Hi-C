@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Pengfei Yu yupf05@gmail.com
 
 import sys,argparse,os
 from xplib import TableIO

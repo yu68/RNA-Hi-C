@@ -147,7 +147,7 @@ Library dependency: Bio</pre>
 <span id="step3"></span><h3>Step 3: Recover fragments for each library.<a class="headerlink" href="#step-3-recover-fragments-for-each-library" title="Permalink to this headline">¶</a></h3>
 <p><strong>After splitting the libraries, the later steps from here (Step 3-6) are executed parallelly for each sample.</strong></p>
 <p>In this step, we are trying to recover the fragments based on local alignment. The fragments are classifed as several different types as shown in the figure below. The flow chart is also clarified at the top.</p>
-<a class="reference internal image-reference" href="_images/workflow_for_recoverFragment.jpg"><img alt="_images/workflow_for_recoverFragment.jpg" src="_images/workflow_for_recoverFragment.jpg" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/workflow_for_recoverFragment.jpg"><img alt="_images/workflow_for_recoverFragment.jpg" class="align-center" src="_images/workflow_for_recoverFragment.jpg" style="width: 600px;" /></a>
 <p>We will use a complied program <tt class="docutils literal"><span class="pre">recoverFragment</span></tt> to do that</p>
 <div class="highlight-python"><pre>recoverFragment - recover fragment into 4 different categories from pair-end seq data
 =====================================================================================
@@ -179,7 +179,7 @@ VERSION
 <div class="section" id="step-4-split-partners-and-classify-different-types-of-fragments">
 <span id="step4"></span><h3>Step 4: Split partners and classify different types of fragments.<a class="headerlink" href="#step-4-split-partners-and-classify-different-types-of-fragments" title="Permalink to this headline">¶</a></h3>
 <p>When we recovered the fragments, the next we are goting to do is to find parts that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: &#8220;IndexOnly&#8221;, &#8220;NoLinker&#8221;, &#8220;LinkerOnly&#8221;, &#8220;BackOnly&#8221;, &#8220;FrontOnly&#8221;, &#8220;Paired&#8221;. (see the figure below).</p>
-<a class="reference internal image-reference" href="_images/summary.jpg"><img alt="_images/summary.jpg" src="_images/summary.jpg" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/summary.jpg"><img alt="_images/summary.jpg" class="align-center" src="_images/summary.jpg" style="width: 600px;" /></a>
 <p>This will be done by <tt class="docutils literal"><span class="pre">split_partner.py</span></tt></p>
 <div class="highlight-python"><pre>usage: split_partner.py [-h] [-e EVALUE] [--linker_db LINKER_DB]
                         [--blast_path BLAST_PATH] [-o OUTPUT] [-t TRIM]
@@ -227,8 +227,8 @@ AGGAGCGTAACGTACCCGATGATC</pre>
 <p>The output fasta files will be the input file name with different prefix (&#8220;NoLinker&#8221;, &#8220;LinkerOnly&#8221;, &#8220;BackOnly&#8221;, &#8220;FrontOnly&#8221;, &#8220;Paired&#8221;) for different types. The other output file specified by <tt class="docutils literal"><span class="pre">-o</span></tt> contains information of aligned linker sequences for each Type1/2 fragment.</p>
 <p>For example, if the commend is</p>
 <div class="highlight-python"><pre>split_partner.py fragment_ACCT.fasta evenlong_ACCTRm_dupPE_stitch_seq_1.fastq
-evenlong_ACCTRm_dupPE_stitch_seq_2.fastq
--o fragment_ACCT_detail.txt --linker_db linker.fa</pre>
+    evenlong_ACCTRm_dupPE_stitch_seq_2.fastq
+    -o fragment_ACCT_detail.txt --linker_db linker.fa</pre>
 </div>
 <dl class="docutils">
 <dt>Then, the output files will be:</dt>
@@ -251,9 +251,173 @@ HWI-ST1001:238:H0NYEADXX:1:1101:4620:2609       L1:2 28,46;47,79     Paired  L1;
 </div>
 <div class="section" id="step-5-align-both-parts-of-paired-fragment-to-the-genome">
 <span id="step5"></span><h3>Step 5: Align both parts of &#8220;Paired&#8221; fragment to the genome.<a class="headerlink" href="#step-5-align-both-parts-of-paired-fragment-to-the-genome" title="Permalink to this headline">¶</a></h3>
+<p>In this step, we will use the Paired1* and Paired2* fasta files output from the previous step. The sequences of part1 and part2 are aligned to the mouse genome mm9 with Bowtie and the pairs with both part1 and part2 mappable are selected as output. We also annotate the RNA types of each part in this step.
+All of these are implemented using script <tt class="docutils literal"><span class="pre">Stitch-seq_Aligner.py</span></tt>.</p>
+<div class="highlight-python"><pre>usage: Stitch-seq_Aligner.py [-h] [-s samtool_path] [-a ANNOTATION]
+                             [-A DB_DETAIL]
+                             miRNA_reads mRNA_reads bowtie_path miRNA_ref
+                             mRNA_ref
+
+Align miRNA-mRNA pairs for Stitch-seq. print the alignable miRNA-mRNA pairs
+with coordinates
+
+positional arguments:
+  part1_reads           paired part1 fasta file
+  part2_reads           paired part2 fasta file
+  bowtie_path           path for the bowtie program
+  part1_ref             reference genomic seq for part1
+  part2_ref             reference genomic seq for part2
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s samtool_path, --samtool_path samtool_path
+                        path for the samtool program
+  -a ANNOTATION, --annotation ANNOTATION
+                        If specified, include the RNA type annotation for each
+                        aligned pair, need to give bed annotation RNA file
+  -A DB_DETAIL, --annotationGenebed DB_DETAIL
+                        annotation bed12 file for lincRNA and mRNA with intron
+                        and exon
+
+Library dependency: Bio, pysam, itertools</pre>
+</div>
+<p>An annotation file for different types of RNAs in mm9 genome (bed format, &#8216;all_RNAs-rRNA_repeat.txt.gz&#8217;) was included in Data folder. The annotation bed12 file for lincRNA and mRNA (&#8216;Ensembl_mm9.genebed.gz&#8217;) was also included in Data folder. One can use the option <tt class="docutils literal"><span class="pre">-a</span> <span class="pre">../Data/all_RNAs-rRNA_repeat.txt.gz</span> <span class="pre">-A</span> <span class="pre">../Data/Ensembl_mm9.genebed.gz</span></tt> for annotation.</p>
+<p>Here is a example:</p>
+<div class="highlight-python"><pre>Stitch-seq_Aligner.py Paired1_fragment_ACCT.fasta Paired2_fragment_ACCT.fasta
+    ~/Software/bowtie-0.12.7/bowtie mm9 mm9 -s samtools
+    -a ../Data/all_RNAs-rRNA_repeat.txt.gz -A ../Data/Ensembl_mm9.genebed.gz
+    &gt; ACCT_fragment_paired_align.txt</pre>
+</div>
+<p>The format for the output file <tt class="docutils literal"><span class="pre">ACCT_fragment_paired_align.txt</span></tt> will be:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column <a class="footnote-reference" href="#f1" id="id1">[1]</a></th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>chromosome name of part1</td>
+</tr>
+<tr class="row-odd"><td>2,3</td>
+<td>start/end position of part1</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>sequence of part1</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>RNA type for part1</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>RNA name for part1</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>RNA subtype <a class="footnote-reference" href="#f2" id="id2">[2]</a> for part1</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>name of the pair</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>column 9-15 are the same as column 1-7 except they are for part2 instead of part1.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), &#8216;.&#8217; for others</td></tr>
+</tbody>
+</table>
 </div>
 <div class="section" id="step-6-determine-strong-interactions">
 <span id="step6"></span><h3>Step 6: Determine strong interactions.<a class="headerlink" href="#step-6-determine-strong-interactions" title="Permalink to this headline">¶</a></h3>
+<p>In this step, we will generate clusters with high coverage separately for all part1 (R1) an part2 (R2) segments. Then based on the pairing information, we count the interactions between clusters from part1 and part2. The strong interactions can be selected by applying a p-value cutoff from hypergeometric test. (See figure below)</p>
+<a class="reference internal image-reference" href="_images/Find_strong_interaction.jpg"><img alt="_images/Find_strong_interaction.jpg" class="align-center" src="_images/Find_strong_interaction.jpg" style="width: 600px;" /></a>
+<p>We will use the script <tt class="docutils literal"><span class="pre">Select_strongInteraction_pp.py</span></tt>, parallel computing are implemented for clustering parallelly on different chromosomes:</p>
+<div class="highlight-python"><pre>usage: Select_strongInteraction_pp.py [-h] -i INPUT [-M MIN_CLUSTERS]
+                                      [-m MIN_INTERACTION] [-p P_VALUE]
+                                      [-o OUTPUT] [-P PARALLEL] [-F]
+
+find strong interactions from paired genomic location data
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        input file which is the output file of Stitch-seq-
+                        Aligner.py
+  -M MIN_CLUSTERS, --min_clusterS MIN_CLUSTERS
+                        minimum number of segments allowed in each cluster,
+                        default:5
+  -m MIN_INTERACTION, --min_interaction MIN_INTERACTION
+                        minimum number of interactions to support a strong
+                        interaction, default:3
+  -p P_VALUE, --p_value P_VALUE
+                        the p-value based on hypergeometric distribution to
+                        call strong interactions, default: 0.05
+  -o OUTPUT, --output OUTPUT
+                        specify output file
+  -P PARALLEL, --parallel PARALLEL
+                        number of workers for parallel computing, default: 5
+  -F, --FDR             Compute FDR if specified
+
+need Scipy for hypergeometric distribution</pre>
+</div>
+<p>The input of the script is the output of Step 5 (<tt class="docutils literal"><span class="pre">ACCT_fragment_paired_align.txt</span></tt> in the example). &#8220;annotated_bed&#8221; class is utilized in this script.</p>
+<p>Here is a example:</p>
+<div class="highlight-python"><pre>Select_strongInteraction.py -i ACCT_fragment_paired_align.txt -o ACCT_interaction_clusters.txt</pre>
+</div>
+<p>The column description for output file <tt class="docutils literal"><span class="pre">ACCT_interaction_clusters.txt</span></tt> is:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>chromosome name of cluster in part1</td>
+</tr>
+<tr class="row-odd"><td>2,3</td>
+<td>start/end position of cluster in part1</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>RNA type for cluster in part1</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>RNA name for cluster in part1</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>RNA subtype for cluster in part1</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td># of counts for cluster in part1</td>
+</tr>
+<tr class="row-even"><td>8-14</td>
+<td>Same as 1-7, but for cluster in part2</td>
+</tr>
+<tr class="row-odd"><td>15</td>
+<td># of interactions between these two clusters</td>
+</tr>
+<tr class="row-even"><td>16</td>
+<td>p-value of the hypergeometrix testing</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="other-functions">

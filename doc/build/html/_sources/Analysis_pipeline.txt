@@ -116,7 +116,7 @@ In this step, we are trying to recover the fragments based on local alignment. T
 
 .. image:: workflow_for_recoverFragment.jpg
    :width: 600 px
-
+   :align: center
 
 We will use a complied program ``recoverFragment`` to do that ::
 
@@ -156,7 +156,7 @@ When we recovered the fragments, the next we are goting to do is to find parts t
 
 .. image:: summary.jpg
    :width: 600 px
-
+   :align: center
 
 This will be done by ``split_partner.py`` ::
 
@@ -209,8 +209,8 @@ The output fasta files will be the input file name with different prefix ("NoLin
 For example, if the commend is ::
 
   split_partner.py fragment_ACCT.fasta evenlong_ACCTRm_dupPE_stitch_seq_1.fastq 
-  evenlong_ACCTRm_dupPE_stitch_seq_2.fastq 
-  -o fragment_ACCT_detail.txt --linker_db linker.fa
+      evenlong_ACCTRm_dupPE_stitch_seq_2.fastq 
+      -o fragment_ACCT_detail.txt --linker_db linker.fa
 
 Then, the output files will be:
  * backOnly_fragment_ACCT.fasta 
@@ -234,12 +234,126 @@ In the **second** fragment, two regions can be aligned to linkers, and they are 
 Step 5: Align both parts of "Paired" fragment to the genome.
 ------------------------------------------------------------
 
+In this step, we will use the Paired1* and Paired2* fasta files output from the previous step. The sequences of part1 and part2 are aligned to the mouse genome mm9 with Bowtie and the pairs with both part1 and part2 mappable are selected as output. We also annotate the RNA types of each part in this step.
+All of these are implemented using script ``Stitch-seq_Aligner.py``. ::
 
+  usage: Stitch-seq_Aligner.py [-h] [-s samtool_path] [-a ANNOTATION]
+                               [-A DB_DETAIL]
+                               miRNA_reads mRNA_reads bowtie_path miRNA_ref
+                               mRNA_ref
+
+  Align miRNA-mRNA pairs for Stitch-seq. print the alignable miRNA-mRNA pairs
+  with coordinates
+  
+  positional arguments:
+    part1_reads           paired part1 fasta file
+    part2_reads           paired part2 fasta file
+    bowtie_path           path for the bowtie program
+    part1_ref             reference genomic seq for part1
+    part2_ref             reference genomic seq for part2
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -s samtool_path, --samtool_path samtool_path
+                          path for the samtool program
+    -a ANNOTATION, --annotation ANNOTATION
+                          If specified, include the RNA type annotation for each
+                          aligned pair, need to give bed annotation RNA file
+    -A DB_DETAIL, --annotationGenebed DB_DETAIL
+                          annotation bed12 file for lincRNA and mRNA with intron
+                          and exon
+
+  Library dependency: Bio, pysam, itertools
+   
+An annotation file for different types of RNAs in mm9 genome (bed format, 'all_RNAs-rRNA_repeat.txt.gz') was included in Data folder. The annotation bed12 file for lincRNA and mRNA ('Ensembl_mm9.genebed.gz') was also included in Data folder. One can use the option ``-a ../Data/all_RNAs-rRNA_repeat.txt.gz -A ../Data/Ensembl_mm9.genebed.gz`` for annotation.
+
+Here is a example: ::
+
+  Stitch-seq_Aligner.py Paired1_fragment_ACCT.fasta Paired2_fragment_ACCT.fasta 
+      ~/Software/bowtie-0.12.7/bowtie mm9 mm9 -s samtools 
+      -a ../Data/all_RNAs-rRNA_repeat.txt.gz -A ../Data/Ensembl_mm9.genebed.gz 
+      > ACCT_fragment_paired_align.txt
+
+The format for the output file ``ACCT_fragment_paired_align.txt`` will be:
+
+  =============  ===========================
+  Column [#f1]_   Description
+  =============  ===========================
+    1            chromosome name of part1
+   2,3           start/end position of part1
+    4            sequence of part1
+    5            RNA type for part1
+    6            RNA name for part1
+    7            RNA subtype [#f2]_ for part1
+    8            name of the pair
+  =============  ===========================
+
+.. [#f1] column 9-15 are the same as column 1-7 except they are for part2 instead of part1.
+.. [#f2] subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), '.' for others
 
 .. _step6:
 
 Step 6: Determine strong interactions.
 --------------------------------------
+
+In this step, we will generate clusters with high coverage separately for all part1 (R1) an part2 (R2) segments. Then based on the pairing information, we count the interactions between clusters from part1 and part2. The strong interactions can be selected by applying a p-value cutoff from hypergeometric test. (See figure below)
+
+.. image:: Find_strong_interaction.jpg
+   :width: 600 px
+   :align: center
+
+We will use the script ``Select_strongInteraction_pp.py``, parallel computing are implemented for clustering parallelly on different chromosomes: ::
+
+  usage: Select_strongInteraction_pp.py [-h] -i INPUT [-M MIN_CLUSTERS]
+                                        [-m MIN_INTERACTION] [-p P_VALUE]
+                                        [-o OUTPUT] [-P PARALLEL] [-F]
+
+  find strong interactions from paired genomic location data
+  
+  optional arguments:
+    -h, --help            show this help message and exit
+    -i INPUT, --input INPUT
+                          input file which is the output file of Stitch-seq-
+                          Aligner.py
+    -M MIN_CLUSTERS, --min_clusterS MIN_CLUSTERS
+                          minimum number of segments allowed in each cluster,
+                          default:5
+    -m MIN_INTERACTION, --min_interaction MIN_INTERACTION
+                          minimum number of interactions to support a strong
+                          interaction, default:3
+    -p P_VALUE, --p_value P_VALUE
+                          the p-value based on hypergeometric distribution to
+                          call strong interactions, default: 0.05
+    -o OUTPUT, --output OUTPUT
+                          specify output file
+    -P PARALLEL, --parallel PARALLEL
+                          number of workers for parallel computing, default: 5
+    -F, --FDR             Compute FDR if specified
+
+  need Scipy for hypergeometric distribution
+
+The input of the script is the output of Step 5 (``ACCT_fragment_paired_align.txt`` in the example). "annotated_bed" class is utilized in this script. 
+
+Here is a example: ::
+
+  Select_strongInteraction.py -i ACCT_fragment_paired_align.txt -o ACCT_interaction_clusters.txt
+
+The column description for output file ``ACCT_interaction_clusters.txt`` is:
+
+  =========  =====================================
+  Column         Description
+  =========  =====================================
+    1            chromosome name of cluster in part1
+   2,3           start/end position of cluster in part1
+    4            RNA type for cluster in part1
+    5            RNA name for cluster in part1
+    6            RNA subtype for cluster in part1
+    7            # of counts for cluster in part1
+   8-14          Same as 1-7, but for cluster in part2
+    15           # of interactions between these two clusters
+    16           p-value of the hypergeometrix testing
+  =========  =====================================
+
 
 
 Other functions
@@ -249,6 +363,8 @@ Other functions
 
 Determine the RNA types of different parts within fragments.
 ------------------------------------------------------------
+
+
 
 .. _find_linker:
 

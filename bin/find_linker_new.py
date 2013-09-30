@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# Pengfei Yu yupf05@gmail.com
 
 import sys,os,argparse
 from Bio.Blast import NCBIXML

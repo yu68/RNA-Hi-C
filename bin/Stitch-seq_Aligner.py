@@ -22,12 +22,12 @@ from Annotation import *
 
 def ParseArg():
     p=argparse.ArgumentParser( description = 'Align miRNA-mRNA pairs for Stitch-seq. print the alignable miRNA-mRNA pairs with coordinates', epilog = 'Library dependency: Bio, pysam, itertools')
-    p.add_argument('input1',type=str,metavar='miRNA_reads',help='paired miRNA fastq file')
-    p.add_argument('input2',type=str,metavar='mRNA_reads',help='paired mRNA fastq file')
+    p.add_argument('input1',type=str,metavar='part1_reads',help='paired part1 fasta file')
+    p.add_argument('input2',type=str,metavar='part2_reads',help='paired part2 fasta file')
     p.add_argument('bowtie_path',type=str,metavar='bowtie_path',help="path for the bowtie program")
     p.add_argument('-s','--samtool_path',dest='spath', type=str,metavar='samtool_path',help="path for the samtool program",default='samtools')
-    p.add_argument('miRNA_ref',type=str,metavar='miRNA_ref',default="hairpin_mouse.fa",help="reference hairpin miRNA seq from miRBase")
-    p.add_argument('mRNA_ref',type=str,metavar='mRNA_ref',help="reference genomic seq from mm9")
+    p.add_argument('miRNA_ref',type=str,metavar='part1_ref',default="mm9",help="reference genomic seq for part1")
+    p.add_argument('mRNA_ref',type=str,metavar='part2_ref',help="reference genomic seq for part2")
     p.add_argument('-a','--annotation',type=str,help='If specified, include the RNA type annotation for each aligned pair, need to give bed annotation RNA file')
     p.add_argument("-A","--annotationGenebed",dest="db_detail",type=str,help="annotation bed12 file for lincRNA and mRNA with intron and exon")
 

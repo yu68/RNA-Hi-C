@@ -72,7 +72,7 @@ def Main():
     if args.annotation:
         dbi1=DBI.init(args.annotation,"bed")
         dbi2=DBI.init(args.db_detail,"bed")
-        Genome('mouse', Release=67, account=None)
+        genome=Genome('mouse', Release=67, account=None)
     
     for record1, record2 in itertools.izip(miRNA_align, mRNA_align):
         

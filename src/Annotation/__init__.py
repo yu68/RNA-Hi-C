@@ -69,19 +69,23 @@ def annotation(bed,ref_allRNA,ref_detail,genome):
     This function is based on :func:`overlap` and :func:`Subtype` functions to annotate RNA type/name/subtype for any genomic region.
 
     :param bed: A Bed object defined by xplib.Annotation.Bed (in BAM2X).
-    :param ref_allRNA: the DBI.init file (from BAM2X) for bed6 file of all kinds of RNA
-    :param ref_detail: the DBI.init file for bed12 file of lincRNA and mRNA with intron, exon, UTR
+    :param ref_allRNA: the DBI.init object (from BAM2X) for bed6 file of all kinds of RNA
+    :param ref_detail: the DBI.init object for bed12 file of lincRNA and mRNA with intron, exon, UTR
+    :param genome: the Genome object from PyCogent.
     :returns: list of str -- [type,name,subtype]
 
     Example:
 
     >>> from xplib.Annotation import Bed
     >>> from xplib import DBI
+    >>> from cogent.db.ensembl import Genome
     >>> bed=Bed(["chr13",40975747,40975770])
     >>> ref_allRNA=DBI.init("../../Data/all_RNAs-rRNA_repeat.txt.gz","bed")
     >>> ref_detail=DBI.init("../../Data/Ensembl_mm9.genebed.gz","bed")
-    >>> print annotation(bed,ref_allRNA,ref_detail)
+    >>> genome=Genome('mouse', Release=67, account=None)
+    >>> print annotation(bed,ref_allRNA,ref_detail,genome)
     ["protein_coding","gcnt2","intron"]
+
     """
     flag=0
     typ="non"

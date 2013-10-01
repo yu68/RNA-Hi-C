@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  27 SEP 2013 18:14
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  30 SEP 2013 18:14
 entering extended mode
  %&-line parsing enabled.
 **Stitch-seq-tools.tex
@@ -905,45 +905,74 @@ Chapter 2.
 [5
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 316--317
+Underfull \hbox (badness 10000) in paragraph at lines 332--333
 []\T1/ptm/m/n/10 For ex-am-ple, if the in-put fastq/fasta files are \T1/pcr/m/n
 /10 Rm_dupPE_example.F1.fastq \T1/ptm/m/n/10 and
  []
 
-[6] <workflow_for_recoverFragment.jpg, id=134, 904.3386pt x 540.3387pt>
+[6] <workflow_for_recoverFragment.jpg, id=163, 904.3386pt x 540.3387pt>
 File: workflow_for_recoverFragment.jpg Graphic file (type jpg)
 
 <use workflow_for_recoverFragment.jpg>
 File: workflow_for_recoverFragment.jpg Graphic file (type jpg)
  <use workflow_for_recoverFragment.jpg>
 [7 <./workflow_for_recoverFragment.jpg>]
-<summary.jpg, id=139, 688.974pt x 274.1442pt>
+<summary.jpg, id=168, 688.974pt x 274.1442pt>
 File: summary.jpg Graphic file (type jpg)
  <use summary.jpg>
 File: summary.jpg Graphic file (type jpg)
 
 <use summary.jpg> [8 <./summary.jpg>] [9] [10]
-Chapter 3.
-(./Stitch-seq-tools.ind) [11
+<Find_strong_interaction.jpg, id=184, 755.82375pt x 405.515pt>
+File: Find_strong_interaction.jpg Graphic file (type jpg)
 
-] (./Stitch-seq-tools.aux) ) 
+<use Find_strong_interaction.jpg>
+File: Find_strong_interaction.jpg Graphic file (type jpg)
+ <use Find_strong_interaction.jpg> [11 <./Find_strong_interaction.jpg>] [12]
+Chapter 3.
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 729.
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <9> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 749.
+[13
+
+] [14] [15] [16
+
+]
+Chapter 4.
+[17] [18
+
+] [19
+
+
+] (./Stitch-seq-tools.ind [20
+
+
+] [21
+
+
+]) (./Stitch-seq-tools.aux) ) 
 Here is how much of TeX's memory you used:
- 8063 strings out of 495061
- 109854 string characters out of 1182621
- 196241 words of memory out of 3000000
- 10946 multiletter control sequences out of 15000+50000
- 58448 words of font info for 63 fonts, out of 3000000 for 9000
+ 8173 strings out of 495061
+ 111485 string characters out of 1182621
+ 197042 words of memory out of 3000000
+ 10999 multiletter control sequences out of 15000+50000
+ 72437 words of font info for 83 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
- 45i,11n,49p,460b,383s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.e
-nc}</usr/share/texmf-texlive/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/tex
-mf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-texlive/fonts/
-type1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/
-utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr8a.pfb></usr/sha
-re/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Stitch-seq-tools.pdf (15 pages, 1092152 bytes).
+ 45i,16n,45p,460b,533s stack positions out of 5000i,500n,10000p,200000b,50000s
+pdfTeX warning (dest): name{Hfootnote.1} has been 
+referenced but does not exist, replaced by a fixed one
+
+{/usr/share/texmf-texlive/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-texlive
+/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/c
+ourier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb
+></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/tex
+mf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/
+type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr
+8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Stitch-seq-tools.pdf (25 pages, 1250612 bytes).
 PDF statistics:
- 190 PDF objects out of 1000 (max. 8388607)
- 40 named destinations out of 1000 (max. 500000)
- 103 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 312 PDF objects out of 1000 (max. 8388607)
+ 68 named destinations out of 1000 (max. 500000)
+ 148 words of extra memory for PDF output out of 10000 (max. 10000000)
 

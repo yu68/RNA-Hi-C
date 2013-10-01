@@ -14,7 +14,7 @@
 
 
 \title{Stitch-seq-tools Documentation}
-\date{September 27, 2013}
+\date{September 30, 2013}
 \release{1.0.1}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -161,7 +161,21 @@ Python libraries {[}for python 2.x{]}:
 \item {} 
 The \href{http://www.boost.org/doc/libs/1\_54\_0/libs/python/doc/index.html}{Boost.Python} C++ library
 
+\item {} 
+Other softwares needed:
+
 \end{enumerate}
+\begin{itemize}
+\item {} 
+\href{http://bowtie-bio.sourceforge.net/index.shtml}{Bowtie} (not Bowtie 2)
+
+\item {} 
+\href{http://samtools.sourceforge.net/}{samtools}
+
+\item {} 
+\href{ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/}{NCBI blast+} (use blastn)
+
+\end{itemize}
 
 \begin{notice}{note}{Note:}
 the Annotation feature need the development version of PyCogent (\href{http://pycogent.org/install.html\#to-use-the-development-version-of-pycogent}{install instruction}). Since we need the getTranscriptByStableId function which is described \href{https://github.com/pycogent/pycogent/issues/21}{here}.
@@ -242,6 +256,7 @@ Other functions:
 
 \subsection{Step 1: Remove PCR duplicates.}
 \label{Analysis_pipeline:step-1-remove-pcr-duplicates}\label{Analysis_pipeline:step1}
+\index{remove\_dup\_PE.py}
 Starting from the raw pair-end sequencing data, PCR duplicates should be removed as the first step if both the 10nt random indexes and the remaining sequences are exactly the same for two pairs. It is achieved by \code{remove\_dup\_PE.py}
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -269,6 +284,7 @@ One pair is considered as a PCR duplicate only when the sequences of both two en
 
 \subsection{Step 2: Split library based on barcode.txt.}
 \label{Analysis_pipeline:step-2-split-library-based-on-barcode-txt}\label{Analysis_pipeline:step2}
+\index{split\_library\_pairend.py}
 After removing PCR duplicates, the libraries from different samples are separated based on 4nt barcodes in the middle of random indexes (``RRRBBBBRRR''; R: random, B: barcode). It is implemented by \code{split\_library\_pairend.py}
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -344,11 +360,12 @@ unassigned\_Rm\_dupPE\_example.R1.fastq
 
 \subsection{Step 3: Recover fragments for each library.}
 \label{Analysis_pipeline:step-3-recover-fragments-for-each-library}\label{Analysis_pipeline:step3}
+\index{recoverFragment}
 \textbf{After splitting the libraries, the later steps from here (Step 3-6) are executed parallelly for each sample.}
 
 In this step, we are trying to recover the fragments based on local alignment. The fragments are classifed as several different types as shown in the figure below. The flow chart is also clarified at the top.
 
-\includegraphics{workflow_for_recoverFragment.jpg}
+{\hfill\includegraphics{workflow_for_recoverFragment.jpg}\hfill}
 
 We will use a complied program \code{recoverFragment} to do that
 
@@ -383,9 +400,10 @@ VERSION
 
 \subsection{Step 4: Split partners and classify different types of fragments.}
 \label{Analysis_pipeline:step4}\label{Analysis_pipeline:step-4-split-partners-and-classify-different-types-of-fragments}
+\index{split\_partner.py}
 When we recovered the fragments, the next we are goting to do is to find parts that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: ``IndexOnly'', ``NoLinker'', ``LinkerOnly'', ``BackOnly'', ``FrontOnly'', ``Paired''. (see the figure below).
 
-\includegraphics{summary.jpg}
+{\hfill\includegraphics{summary.jpg}\hfill}
 
 This will be done by \code{split\_partner.py}
 
@@ -443,8 +461,8 @@ For example, if the commend is
 
 \begin{Verbatim}[commandchars=\\\{\}]
 split\_partner.py fragment\_ACCT.fasta evenlong\_ACCTRm\_dupPE\_stitch\_seq\_1.fastq
-evenlong\_ACCTRm\_dupPE\_stitch\_seq\_2.fastq
--o fragment\_ACCT\_detail.txt --linker\_db linker.fa
+    evenlong\_ACCTRm\_dupPE\_stitch\_seq\_2.fastq
+    -o fragment\_ACCT\_detail.txt --linker\_db linker.fa
 \end{Verbatim}
 \begin{description}
 \item[{Then, the output files will be:}] \leavevmode\begin{itemize}
@@ -484,9 +502,211 @@ In the \textbf{second} fragment, two regions can be aligned to linkers, and they
 
 \subsection{Step 5: Align both parts of ``Paired'' fragment to the genome.}
 \label{Analysis_pipeline:step-5-align-both-parts-of-paired-fragment-to-the-genome}\label{Analysis_pipeline:step5}
+\index{Stitch-seq\_Aligner.py}
+In this step, we will use the Paired1* and Paired2* fasta files output from the previous step. The sequences of part1 and part2 are aligned to the mouse genome mm9 with Bowtie and the pairs with both part1 and part2 mappable are selected as output. We also annotate the RNA types of each part in this step.
+All of these are implemented using script \code{Stitch-seq\_Aligner.py}.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+usage: Stitch-seq\_Aligner.py [-h] [-s samtool\_path] [-a ANNOTATION]
+                             [-A DB\_DETAIL]
+                             miRNA\_reads mRNA\_reads bowtie\_path miRNA\_ref
+                             mRNA\_ref
+
+Align miRNA-mRNA pairs for Stitch-seq. print the alignable miRNA-mRNA pairs
+with coordinates
+
+positional arguments:
+  part1\_reads           paired part1 fasta file
+  part2\_reads           paired part2 fasta file
+  bowtie\_path           path for the bowtie program
+  part1\_ref             reference genomic seq for part1
+  part2\_ref             reference genomic seq for part2
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s samtool\_path, --samtool\_path samtool\_path
+                        path for the samtool program
+  -a ANNOTATION, --annotation ANNOTATION
+                        If specified, include the RNA type annotation for each
+                        aligned pair, need to give bed annotation RNA file
+  -A DB\_DETAIL, --annotationGenebed DB\_DETAIL
+                        annotation bed12 file for lincRNA and mRNA with intron
+                        and exon
+
+Library dependency: Bio, pysam, itertools
+\end{Verbatim}
+
+An annotation file for different types of RNAs in mm9 genome (bed format, `all\_RNAs-rRNA\_repeat.txt.gz') was included in Data folder. The annotation bed12 file for lincRNA and mRNA (`Ensembl\_mm9.genebed.gz') was also included in Data folder. One can use the option \code{-a ../Data/all\_RNAs-rRNA\_repeat.txt.gz -A ../Data/Ensembl\_mm9.genebed.gz} for annotation.
+
+Here is a example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+Stitch-seq\_Aligner.py Paired1\_fragment\_ACCT.fasta Paired2\_fragment\_ACCT.fasta
+    \textasciitilde{}/Software/bowtie-0.12.7/bowtie mm9 mm9 -s samtools
+    -a ../Data/all\_RNAs-rRNA\_repeat.txt.gz -A ../Data/Ensembl\_mm9.genebed.gz
+    \textgreater{} ACCT\_fragment\_paired\_align.txt
+\end{Verbatim}
+
+The format for the output file \code{ACCT\_fragment\_paired\_align.txt} will be:
+\begin{quote}
+
+\begin{tabulary}{\linewidth}{|L|L|}
+\hline
+\textsf{\relax 
+Column \footnote{
+column 9-15 are the same as column 1-7 except they are for part2 instead of part1.
+}
+} & \textsf{\relax 
+Description
+}\\
+\hline
+1
+ & 
+chromosome name of part1
+\\
+
+2,3
+ & 
+start/end position of part1
+\\
+
+4
+ & 
+sequence of part1
+\\
+
+5
+ & 
+RNA type for part1
+\\
+
+6
+ & 
+RNA name for part1
+\\
+
+7
+ & 
+RNA subtype \footnote{
+subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), `.' for others
+} for part1
+\\
+
+8
+ & 
+name of the pair
+\\
+\hline\end{tabulary}
+
+\end{quote}
+
 
 \subsection{Step 6: Determine strong interactions.}
 \label{Analysis_pipeline:step6}\label{Analysis_pipeline:step-6-determine-strong-interactions}
+\index{Select\_strongInteraction\_pp.py}
+In this step, we will generate clusters with high coverage separately for all part1 (R1) an part2 (R2) segments. Then based on the pairing information, we count the interactions between clusters from part1 and part2. The strong interactions can be selected by applying a p-value cutoff from hypergeometric test. (See figure below)
+
+{\hfill\includegraphics{Find_strong_interaction.jpg}\hfill}
+
+We will use the script \code{Select\_strongInteraction\_pp.py}, parallel computing are implemented for clustering parallelly on different chromosomes:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+usage: Select\_strongInteraction\_pp.py [-h] -i INPUT [-M MIN\_CLUSTERS]
+                                      [-m MIN\_INTERACTION] [-p P\_VALUE]
+                                      [-o OUTPUT] [-P PARALLEL] [-F]
+
+find strong interactions from paired genomic location data
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        input file which is the output file of Stitch-seq-
+                        Aligner.py
+  -M MIN\_CLUSTERS, --min\_clusterS MIN\_CLUSTERS
+                        minimum number of segments allowed in each cluster,
+                        default:5
+  -m MIN\_INTERACTION, --min\_interaction MIN\_INTERACTION
+                        minimum number of interactions to support a strong
+                        interaction, default:3
+  -p P\_VALUE, --p\_value P\_VALUE
+                        the p-value based on hypergeometric distribution to
+                        call strong interactions, default: 0.05
+  -o OUTPUT, --output OUTPUT
+                        specify output file
+  -P PARALLEL, --parallel PARALLEL
+                        number of workers for parallel computing, default: 5
+  -F, --FDR             Compute FDR if specified
+
+need Scipy for hypergeometric distribution
+\end{Verbatim}
+
+The input of the script is the output of Step 5 (\code{ACCT\_fragment\_paired\_align.txt} in the example). ``annotated\_bed'' class is utilized in this script.
+
+Here is a example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+Select\_strongInteraction.py -i ACCT\_fragment\_paired\_align.txt -o ACCT\_interaction\_clusters.txt
+\end{Verbatim}
+
+The column description for output file \code{ACCT\_interaction\_clusters.txt} is:
+\begin{quote}
+
+\begin{tabulary}{\linewidth}{|L|L|}
+\hline
+\textsf{\relax 
+Column
+} & \textsf{\relax 
+Description
+}\\
+\hline
+1
+ & 
+chromosome name of cluster in part1
+\\
+
+2,3
+ & 
+start/end position of cluster in part1
+\\
+
+4
+ & 
+RNA type for cluster in part1
+\\
+
+5
+ & 
+RNA name for cluster in part1
+\\
+
+6
+ & 
+RNA subtype for cluster in part1
+\\
+
+7
+ & 
+\# of counts for cluster in part1
+\\
+
+8-14
+ & 
+Same as 1-7, but for cluster in part2
+\\
+
+15
+ & 
+\# of interactions between these two clusters
+\\
+
+16
+ & 
+p-value of the hypergeometric testing
+\\
+\hline\end{tabulary}
+
+\end{quote}
+
 
 \section{Other functions}
 \label{Analysis_pipeline:other-functions}
@@ -496,6 +716,257 @@ In the \textbf{second} fragment, two regions can be aligned to linkers, and they
 
 \subsection{Find linker sequences within the library.}
 \label{Analysis_pipeline:find-linker-sequences-within-the-library}\label{Analysis_pipeline:find-linker}
+
+\chapter{Python APIs created for this project}
+\label{Other_api:python-apis-created-for-this-project}\label{Other_api::doc}
+
+\section{Annotation module}
+\label{Other_api:annotation-module}\label{Other_api:module-Annotation}\index{Annotation (module)}
+For the purpose of annotating RNA types for genomic regions.
+\index{overlap() (in module Annotation)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:Annotation.overlap}\pysiglinewithargsret{\code{Annotation.}\bfcode{overlap}}{\emph{bed1}, \emph{bed2}}{}
+This function compares overlap of two Bed object from same chromosome
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{bed1} -- A Bed object from xplib.Annotation.Bed (BAM2X)
+
+\item {} 
+\textbf{bed2} -- A Bed object from xplib.Annotation.Bed (BAM2X)
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+boolean -- True or False
+
+\end{description}\end{quote}
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{xplib.Annotation} \PYG{k+kn}{import} \PYG{n}{Bed}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{bed1}\PYG{o}{=}\PYG{n}{Bed}\PYG{p}{(}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr1}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{l+m+mi}{10000}\PYG{p}{,}\PYG{l+m+mi}{12000}\PYG{p}{]}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{bed2}\PYG{o}{=}\PYG{n}{Bed}\PYG{p}{(}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr1}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{l+m+mi}{9000}\PYG{p}{,}\PYG{l+m+mi}{13000}\PYG{p}{]}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{print} \PYG{n}{overlap}\PYG{p}{(}\PYG{n}{bed1}\PYG{p}{,}\PYG{n}{bed2}\PYG{p}{)}
+\PYG{g+go}{True}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{Subtype() (in module Annotation)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:Annotation.Subtype}\pysiglinewithargsret{\code{Annotation.}\bfcode{Subtype}}{\emph{bed1}, \emph{genebed}}{}
+This function determines intron or exon or utr from a BED12 file.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{bed1} -- A Bed object defined by xplib.Annotation.Bed (BAM2X)
+
+\item {} 
+\textbf{genebed} -- A Bed12 object representing a transcript defined by xplib Annotaton.Bed with information of exon/intron/utr from an BED12 file
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+str -- RNA subtype. ``intron''/''exon''/''utr3''/''utr5''/''.''
+
+\end{description}\end{quote}
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{xplib.Annotation} \PYG{k+kn}{import} \PYG{n}{Bed}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{xplib} \PYG{k+kn}{import} \PYG{n}{DBI}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{bed1}\PYG{o}{=}\PYG{n}{Bed}\PYG{p}{(}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{l+m+mi}{40975747}\PYG{p}{,}\PYG{l+m+mi}{40975770}\PYG{p}{]}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{DBI}\PYG{o}{.}\PYG{n}{init}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{../../Data/Ensembl\PYGZus{}mm9.genebed.gz}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bed}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{genebed}\PYG{o}{=}\PYG{n}{a}\PYG{o}{.}\PYG{n}{query}\PYG{p}{(}\PYG{n}{bed1}\PYG{p}{)}\PYG{o}{.}\PYG{n}{next}\PYG{p}{(}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{print} \PYG{n}{Subtype}\PYG{p}{(}\PYG{n}{bed1}\PYG{p}{,}\PYG{n}{genebed}\PYG{p}{)}
+\PYG{g+go}{\PYGZdq{}Intron\PYGZdq{}}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{annotation() (in module Annotation)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:Annotation.annotation}\pysiglinewithargsret{\code{Annotation.}\bfcode{annotation}}{\emph{bed}, \emph{ref\_allRNA}, \emph{ref\_detail}}{}
+This function is based on {\hyperref[Other_api:Annotation.overlap]{\code{overlap()}}} and {\hyperref[Other_api:Annotation.Subtype]{\code{Subtype()}}} functions to annotate RNA type/name/subtype for any genomic region.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{bed} -- A Bed object defined by xplib.Annotation.Bed (in BAM2X).
+
+\item {} 
+\textbf{ref\_allRNA} -- the DBI.init file (from BAM2X) for bed6 file of all kinds of RNA
+
+\item {} 
+\textbf{ref\_detail} -- the DBI.init file for bed12 file of lincRNA and mRNA with intron, exon, UTR
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+list of str -- {[}type,name,subtype{]}
+
+\end{description}\end{quote}
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{xplib.Annotation} \PYG{k+kn}{import} \PYG{n}{Bed}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{xplib} \PYG{k+kn}{import} \PYG{n}{DBI}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{bed}\PYG{o}{=}\PYG{n}{Bed}\PYG{p}{(}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{l+m+mi}{40975747}\PYG{p}{,}\PYG{l+m+mi}{40975770}\PYG{p}{]}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{ref\PYGZus{}allRNA}\PYG{o}{=}\PYG{n}{DBI}\PYG{o}{.}\PYG{n}{init}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{../../Data/all\PYGZus{}RNAs\PYGZhy{}rRNA\PYGZus{}repeat.txt.gz}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bed}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{ref\PYGZus{}detail}\PYG{o}{=}\PYG{n}{DBI}\PYG{o}{.}\PYG{n}{init}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{../../Data/Ensembl\PYGZus{}mm9.genebed.gz}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bed}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{print} \PYG{n}{annotation}\PYG{p}{(}\PYG{n}{bed}\PYG{p}{,}\PYG{n}{ref\PYGZus{}allRNA}\PYG{p}{,}\PYG{n}{ref\PYGZus{}detail}\PYG{p}{)}
+\PYG{g+go}{[\PYGZdq{}protein\PYGZus{}coding\PYGZdq{},\PYGZdq{}gcnt2\PYGZdq{},\PYGZdq{}intron\PYGZdq{}]}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+
+
+\section{``annotated\_bed'' data class}
+\label{Other_api:annotated-bed-data-class}\index{annotated\_bed (class in data\_structure)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:data_structure.annotated_bed}\pysiglinewithargsret{\strong{class }\code{data\_structure.}\bfcode{annotated\_bed}}{\emph{x=None}, \emph{**kwargs}}{}
+To store, compare, cluster for the genomic regions with RNA annotation information. Utlized in the program {\hyperref[Analysis_pipeline:step6]{\emph{Select\_stronginteraction\_pp.py}}}
+\index{Cluster() (data\_structure.annotated\_bed method)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:data_structure.annotated_bed.Cluster}\pysiglinewithargsret{\bfcode{Cluster}}{\emph{c}}{}
+Store cluster information of self object
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{c} -- cluster index
+
+\end{description}\end{quote}
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{chr}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{start}\PYG{o}{=}\PYG{l+m+mi}{40975747}\PYG{p}{,}\PYG{n}{end}\PYG{o}{=}\PYG{l+m+mi}{40975770}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{.}\PYG{n}{Cluster}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{print} \PYG{n}{a}\PYG{o}{.}\PYG{n}{cluster}
+\PYG{g+go}{3}
+\end{Verbatim}
+
+\begin{notice}{note}{Note:}
+a.cluster will be the count information when a become a cluster object in {\hyperref[Analysis_pipeline:step6]{\emph{Select\_stronginteraction\_pp.py}}}
+\end{notice}
+
+\end{fulllineitems}
+
+\index{Update() (data\_structure.annotated\_bed method)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:data_structure.annotated_bed.Update}\pysiglinewithargsret{\bfcode{Update}}{\emph{S}, \emph{E}}{}
+Update the upper and lower bound of the cluster after adding segments using Union-Find.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{S} -- start loc of the newly added genomic segment
+
+\item {} 
+\textbf{E} -- end loc of the newly added genomic segment
+
+\end{itemize}
+
+\end{description}\end{quote}
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{chr}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{start}\PYG{o}{=}\PYG{l+m+mi}{40975747}\PYG{p}{,}\PYG{n}{end}\PYG{o}{=}\PYG{l+m+mi}{40975770}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{.}\PYG{n}{Update}\PYG{p}{(}\PYG{l+m+mi}{40975700}\PYG{p}{,}\PYG{l+m+mi}{40975800}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{print} \PYG{n}{a}\PYG{o}{.}\PYG{n}{start}\PYG{p}{,} \PYG{n}{a}\PYG{o}{.}\PYG{n}{end}
+\PYG{g+go}{40975700 40975800}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{\_\_init\_\_() (data\_structure.annotated\_bed method)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:data_structure.annotated_bed.__init__}\pysiglinewithargsret{\bfcode{\_\_init\_\_}}{\emph{x=None}, \emph{**kwargs}}{}
+Initiation example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n+nb}{str}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13  40975747        40975770        ATTAAG...TGA    protein\PYGZus{}coding  gcnt2   intron}\PYG{l+s}{\PYGZdq{}}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{str}\PYG{p}{)}
+\PYG{g+go}{or}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{chr}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{start}\PYG{o}{=}\PYG{l+m+mi}{40975747}\PYG{p}{,}\PYG{n}{end}\PYG{o}{=}\PYG{l+m+mi}{40975770}\PYG{p}{,}\PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{protein\PYGZus{}coding}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{p}{)}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{\_\_lt\_\_() (data\_structure.annotated\_bed method)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:data_structure.annotated_bed.__lt__}\pysiglinewithargsret{\bfcode{\_\_lt\_\_}}{\emph{other}}{}
+Compare two objects self and other when they are not \textbf{overlapped}
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{other} -- another \code{annotated\_bed} object
+
+\item[{Returns}] \leavevmode
+boolean -- ``None'' if overlapped.
+
+\end{description}\end{quote}
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{chr}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{start}\PYG{o}{=}\PYG{l+m+mi}{40975747}\PYG{p}{,}\PYG{n}{end}\PYG{o}{=}\PYG{l+m+mi}{40975770}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{b}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{chr}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{start}\PYG{o}{=}\PYG{l+m+mi}{10003212}\PYG{p}{,}\PYG{n}{end}\PYG{o}{=}\PYG{l+m+mi}{10005400}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{print} \PYG{n}{a}\PYG{o}{\PYGZgt{}}\PYG{n}{b}
+\PYG{g+go}{False}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{\_\_str\_\_() (data\_structure.annotated\_bed method)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:data_structure.annotated_bed.__str__}\pysiglinewithargsret{\bfcode{\_\_str\_\_}}{}{}
+Use print function to output the cluster information (chr, start, end, type, name, subtype,cluster)
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n+nb}{str}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13  40975747        40975770        ATTAAG...TGA    protein\PYGZus{}coding  gcnt2   intron}\PYG{l+s}{\PYGZdq{}}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{str}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{.}\PYG{n}{Cluster}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{.}\PYG{n}{Update}\PYG{p}{(}\PYG{l+m+mi}{40975700}\PYG{p}{,}\PYG{l+m+mi}{40975800}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{print} \PYG{n}{a}
+\PYG{g+go}{\PYGZdq{}chr13  40975700        40975800        protein\PYGZus{}coding  gcnt2   intron  3\PYGZdq{}}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{overlap() (data\_structure.annotated\_bed method)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:data_structure.annotated_bed.overlap}\pysiglinewithargsret{\bfcode{overlap}}{\emph{other}}{}
+Find overlap between regions
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{other} -- another \code{annotated\_bed} object
+
+\item[{Returns}] \leavevmode
+boolean
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
 
 \chapter{Indices and tables}
 \label{index:indices-and-tables}\begin{itemize}
@@ -511,6 +982,12 @@ In the \textbf{second} fragment, two regions can be aligned to linkers, and they
 \end{itemize}
 
 
+\renewcommand{\indexname}{Python Module Index}
+\begin{theindex}
+\def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
+\bigletter{a}
+\item {\texttt{Annotation}}, \pageref{Other_api:module-Annotation}
+\end{theindex}
 
 \renewcommand{\indexname}{Index}
 \printindex

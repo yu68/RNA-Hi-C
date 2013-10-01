@@ -3,8 +3,8 @@ For the purpose of annotating RNA types for genomic regions.
 """
 
 
-from xplib import DBI
-from cogent.db.ensembl import HostAccount, Genome
+#from xplib import DBI
+#from cogent.db.ensembl import HostAccount, Genome
 
 def overlap(bed1,bed2):
     """

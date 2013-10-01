@@ -14,8 +14,13 @@
 \contentsline {subsection}{\numberline {2.2.3}Step 3: Recover fragments for each library.}{7}{subsection.2.2.3}
 \contentsline {subsection}{\numberline {2.2.4}Step 4: Split partners and classify different types of fragments.}{8}{subsection.2.2.4}
 \contentsline {subsection}{\numberline {2.2.5}Step 5: Align both parts of ``Paired'' fragment to the genome.}{10}{subsection.2.2.5}
-\contentsline {subsection}{\numberline {2.2.6}Step 6: Determine strong interactions.}{10}{subsection.2.2.6}
-\contentsline {section}{\numberline {2.3}Other functions}{10}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Determine the RNA types of different parts within fragments.}{10}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Find linker sequences within the library.}{10}{subsection.2.3.2}
-\contentsline {chapter}{\numberline {3}Indices and tables}{11}{chapter.3}
+\contentsline {subsection}{\numberline {2.2.6}Step 6: Determine strong interactions.}{11}{subsection.2.2.6}
+\contentsline {section}{\numberline {2.3}Other functions}{12}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Determine the RNA types of different parts within fragments.}{12}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Find linker sequences within the library.}{12}{subsection.2.3.2}
+\contentsline {chapter}{\numberline {3}Python APIs created for this project}{13}{chapter.3}
+\contentsline {section}{\numberline {3.1}Annotation module}{13}{section.3.1}
+\contentsline {section}{\numberline {3.2}``annotated\_bed'' data class}{14}{section.3.2}
+\contentsline {chapter}{\numberline {4}Indices and tables}{17}{chapter.4}
+\contentsline {chapter}{Python Module Index}{19}{section*.13}
+\contentsline {chapter}{Index}{21}{section*.14}

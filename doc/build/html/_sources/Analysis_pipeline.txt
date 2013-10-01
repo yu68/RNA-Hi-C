@@ -27,6 +27,7 @@ Pipeline
 
 Step 1: Remove PCR duplicates.
 ------------------------------
+.. index:: remove_dup_PE.py
 
 Starting from the raw pair-end sequencing data, PCR duplicates should be removed as the first step if both the 10nt random indexes and the remaining sequences are exactly the same for two pairs. It is achieved by ``remove_dup_PE.py`` ::
 
@@ -54,6 +55,8 @@ The program will generate two fastq/fasta files after removind PCR duplicates an
 
 Step 2: Split library based on barcode.txt.
 -------------------------------------------
+.. index:: split_library_pairend.py
+
 After removing PCR duplicates, the libraries from different samples are separated based on 4nt barcodes in the middle of random indexes ("RRRBBBBRRR"; R: random, B: barcode). It is implemented by ``split_library_pairend.py`` ::
 
   usage: split_library_pairend.py [-h] [-f | -q] [-v] [-b BARCODE]
@@ -109,6 +112,7 @@ For example, if the input fastq/fasta files are ``Rm_dupPE_example.F1.fastq`` an
 
 Step 3: Recover fragments for each library.
 -------------------------------------------
+.. index:: recoverFragment
 
 **After splitting the libraries, the later steps from here (Step 3-6) are executed parallelly for each sample.** 
  
@@ -152,6 +156,8 @@ We will use a complied program ``recoverFragment`` to do that ::
 
 Step 4: Split partners and classify different types of fragments.
 -----------------------------------------------------------------
+.. index:: split_partner.py
+
 When we recovered the fragments, the next we are goting to do is to find parts that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: "IndexOnly", "NoLinker", "LinkerOnly", "BackOnly", "FrontOnly", "Paired". (see the figure below).
 
 .. image:: summary.jpg
@@ -233,6 +239,7 @@ In the **second** fragment, two regions can be aligned to linkers, and they are 
 
 Step 5: Align both parts of "Paired" fragment to the genome.
 ------------------------------------------------------------
+.. index:: Stitch-seq_Aligner.py
 
 In this step, we will use the Paired1* and Paired2* fasta files output from the previous step. The sequences of part1 and part2 are aligned to the mouse genome mm9 with Bowtie and the pairs with both part1 and part2 mappable are selected as output. We also annotate the RNA types of each part in this step.
 All of these are implemented using script ``Stitch-seq_Aligner.py``. ::
@@ -295,6 +302,7 @@ The format for the output file ``ACCT_fragment_paired_align.txt`` will be:
 
 Step 6: Determine strong interactions.
 --------------------------------------
+.. index:: Select_strongInteraction_pp.py
 
 In this step, we will generate clusters with high coverage separately for all part1 (R1) an part2 (R2) segments. Then based on the pairing information, we count the interactions between clusters from part1 and part2. The strong interactions can be selected by applying a p-value cutoff from hypergeometric test. (See figure below)
 
@@ -351,7 +359,7 @@ The column description for output file ``ACCT_interaction_clusters.txt`` is:
     7            # of counts for cluster in part1
    8-14          Same as 1-7, but for cluster in part2
     15           # of interactions between these two clusters
-    16           p-value of the hypergeometrix testing
+    16           p-value of the hypergeometric testing
   =========  =====================================
 
 

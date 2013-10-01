@@ -60,17 +60,6 @@ def bowtie_align(b_path,read,ref,s_path):
     os.system("rm "+bam)
     return align
 
-def annotate(bed,dbi):
-    flag=0
-    typ="other"
-    name="."
-    for hit in dbi.query(bed):
-        if flag==0:
-            name=hit.id.split(".")[1]
-            typ=hit.id.split(".")[0]
-            flag=1
-    return [name,typ]
-
 
 def Main():
     args=ParseArg()

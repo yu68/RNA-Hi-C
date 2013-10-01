@@ -25,6 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Stitch-seq-tools 1.0.1 documentation" href="index.html" />
+    <link rel="next" title="Python APIs created for this purpose" href="Other_api.html" />
     <link rel="prev" title="Stitch-seq-tools 1.0 documentation" href="Stitch-seq-tools.html" /> 
   </head>
   <body>
@@ -34,6 +35,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Other_api.html" title="Python APIs created for this purpose"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="Stitch-seq-tools.html" title="Stitch-seq-tools 1.0 documentation"
              accesskey="P">previous</a> |</li>
@@ -70,7 +77,7 @@ This bioinformatic pipeline is trying to obtain the strong interactions from raw
 <h2>Pipeline<a class="headerlink" href="#pipeline" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="step-1-remove-pcr-duplicates">
 <span id="step1"></span><h3>Step 1: Remove PCR duplicates.<a class="headerlink" href="#step-1-remove-pcr-duplicates" title="Permalink to this headline">¶</a></h3>
-<p>Starting from the raw pair-end sequencing data, PCR duplicates should be removed as the first step if both the 10nt random indexes and the remaining sequences are exactly the same for two pairs. It is achieved by <tt class="docutils literal"><span class="pre">remove_dup_PE.py</span></tt></p>
+<p id="index-0">Starting from the raw pair-end sequencing data, PCR duplicates should be removed as the first step if both the 10nt random indexes and the remaining sequences are exactly the same for two pairs. It is achieved by <tt class="docutils literal"><span class="pre">remove_dup_PE.py</span></tt></p>
 <div class="highlight-python"><pre>usage: remove_dup_PE.py [-h] reads1 reads2
 
 Remove duplicated reads which have same sequences for both forward and reverse
@@ -93,7 +100,7 @@ Library dependency: Bio, itertools</pre>
 </div>
 <div class="section" id="step-2-split-library-based-on-barcode-txt">
 <span id="step2"></span><h3>Step 2: Split library based on barcode.txt.<a class="headerlink" href="#step-2-split-library-based-on-barcode-txt" title="Permalink to this headline">¶</a></h3>
-<p>After removing PCR duplicates, the libraries from different samples are separated based on 4nt barcodes in the middle of random indexes (&#8220;RRRBBBBRRR&#8221;; R: random, B: barcode). It is implemented by <tt class="docutils literal"><span class="pre">split_library_pairend.py</span></tt></p>
+<p id="index-1">After removing PCR duplicates, the libraries from different samples are separated based on 4nt barcodes in the middle of random indexes (&#8220;RRRBBBBRRR&#8221;; R: random, B: barcode). It is implemented by <tt class="docutils literal"><span class="pre">split_library_pairend.py</span></tt></p>
 <div class="highlight-python"><pre>usage: split_library_pairend.py [-h] [-f | -q] [-v] [-b BARCODE]
                                 [-r RANGE [RANGE ...]] [-t] [-m MAX_SCORE]
                                 input1 input2
@@ -145,7 +152,7 @@ Library dependency: Bio</pre>
 </div>
 <div class="section" id="step-3-recover-fragments-for-each-library">
 <span id="step3"></span><h3>Step 3: Recover fragments for each library.<a class="headerlink" href="#step-3-recover-fragments-for-each-library" title="Permalink to this headline">¶</a></h3>
-<p><strong>After splitting the libraries, the later steps from here (Step 3-6) are executed parallelly for each sample.</strong></p>
+<p id="index-2"><strong>After splitting the libraries, the later steps from here (Step 3-6) are executed parallelly for each sample.</strong></p>
 <p>In this step, we are trying to recover the fragments based on local alignment. The fragments are classifed as several different types as shown in the figure below. The flow chart is also clarified at the top.</p>
 <a class="reference internal image-reference" href="_images/workflow_for_recoverFragment.jpg"><img alt="_images/workflow_for_recoverFragment.jpg" class="align-center" src="_images/workflow_for_recoverFragment.jpg" style="width: 600px;" /></a>
 <p>We will use a complied program <tt class="docutils literal"><span class="pre">recoverFragment</span></tt> to do that</p>
@@ -178,7 +185,7 @@ VERSION
 </div>
 <div class="section" id="step-4-split-partners-and-classify-different-types-of-fragments">
 <span id="step4"></span><h3>Step 4: Split partners and classify different types of fragments.<a class="headerlink" href="#step-4-split-partners-and-classify-different-types-of-fragments" title="Permalink to this headline">¶</a></h3>
-<p>When we recovered the fragments, the next we are goting to do is to find parts that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: &#8220;IndexOnly&#8221;, &#8220;NoLinker&#8221;, &#8220;LinkerOnly&#8221;, &#8220;BackOnly&#8221;, &#8220;FrontOnly&#8221;, &#8220;Paired&#8221;. (see the figure below).</p>
+<p id="index-3">When we recovered the fragments, the next we are goting to do is to find parts that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: &#8220;IndexOnly&#8221;, &#8220;NoLinker&#8221;, &#8220;LinkerOnly&#8221;, &#8220;BackOnly&#8221;, &#8220;FrontOnly&#8221;, &#8220;Paired&#8221;. (see the figure below).</p>
 <a class="reference internal image-reference" href="_images/summary.jpg"><img alt="_images/summary.jpg" class="align-center" src="_images/summary.jpg" style="width: 600px;" /></a>
 <p>This will be done by <tt class="docutils literal"><span class="pre">split_partner.py</span></tt></p>
 <div class="highlight-python"><pre>usage: split_partner.py [-h] [-e EVALUE] [--linker_db LINKER_DB]
@@ -251,7 +258,7 @@ HWI-ST1001:238:H0NYEADXX:1:1101:4620:2609       L1:2 28,46;47,79     Paired  L1;
 </div>
 <div class="section" id="step-5-align-both-parts-of-paired-fragment-to-the-genome">
 <span id="step5"></span><h3>Step 5: Align both parts of &#8220;Paired&#8221; fragment to the genome.<a class="headerlink" href="#step-5-align-both-parts-of-paired-fragment-to-the-genome" title="Permalink to this headline">¶</a></h3>
-<p>In this step, we will use the Paired1* and Paired2* fasta files output from the previous step. The sequences of part1 and part2 are aligned to the mouse genome mm9 with Bowtie and the pairs with both part1 and part2 mappable are selected as output. We also annotate the RNA types of each part in this step.
+<p id="index-4">In this step, we will use the Paired1* and Paired2* fasta files output from the previous step. The sequences of part1 and part2 are aligned to the mouse genome mm9 with Bowtie and the pairs with both part1 and part2 mappable are selected as output. We also annotate the RNA types of each part in this step.
 All of these are implemented using script <tt class="docutils literal"><span class="pre">Stitch-seq_Aligner.py</span></tt>.</p>
 <div class="highlight-python"><pre>usage: Stitch-seq_Aligner.py [-h] [-s samtool_path] [-a ANNOTATION]
                              [-A DB_DETAIL]
@@ -340,7 +347,7 @@ Library dependency: Bio, pysam, itertools</pre>
 </div>
 <div class="section" id="step-6-determine-strong-interactions">
 <span id="step6"></span><h3>Step 6: Determine strong interactions.<a class="headerlink" href="#step-6-determine-strong-interactions" title="Permalink to this headline">¶</a></h3>
-<p>In this step, we will generate clusters with high coverage separately for all part1 (R1) an part2 (R2) segments. Then based on the pairing information, we count the interactions between clusters from part1 and part2. The strong interactions can be selected by applying a p-value cutoff from hypergeometric test. (See figure below)</p>
+<p id="index-5">In this step, we will generate clusters with high coverage separately for all part1 (R1) an part2 (R2) segments. Then based on the pairing information, we count the interactions between clusters from part1 and part2. The strong interactions can be selected by applying a p-value cutoff from hypergeometric test. (See figure below)</p>
 <a class="reference internal image-reference" href="_images/Find_strong_interaction.jpg"><img alt="_images/Find_strong_interaction.jpg" class="align-center" src="_images/Find_strong_interaction.jpg" style="width: 600px;" /></a>
 <p>We will use the script <tt class="docutils literal"><span class="pre">Select_strongInteraction_pp.py</span></tt>, parallel computing are implemented for clustering parallelly on different chromosomes:</p>
 <div class="highlight-python"><pre>usage: Select_strongInteraction_pp.py [-h] -i INPUT [-M MIN_CLUSTERS]
@@ -413,7 +420,7 @@ need Scipy for hypergeometric distribution</pre>
 <td># of interactions between these two clusters</td>
 </tr>
 <tr class="row-even"><td>16</td>
-<td>p-value of the hypergeometrix testing</td>
+<td>p-value of the hypergeometric testing</td>
 </tr>
 </tbody>
 </table>
@@ -462,6 +469,9 @@ need Scipy for hypergeometric distribution</pre>
   <h4>Previous topic</h4>
   <p class="topless"><a href="Stitch-seq-tools.html"
                         title="previous chapter">Stitch-seq-tools 1.0 documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Other_api.html"
+                        title="next chapter">Python APIs created for this purpose</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/Analysis_pipeline.txt"
@@ -490,6 +500,12 @@ need Scipy for hypergeometric distribution</pre>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Other_api.html" title="Python APIs created for this purpose"
+             >next</a> |</li>
         <li class="right" >
           <a href="Stitch-seq-tools.html" title="Stitch-seq-tools 1.0 documentation"
              >previous</a> |</li>

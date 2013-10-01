@@ -8,10 +8,12 @@ from scipy.stats import hypergeom
 from random import shuffle
 import pp
 import copy
+from data_structure import *
 
 from UnionFind import *
 # include functions UF, find, merge, connected, count
 
+'''
 class annotated_bed():
     def __init__(self,x=None,**kwargs):
         if type(x)==type("str"):
@@ -44,7 +46,7 @@ class annotated_bed():
     def __str__(self):
         return "\t".join(str(f) for f in [self.chr,self.start,self.end,self.type,self.name,self.subtype,self.cluster])
     # self.cluster become number of regions within cluster for cluster_pool object
-
+'''
 
 
 ##########################################################

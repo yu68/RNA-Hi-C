@@ -9,14 +9,14 @@ Welcome to Stitch-seq-tools's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    Stitch-seq-tools
    
-.. toctree::
-   :maxdepth: 2
-   
    Analysis_pipeline
+
+   Other_api.rst
+
 
 Indices and tables
 ==================

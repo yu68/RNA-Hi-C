@@ -19,6 +19,11 @@ step 1: Install the dependent prerequisites:
 
 2. The `Boost.Python <http://www.boost.org/doc/libs/1_54_0/libs/python/doc/index.html>`_ C++ library
 
+3. Other softwares needed:
+
+  * `Bowtie <http://bowtie-bio.sourceforge.net/index.shtml>`_ (not Bowtie 2)
+  * `samtools <http://samtools.sourceforge.net/>`_
+  * `NCBI blast+ <ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/>`_ (use blastn)
 
 .. note::
 

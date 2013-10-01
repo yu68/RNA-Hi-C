@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python APIs created for this purpose &mdash; Stitch-seq-tools 1.0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Stitch-seq-tools 1.0.1 documentation" href="index.html" />
+    <link rel="prev" title="Analysis pipeline" href="Analysis_pipeline.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Analysis_pipeline.html" title="Analysis pipeline"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Stitch-seq-tools 1.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="python-apis-created-for-this-purpose">
+<h1>Python APIs created for this purpose<a class="headerlink" href="#python-apis-created-for-this-purpose" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-Annotation">
+<span id="annotation-module"></span><h2>Annotation module<a class="headerlink" href="#module-Annotation" title="Permalink to this headline">¶</a></h2>
+<p>For the purpose of annotating RNA types for genomic regions.</p>
+<dl class="function">
+<dt id="Annotation.Subtype">
+<tt class="descclassname">Annotation.</tt><tt class="descname">Subtype</tt><big>(</big><em>bed1</em>, <em>genebed</em><big>)</big><a class="headerlink" href="#Annotation.Subtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function determines intron or exon or utr from a BED12 file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bed1</strong> &#8211; A Bed object defined by xplib.Annotation.Bed (BAM2X)</li>
+<li><strong>genebed</strong> &#8211; A Bed12 object representing a transcript defined by xplib Annotaton.Bed with information of exon/intron/utr from an BED12 file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">str &#8211; RNA subtype. &#8220;intron&#8221;/&#8221;exon&#8221;/&#8221;utr3&#8221;/&#8221;utr5&#8221;/&#8221;.&#8221;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib.Annotation</span> <span class="kn">import</span> <span class="n">Bed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib</span> <span class="kn">import</span> <span class="n">DBI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bed1</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="mi">40975747</span><span class="p">,</span><span class="mi">40975770</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/Ensembl_mm9.genebed.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">genebed</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">bed1</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">Subtype</span><span class="p">(</span><span class="n">bed1</span><span class="p">,</span><span class="n">genebed</span><span class="p">)</span>
+<span class="go">&quot;Intron&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="Annotation.annotation">
+<tt class="descclassname">Annotation.</tt><tt class="descname">annotation</tt><big>(</big><em>bed</em>, <em>ref_allRNA</em>, <em>ref_detail</em><big>)</big><a class="headerlink" href="#Annotation.annotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is based on <a class="reference internal" href="#Annotation.overlap" title="Annotation.overlap"><tt class="xref py py-func docutils literal"><span class="pre">overlap()</span></tt></a> and <a class="reference internal" href="#Annotation.Subtype" title="Annotation.Subtype"><tt class="xref py py-func docutils literal"><span class="pre">Subtype()</span></tt></a> functions to annotate RNA type/name/subtype for any genomic region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bed</strong> &#8211; A Bed object defined by xplib.Annotation.Bed (in BAM2X).</li>
+<li><strong>ref_allRNA</strong> &#8211; the DBI.init file (from BAM2X) for bed6 file of all kinds of RNA</li>
+<li><strong>ref_detail</strong> &#8211; the DBI.init file for bed12 file of lincRNA and mRNA with intron, exon, UTR</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of str &#8211; [type,name,subtype]</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib.Annotation</span> <span class="kn">import</span> <span class="n">Bed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib</span> <span class="kn">import</span> <span class="n">DBI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bed</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="mi">40975747</span><span class="p">,</span><span class="mi">40975770</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ref_allRNA</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/all_RNAs-rRNA_repeat.txt.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ref_detail</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/Ensembl_mm9.genebed.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">annotation</span><span class="p">(</span><span class="n">bed</span><span class="p">,</span><span class="n">ref_allRNA</span><span class="p">,</span><span class="n">ref_detail</span><span class="p">)</span>
+<span class="go">[&quot;protein_coding&quot;,&quot;gcnt2&quot;,&quot;intron&quot;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="Annotation.overlap">
+<tt class="descclassname">Annotation.</tt><tt class="descname">overlap</tt><big>(</big><em>bed1</em>, <em>bed2</em><big>)</big><a class="headerlink" href="#Annotation.overlap" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function compares overlap of two Bed object from same chromosome</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bed1</strong> &#8211; A Bed object from xplib.Annotation.Bed (BAM2X)</li>
+<li><strong>bed2</strong> &#8211; A Bed object from xplib.Annotation.Bed (BAM2X)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">boolean &#8211; True or False</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib.Annotation</span> <span class="kn">import</span> <span class="n">Bed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bed1</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr1&quot;</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">12000</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bed2</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr1&quot;</span><span class="p">,</span><span class="mi">9000</span><span class="p">,</span><span class="mi">13000</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">overlap</span><span class="p">(</span><span class="n">bed1</span><span class="p">,</span><span class="n">bed2</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="annotated-bed-data-class">
+<h2>&#8220;annotated_bed&#8221; data class<a class="headerlink" href="#annotated-bed-data-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="data_structure.annotated_bed">
+<em class="property">class </em><tt class="descclassname">data_structure.</tt><tt class="descname">annotated_bed</tt><big>(</big><em>x=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#data_structure.annotated_bed" title="Permalink to this definition">¶</a></dt>
+<dd><p>To store, compare, cluster for the genomic regions with RNA annotation information. Utlized in the program <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Select_stronginteraction_pp.py</em></a></p>
+<dl class="method">
+<dt id="data_structure.annotated_bed.Cluster">
+<tt class="descname">Cluster</tt><big>(</big><em>c</em><big>)</big><a class="headerlink" href="#data_structure.annotated_bed.Cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store cluster information of self object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>c</strong> &#8211; cluster index</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">40975747</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">40975770</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">Cluster</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span><span class="o">.</span><span class="n">cluster</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">a.cluster will be the count information when a become a cluster object in <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Select_stronginteraction_pp.py</em></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structure.annotated_bed.Update">
+<tt class="descname">Update</tt><big>(</big><em>S</em>, <em>E</em><big>)</big><a class="headerlink" href="#data_structure.annotated_bed.Update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the upper and lower bound of the cluster after adding segments using Union-Find.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>S</strong> &#8211; start loc of the newly added genomic segment</li>
+<li><strong>E</strong> &#8211; end loc of the newly added genomic segment</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">40975747</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">40975770</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">Update</span><span class="p">(</span><span class="mi">40975700</span><span class="p">,</span><span class="mi">40975800</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">end</span>
+<span class="go">40975700 40975800</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structure.annotated_bed.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>x=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#data_structure.annotated_bed.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiation example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="o">=</span><span class="s">&quot;chr13  40975747        40975770        ATTAAG...TGA    protein_coding  gcnt2   intron&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="go">or</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">40975747</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">40975770</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="s">&quot;protein_coding&quot;</span><span class="p">,)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structure.annotated_bed.__lt__">
+<tt class="descname">__lt__</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#data_structure.annotated_bed.__lt__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compare two objects self and other when they are not <strong>overlapped</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; another <tt class="xref py py-class docutils literal"><span class="pre">annotated_bed</span></tt> object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean &#8211; &#8220;None&#8221; if overlapped.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">40975747</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">40975770</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">10003212</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">10005400</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span><span class="o">&gt;</span><span class="n">b</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structure.annotated_bed.__str__">
+<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#data_structure.annotated_bed.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use print function to output the cluster information (chr, start, end, type, name, subtype,cluster)</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="o">=</span><span class="s">&quot;chr13  40975747        40975770        ATTAAG...TGA    protein_coding  gcnt2   intron&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">Cluster</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">Update</span><span class="p">(</span><span class="mi">40975700</span><span class="p">,</span><span class="mi">40975800</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span>
+<span class="go">&quot;chr13  40975700        40975800        protein_coding  gcnt2   intron  3&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structure.annotated_bed.overlap">
+<tt class="descname">overlap</tt><big>(</big><em>other</em><big>)</big><a class="headerlink" href="#data_structure.annotated_bed.overlap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find overlap between regions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; another <tt class="xref py py-class docutils literal"><span class="pre">annotated_bed</span></tt> object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python APIs created for this purpose</a><ul>
+<li><a class="reference internal" href="#module-Annotation">Annotation module</a></li>
+<li><a class="reference internal" href="#annotated-bed-data-class">&#8220;annotated_bed&#8221; data class</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Analysis_pipeline.html"
+                        title="previous chapter">Analysis pipeline</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Other_api.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Analysis_pipeline.html" title="Analysis pipeline"
+             >previous</a> |</li>
+        <li><a href="index.html">Stitch-seq-tools 1.0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Pengfei Yu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+  </body>
+</html>

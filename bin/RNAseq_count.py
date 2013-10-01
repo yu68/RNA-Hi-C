@@ -68,8 +68,8 @@ def Main():
 
     Input=open(args.input,'r')
     lines=Input.read().split("\n")
-    db="../Data/all_RNAs-rRNA_repeat.txt.gz"
-    db_detail="../Data/Ensembl_mm9.genebed.gz"
+    db="/data/yu68/git/stitch-seq/Data/all_RNAs-rRNA_repeat.txt.gz"
+    db_detail="/data/yu68/git/stitch-seq/Data/Ensembl_mm9.genebed.gz"
     dbi_all=DBI.init(db,"bed") # the DBI init file for bed6 file of all kinds of RNA
     dbi_detail=DBI.init(db_detail,"bed") # the DBI init file for bed12 file of lincRNA and mRNA with intron, exon, UTR
     genome=Genome('mouse', Release=67, account=None)

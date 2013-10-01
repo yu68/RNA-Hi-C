@@ -71,7 +71,7 @@ def annotation(bed,ref_allRNA,ref_detail,genome):
     :param bed: A Bed object defined by xplib.Annotation.Bed (in BAM2X).
     :param ref_allRNA: the DBI.init object (from BAM2X) for bed6 file of all kinds of RNA
     :param ref_detail: the DBI.init object for bed12 file of lincRNA and mRNA with intron, exon, UTR
-    :param genome: the Genome object from PyCogent.
+    :param genome: the `Genome object from PyCogent <http://pycogent.org/cookbook/accessing_databases.html#get-genomic-features>`_.
     :returns: list of str -- [type,name,subtype]
 
     Example:

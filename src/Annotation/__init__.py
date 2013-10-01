@@ -63,12 +63,8 @@ def Subtype(bed1,genebed):
                 break
     return subtype
 
-    
-mouse=Genome('mouse', Release=67, account=None)
 
-
-
-def annotation(bed,ref_allRNA,ref_detail):
+def annotation(bed,ref_allRNA,ref_detail,genome):
     """
     This function is based on :func:`overlap` and :func:`Subtype` functions to annotate RNA type/name/subtype for any genomic region.
 
@@ -87,7 +83,6 @@ def annotation(bed,ref_allRNA,ref_detail):
     >>> print annotation(bed,ref_allRNA,ref_detail)
     ["protein_coding","gcnt2","intron"]
     """
-    global mouse
     flag=0
     typ="non"
     name="."
@@ -106,13 +101,13 @@ def annotation(bed,ref_allRNA,ref_detail):
                 if subtype!="intron":
                     flag=1
         try:
-            tran=mouse.getTranscriptByStableId(StableId=tempname).Gene
+            tran=genome.getTranscriptByStableId(StableId=tempname).Gene
             typ=tran.BioType
             name=tran.Symbol
         except: pass
     if typ=="non":
         try:
-            repeats=mouse.getFeatures(CoordName=bed.chr[3:], Start=bed.start, End=bed.stop, feature_types='repeat')
+            repeats=genome.getFeatures(CoordName=bed.chr[3:], Start=bed.start, End=bed.stop, feature_types='repeat')
             for r in repeats:
                if r.RepeatClass!='dust':
                    typ=r.RepeatType

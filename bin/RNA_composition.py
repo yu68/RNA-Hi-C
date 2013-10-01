@@ -5,6 +5,7 @@ import argparse,sys
 from xplib import TableIO
 from xplib import DBI
 from Annotation import *
+from cogent.db.ensembl import HostAccount, Genome
 
 def ParseArg():
     p=argparse.ArgumentParser(description = "RNA composition for aligned sample using ensembl annotation",epilog="Library dependency: bam2x")
@@ -33,8 +34,9 @@ def Main():
     count={}
     dbi1=DBI.init(args.db,"bed") # the DBI init file for bed6 file of all kinds of RNA
     dbi2=DBI.init(args.db_detail,"bed") # the DBI init file for bed12 file of lincRNA and mRNA with intron, exon, UTR
+    genome=Genome('mouse', Release=67, account=None)
     for bed in TableIO.parse(args.input,args.format):
-        [typ,name,subtype]=annotation(bed,dbi1,dbi2)
+        [typ,name,subtype]=annotation(bed,dbi1,dbi2,genome)
         if count.has_key(typ):
             count[typ]+=1
         else:

@@ -1,12 +1,12 @@
 ====================================
-Python APIs created for this purpose
+Python APIs created for this project
 ====================================
 
 Annotation module
 =================
 
 .. automodule:: Annotation 
-   :members:
+   :members: overlap, Subtype, annotation
 
 "annotated_bed" data class
 ==========================

@@ -135,6 +135,7 @@ html_theme = 'default'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_style = 'labibi.css'
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -184,6 +185,15 @@ html_static_path = ['_static']
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'Stitch-seq-toolsdoc'
+
+##
+# Various settings to pass to templates:
+
+html_context = {
+   "disqus_shortname" : 'stitchseqtools',
+   "github_base_account" : 'yu68',
+   "github_project" : 'stitch-seq',
+}
 
 
 # -- Options for LaTeX output ---------------------------------------------

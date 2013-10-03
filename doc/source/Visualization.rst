@@ -44,10 +44,18 @@ We will use the script "Plot_Circos.R" for this purpose. ::
 Example of result graph
 -----------------------
 
+Example code: ::
+  
+  Rscript Plot_Circos.R GGCG_interaction_clusters.txt 
+  sort_Paired1_fragment_GGCG.bam sort_Paired2_fragment_GGCG.bam 
+  -b 100000 -o Interactome_GGCG.pdf
+
 .. image:: Interactome_GGCG.JPG
 
 Explanation:
+.. raw:: html
 
- * The purple track right inside chromatin cytoband ideogram is the coverage of part1 (the first genomic region linked by linker sequences)  of this sample. 
- * The light blue track next is the coverage of part2 (the other genomix region connected by linkers). 
- * The inner links are the strong interactions after removing rRNA. colors represent the confidence of the interaction (the ones with lower p-values are stronger)
+ <ul>
+ <li>The <font color="#763a7a"> purple </font>track right inside chromatin cytoband ideogram is the coverage of part1 (the first genomic region linked by linker sequences)  of this sample.</li> 
+ <li>The <font color="#0288ad"> light blue </font>track next is the coverage of part2 (the other genomix region connected by linkers). </li>
+ <li>The <font color="red">inner </font>links are the strong interactions after removing rRNA. colors represent the confidence of the interaction (the ones with lower p-values are stronger) </li>

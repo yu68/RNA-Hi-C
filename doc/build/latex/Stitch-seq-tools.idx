@@ -4,14 +4,16 @@
 \indexentry{split\_partner.py|hyperpage}{8}
 \indexentry{Stitch-seq\_Aligner.py|hyperpage}{10}
 \indexentry{Select\_strongInteraction\_pp.py|hyperpage}{11}
-\indexentry{Annotation (module)|hyperpage}{13}
-\indexentry{overlap() (in module Annotation)|hyperpage}{13}
-\indexentry{Subtype() (in module Annotation)|hyperpage}{13}
-\indexentry{annotation() (in module Annotation)|hyperpage}{13}
-\indexentry{annotated\_bed (class in data\_structure)|hyperpage}{14}
-\indexentry{Cluster() (data\_structure.annotated\_bed method)|hyperpage}{14}
-\indexentry{Update() (data\_structure.annotated\_bed method)|hyperpage}{14}
-\indexentry{\_\_init\_\_() (data\_structure.annotated\_bed method)|hyperpage}{14}
-\indexentry{\_\_lt\_\_() (data\_structure.annotated\_bed method)|hyperpage}{15}
-\indexentry{\_\_str\_\_() (data\_structure.annotated\_bed method)|hyperpage}{15}
-\indexentry{overlap() (data\_structure.annotated\_bed method)|hyperpage}{15}
+\indexentry{Plot\_Circos.R|hyperpage}{12}
+\indexentry{Plot\_Circos.R|hyperpage}{15}
+\indexentry{Annotation (module)|hyperpage}{17}
+\indexentry{overlap() (in module Annotation)|hyperpage}{17}
+\indexentry{Subtype() (in module Annotation)|hyperpage}{17}
+\indexentry{annotation() (in module Annotation)|hyperpage}{17}
+\indexentry{annotated\_bed (class in data\_structure)|hyperpage}{18}
+\indexentry{Cluster() (data\_structure.annotated\_bed method)|hyperpage}{18}
+\indexentry{Update() (data\_structure.annotated\_bed method)|hyperpage}{18}
+\indexentry{\_\_init\_\_() (data\_structure.annotated\_bed method)|hyperpage}{19}
+\indexentry{\_\_lt\_\_() (data\_structure.annotated\_bed method)|hyperpage}{19}
+\indexentry{\_\_str\_\_() (data\_structure.annotated\_bed method)|hyperpage}{19}
+\indexentry{overlap() (data\_structure.annotated\_bed method)|hyperpage}{19}

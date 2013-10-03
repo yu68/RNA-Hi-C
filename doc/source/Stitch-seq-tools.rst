@@ -10,6 +10,7 @@ Overview
 Below is a illustration for the experimental design of this new technology
 
 .. image:: exp.jpg
+  :align: center
 
 
 Installation

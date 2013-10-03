@@ -2,24 +2,28 @@
 \def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
 
   \bigletter {Symbols}
-  \item \_\_init\_\_() (data\_structure.annotated\_bed method), \hyperpage{14}
-  \item \_\_lt\_\_() (data\_structure.annotated\_bed method), \hyperpage{15}
-  \item \_\_str\_\_() (data\_structure.annotated\_bed method), \hyperpage{15}
+  \item \_\_init\_\_() (data\_structure.annotated\_bed method), \hyperpage{19}
+  \item \_\_lt\_\_() (data\_structure.annotated\_bed method), \hyperpage{19}
+  \item \_\_str\_\_() (data\_structure.annotated\_bed method), \hyperpage{19}
 
   \indexspace
   \bigletter A
-  \item annotated\_bed (class in data\_structure), \hyperpage{14}
-  \item Annotation (module), \hyperpage{13}
-  \item annotation() (in module Annotation), \hyperpage{13}
+  \item annotated\_bed (class in data\_structure), \hyperpage{18}
+  \item Annotation (module), \hyperpage{17}
+  \item annotation() (in module Annotation), \hyperpage{17}
 
   \indexspace
   \bigletter C
-  \item Cluster() (data\_structure.annotated\_bed method), \hyperpage{14}
+  \item Cluster() (data\_structure.annotated\_bed method), \hyperpage{18}
 
   \indexspace
   \bigletter O
-  \item overlap() (data\_structure.annotated\_bed method), \hyperpage{15}
-  \item overlap() (in module Annotation), \hyperpage{13}
+  \item overlap() (data\_structure.annotated\_bed method), \hyperpage{19}
+  \item overlap() (in module Annotation), \hyperpage{17}
+
+  \indexspace
+  \bigletter P
+  \item Plot\_Circos.R, \hyperpage{12}, \hyperpage{15}
 
   \indexspace
   \bigletter R
@@ -32,10 +36,10 @@
   \item split\_library\_pairend.py, \hyperpage{6}
   \item split\_partner.py, \hyperpage{8}
   \item Stitch-seq\_Aligner.py, \hyperpage{10}
-  \item Subtype() (in module Annotation), \hyperpage{13}
+  \item Subtype() (in module Annotation), \hyperpage{17}
 
   \indexspace
   \bigletter U
-  \item Update() (data\_structure.annotated\_bed method), \hyperpage{14}
+  \item Update() (data\_structure.annotated\_bed method), \hyperpage{18}
 
 \end{theindex}

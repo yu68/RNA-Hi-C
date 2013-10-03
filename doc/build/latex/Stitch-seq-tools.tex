@@ -14,7 +14,7 @@
 
 
 \title{Stitch-seq-tools Documentation}
-\date{September 30, 2013}
+\date{October 03, 2013}
 \release{1.0.1}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -127,6 +127,15 @@ Contents:
 \chapter{Stitch-seq-tools 1.0 documentation}
 \label{Stitch-seq-tools:stitch-seq-tools-version-documentation}\label{Stitch-seq-tools::doc}\label{Stitch-seq-tools:welcome-to-stitch-seq-tools-s-documentation}
 
+\section{Overview}
+\label{Stitch-seq-tools:overview}
+\textbf{Stitch-seq-tools} is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome.
+
+Below is a illustration for the experimental design of this new technology
+
+\includegraphics{exp.jpg}
+
+
 \section{Installation}
 \label{Stitch-seq-tools:installation}
 
@@ -202,11 +211,6 @@ export PATH="\$PATH:\$Location/bin"
 \end{Verbatim}
 
 
-\section{Overview}
-\label{Stitch-seq-tools:overview}
-\textbf{Stitch-seq-tools} is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome.
-
-
 \section{Support}
 \label{Stitch-seq-tools:support}
 For issues related to the use of Stitch-seq-tools, or if you want to \textbf{report a bug or request a feature}, please contact Pengfei Yu \textless{}p3yu at ucsd dot edu\textgreater{}
@@ -237,6 +241,9 @@ This bioinformatic pipeline is trying to obtain the strong interactions from raw
 
 \item {} 
 {\hyperref[Analysis_pipeline:step6]{\emph{Step 6: Determine strong interactions.}}}
+
+\item {} 
+{\hyperref[Analysis_pipeline:step7]{\emph{Step 7: Visualization of interactions and coverages.}}}
 
 \end{itemize}
 
@@ -708,6 +715,72 @@ p-value of the hypergeometric testing
 \end{quote}
 
 
+\subsection{Step 7: Visualization of interactions and coverages.}
+\label{Analysis_pipeline:step7}\label{Analysis_pipeline:step-7-visualization-of-interactions-and-coverages}
+
+\subsubsection{Visualization of RNA-RNA interactome}
+\label{Visualization::doc}\label{Visualization:visualization-of-rna-rna-interactome}
+
+\paragraph{Prerequirement}
+\label{Visualization:prerequirement}
+This program is powered by \href{http://cran.r-project.org/web/packages/RCircos/index.html}{RCircos}.
+
+Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):
+\begin{itemize}
+\item {} 
+argparse, RCircos, biovizBase, rtracklayer
+
+\end{itemize}
+
+The program also require a python script ``bam2tab.py'' (already in /bin/ folder) to call coverage from \href{https://github.com/nimezhu/bam2x/blob/master/scripts/bed2tab.py}{BAM2X}
+
+
+\paragraph{Run the program to generate visualization}
+\label{Visualization:run-the-program-to-generate-visualization}
+\index{Plot\_Circos.R}
+We will use the script ``Plot\_Circos.R'' for this purpose.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+usage: Plot\_Circos.R [-h] [-g GENOME] [-b BIN] [-o OUTPUT]
+                   interaction part1 part2
+
+positional arguments:
+  interaction           the interaction file,[required]
+  part1                 aligned BAM file for part1,[required]
+  part2                 aligned BAM file for part2,[required]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -g GENOME, --genome GENOME
+                        genome information, choice: mm9/mm10/hg19 et.al.,
+                        [default: mm9]
+  -b BIN, --bin BIN     window size for the bins for coverage calling, [default: 100000.0]
+  -o OUTPUT, --output OUTPUT
+                        output pdf file name, [default: Interactome\_view.pdf]
+\end{Verbatim}
+
+\begin{notice}{note}{Note:}
+part1, part2 BAM files are the ones generated from {\hyperref[Analysis_pipeline:step5]{\emph{Step5:Stitch-seq\_Aligner.py}}} of the pipeline; Interaction txt file is the output of {\hyperref[Analysis_pipeline:step6]{\emph{Step6:Select\_strongInteraction\_pp.py}}}.
+\end{notice}
+
+
+\paragraph{Example of result graph}
+\label{Visualization:example-of-result-graph}
+Example code:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+Rscript Plot\_Circos.R GGCG\_interaction\_clusters.txt
+sort\_Paired1\_fragment\_GGCG.bam sort\_Paired2\_fragment\_GGCG.bam
+-b 100000 -o Interactome\_GGCG.pdf
+\end{Verbatim}
+
+Result figure:
+
+\includegraphics{Interactome_GGCG.JPG}
+
+Explanation:
+
+
 \section{Other functions}
 \label{Analysis_pipeline:other-functions}
 
@@ -716,6 +789,69 @@ p-value of the hypergeometric testing
 
 \subsection{Find linker sequences within the library.}
 \label{Analysis_pipeline:find-linker-sequences-within-the-library}\label{Analysis_pipeline:find-linker}
+
+\chapter{Visualization of RNA-RNA interactome}
+\label{Visualization::doc}\label{Visualization:visualization-of-rna-rna-interactome}
+
+\section{Prerequirement}
+\label{Visualization:prerequirement}
+This program is powered by \href{http://cran.r-project.org/web/packages/RCircos/index.html}{RCircos}.
+
+Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):
+\begin{itemize}
+\item {} 
+argparse, RCircos, biovizBase, rtracklayer
+
+\end{itemize}
+
+The program also require a python script ``bam2tab.py'' (already in /bin/ folder) to call coverage from \href{https://github.com/nimezhu/bam2x/blob/master/scripts/bed2tab.py}{BAM2X}
+
+
+\section{Run the program to generate visualization}
+\label{Visualization:run-the-program-to-generate-visualization}
+\index{Plot\_Circos.R}
+We will use the script ``Plot\_Circos.R'' for this purpose.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+usage: Plot\_Circos.R [-h] [-g GENOME] [-b BIN] [-o OUTPUT]
+                   interaction part1 part2
+
+positional arguments:
+  interaction           the interaction file,[required]
+  part1                 aligned BAM file for part1,[required]
+  part2                 aligned BAM file for part2,[required]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -g GENOME, --genome GENOME
+                        genome information, choice: mm9/mm10/hg19 et.al.,
+                        [default: mm9]
+  -b BIN, --bin BIN     window size for the bins for coverage calling, [default: 100000.0]
+  -o OUTPUT, --output OUTPUT
+                        output pdf file name, [default: Interactome\_view.pdf]
+\end{Verbatim}
+
+\begin{notice}{note}{Note:}
+part1, part2 BAM files are the ones generated from {\hyperref[Analysis_pipeline:step5]{\emph{Step5:Stitch-seq\_Aligner.py}}} of the pipeline; Interaction txt file is the output of {\hyperref[Analysis_pipeline:step6]{\emph{Step6:Select\_strongInteraction\_pp.py}}}.
+\end{notice}
+
+
+\section{Example of result graph}
+\label{Visualization:example-of-result-graph}
+Example code:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+Rscript Plot\_Circos.R GGCG\_interaction\_clusters.txt
+sort\_Paired1\_fragment\_GGCG.bam sort\_Paired2\_fragment\_GGCG.bam
+-b 100000 -o Interactome\_GGCG.pdf
+\end{Verbatim}
+
+Result figure:
+
+\includegraphics{Interactome_GGCG.JPG}
+
+Explanation:
+
 
 \chapter{Python APIs created for this project}
 \label{Other_api:python-apis-created-for-this-project}\label{Other_api::doc}
@@ -792,7 +928,7 @@ Example:
 \index{annotation() (in module Annotation)}
 
 \begin{fulllineitems}
-\phantomsection\label{Other_api:Annotation.annotation}\pysiglinewithargsret{\code{Annotation.}\bfcode{annotation}}{\emph{bed}, \emph{ref\_allRNA}, \emph{ref\_detail}}{}
+\phantomsection\label{Other_api:Annotation.annotation}\pysiglinewithargsret{\code{Annotation.}\bfcode{annotation}}{\emph{bed}, \emph{ref\_allRNA}, \emph{ref\_detail}, \emph{genome}}{}
 This function is based on {\hyperref[Other_api:Annotation.overlap]{\code{overlap()}}} and {\hyperref[Other_api:Annotation.Subtype]{\code{Subtype()}}} functions to annotate RNA type/name/subtype for any genomic region.
 \begin{quote}\begin{description}
 \item[{Parameters}] \leavevmode\begin{itemize}
@@ -800,10 +936,13 @@ This function is based on {\hyperref[Other_api:Annotation.overlap]{\code{overlap
 \textbf{bed} -- A Bed object defined by xplib.Annotation.Bed (in BAM2X).
 
 \item {} 
-\textbf{ref\_allRNA} -- the DBI.init file (from BAM2X) for bed6 file of all kinds of RNA
+\textbf{ref\_allRNA} -- the DBI.init object (from BAM2X) for bed6 file of all kinds of RNA
 
 \item {} 
-\textbf{ref\_detail} -- the DBI.init file for bed12 file of lincRNA and mRNA with intron, exon, UTR
+\textbf{ref\_detail} -- the DBI.init object for bed12 file of lincRNA and mRNA with intron, exon, UTR
+
+\item {} 
+\textbf{genome} -- the \href{http://pycogent.org/cookbook/accessing\_databases.html\#get-genomic-features}{Genome object from PyCogent}.
 
 \end{itemize}
 
@@ -817,10 +956,12 @@ Example:
 \begin{Verbatim}[commandchars=\\\{\}]
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{xplib.Annotation} \PYG{k+kn}{import} \PYG{n}{Bed}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{xplib} \PYG{k+kn}{import} \PYG{n}{DBI}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{cogent.db.ensembl} \PYG{k+kn}{import} \PYG{n}{Genome}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{bed}\PYG{o}{=}\PYG{n}{Bed}\PYG{p}{(}\PYG{p}{[}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{l+m+mi}{40975747}\PYG{p}{,}\PYG{l+m+mi}{40975770}\PYG{p}{]}\PYG{p}{)}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{ref\PYGZus{}allRNA}\PYG{o}{=}\PYG{n}{DBI}\PYG{o}{.}\PYG{n}{init}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{../../Data/all\PYGZus{}RNAs\PYGZhy{}rRNA\PYGZus{}repeat.txt.gz}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bed}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{ref\PYGZus{}detail}\PYG{o}{=}\PYG{n}{DBI}\PYG{o}{.}\PYG{n}{init}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{../../Data/Ensembl\PYGZus{}mm9.genebed.gz}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{bed}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
-\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{print} \PYG{n}{annotation}\PYG{p}{(}\PYG{n}{bed}\PYG{p}{,}\PYG{n}{ref\PYGZus{}allRNA}\PYG{p}{,}\PYG{n}{ref\PYGZus{}detail}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{genome}\PYG{o}{=}\PYG{n}{Genome}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}}\PYG{l+s}{mouse}\PYG{l+s}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{Release}\PYG{o}{=}\PYG{l+m+mi}{67}\PYG{p}{,} \PYG{n}{account}\PYG{o}{=}\PYG{n+nb+bp}{None}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{print} \PYG{n}{annotation}\PYG{p}{(}\PYG{n}{bed}\PYG{p}{,}\PYG{n}{ref\PYGZus{}allRNA}\PYG{p}{,}\PYG{n}{ref\PYGZus{}detail}\PYG{p}{,}\PYG{n}{genome}\PYG{p}{)}
 \PYG{g+go}{[\PYGZdq{}protein\PYGZus{}coding\PYGZdq{},\PYGZdq{}gcnt2\PYGZdq{},\PYGZdq{}intron\PYGZdq{}]}
 \end{Verbatim}
 

@@ -101,6 +101,50 @@ RCircos.Histogram.Plot<-function(hist.data, data.col, track.num, side, col)
   
 }
 
+
+# modified colorRampPalette function to include alpha channel as well
+# from http://r.789695.n4.nabble.com/Alpha-channel-in-colorRamp-and-colorRampPalette-td4672229.html
+colorRampPalette <- function (colors, ...) { 
+  ramp <- colorRamp(colors, ...) 
+  function(n) { 
+    x <- ramp(seq.int(0, 1, length.out = n)) 
+    rgb(x[, 1], x[, 2], x[, 3], x[, 4], maxColorValue = 255) 
+  } 
+} 
+
+colorRamp <- function (colors, bias = 1, space = c("rgb", "Lab"), interpolate = c("linear", "spline")) { 
+  if (bias <= 0) 
+    stop("'bias' must be positive") 
+  colors <- t(col2rgb(colors, alpha=T)/255) 
+  space <- match.arg(space) 
+  interpolate <- match.arg(interpolate) 
+  if (space == "Lab") { 
+    colors <- convertColor(colors, from = "sRGB", to = "Lab") 
+  } 
+  interpolate <- switch(interpolate, linear = stats::approxfun, spline = stats::splinefun) 
+  if ((nc <- nrow(colors)) == 1L) { 
+    colors <- colors[c(1L, 1L), ] 
+    nc <- 2L 
+  } 
+  x <- seq.int(0, 1, length.out = nc)^bias 
+  palette <- c(interpolate(x, colors[, 1]), interpolate(x, colors[, 2]), interpolate(x, colors[, 3]), interpolate(x, colors[, 4])) 
+  roundcolor <- function(rgb) pmax(pmin(rgb, 1), 0) 
+  if (space == "Lab") { 
+    function(x) { 
+      roundcolor(convertColor(cbind(palette[[1L]](x), palette[[2L]](x), 
+                                    palette[[3L]](x), palette[[4L]](x)), from = "Lab", to = "sRGB")) * 
+        255 
+    } 
+  } 
+  else { 
+    function(x) { 
+      roundcolor(cbind(palette[[1L]](x), palette[[2L]](x), 
+                       palette[[3L]](x), palette[[4L]](x))) * 255 
+    } 
+  } 
+} 
+
+
 #  modified link plot function change color scheme (color_list is the vector of p-values for all interactions)
 RCircos.Link.Plot<-function(link.data, track.num, color_list)
 {
@@ -124,7 +168,7 @@ RCircos.Link.Plot<-function(link.data, track.num, color_list)
   base.positions <- RCircos.Pos*start;
   
   data.points <- matrix(rep(0, nrow(link.data)*2), ncol=2);
-  colfunc <- colorRampPalette(c("white", "red"));
+  colfunc <- colorRampPalette(c("#FFFFFF11", "#FF0000FF"));
   line.colors <- colfunc(12)[-2*log10(color_list+1e-6)]
   for(a.link in 1:nrow(link.data))
   {

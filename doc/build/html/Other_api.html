@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Stitch-seq-tools 1.0.1 documentation" href="index.html" />
-    <link rel="prev" title="Analysis pipeline" href="Analysis_pipeline.html" />
+    <link rel="prev" title="Visualization of RNA-RNA interactome" href="Visualization.html" />
 
 
 <script src="_static/labibi.js"></script>
@@ -47,7 +47,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="Analysis_pipeline.html" title="Analysis pipeline"
+          <a href="Visualization.html" title="Visualization of RNA-RNA interactome"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Stitch-seq-tools 1.0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -73,8 +73,9 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>bed1</strong> &#8211; A Bed object from xplib.Annotation.Bed (BAM2X)</li>
-<li><strong>bed2</strong> &#8211; A Bed object from xplib.Annotation.Bed (BAM2X)</li>
+<li><strong>bed1</strong> &#8211; A Bed object from <a class="reference external" href="http://bam2xwiki.appspot.com/bed">xplib.Annotation.Bed</a> (BAM2X)</li>
+<li><strong>bed2</strong> &#8211; <p>A Bed object from <a class="reference external" href="http://bam2xwiki.appspot.com/bed">xplib.Annotation.Bed</a> (BAM2X)</p>
+</li>
 </ul>
 </td>
 </tr>
@@ -102,7 +103,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>bed1</strong> &#8211; A Bed object defined by xplib.Annotation.Bed (BAM2X)</li>
+<li><strong>bed1</strong> &#8211; <p>A Bed object defined by <a class="reference external" href="http://bam2xwiki.appspot.com/bed">xplib.Annotation.Bed</a> (BAM2X)</p>
+</li>
 <li><strong>genebed</strong> &#8211; A Bed12 object representing a transcript defined by xplib Annotaton.Bed with information of exon/intron/utr from an BED12 file</li>
 </ul>
 </td>
@@ -119,7 +121,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/Ensembl_mm9.genebed.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">genebed</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">bed1</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">Subtype</span><span class="p">(</span><span class="n">bed1</span><span class="p">,</span><span class="n">genebed</span><span class="p">)</span>
-<span class="go">&quot;Intron&quot;</span>
+<span class="go">&quot;intron&quot;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -133,9 +135,11 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>bed</strong> &#8211; A Bed object defined by xplib.Annotation.Bed (in BAM2X).</li>
-<li><strong>ref_allRNA</strong> &#8211; the DBI.init object (from BAM2X) for bed6 file of all kinds of RNA</li>
-<li><strong>ref_detail</strong> &#8211; the DBI.init object for bed12 file of lincRNA and mRNA with intron, exon, UTR</li>
+<li><strong>bed</strong> &#8211; <p>A Bed object defined by <a class="reference external" href="http://bam2xwiki.appspot.com/bed">xplib.Annotation.Bed</a> (in BAM2X).</p>
+</li>
+<li><strong>ref_allRNA</strong> &#8211; the <a class="reference external" href="http://bam2xwiki.appspot.com/DBI">DBI.init</a> object (from BAM2X) for bed6 file of all kinds of RNA</li>
+<li><strong>ref_detail</strong> &#8211; <p>the <a class="reference external" href="http://bam2xwiki.appspot.com/DBI">DBI.init</a> object for bed12 file of lincRNA and mRNA with intron, exon, UTR</p>
+</li>
 <li><strong>genome</strong> &#8211; the <a class="reference external" href="http://pycogent.org/cookbook/accessing_databases.html#get-genomic-features">Genome object from PyCogent</a>.</li>
 </ul>
 </td>
@@ -324,8 +328,8 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Analysis_pipeline.html"
-                        title="previous chapter">Analysis pipeline</a></p>
+  <p class="topless"><a href="Visualization.html"
+                        title="previous chapter">Visualization of RNA-RNA interactome</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/Other_api.txt"
@@ -358,7 +362,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="Analysis_pipeline.html" title="Analysis pipeline"
+          <a href="Visualization.html" title="Visualization of RNA-RNA interactome"
              >previous</a> |</li>
         <li><a href="index.html">Stitch-seq-tools 1.0.1 documentation</a> &raquo;</li> 
       </ul>

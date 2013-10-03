@@ -10,8 +10,8 @@ def overlap(bed1,bed2):
     """
     This function compares overlap of two Bed object from same chromosome
     
-    :param bed1: A Bed object from xplib.Annotation.Bed (BAM2X)
-    :param bed2: A Bed object from xplib.Annotation.Bed (BAM2X)
+    :param bed1: A Bed object from `xplib.Annotation.Bed <http://bam2xwiki.appspot.com/bed>`_ (BAM2X)
+    :param bed2: A Bed object from `xplib.Annotation.Bed <http://bam2xwiki.appspot.com/bed>`_ (BAM2X)
     :returns: boolean -- True or False
 
     Example:
@@ -32,7 +32,7 @@ def Subtype(bed1,genebed):
     """
     This function determines intron or exon or utr from a BED12 file.
     
-    :param bed1: A Bed object defined by xplib.Annotation.Bed (BAM2X)
+    :param bed1: A Bed object defined by `xplib.Annotation.Bed <http://bam2xwiki.appspot.com/bed>`_ (BAM2X)
     :param genebed: A Bed12 object representing a transcript defined by xplib Annotaton.Bed with information of exon/intron/utr from an BED12 file
     :returns: str -- RNA subtype. "intron"/"exon"/"utr3"/"utr5"/"."
 
@@ -44,7 +44,7 @@ def Subtype(bed1,genebed):
     >>> a=DBI.init("../../Data/Ensembl_mm9.genebed.gz","bed")
     >>> genebed=a.query(bed1).next()
     >>> print Subtype(bed1,genebed)
-    "Intron"
+    "intron"
         
     """
     subtype="intron"
@@ -68,9 +68,9 @@ def annotation(bed,ref_allRNA,ref_detail,genome):
     """
     This function is based on :func:`overlap` and :func:`Subtype` functions to annotate RNA type/name/subtype for any genomic region.
 
-    :param bed: A Bed object defined by xplib.Annotation.Bed (in BAM2X).
-    :param ref_allRNA: the DBI.init object (from BAM2X) for bed6 file of all kinds of RNA
-    :param ref_detail: the DBI.init object for bed12 file of lincRNA and mRNA with intron, exon, UTR
+    :param bed: A Bed object defined by `xplib.Annotation.Bed <http://bam2xwiki.appspot.com/bed>`_ (in BAM2X).
+    :param ref_allRNA: the `DBI.init <http://bam2xwiki.appspot.com/DBI>`_ object (from BAM2X) for bed6 file of all kinds of RNA
+    :param ref_detail: the `DBI.init <http://bam2xwiki.appspot.com/DBI>`_ object for bed12 file of lincRNA and mRNA with intron, exon, UTR
     :param genome: the `Genome object from PyCogent <http://pycogent.org/cookbook/accessing_databases.html#get-genomic-features>`_.
     :returns: list of str -- [type,name,subtype]
 

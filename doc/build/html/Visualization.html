@@ -26,7 +26,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="Stitch-seq-tools 1.0.1 documentation" href="index.html" />
     <link rel="next" title="Python APIs created for this project" href="Other_api.html" />
-    <link rel="prev" title="Visualization of RNA-RNA interactome" href="" />
+    <link rel="prev" title="Analysis pipeline" href="Analysis_pipeline.html" />
 
 
 <script src="_static/labibi.js"></script>
@@ -51,7 +51,7 @@
           <a href="Other_api.html" title="Python APIs created for this project"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="#" title="Visualization of RNA-RNA interactome"
+          <a href="Analysis_pipeline.html" title="Analysis pipeline"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Stitch-seq-tools 1.0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -64,7 +64,7 @@
             
   
   <div class="section" id="visualization-of-rna-rna-interactome">
-<h1>Visualization of RNA-RNA interactome<a class="headerlink" href="#visualization-of-rna-rna-interactome" title="Permalink to this headline">¶</a></h1>
+<span id="visualization"></span><h1>Visualization of RNA-RNA interactome<a class="headerlink" href="#visualization-of-rna-rna-interactome" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="prerequirement">
 <h2>Prerequirement<a class="headerlink" href="#prerequirement" title="Permalink to this headline">¶</a></h2>
 <p>This program is powered by <a class="reference external" href="http://cran.r-project.org/web/packages/RCircos/index.html">RCircos</a>.</p>
@@ -105,15 +105,15 @@ optional arguments:
 <h2>Example of result graph<a class="headerlink" href="#example-of-result-graph" title="Permalink to this headline">¶</a></h2>
 <p>Example code:</p>
 <div class="highlight-python"><pre>Rscript Plot_Circos.R GGCG_interaction_clusters.txt
-sort_Paired1_fragment_GGCG.bam sort_Paired2_fragment_GGCG.bam
--b 100000 -o Interactome_GGCG.pdf</pre>
+  sort_Paired1_fragment_GGCG.bam sort_Paired2_fragment_GGCG.bam
+  -b 100000 -o Interactome_GGCG.pdf</pre>
 </div>
 <p>Result figure:</p>
 <img alt="_images/Interactome_GGCG.JPG" src="_images/Interactome_GGCG.JPG" />
 <p>Explanation:</p>
 <ul>
-<li>The <font color="#763a7a"> purple </font>track right inside chromatin cytoband ideogram is the coverage of part1 (the first genomic region linked by linker sequences)  of this sample.</li>
-<li>The <font color="#0288ad"> light blue </font>track next is the coverage of part2 (the other genomix region connected by linkers). </li>
+<li>The <font color="#763a7a"> purple </font>track right inside chromatin cytoband ideogram is the coverage of part1 (the first genomic regions connected with linker sequences)  of this sample.</li>
+<li>The <font color="#0288ad"> light blue </font>track next is the coverage of part2 (the other genomic regions connected with linkers). </li>
 <li>The <font color="red">inner </font>links are the strong interactions after removing rRNA. colors represent the confidence of the interaction (the ones with lower p-values are stronger) </li>
 </ul></div>
 </div>
@@ -156,8 +156,8 @@ sort_Paired1_fragment_GGCG.bam sort_Paired2_fragment_GGCG.bam
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href=""
-                        title="previous chapter">Visualization of RNA-RNA interactome</a></p>
+  <p class="topless"><a href="Analysis_pipeline.html"
+                        title="previous chapter">Analysis pipeline</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="Other_api.html"
                         title="next chapter">Python APIs created for this project</a></p>
@@ -196,7 +196,7 @@ sort_Paired1_fragment_GGCG.bam sort_Paired2_fragment_GGCG.bam
           <a href="Other_api.html" title="Python APIs created for this project"
              >next</a> |</li>
         <li class="right" >
-          <a href="#" title="Visualization of RNA-RNA interactome"
+          <a href="Analysis_pipeline.html" title="Analysis pipeline"
              >previous</a> |</li>
         <li><a href="index.html">Stitch-seq-tools 1.0.1 documentation</a> &raquo;</li> 
       </ul>

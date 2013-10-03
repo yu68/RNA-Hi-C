@@ -368,11 +368,7 @@ The column description for output file ``ACCT_interaction_clusters.txt`` is:
 Step 7: Visualization of interactions and coverages.
 -----------------------------
 
-.. toctree::
-   :maxdepth: 1
-
-   Visualization.rst
-
+:ref:`Visualization`
 
 Other functions
 ===============

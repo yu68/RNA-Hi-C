@@ -1,3 +1,5 @@
+.. _Visualization:
+
 ====================================
 Visualization of RNA-RNA interactome
 ====================================
@@ -47,8 +49,8 @@ Example of result graph
 Example code: ::
   
   Rscript Plot_Circos.R GGCG_interaction_clusters.txt 
-  sort_Paired1_fragment_GGCG.bam sort_Paired2_fragment_GGCG.bam 
-  -b 100000 -o Interactome_GGCG.pdf
+    sort_Paired1_fragment_GGCG.bam sort_Paired2_fragment_GGCG.bam 
+    -b 100000 -o Interactome_GGCG.pdf
 
 Result figure:
 

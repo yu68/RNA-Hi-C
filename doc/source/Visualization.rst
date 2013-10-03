@@ -59,7 +59,7 @@ Explanation:
 .. raw:: html
 
  <ul>
- <li>The <font color="#763a7a"> purple </font>track right inside chromatin cytoband ideogram is the coverage of part1 (the first genomic region linked by linker sequences)  of this sample.</li> 
- <li>The <font color="#0288ad"> light blue </font>track next is the coverage of part2 (the other genomix region connected by linkers). </li>
+ <li>The <font color="#763a7a"> purple </font>track right inside chromatin cytoband ideogram is the coverage of part1 (the first genomic regions connected with linker sequences)  of this sample.</li> 
+ <li>The <font color="#0288ad"> light blue </font>track next is the coverage of part2 (the other genomic regions connected with linkers). </li>
  <li>The <font color="red">inner </font>links are the strong interactions after removing rRNA. colors represent the confidence of the interaction (the ones with lower p-values are stronger) </li>
  </ul>

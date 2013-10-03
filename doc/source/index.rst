@@ -15,6 +15,8 @@ Contents:
    
    Analysis_pipeline
 
+   Visualization.rst
+
    Other_api.rst
 
 

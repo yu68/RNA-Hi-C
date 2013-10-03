@@ -14,6 +14,7 @@ This bioinformatic pipeline is trying to obtain the strong interactions from raw
 * :ref:`Step4`
 * :ref:`Step5`
 * :ref:`Step6`
+* :ref:`Step7`
 
 Other functions:
 
@@ -362,6 +363,15 @@ The column description for output file ``ACCT_interaction_clusters.txt`` is:
     16           p-value of the hypergeometric testing
   =========  =====================================
 
+.. _step7:
+
+Step 7: Visualization of interactions and coverages.
+-----------------------------
+
+.. toctree::
+   :maxdepth: 1
+
+   Visualization.rst
 
 
 Other functions

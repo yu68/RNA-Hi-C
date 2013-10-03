@@ -2,6 +2,16 @@
 Stitch-seq-tools |version| documentation
 ========================================
 
+Overview
+========
+
+**Stitch-seq-tools** is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome.
+
+Below is a illustration for the experimental design of this new technology
+
+.. image:: exp.jpg
+
+
 Installation
 ============
 
@@ -47,10 +57,6 @@ Add these lines into your ~/.bash_profile or ~/.profile ::
   export PYTHONPATH="$Location/src:$PYTHONPATH"
   export PATH="$PATH:$Location/bin"
 
-Overview
-========
-
-**Stitch-seq-tools** is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome.
 
 Support
 =======

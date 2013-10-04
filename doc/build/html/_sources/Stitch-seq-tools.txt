@@ -1,6 +1,6 @@
-========================================
+============================================
 RNA-Stitch-seq-tools |version| documentation
-========================================
+============================================
 
 Overview
 ========
@@ -12,6 +12,13 @@ Below is a illustration for the experimental design of this new technology
 .. image:: exp.jpg
   :align: center
 
+.. seealso:: 
+
+  Offline documentation.
+
+  Download a copy of RNA-stitch-seq-tools documentation:
+
+   * `PDF </pdf/latest/RNA-Stitch-seq-tools.pdf>`_
 
 Installation
 ============

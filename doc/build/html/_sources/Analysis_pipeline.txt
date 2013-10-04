@@ -366,7 +366,7 @@ The column description for output file ``ACCT_interaction_clusters.txt`` is:
 .. _step7:
 
 Step 7: Visualization of interactions and coverages.
------------------------------
+----------------------------------------------------
 
 :ref:`Visualization`
 

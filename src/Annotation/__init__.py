@@ -17,6 +17,7 @@ def overlap(bed1,bed2):
     Example:
     
     >>> from xplib.Annotation import Bed
+    >>> from Annotation import overlap
     >>> bed1=Bed(["chr1",10000,12000])
     >>> bed2=Bed(["chr1",9000,13000])
     >>> print overlap(bed1,bed2)
@@ -40,6 +41,7 @@ def Subtype(bed1,genebed):
     
     >>> from xplib.Annotation import Bed
     >>> from xplib import DBI
+    >>> from Annotation import Subtype
     >>> bed1=Bed(["chr13",40975747,40975770])
     >>> a=DBI.init("../../Data/Ensembl_mm9.genebed.gz","bed")
     >>> genebed=a.query(bed1).next()
@@ -79,6 +81,7 @@ def annotation(bed,ref_allRNA,ref_detail,genome):
     >>> from xplib.Annotation import Bed
     >>> from xplib import DBI
     >>> from cogent.db.ensembl import Genome
+    >>> from Annotation import annotation
     >>> bed=Bed(["chr13",40975747,40975770])
     >>> ref_allRNA=DBI.init("../../Data/all_RNAs-rRNA_repeat.txt.gz","bed")
     >>> ref_detail=DBI.init("../../Data/Ensembl_mm9.genebed.gz","bed")

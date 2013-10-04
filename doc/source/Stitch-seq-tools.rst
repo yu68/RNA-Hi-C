@@ -1,11 +1,11 @@
 ========================================
-Stitch-seq-tools |version| documentation
+RNA-Stitch-seq-tools |version| documentation
 ========================================
 
 Overview
 ========
 
-**Stitch-seq-tools** is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome.
+**RNA-Stitch-seq-tools** is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome (RNA-chromatin interactome is coming soon).
 
 Below is a illustration for the experimental design of this new technology
 
@@ -54,7 +54,7 @@ Step 3: Add library source to your python path
 
 Add these lines into your ~/.bash_profile or ~/.profile ::
 
-  Location="/path/of/Stitch-seq-tools" # change accordingly
+  Location="/path/of/RNA-Stitch-seq-tools" # change accordingly
   export PYTHONPATH="$Location/src:$PYTHONPATH"
   export PATH="$PATH:$Location/bin"
 
@@ -62,5 +62,5 @@ Add these lines into your ~/.bash_profile or ~/.profile ::
 Support
 =======
 
-For issues related to the use of Stitch-seq-tools, or if you want to **report a bug or request a feature**, please contact Pengfei Yu <p3yu at ucsd dot edu>
+For issues related to the use of RNA-Stitch-seq-tools, or if you want to **report a bug or request a feature**, please contact Pengfei Yu <p3yu at ucsd dot edu>
 

@@ -115,7 +115,7 @@ Step 3: Recover fragments for each library.
 -------------------------------------------
 .. index:: recoverFragment
 
-**After splitting the libraries, the later steps from here (Step 3-6) are executed parallelly for each sample.** 
+**After splitting the libraries, the later steps from here (Step 3-7) need to be executed parallelly for each sample.** 
  
 In this step, we are trying to recover the fragments based on local alignment. The fragments are classifed as several different types as shown in the figure below. The flow chart is also clarified at the top. 
 

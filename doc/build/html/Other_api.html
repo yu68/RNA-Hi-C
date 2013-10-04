@@ -86,6 +86,7 @@
 </table>
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib.Annotation</span> <span class="kn">import</span> <span class="n">Bed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Annotation</span> <span class="kn">import</span> <span class="n">overlap</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bed1</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr1&quot;</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">12000</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bed2</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr1&quot;</span><span class="p">,</span><span class="mi">9000</span><span class="p">,</span><span class="mi">13000</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">overlap</span><span class="p">(</span><span class="n">bed1</span><span class="p">,</span><span class="n">bed2</span><span class="p">)</span>
@@ -117,6 +118,7 @@
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib.Annotation</span> <span class="kn">import</span> <span class="n">Bed</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib</span> <span class="kn">import</span> <span class="n">DBI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Annotation</span> <span class="kn">import</span> <span class="n">Subtype</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bed1</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="mi">40975747</span><span class="p">,</span><span class="mi">40975770</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/Ensembl_mm9.genebed.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">genebed</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">bed1</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
@@ -153,6 +155,7 @@
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib.Annotation</span> <span class="kn">import</span> <span class="n">Bed</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib</span> <span class="kn">import</span> <span class="n">DBI</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cogent.db.ensembl</span> <span class="kn">import</span> <span class="n">Genome</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Annotation</span> <span class="kn">import</span> <span class="n">annotation</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bed</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="mi">40975747</span><span class="p">,</span><span class="mi">40975770</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ref_allRNA</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/all_RNAs-rRNA_repeat.txt.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ref_detail</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/Ensembl_mm9.genebed.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>

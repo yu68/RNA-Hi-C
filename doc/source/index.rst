@@ -6,7 +6,7 @@
 Welcome to RNA-Stitch-seq-tools's documentation!
 ================================================
 
-Contents:
+**Contents:**
 
 .. toctree::
    :maxdepth: 3

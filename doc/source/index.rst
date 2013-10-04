@@ -20,6 +20,10 @@ Contents:
    Other_api.rst
 
 
+.. note::
+
+   RNA-Stitch-seq-tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. `Try BAM2X now <http://bam2xwiki.appspot.com/>`_!
+
 Indices and tables
 ==================
 

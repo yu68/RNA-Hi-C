@@ -18,7 +18,8 @@ Below is a illustration for the experimental design of this new technology
 
   Download a copy of RNA-stitch-seq-tools documentation:
 
-   * `PDF </pdf/stitch-seq-tools/latest/stitch-seq-tools.pdf>`_
+   * `PDF <https://media.readthedocs.org/pdf/stitch-seq-tools/latest/stitch-seq-tools.pdf>`_
+   * `Epub <https://media.readthedocs.org/epub/stitch-seq-tools/latest/stitch-seq-tools.epub>`_
 
 Installation
 ============

@@ -6,6 +6,7 @@ from time import time
 from operator import attrgetter
 from scipy.stats import hypergeom
 from random import shuffle
+import math
 import pp
 import copy
 from data_structure import *
@@ -239,7 +240,7 @@ def Main():
         real_p=1-hypergeom.cdf(count,len(part1),count1,count2)
         if real_p<=p_value:
             k=k+1
-            print >> output,str(cluster_pool1[i])+'\t'+str(cluster_pool2[j])+'\t%d\t%.5f'%(count,real_p)
+            print >> output,str(cluster_pool1[i])+'\t'+str(cluster_pool2[j])+'\t%d\t%.5f'%(count,math.log(real_p))
         if n%1000==0: print >> sys.stderr, "  Progress ( %d / %d )\r"%(n,len(c_interaction)),
 
     print >> sys.stderr,"# Find %d strong interactions. Cost time: %.2f s"%(k,time()-t1)

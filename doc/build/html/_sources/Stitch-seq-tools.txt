@@ -65,6 +65,8 @@ Add these lines into your ~/.bash_profile or ~/.profile ::
   Location="/path/of/RNA-Stitch-seq-tools" # change accordingly
   export PYTHONPATH="$Location/src:$PYTHONPATH"
   export PATH="$PATH:$Location/bin"
+  Loc_lib="/path/of/boost_1_xx_0/lib/"  # change accordingly
+  export LD_LIBRARY_PATH="$Loc_lib:$LD_LIBRARY_PATH" 
 
 
 Support

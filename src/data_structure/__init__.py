@@ -14,20 +14,31 @@ class annotated_bed():
         or
         >>> a=annotated_bed(chr="chr13",start=40975747,end=40975770,type="protein_coding",)
         """
-        if type(x)==type("str"):
-            x=x.split("\t")
-        self.chr=str(x[0]).strip()
-        self.start=int(x[1])
-        self.end=int(x[2])
-        try:
-            self.seq=str(x[3]).strip()
-            self.type=str(x[4]).strip()
-            self.name=str(x[5]).strip()
-            self.subtype=str(x[6]).strip()
-        except:
-            pass
+        if x is not None:
+            if type(x)==type("str"):
+                x=x.split("\t")
+            self.chr=str(x[0]).strip()
+            self.start=int(x[1])
+            self.end=int(x[2])
+            try:
+                self.seq=str(x[3]).strip()
+                self.type=str(x[4]).strip()
+                self.name=str(x[5]).strip()
+                self.subtype=str(x[6]).strip()
+            except:
+                pass
         for key in kwargs.keys():
             setattr(self,key,kwargs[key])
+    def overlap(self,other): # for the purpose of finding overlap between regions
+        """
+        Find overlap between regions
+
+        :param other: another :class:`annotated_bed` object
+        :returns: boolean
+
+        """
+        return ((self.chr==other.chr)&(self.end>other.start)&(self.start<other.end))
+
     def __lt__(self, other): # for the purpose of ordering clusters
         """
         Compare two objects self and other when they are not **overlapped**
@@ -43,20 +54,12 @@ class annotated_bed():
         False
 
         """
-        if overlap(self,other): return "None"
+        if self.overlap(other): return "None"
         if self.chr==other.chr:
             return ((self.start<other.start)&(self.end<other.end))
         else:
             return (self.chr<other.chr)
-    def overlap(self,other): # for the purpose of finding overlap between regions
-        """
-        Find overlap between regions
-        
-        :param other: another :class:`annotated_bed` object
-        :returns: boolean
-        
-        """
-        return ((self.chr==other.chr)&(self.end>other.start)&(self.start<other.end))
+
     def Cluster(self,c):
         """
         Store cluster information of self object

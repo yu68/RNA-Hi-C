@@ -360,7 +360,7 @@ The column description for output file ``ACCT_interaction_clusters.txt`` is:
     7            # of counts for cluster in part1
    8-14          Same as 1-7, but for cluster in part2
     15           # of interactions between these two clusters
-    16           p-value of the hypergeometric testing
+    16           log(p-value) of the hypergeometric testing
   =========  =====================================
 
 .. _step7:

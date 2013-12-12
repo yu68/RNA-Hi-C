@@ -6,7 +6,6 @@ from xplib import TableIO
 from xplib import DBI
 from xplib.Annotation import Bed
 from Annotation import *
-from cogent.db.ensembl import HostAccount, Genome
 
 def ParseArg():
     p=argparse.ArgumentParser(description = "Count RPKM value of RNAseq/CLIPseq for clusters (genomic regions) in strong interaction",epilog="Library dependency: bam2x")
@@ -68,11 +67,6 @@ def Main():
 
     Input=open(args.input,'r')
     lines=Input.read().split("\n")
-    db="/data/yu68/git/stitch-seq/Data/all_RNAs-rRNA_repeat.txt.gz"
-    db_detail="/data/yu68/git/stitch-seq/Data/Ensembl_mm9.genebed.gz"
-    dbi_all=DBI.init(db,"bed") # the DBI init file for bed6 file of all kinds of RNA
-    dbi_detail=DBI.init(db_detail,"bed") # the DBI init file for bed12 file of lincRNA and mRNA with intron, exon, UTR
-    genome=Genome('mouse', Release=67, account=None)
 
     # header
     header=["chr","start","end","type","name","subtype","count"]+data.keys()
@@ -86,12 +80,10 @@ def Main():
         num=num+1
         C1=Bed([l[0],int(l[1]),int(l[2])])
         C2=Bed([l[7],int(l[8]),int(l[9])])
-        [typ1,name1,sub1]=annotation(C1,dbi_all,dbi_detail,genome)
-        [typ2,name2,sub2]=annotation(C2,dbi_all,dbi_detail,genome)
         rpkm1="\t".join (str(f) for f in [RPKM(C1,data[n],total_reads[n],n) for n in data.keys()])
         rpkm2="\t".join (str(f) for f in [RPKM(C2,data[n],total_reads[n],n) for n in data.keys()])
-        print >> output, "\t".join(str(f) for f in [C1.chr,C1.start,C1.stop,typ1,name1,sub1,l[6],rpkm1,C2.chr,C2.start,C2.stop,typ2,name2,sub2,l[13],rpkm2,l[14],l[15]])
-	if num%100==0:
+        print >> output, "\t".join(str(f) for f in l[:7]+[rpkm1]+l[7:14]+[rpkm2,l[14],l[15]])
+	if num%1000==0:
             print >> sys.stderr, "  Output interaction: %d\r"%(num),
 
 if __name__ == '__main__':

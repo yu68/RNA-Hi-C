@@ -103,15 +103,22 @@ def annotation(bed,ref_allRNA,ref_detail,genome):
         flag=0
         for hit in ref_detail.query(bed):
             if flag==0:
-                tempname=hit.id
+                tempname=hit.id.split("&")
                 subtype=Subtype(bed,hit)
+                try:
+                  typ = tempname[1]
+                except:
+                  pass
+                name = tempname[0]
                 if subtype!="intron":
                     flag=1
+        '''
         try:
             tran=genome.getTranscriptByStableId(StableId=tempname).Gene
             typ=tran.BioType
             name=tran.Symbol
         except: pass
+        '''
     if typ=="non":
         try:
             repeats=genome.getFeatures(CoordName=bed.chr[3:], Start=bed.start, End=bed.stop, feature_types='repeat')

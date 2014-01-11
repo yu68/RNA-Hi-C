@@ -66,7 +66,7 @@ def Subtype(bed1,genebed):
     return subtype
 
 
-def annotation(bed,ref_allRNA,ref_detail,genome):
+def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
     """
     This function is based on :func:`overlap` and :func:`Subtype` functions to annotate RNA type/name/subtype for any genomic region.
 
@@ -80,13 +80,12 @@ def annotation(bed,ref_allRNA,ref_detail,genome):
 
     >>> from xplib.Annotation import Bed
     >>> from xplib import DBI
-    >>> from cogent.db.ensembl import Genome
     >>> from Annotation import annotation
     >>> bed=Bed(["chr13",40975747,40975770])
     >>> ref_allRNA=DBI.init("../../Data/all_RNAs-rRNA_repeat.txt.gz","bed")
     >>> ref_detail=DBI.init("../../Data/Ensembl_mm9.genebed.gz","bed")
-    >>> genome=Genome('mouse', Release=67, account=None)
-    >>> print annotation(bed,ref_allRNA,ref_detail,genome)
+    >>> ref_repeat=DBI.init("../../Data/mouse.repeat.txt.gz","bed")
+    >>> print annotation(bed,ref_allRNA,ref_detail,ref_repeat)
     ["protein_coding","gcnt2","intron"]
 
     """
@@ -120,6 +119,13 @@ def annotation(bed,ref_allRNA,ref_detail,genome):
         except: pass
         '''
     if typ=="non":
+        for hit in ref_repeat.query(bed):
+            tempname=hit.id.split("&")
+            name = tempname[0]
+            typ = tempname[1]
+            subtype = tempname[2]
+            break
+        '''
         try:
             repeats=genome.getFeatures(CoordName=bed.chr[3:], Start=bed.start, End=bed.stop, feature_types='repeat')
             for r in repeats:
@@ -128,6 +134,7 @@ def annotation(bed,ref_allRNA,ref_detail,genome):
                    name=r.Symbol
                    break 
         except: pass
+        '''
     return [typ,name,subtype]
                     
            

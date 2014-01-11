@@ -124,8 +124,10 @@ def main():
     seq_type3_1=SeqIO.parse(args.type3_1,types2)
     seq_type3_2=SeqIO.parse(args.type3_2,types2)
 
-
-
+    n_p=0
+    n_b=0
+    n_f=0
+    
     # output of different groups:
     output1=open("NoLinker_"+args.input,'w')
     output2=open("frontOnly_"+args.input,'w')
@@ -153,7 +155,6 @@ def main():
         
 
         #print "Start to parse BLAST results for %s" %(filename)
-        j=0
         for linker_record, fragment in itertools.izip(linker_records,batch):
             n=n+1
             line=''
@@ -187,22 +188,21 @@ def main():
                 #XXXXXXXXXX111111LLLLLLL2222222
                 SeqIO.write(fragment[trim_n:start],output4, types)
                 SeqIO.write(fragment[end:].reverse_complement(fragment.id),output5, types)
+                n_p+=1
                 Types="Paired"
             elif (start>trim_n+min_l):
                 #XXXXXXXXXX1111111LLLLLLL
                 SeqIO.write(fragment[trim_n:start],output2, types)
+                n_f+=1
                 Types="FrontOnly"
             elif (end<len(fragment)-min_l):
                 #XXXXXXXXXXLLLLLL22222222
                 SeqIO.write(fragment[end:].reverse_complement(fragment.id),output3,types)
                 Types="BackOnly"
-            j=j+1
-            if (j+1)%(args.batch/100)==0:
-                sys.stdout.write('#'+'->'+"\b\b")
-                sys.stdout.flush()
+                n_b+=1   
             print >> output, "\t".join (str(f) for f in [fragment.id,stat,pos_order,Types,order])
         t1=time()
-        print >>sys.stderr,"After %s, got %i, %i align to linkers. This batch takes %.2f min.\r"%(filename,n,n-align_no_linker,(t1-t0)/60),
+        print >>sys.stderr,"Type1-2, with_linker: (%i/%i). P:%i B:%i F:%i. Time: %.2f min.\r"%(n-align_no_linker,n,n_p,n_b,n_f,(t1-t0)/60),
     
     '''
     This loop is for evenlong(type3) reads to find "Paired"/"BackOnly"/"FrontOnly"    
@@ -210,7 +210,7 @@ def main():
     i=0    
     align_no_linker=0
     n=0
-    print "split partners for type3 paired reads"
+    print "\nsplit partners for type3 paired reads"
     for batch1, batch2 in batch_iterator2(seq_type3_1, seq_type3_2, args.batch):
         t0=time()
         filename1="type3_group_%i_1.fasta" % (i+1)
@@ -233,6 +233,7 @@ def main():
             n=n+1
             read1=batch1[j]
             read2=batch2[j]
+            j+=1
             if read1.id!=read2.id:
                 print "ERROR!! ID not match for paired type3 reads"
                 sys.exit(0)
@@ -251,22 +252,21 @@ def main():
           
             if (start1==len(read1) and start2==len(read2)):
                 align_no_linker+=1
-            elif (start1>trim_n+min_l) and (start2>min_l):
+            if (start1>trim_n+min_l) and (start2>min_l):
                 SeqIO.write(read1[trim_n:start1],output4, types)
                 SeqIO.write(read2[:start2],output5, types)
+                n_p+=1
                 Types="Paired"
             elif start1>trim_n+min_l:
                 SeqIO.write(read1[trim_n:start1],output2, types)
+                n_f+=1
                 Types="FrontOnly"
             elif start2>min_l:
+                n_b+=1
                 SeqIO.write(read2[:start2],output3,types)
                 Types="BackOnly"
-            j=j+1
-            if (j+1)%(args.batch/100)==0:
-                sys.stdout.write('#'+'->'+"\b\b")
-                sys.stdout.flush()
         t1=time()
-        print >>sys.stderr,"After %s, got %i, %i align to linkers. This batch takes %.2f min.\r"%(filename1,n,n-align_no_linker,(t1-t0)/60),
+        print >>sys.stderr,"Type3, with_linker: (%i/%i). P:%i B:%i F:%i. Time: %.2f min.\r"%(n-align_no_linker,n,n_p,n_b,n_f,(t1-t0)/60),
                 
 
             

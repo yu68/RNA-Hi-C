@@ -131,9 +131,9 @@ def main():
                 align_linker+=1
         stat=''
         for i in counts.keys():
-            stat=stat+' '+i+':%d'%(counts[i])
+            stat=stat+'\n'+i+':%d'%(counts[i])
         t1=time()
-        print "After %s, got %i sequences, %i align to linkers. %s. This batch takes %.2f min."%(filename,n,align_linker,stat,(t1-t0)/60)
+        print "After %s, got %i sequences, %i align to linkers.\n %s. \nThis batch takes %.2f min."%(filename,n,align_linker,stat,(t1-t0)/60)
 
     output.close()
 

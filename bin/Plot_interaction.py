@@ -1,8 +1,10 @@
 import sys,argparse,os
+from xplib import DBI
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+import matplotlib.cm as cm
 import numpy as np
 #plt.ioff()
 
@@ -13,6 +15,8 @@ def ParseArg():
     p.add_argument('-n',type=int,default=1,help="Plot all linked pairs for 'n'th interaction in the interaction file, default=1")
     p.add_argument('-s','--start',type=int,nargs='+',default=(7,8),help='start column number of the second region in interaction file and linkedPair file, default=(7,8)')
     p.add_argument('-d','--distance',type=int,default=10,help='the plus-minus distance (unit: kbp) flanking the interaction regions to be plotted, default=10')
+    p.add_argument('-g','--genebed',type=str,default='/home/yu68/bharat-interaction/new_lincRNA_data/Ensembl_mm9.genebed',help='the genebed file from Ensembl, default: Ensembl_mm9.genebed')
+    p.add_argument("-p","--pair_dist",type=int,default=200,help="two interacted parts within this distance are eliminated, default: 200bp")
     p.add_argument('-o','--output',type=str,help="output plot file, can be format of emf, eps, pdf, png, ps, raw, rgba, svg, svgz")
     if len(sys.argv)==1:
         print >>sys.stderr,p.print_help()
@@ -21,18 +25,18 @@ def ParseArg():
 
 class Bed:
     def __init__(self,x):
-        self.chro=x[0]
+        self.chr=x[0]
         self.start=int(x[1])
-        self.end=int(x[2])
+        self.stop=int(x[2])
         if len(x)>=6:
             self.type=x[3]
             self.name=x[4]
             self.subtype=x[5]
-        self.center=int((self.start+self.end)/2)
+        self.center=int((self.start+self.stop)/2)
     def overlap(self,bed2,n):
-        return (self.chro==bed2.chro) and (self.start+n<bed2.end) and (bed2.start+n<self.end)
+        return (self.chr==bed2.chr) and (self.start+n<bed2.stop) and (bed2.start+n<self.stop)
     def str_region(self):
-        return self.chro+":%d-%d"%(self.start,self.end)
+        return self.chr+":%d-%d"%(self.start,self.stop)
 
 def read_interaction(File,s):
     '''
@@ -53,20 +57,102 @@ def transform(x1,start1,end1,start2,end2):
     '''
     return int(1.0*(x1-start1)/(end1-start1)*(end2-start2)+start2)
 
+
+def addGeneToFig(gene,ax,start,end,name=0,bottom=0):
+
+    '''
+    add gene to figures
+        start is the start of query region
+    '''
+    if name==1:
+        if gene.start>start:
+            ax.text((1.0*gene.start+0.0*start),bottom+0.015,gene.id.split("&")[0],fontsize=6,horizontalalignment='right')
+        else:
+            ax.text((1.0*gene.stop+0.0*end),bottom+0.015,gene.id.split("&")[0],fontsize=6,horizontalalignment='left')
+    cds=gene.cds()
+
+    utr5=gene.utr5()
+    utr3=gene.utr3()
+    if cds.stop!=cds.start:
+        cds_exons=cds.Exons()
+        for cds_exon in cds_exons:
+            ax.bar(cds_exon.start,0.02,cds_exon.stop-cds_exon.start,facecolor="blue",edgecolor="blue",alpha=1,bottom=bottom)
+    if not utr3 is None:
+        for utr3_exon in utr3.Exons():
+            ax.bar(utr3_exon.start,0.01,utr3_exon.stop-utr3_exon.start,facecolor="blue",edgecolor="blue",alpha=1,bottom=bottom+0.005)
+    if not utr5 is None:
+        for utr5_exon in utr5.Exons():
+            ax.bar(utr5_exon.start,0.01,utr5_exon.stop-utr5_exon.start,facecolor="blue",edgecolor="blue",alpha=1,bottom=bottom+0.005)
+    interval=(end-start)/100
+    yloc=bottom+0.01
+    for intron in gene.Introns():
+        ax.plot([intron.start,intron.stop],[yloc,yloc],lw=0.5,color='k') 
+        for i in range((intron.stop-intron.start)/interval):
+            if intron.strand=="+":
+                loc=intron.start+(i+1)*interval
+                x=[loc-0.3*interval,loc,loc-0.3*interval]
+            else:
+                loc=intron.stop-(i+1)*interval
+                x=[loc+0.3*interval,loc,loc+0.3*interval] 
+            y=[yloc-0.01,yloc,yloc+0.01]
+            ax.plot(x,y,color='k',lw=0.5)
+
+def Genetrack(bed,gene_dbi,ax,track_bottom):
+    '''
+    draw gene track for each part
+       bed: define the region to be drawn
+       gene_dbi: querible database for genes
+       ax: the subplot
+    '''
+    query_gene=gene_dbi.query(bed)
+    ### determine height of gene track
+
+    bottoms=[0 for i in range(100)]
+    max_index=0
+    for i in gene_dbi.query(bed):
+        index=0
+        while(1):
+            if i.start > bottoms[index]:
+                addGeneToFig(i,ax,bed.start,bed.stop,1,0.03*index+track_bottom+0.05)
+                bottoms[index]=i.stop
+                if max_index<index: max_index=index
+                break
+            index+=1
+    gene_track_number=max_index+1
+    gene_track_height=0.03*gene_track_number+0.04
+
+    # add frame
+    rect=matplotlib.patches.Rectangle((bed.start,track_bottom+0.03),bed.stop-bed.start, gene_track_height, edgecolor='black', lw=0.5,fill=False)
+    ax.add_patch(rect)
+
+    return gene_track_height+track_bottom  # return the y-axis value of gene track top
+
+
 def Main():
     args=ParseArg()
     distance=args.distance*1000
-
+    pair_dist=args.pair_dist
+    
     print "\nChecking if linkedPair file is tabixed..."
+    if not os.path.isfile(args.linkedPair):
+        print "LinkedPair file is not exist, please check!!"
+        sys.exit(0)
     if not os.path.isfile(args.linkedPair+".tbi"):
         print "  tabix-ing..."
-        os.system("sort -k1,1 -k2,2n "+args.linkedPair+" > temp.txt")
-        os.system("bgzip temp.txt")
-        os.system("tabix -p bed temp.txt.gz")
-        linkedPair='temp.txt.gz'
+        os.system("sort -k1,1 -k2,2n "+args.linkedPair+" > temp_linkedPair.txt")
+        os.system("bgzip temp_linkedPair.txt")
+        os.system("tabix -p bed temp_linkedPair.txt.gz")
+        linkedPair='temp_linkedPair.txt.gz'
     else:
         linkedPair=args.linkedPair
     print "  linkedPair file is tabixed."
+
+    print "\nTabixing the interaction file..."
+    os.system("sort -k1,1 -k2,2n "+args.interaction+" > temp_interaction.txt")
+    os.system("bgzip temp_interaction.txt")
+    os.system("tabix -p bed temp_interaction.txt.gz")
+    print "  interaction file is tabixed."
+
 
     # start column number for second regions
     # s1 for interaction file and s2 for linkedPair file
@@ -78,9 +164,15 @@ def Main():
     part1=Bed(l[0:6])
     part2=Bed(l[s1:(s1+6)])
     start1=part1.start-distance
-    end1=part1.end+distance
+    end1=part1.stop+distance
     start2=part2.start-distance
-    end2=part2.end+distance
+    end2=part2.stop+distance
+    # if the searched regions for part1 and part2 are overlapped, using the same regions for both part
+    if part1.overlap(part2,-distance):
+        start1=min(start1,start2)
+        start2=min(start1,start2)
+        end1=max(end1,end2)
+        end2=max(end1,end2)
 
     
     # initialize figure
@@ -103,41 +195,71 @@ def Main():
     locs=ax2.get_xticks()
     ax2.set_xticklabels(map(lambda x: "%i"%x, locs),fontsize=8)
     
-    y_1=0.36
-    y_2=0.64
-    ax1.add_patch(matplotlib.patches.Rectangle((part1.start,y_1),part1.end-part1.start,0.04,color=col1))
-    ax2.add_patch(matplotlib.patches.Rectangle((part2.start,y_2),part2.end-part2.start,0.04,color=col2))
+
+    print "\nStart draw gene track"
+    gene_dbi=DBI.init(args.genebed,"bed")
+    print "  genebed indexed!"
+    print "  Plot gene track for Part1"
+    gene1_top=Genetrack(Bed([part1.chr,start1,end1]),gene_dbi,ax1,0.08)
+
+    y_1=gene1_top+0.13
+    y_2=y_1+0.2
+    
+    print "  Plot gene track for Part2"
+    gene2_top=Genetrack(Bed([part2.chr,start2,end2]),gene_dbi,ax2,y_2+0.08)    
+ 
+    print "\nQuery interactions within +-%dkbp of interaction"%(distance/1000)
+    os.system("tabix temp_interaction.txt.gz %s:%i-%i > temp2.txt"%(part1.chr,start1,end1))
+    print "\nList of interactions plotted: "
+    k=1
+    cmap=cm.get_cmap('Paired', 10)
+    cmap=cmap(range(10))
+    for b in read_interaction("temp2.txt",s1):
+        # if b[0].overlap(b[1],-pair_dist): continue
+        if Bed([part2.chr,start2,end2]).overlap(b[1],0):
+            k+=1
+            ax1.add_patch(matplotlib.patches.Rectangle((b[0].start,y_1),b[0].stop-b[0].start,0.04,facecolor=col1,edgecolor=cmap[k%10],lw=0.9))
+            ax2.add_patch(matplotlib.patches.Rectangle((b[1].start,y_2),b[1].stop-b[1].start,0.04,facecolor=col2,edgecolor=cmap[k%10],lw=0.9))
+            print "  "+b[0].str_region()+" <-> "+b[1].str_region()
+
+
     ax1.plot([start1,end1],[y_1+0.02,y_1+0.02],color=col1,linewidth=1,alpha=0.7)
     ax2.plot([start2,end2],[y_2+0.02,y_2+0.02],color=col2,linewidth=1,alpha=0.7)
 
 
     print "\nQuery linkedPairs within +-%dkbp of interaction"%(distance/1000)
-    os.system("tabix "+linkedPair+" %s:%i-%i > temp2.txt"%(part1.chro,part1.start-distance,part1.end+distance))
+    os.system("tabix "+linkedPair+" %s:%i-%i > temp2.txt"%(part1.chr,start1,end1))
     print "\nList of linked pairs plotted: "
     for b in read_interaction("temp2.txt",s2):
+        if b[0].overlap(b[1],-pair_dist): continue
         if part1.overlap(b[0],-distance) and part2.overlap(b[1],-distance):
             x1_2_start=transform(b[0].start,start1,end1,start2,end2)
-            x1_2_end=transform(b[0].end,start1,end1,start2,end2)
+            x1_2_end=transform(b[0].stop,start1,end1,start2,end2)
             ax2.plot([(x1_2_start+x1_2_end)/2,b[1].center],[y_1+0.02,y_2+0.02],"ko-",
                      markersize=3,markeredgewidth=0,alpha=0.3)
             print "  "+b[0].str_region()+" <-> "+b[1].str_region()
-    plt.text(0.5, 1.12, part1.str_region()+" <-> "+part2.str_region(),
+    plt.text(0.5, 1.15, part1.str_region()+" <-> "+part2.str_region(),
          horizontalalignment='center',
          fontsize=10,
          transform = ax1.transAxes)
+    plt.text(0.5, 1.10, "Distance: +-%dkbp of interaction"%(distance/1000),
+         horizontalalignment='center',
+         fontsize=8,
+         transform = ax1.transAxes)
     ax1.text(part1.center,y_1-0.03,"|".join([part1.type,part1.name,part1.subtype]),
-             verticalalignment='center', horizontalalignment='center',fontsize=10,color=col1)
+             verticalalignment='center', horizontalalignment='center',fontsize=8,color=col1)
     ax2.text(part2.center,y_2+0.07,"|".join([part2.type,part2.name,part2.subtype]),
-             verticalalignment='center', horizontalalignment='center',fontsize=10,color=col2)
-    ax1.set_ylim(0.1,0.9)
-    ax2.set_ylim(0.1,0.9)
-    ax1.text(start1, 0.15, part1.chro,horizontalalignment='left',fontsize=10)
-    ax2.text(start2, 0.85, part2.chro,horizontalalignment='left',fontsize=10)
+             verticalalignment='center', horizontalalignment='center',fontsize=8,color=col2)
+    ax1.set_ylim(0,gene2_top+0.1)
+    ax2.set_ylim(0,gene2_top+0.1)
+    ax1.text(start1, 0.05, part1.chr,horizontalalignment='left',fontsize=8)
+    ax2.text(start2, gene2_top+0.04, part2.chr,horizontalalignment='left',fontsize=8)
     plt.savefig(args.output)
     
     # remove temp file
+    os.system("rm temp_interaction.txt.gz*")
     if not os.path.isfile(args.linkedPair+".tbi"):
-        os.system("rm temp.txt.gz*")
+        os.system("rm temp_linkedPair.txt.gz*")
     os.system("rm temp2.txt")
 
 if __name__=="__main__":

@@ -1,8 +1,97 @@
 .. _Visualization:
 
-====================================
-Visualization of RNA-RNA interactome
-====================================
+===========================================
+Visualization of local RNA-RNA interactions
+===========================================
+
+Prerequirement
+--------------
+
+This program require python modules: xplib, matplotlib, numpy, bx-python
+
+.. _plotInteraction:
+Run the program to generate visualization
+-----------------------------------------
+.. index:: Plot_interaction.py
+
+The script "Plot_interaction.py" will be used for this purpose, ::
+  
+  usage: Plot_interaction.py [-h] [-n N] [-s START [START ...]] [-d DISTANCE]
+                             [-g GENEBED] [-w PHYLOP_WIG] [-p PAIR_DIST] [-S]
+                             [-o OUTPUT]
+                             interaction linkedPair
+
+  plot linked pairs around a given interaction. information of linked pairs are
+  stored in file '*_fragment_paired_align.txt'
+
+  positional arguments:
+    interaction           Interaction file from output of
+                          'Select_strongInteraction_pp.py'
+    linkedPair            file for information of linked pairs, which is output
+                          of 'Stitch-seq_Aligner.py'
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -n N                  Choose region to plot, it can be a number (around n-th
+                          interaction in the interaction file) or one/two
+                          regions with format 'chr:start-end', default=1
+    -s START [START ...], --start START [START ...]
+                          start column number of the second region in
+                          interaction file and linkedPair file, default=(7,8)
+    -d DISTANCE, --distance DISTANCE
+                          the plus-minus distance (unit: kbp) flanking the
+                          interaction regions to be plotted, default=10
+    -g GENEBED, --genebed GENEBED
+                          the genebed file from Ensembl, default:
+                          ../Data/Ensembl_mm9.genebed
+    -w PHYLOP_WIG, --phyloP_wig PHYLOP_WIG
+                          the bigWig file for phyloP scores,defualt:
+                          mouse.phyloP30way.bw
+    -p PAIR_DIST, --pair_dist PAIR_DIST
+                          two interacted parts within this distance are
+                          considered as self-ligated and they are marked or
+                          eliminated (see option -s for slim mode), default:
+                          200bp
+    -S, --Slim            set slim mode to eliminate self ligated interactions
+    -o OUTPUT, --output OUTPUT
+                          output plot file, can be format of emf, eps, pdf, png,
+                          ps, raw, rgba, svg, svgz
+
+.. note::
+
+  linkedPair file is the output \*_fragment_paired_align.txt from :ref:`Step5:Stitch-seq_Aligner.py<Step5>` of the pipeline; Interaction txt file is the output of :ref:`Step6:Select_strongInteraction_pp.py<Step6>`.
+
+
+Example of result graph
+-----------------------
+
+Example code: ::
+
+  python Plot_interaction.py 
+          ACCT_interaction_clusters_rmrRNA.txt \
+          ACCT_fragment_paired_align_rmRNA_sort.txt.gz \
+          -n 2412 \
+          -d 5 \
+          -o local_interaction.pdf
+    
+Result figure:
+
+.. image:: local_interaction_malat1_ACCT.jpg
+
+Explanation:
+
+.. raw:: html
+
+ <ul>
+ <li> The <font color="#4F81BD"> blue </font> blocks are clusters generated in <font color="#4F81BD"> R1 </font>. And the <font color="#C0504D"> blue </font> blocks are clusters generated in <font color="#C0504D"> R2 </font>. </li>
+ <li> the semi-transparent polygons connecting clusters in <font color="#4F81BD">R1</font> and <font color="#C0504D">R2</font> pools indicate different strong interactions between clusters. </li> 
+ <li>The lines connecting to regions are evidence of linkedPairs, where <font color="#00dd00"> green </font> lines are the ones with distance between two ends less than what specified in option '-p'. This implies self ligation. All others are colored black </li>
+ </ul>
+
+
+===========================================
+Visualization of global RNA-RNA interactome
+===========================================
 
 Prerequirement
 --------------
@@ -61,7 +150,7 @@ Explanation:
 .. raw:: html
 
  <ul>
- <li>The <font color="#763a7a"> purple </font>track right inside chromatin cytoband ideogram is the coverage of part1 (the first genomic regions connected with linker sequences)  of this sample.</li> 
+ <li>The <font color="#763a7a"> purple </font>track right inside chromatin cytoband ideogram is the coverage of part1 (the first genomic regions connected with linker sequences) of this sample.</li> 
  <li>The <font color="#0288ad"> light blue </font>track next is the coverage of part2 (the other genomic regions connected with linkers). </li>
  <li>The <font color="red">inner </font>links are the strong interactions after removing rRNA. colors represent the confidence of the interaction (the ones with lower p-values are stronger) </li>
  </ul>

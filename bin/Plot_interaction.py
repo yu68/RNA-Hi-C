@@ -17,6 +17,7 @@ def ParseArg():
     p.add_argument('-s','--start',type=int,nargs='+',default=(7,8),help='start column number of the second region in interaction file and linkedPair file, default=(7,8)')
     p.add_argument('-d','--distance',type=int,default=10,help='the plus-minus distance (unit: kbp) flanking the interaction regions to be plotted, default=10')
     p.add_argument('-g','--genebed',type=str,default='/home/yu68/bharat-interaction/new_lincRNA_data/Ensembl_mm9.genebed',help='the genebed file from Ensembl, default: Ensembl_mm9.genebed')
+    p.add_argument('-w','--phyloP_wig',type=str,default='/data2/sysbio/UCSD-sequencing/mouse.phyloP30way.bw',help='the bigWig file for phyloP scores,defualt: mouse.phyloP30way.bw')
     p.add_argument("-p","--pair_dist",type=int,default=200,help="two interacted parts within this distance are considered as self-ligated and they are marked or eliminated (see option -s for slim mode), default: 200bp")
     p.add_argument("-S","--Slim",action='store_true',help='set slim mode to eliminate self ligated interactions')
     p.add_argument('-o','--output',type=str,help="output plot file, can be format of emf, eps, pdf, png, ps, raw, rgba, svg, svgz")
@@ -211,7 +212,9 @@ def Main():
     locs=ax2.get_xticks()
     ax2.set_xticklabels(map(lambda x: "%i"%x, locs),fontsize=8)
     
-    bw_phyloP = BigWigFile(open("/data2/sysbio/UCSD-sequencing/mouse.phyloP30way.bw"))
+    
+    # input bigWig file for phyloP score
+    bw_phyloP = BigWigFile(open(args.phyloP_wig))
 
     print "\nStart draw gene track"
     gene_dbi=DBI.init(args.genebed,"bed")

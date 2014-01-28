@@ -23,7 +23,8 @@
 
   \indexspace
   \bigletter P
-  \item Plot\_Circos.R, \hyperpage{12}, \hyperpage{15}
+  \item Plot\_Circos.R, \hyperpage{15}
+  \item Plot\_interaction.py, \hyperpage{13}
 
   \indexspace
   \bigletter R

@@ -65,7 +65,7 @@ The script "Plot_interaction.py" will be used for this purpose, ::
 Example of result graph
 -----------------------
 
-Example code: ::
+*Example code:* ::
 
   python Plot_interaction.py 
           ACCT_interaction_clusters_rmrRNA.txt \
@@ -74,16 +74,16 @@ Example code: ::
           -d 5 \
           -o local_interaction.pdf
     
-Result figure:
+*Result figure:*
 
 .. image:: local_interaction_malat1_ACCT.jpg
 
-Explanation:
+*Explanation:*
 
 .. raw:: html
 
  <ul>
- <li> The <font color="#4F81BD"> blue </font> blocks are clusters generated in <font color="#4F81BD"> R1 </font>. And the <font color="#C0504D"> blue </font> blocks are clusters generated in <font color="#C0504D"> R2 </font>. </li>
+ <li> The <font color="#4F81BD"> blue </font> blocks are clusters generated in <font color="#4F81BD"> R1 </font>. And the <font color="#C0504D"> red </font> blocks are clusters generated in <font color="#C0504D"> R2 </font>. </li>
  <li> the semi-transparent polygons connecting clusters in <font color="#4F81BD">R1</font> and <font color="#C0504D">R2</font> pools indicate different strong interactions between clusters. </li> 
  <li>The lines connecting to regions are evidence of linkedPairs, where <font color="#00dd00"> green </font> lines are the ones with distance between two ends less than what specified in option '-p'. This implies self ligation. All others are colored black </li>
  </ul>
@@ -136,17 +136,17 @@ We will use the script "Plot_Circos.R" for this purpose. ::
 Example of result graph
 -----------------------
 
-Example code: ::
+*Example code:* ::
   
   Rscript Plot_Circos.R GGCG_interaction_clusters.txt 
     sort_Paired1_fragment_GGCG.bam sort_Paired2_fragment_GGCG.bam 
     -b 100000 -o Interactome_GGCG.pdf
 
-Result figure:
+*Result figure:*
 
 .. image:: Interactome_GGCG.JPG
 
-Explanation:
+*Explanation:*
 
 .. raw:: html
 

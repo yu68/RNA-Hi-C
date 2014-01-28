@@ -2,29 +2,33 @@
 \def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
 
   \bigletter {Symbols}
-  \item \_\_init\_\_() (data\_structure.annotated\_bed method), \hyperpage{19}
-  \item \_\_lt\_\_() (data\_structure.annotated\_bed method), \hyperpage{19}
-  \item \_\_str\_\_() (data\_structure.annotated\_bed method), \hyperpage{19}
+  \item \_\_init\_\_() (data\_structure.annotated\_bed method), \hyperpage{21}
+  \item \_\_lt\_\_() (data\_structure.annotated\_bed method), \hyperpage{21}
+  \item \_\_str\_\_() (data\_structure.annotated\_bed method), \hyperpage{21}
 
   \indexspace
   \bigletter A
-  \item annotated\_bed (class in data\_structure), \hyperpage{18}
-  \item Annotation (module), \hyperpage{17}
-  \item annotation() (in module Annotation), \hyperpage{17}
+  \item annotated\_bed (class in data\_structure), \hyperpage{20}
+  \item Annotation (module), \hyperpage{19}
+  \item annotation() (in module Annotation), \hyperpage{19}
 
   \indexspace
   \bigletter C
-  \item Cluster() (data\_structure.annotated\_bed method), \hyperpage{18}
+  \item Cluster() (data\_structure.annotated\_bed method), \hyperpage{20}
+
+  \indexspace
+  \bigletter I
+  \item intersectInteraction.py, \hyperpage{12}
 
   \indexspace
   \bigletter O
-  \item overlap() (data\_structure.annotated\_bed method), \hyperpage{19}
-  \item overlap() (in module Annotation), \hyperpage{17}
+  \item overlap() (data\_structure.annotated\_bed method), \hyperpage{21}
+  \item overlap() (in module Annotation), \hyperpage{19}
 
   \indexspace
   \bigletter P
-  \item Plot\_Circos.R, \hyperpage{15}
-  \item Plot\_interaction.py, \hyperpage{13}
+  \item Plot\_Circos.R, \hyperpage{17}
+  \item Plot\_interaction.py, \hyperpage{15}
 
   \indexspace
   \bigletter R
@@ -37,10 +41,10 @@
   \item split\_library\_pairend.py, \hyperpage{6}
   \item split\_partner.py, \hyperpage{8}
   \item Stitch-seq\_Aligner.py, \hyperpage{10}
-  \item Subtype() (in module Annotation), \hyperpage{17}
+  \item Subtype() (in module Annotation), \hyperpage{19}
 
   \indexspace
   \bigletter U
-  \item Update() (data\_structure.annotated\_bed method), \hyperpage{18}
+  \item Update() (data\_structure.annotated\_bed method), \hyperpage{20}
 
 \end{theindex}

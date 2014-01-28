@@ -368,7 +368,10 @@ The column description for output file ``ACCT_interaction_clusters.txt`` is:
 Step 7: Visualization of interactions and coverages.
 ----------------------------------------------------
 
-:ref:`Visualization`
+There are two ways of visulization provided ( LOCAL and GLOBAL ):
+
+ * :ref:`Visualization of local interactions <VisualizationLocal>`.
+ * :ref:`Visualization of global interactome <VisualizationGlobal>`.
 
 Other functions
 ===============
@@ -384,3 +387,39 @@ Determine the RNA types of different parts within fragments.
 
 Find linker sequences within the library.
 -----------------------------------------
+
+.. _intersection:
+
+Find intersections between two different interaction sets.
+----------------------------------------------------------
+.. index:: intersectInteraction.py
+
+The script tool 'intersectInteraction.py' could be used to identify overlap of interactions between two interaction set from independent experiments (two replicates or treatment v.s. control) ::
+
+  usage: intersectInteraction.py [-h] -a FILEA -b FILEB [-s START] [-n NBASE]
+                                 [-o OUTPUT] [-c]
+
+  find intersections (overlaps) between two interaction sets
+  
+  optional arguments:
+    -h, --help            show this help message and exit
+    -a FILEA, --filea FILEA
+                          file for interaction set a
+    -b FILEB, --fileb FILEB
+                          file for interaction set b
+    -s START, --start START
+                          start column number of the second part in each
+                          interaction (0-based), default:7
+    -n NBASE, --nbase NBASE
+                          number of overlapped nucleotides for each part of
+                        interactions to call intersections, default: 1
+    -o OUTPUT, --output OUTPUT
+                          specify output file
+    -c, --compare         Use a set of different 'nbase' to call overlaps and
+                          find the best one. if nbase=-200, then choose from
+                          [0,-10,-20,...,-200]
+
+  require numpy and matplotlib if set '-c'
+
+if "-c" option is set, then the program will also output a plot to show different numbers of intersections (overlaps) given a sequence of different "-n" parameters.
+

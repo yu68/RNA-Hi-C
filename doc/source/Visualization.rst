@@ -1,4 +1,4 @@
-.. _Visualization:
+.. _VisualizationLocal:
 
 ===========================================
 Visualization of local RNA-RNA interactions
@@ -89,6 +89,7 @@ Explanation:
  </ul>
 
 
+.. _VisualizationGlobal:
 ===========================================
 Visualization of global RNA-RNA interactome
 ===========================================

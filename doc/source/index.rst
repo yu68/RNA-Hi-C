@@ -29,8 +29,8 @@ Updates
 -------
   
 New features in 0.2.2:
-  * :":ref:`Plot_interaction.py<plotInteraction>`" function to plot local RNA-RNA interactions. 
-  
+  * ":ref:`Plot_interaction.py<plotInteraction>`" function to plot local RNA-RNA interactions. 
+  * ":ref:`intersectInteraction.py<intersection>`" function to call overlap between two independent interaction sets.  
 
 Indices and tables
 ==================

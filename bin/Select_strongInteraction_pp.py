@@ -131,6 +131,19 @@ def ParseArg():
     return p.parse_args()
 
 
+def SingleFragment(p1,p2):
+    '''
+    determine if mapped pair is single RNA fragment or not.
+      1. no linker
+      2. same chromosome
+      3. same RNA
+    '''
+    if (p1.end-p1.start==90) and (p2.end-p2.start==100) and (p1.chr==p2.chr) and p1.name==p2.name:
+        return True
+        
+
+
+
 def Main():
     t1=time()
     
@@ -157,11 +170,14 @@ def Main():
     for line in inp.read().split('\n'):
         if line=='': continue
         line=line.strip().split('\t')
-        k=k+1
-        part1.append(annotated_bed(line[0:7],id=k))
-        part2.append(annotated_bed(line[8:],id=k))
-        if line[0] not in chr_list: chr_list.append(line[0])
-        if line[8] not in chr_list: chr_list.append(line[8])
+        p1=annotated_bed(line[0:8],id=k)
+        p2=annotated_bed(line[9:],id=k)
+        if SingleFragment(p1,p2): continue
+        k+=1
+        part1.append(p1)
+        part2.append(p2)
+        if p1.chr not in chr_list: chr_list.append(p1.chr)
+        if p2.chr not in chr_list: chr_list.append(p2.chr)
         if k%20000==0: 
             print >> sys.stderr,"  Reading %d pairs of segments\r"%(k),
     print >> sys.stderr,"Get total %d pairs."%(k)

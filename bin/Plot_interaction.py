@@ -14,11 +14,11 @@ def ParseArg():
     p.add_argument("interaction",type=str,help="Interaction file from output of 'Select_strongInteraction_pp.py'")
     p.add_argument("linkedPair",type=str,help="file for information of linked pairs, which is output of 'Stitch-seq_Aligner.py'")
     p.add_argument('-n',type=int,default=1,help="Choose region to plot, it can be a number (around n-th interaction in the interaction file) or one/two regions with format 'chr:start-end', default=1")
-    p.add_argument('-s','--start',type=int,nargs='+',default=(7,8),help='start column number of the second region in interaction file and linkedPair file, default=(7,8)')
+    p.add_argument('-s','--start',type=int,nargs='+',default=(7,9),help='start column number of the second region in interaction file and linkedPair file, default=(7,9)')
     p.add_argument('-d','--distance',type=int,default=10,help='the plus-minus distance (unit: kbp) flanking the interaction regions to be plotted, default=10')
     p.add_argument('-g','--genebed',type=str,default='/home/yu68/bharat-interaction/new_lincRNA_data/Ensembl_mm9.genebed',help='the genebed file from Ensembl, default: Ensembl_mm9.genebed')
     p.add_argument('-w','--phyloP_wig',type=str,default='/data2/sysbio/UCSD-sequencing/mouse.phyloP30way.bw',help='the bigWig file for phyloP scores,defualt: mouse.phyloP30way.bw')
-    p.add_argument("-p","--pair_dist",type=int,default=200,help="two interacted parts within this distance are considered as self-ligated and they are marked or eliminated (see option -s for slim mode), default: 200bp")
+    p.add_argument("-p","--pair_dist",type=int,default=1000,help="two interacted parts within this distance are considered as self-ligated and they are marked or eliminated (see option -s for slim mode), default: 1000bp")
     p.add_argument("-S","--Slim",action='store_true',help='set slim mode to eliminate self ligated interactions')
     p.add_argument('-o','--output',type=str,help="output plot file, can be format of emf, eps, pdf, png, ps, raw, rgba, svg, svgz")
     if len(sys.argv)==1:
@@ -27,7 +27,7 @@ def ParseArg():
     return p.parse_args()
 
 class Bed:
-    def __init__(self,x):
+    def __init__(self,x,**kwargs):
         self.chr=x[0]
         self.start=int(x[1])
         self.stop=int(x[2])
@@ -36,6 +36,8 @@ class Bed:
             self.name=x[4]
             self.subtype=x[5]
         self.center=int((self.start+self.stop)/2)
+        for key in kwargs.keys():
+            setattr(self,key,kwargs[key])
     def overlap(self,bed2,n):
         return (self.chr==bed2.chr) and (self.start+n<bed2.stop) and (bed2.start+n<self.stop)
     def str_region(self):
@@ -49,8 +51,12 @@ def read_interaction(File,s):
     for l in a.read().split('\n'):
         if l.strip()=="": continue
         lsep=l.split('\t')
-        bed1=Bed(lsep[0:3])
-        bed2=Bed(lsep[s:(s+3)])
+        if lsep[3] in ['+','-']:
+            bed1=Bed(lsep[0:3],strand=lsep[3])
+            bed2=Bed(lsep[s:(s+3)],strand=lsep[s+3])
+        else:
+            bed1=Bed(lsep[0:3])
+            bed2=Bed(lsep[s:(s+3)])
         yield (bed1,bed2,l)
 
 
@@ -129,6 +135,19 @@ def Genetrack(bed,gene_dbi,ax,track_bottom):
     ax.add_patch(rect)
 
     return gene_track_height+track_bottom+0.03  # return the y-axis value of gene track top
+
+
+def SingleFragment(p1,p2,pair_dist):
+    '''
+    determine if mapped pair is single RNA fragment or not.
+      1. no linker
+      2. same chromosome
+      3. same RNA
+    '''
+    if (p1.stop-p1.start==90) and (p2.stop-p2.start==100) and (p1.chr==p2.chr):
+        if abs(p1.center-p2.center)<pair_dist:
+            return True
+
 
 def Wigtrack(bed, bw, ax, track_bottom,col):
     array=bw.summarize(bed.chr,bed.start,bed.stop,(bed.stop-bed.start)/10).sum_data
@@ -236,7 +255,7 @@ def Main():
     cmap=cm.get_cmap('Paired', 10)
     cmap=cmap(range(10))
     for b in read_interaction("temp2.txt",s1):
-        if args.Slim and b[0].overlap(b[1],-pair_dist): continue
+        #if args.Slim and b[0].overlap(b[1],-pair_dist): continue
         if Bed([part2.chr,start2,end2]).overlap(b[1],0):
             k+=1
             x1_2_start=transform(b[0].start,start1,end1,start2,end2)
@@ -256,13 +275,22 @@ def Main():
     print "\nList of linked pairs plotted: "
     for b in read_interaction("temp2.txt",s2):
         col='k'
-        if args.Slim and b[0].overlap(b[1],-pair_dist): continue
-        if b[0].overlap(b[1],-pair_dist): col='#03C03C'
-        if part1.overlap(b[0],-distance) and part2.overlap(b[1],-distance):
+        if args.Slim and SingleFragment(b[0],b[1],pair_dist): continue
+        if SingleFragment(b[0],b[1],pair_dist): col='#03C03C'
+        if part1.overlap(b[0],-distance) and part2.overlap(b[1],-distance):    
             x1_2_start=transform(b[0].start,start1,end1,start2,end2)
             x1_2_end=transform(b[0].stop,start1,end1,start2,end2)
-            ax2.plot([(x1_2_start+x1_2_end)/2,b[1].center],[y_1+0.02,y_2+0.02],"ko-",
-                     markersize=1.5,markeredgewidth=0,color=col,alpha=0.3,lw=0.5)
+            if b[0].strand=='-':
+                connect1=x1_2_start
+            else:
+                connect1=x1_2_end
+            if b[1].strand=="-":
+                connect2=b[1].start
+            else:
+                connect2=b[1].stop
+            ax2.plot([connect1,connect2],[y_1+0.02,y_2+0.02],color=col,alpha=0.3,lw=0.5)
+            ax1.plot([b[0].start,b[0].stop],[y_1+0.02,y_1+0.02],color=col,alpha=0.3,lw=0.8)
+            ax2.plot([b[1].start,b[1].stop],[y_2+0.02,y_2+0.02],color=col,alpha=0.3,lw=0.8)
            # print "  "+b[0].str_region()+" <-> "+b[1].str_region()
     plt.text(0.5, 1.15, part1.str_region()+" <-> "+part2.str_region(),
          horizontalalignment='center',

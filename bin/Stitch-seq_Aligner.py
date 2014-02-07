@@ -80,14 +80,20 @@ def Main():
             print >> sys.stderr, "Not match!!"
             sys.exit(0)
         if ( not record1.is_unmapped) & ( not record2.is_unmapped):
+            strand1="+"
+            strand2="+"
+            if record1.is_reverse:
+                strand1="-"
+            if record2.is_reverse:
+                strand2="-"
             if args.annotation:
                 bed1=Bed([miRNA_align.getrname(record1.tid),record1.pos,record1.aend])
                 bed2=Bed([miRNA_align.getrname(record2.tid),record2.pos,record2.aend])
                 [name1,typ1,subtype1]=annotation(bed1,dbi1,dbi2,dbi3)
                 [name2,typ2,subtype2]=annotation(bed2,dbi1,dbi2,dbi3)
-                print '\t'.join(str(f) for f in [miRNA_align.getrname(record1.tid),record1.pos,record1.aend,record1.seq,name1,typ1,subtype1,record1.qname,mRNA_align.getrname(record2.tid),record2.pos,record2.aend,record2.seq,name2,typ2,subtype2])
+                print '\t'.join(str(f) for f in [miRNA_align.getrname(record1.tid),record1.pos,record1.aend,strand1,record1.seq,name1,typ1,subtype1,record1.qname,mRNA_align.getrname(record2.tid),record2.pos,record2.aend,strand2,record2.seq,name2,typ2,subtype2])
             else:
-                print '\t'.join(str(f) for f in [miRNA_align.getrname(record1.tid),record1.aend-record1.alen+1,record1.aend,record1.seq,record1.qname,mRNA_align.getrname(record2.tid),record2.aend-record2.alen+1,record2.aend,record2.seq])
+                print '\t'.join(str(f) for f in [miRNA_align.getrname(record1.tid),record1.aend-record1.alen+1,record1.aend,strand1,record1.seq,record1.qname,mRNA_align.getrname(record2.tid),record2.aend-record2.alen+1,record2.aend,strand2,record2.seq])
     miRNA_align.close()
     mRNA_align.close()
 

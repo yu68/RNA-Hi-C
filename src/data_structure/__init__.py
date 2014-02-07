@@ -9,10 +9,10 @@ class annotated_bed():
         """
         Initiation example:
         
-        >>> str="chr13\t40975747\t40975770\tATTAAG...TGA\tprotein_coding\tgcnt2\tintron"
+        >>> str="chr13\t40975747\t40975770\t+\tATTAAG...TGA\tprotein_coding\tgcnt2\tintron"
         >>> a=annotated_bed(str)
         or
-        >>> a=annotated_bed(chr="chr13",start=40975747,end=40975770,type="protein_coding",)
+        >>> a=annotated_bed(chr="chr13",start=40975747,end=40975770,strand='+',type="protein_coding",)
         """
         if x is not None:
             if type(x)==type("str"):
@@ -20,11 +20,12 @@ class annotated_bed():
             self.chr=str(x[0]).strip()
             self.start=int(x[1])
             self.end=int(x[2])
+            self.strand=str(x[4]).strip()
             try:
-                self.seq=str(x[3]).strip()
-                self.type=str(x[4]).strip()
-                self.name=str(x[5]).strip()
-                self.subtype=str(x[6]).strip()
+                self.seq=str(x[4]).strip()
+                self.type=str(x[5]).strip()
+                self.name=str(x[6]).strip()
+                self.subtype=str(x[7]).strip()
             except:
                 pass
         for key in kwargs.keys():

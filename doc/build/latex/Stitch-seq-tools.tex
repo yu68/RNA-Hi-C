@@ -14,7 +14,7 @@
 
 
 \title{Stitch-seq-tools Documentation}
-\date{January 27, 2014}
+\date{February 07, 2014}
 \release{0.2.2}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -581,7 +581,7 @@ The format for the output file \code{ACCT\_fragment\_paired\_align.txt} will be:
 \hline
 \textsf{\relax 
 Column \footnote{
-column 9-15 are the same as column 1-7 except they are for part2 instead of part1.
+column 10-17 are the same as column 1-8 except they are for part2 instead of part1.
 }
 } & \textsf{\relax 
 Description
@@ -599,27 +599,32 @@ start/end position of part1
 
 4
  & 
-sequence of part1
+strand information of part1
 \\
 
 5
  & 
-RNA type for part1
+sequence of part1
 \\
 
 6
  & 
-RNA name for part1
+RNA type for part1
 \\
 
 7
+ & 
+RNA name for part1
+\\
+
+8
  & 
 RNA subtype \footnote{
 subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), `.' for others
 } for part1
 \\
 
-8
+9
  & 
 name of the pair
 \\
@@ -1129,10 +1134,10 @@ Example:
 Initiation example:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n+nb}{str}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13  40975747        40975770        ATTAAG...TGA    protein\PYGZus{}coding  gcnt2   intron}\PYG{l+s}{\PYGZdq{}}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n+nb}{str}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13  40975747        40975770        +       ATTAAG...TGA    protein\PYGZus{}coding  gcnt2   intron}\PYG{l+s}{\PYGZdq{}}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{str}\PYG{p}{)}
 \PYG{g+go}{or}
-\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{chr}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{start}\PYG{o}{=}\PYG{l+m+mi}{40975747}\PYG{p}{,}\PYG{n}{end}\PYG{o}{=}\PYG{l+m+mi}{40975770}\PYG{p}{,}\PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{protein\PYGZus{}coding}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{chr}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{n}{start}\PYG{o}{=}\PYG{l+m+mi}{40975747}\PYG{p}{,}\PYG{n}{end}\PYG{o}{=}\PYG{l+m+mi}{40975770}\PYG{p}{,}\PYG{n}{strand}\PYG{o}{=}\PYG{l+s}{\PYGZsq{}}\PYG{l+s}{+}\PYG{l+s}{\PYGZsq{}}\PYG{p}{,}\PYG{n+nb}{type}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{protein\PYGZus{}coding}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{p}{)}
 \end{Verbatim}
 
 \end{fulllineitems}

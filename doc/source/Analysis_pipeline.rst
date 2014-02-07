@@ -289,14 +289,15 @@ The format for the output file ``ACCT_fragment_paired_align.txt`` will be:
   =============  ===========================
     1            chromosome name of part1
    2,3           start/end position of part1
-    4            sequence of part1
-    5            RNA type for part1
-    6            RNA name for part1
-    7            RNA subtype [#f2]_ for part1
-    8            name of the pair
+    4            strand information of part1
+    5            sequence of part1
+    6            RNA type for part1
+    7            RNA name for part1
+    8            RNA subtype [#f2]_ for part1
+    9            name of the pair
   =============  ===========================
 
-.. [#f1] column 9-15 are the same as column 1-7 except they are for part2 instead of part1.
+.. [#f1] column 10-17 are the same as column 1-8 except they are for part2 instead of part1.
 .. [#f2] subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), '.' for others
 
 .. _step6:

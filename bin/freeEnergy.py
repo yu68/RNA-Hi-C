@@ -66,4 +66,3 @@ plt.legend()
 print "wilcoxon signed-rank test:",pvalue1,"Paired t-test:",pvalue2
 plt.savefig("free_energy.pdf")
 plt.close()    
-

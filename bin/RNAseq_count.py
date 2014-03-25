@@ -6,6 +6,7 @@ from xplib import TableIO
 from xplib import DBI
 from xplib.Annotation import Bed
 from Annotation import *
+import pysam
 
 def ParseArg():
     p=argparse.ArgumentParser(description = "Count RPKM value of RNAseq/CLIPseq for clusters (genomic regions) in strong interaction",epilog="Library dependency: bam2x")
@@ -53,13 +54,13 @@ def Main():
         print >> sys.stderr, "\n Reading data file:"+temp_name+"..."
         total_reads[temp_name]=0
         if args.format[i]=="bam":
-            Format="bam2bed"
+            total_reads[temp_name] = reduce(lambda x, y: x + y, [ int(l.rstrip('\n').split('\t')[2]) for l in pysam.idxstats(args.data[i])])
         else:
             Format="bed"
-        for b in TableIO.parse(args.data[i],Format):
-            total_reads[temp_name]+=1
-            if total_reads[temp_name]%50000==0:
-                print >> sys.stderr, "  reading %d reads..\r"%(total_reads[temp_name]),
+            for b in TableIO.parse(args.data[i],Format):
+                total_reads[temp_name]+=1
+                if total_reads[temp_name]%50000==0:
+                    print >> sys.stderr, "  reading %d reads..\r"%(total_reads[temp_name]),
         data[temp_name]=DBI.init(args.data[i],args.format[i])
         
     
@@ -78,6 +79,7 @@ def Main():
         if l.strip()=='': continue
         l=l.strip().split('\t')
         num=num+1
+        if l[0]=="chrM" or l[7]=="chrM": continue
         C1=Bed([l[0],int(l[1]),int(l[2])])
         C2=Bed([l[7],int(l[8]),int(l[9])])
         rpkm1="\t".join (str(f) for f in [RPKM(C1,data[n],total_reads[n],n) for n in data.keys()])

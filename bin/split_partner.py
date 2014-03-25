@@ -244,7 +244,7 @@ def main():
                     if hsp.expect < expect:
                         start1=min(hsp.query_start,hsp.query_end,start1)
             start2=len(read2)
-            for alignment in linker_record1.alignments:
+            for alignment in linker_record2.alignments:
                 expect=evalue
                 for hsp in alignment.hsps:
                     if hsp.expect < expect:

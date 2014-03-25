@@ -42,7 +42,7 @@ for l in mappedPair.read().split('\n'):
     i+=1
     if i%100==0:
         print >>sys.stderr, "processing %d %.2f %.2f\r"%(i,sum(energies)/float(i),sum(random_energies)/float(i)),
-    if i==100000:
+    if i==2000:
         break
 
 energies=np.array(energies)
@@ -56,7 +56,7 @@ density._compute_covariance()
 density_r = stats.gaussian_kde(random_energies)
 density_r.covariance_factor = lambda : .10
 density_r._compute_covariance()
-xs = np.linspace(-40,0,500)
+xs = np.linspace(min(energies),0,500)
 plt.figure(figsize=(6,4))
 plt.plot(xs,density(xs),label="ChimericRNA")
 plt.plot(xs,density_r(xs),label="Random")

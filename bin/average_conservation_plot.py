@@ -118,7 +118,7 @@ def Main():
         n+=1
         if n%100==0:
             print >>sys.stderr, "%d th linkedPair now\r"%(n),
-        if n>100000:
+        if n>5000:
             break
     arrays1=np.array(arrays1)
     arrays2=np.array(arrays2)

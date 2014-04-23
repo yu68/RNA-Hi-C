@@ -2,7 +2,11 @@
 
 list.of.packages <- c("argparse","RCircos", "biovizBase","rtracklayer")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages,repos="http://R-Forge.R-project.org")
+if(length(new.packages)) {
+  install.packages(new.packages,repos="http://cran.us.r-project.org");
+  source("http://bioconductor.org/biocLite.R")
+  biocLite(new.packages)
+}
 suppressPackageStartupMessages(require(rtracklayer))
 suppressPackageStartupMessages(require(RCircos))
 suppressPackageStartupMessages(require(argparse))
@@ -145,7 +149,7 @@ colorRamp <- function (colors, bias = 1, space = c("rgb", "Lab"), interpolate = 
 } 
 
 
-#  modified link plot function change color scheme (color_list is the vector of p-values for all interactions)
+#  modified link plot function change color scheme (color_list is the vector of inter-type and p-values for all interactions)
 RCircos.Link.Plot<-function(link.data, track.num, color_list)
 {
   RCircos.Pos <- RCircos.Get.Plot.Positions();
@@ -168,8 +172,8 @@ RCircos.Link.Plot<-function(link.data, track.num, color_list)
   base.positions <- RCircos.Pos*start;
   
   data.points <- matrix(rep(0, nrow(link.data)*2), ncol=2);
-  colfunc <- colorRampPalette(c("#FFFFFF11", "#FF0000FF"));
-  line.colors <- colfunc(12)[-2*log10(color_list+1e-6)]
+  colors <- colors=cbind(rep("#FFFFFF11",max(color_list[1,])),rainbow(max(color_list[1,])))
+  line.colors <- apply(color_list,1, function (x) colorRampPalette(colors[x[1],])(12)[-2*log10(x[2]+1e-6)]);
   for(a.link in 1:nrow(link.data))
   {
     data.points[a.link, 1] <- RCircos.Data.Point(
@@ -293,11 +297,21 @@ part2_cov$Data=log(part2_cov$Data+1)/max(log(part2_cov$Data+1))
 cat("Generating link data from interaction file... \n")
 interaction<-read.table(interaction_f,sep='\t',header=F)
 interaction=interaction[(!grepl("rRNA",interaction[,4]))&(!grepl("rRNA",interaction[,11])),]
-interaction_p=interaction[,16]
+interaction=interaction[(interaction[,1]!="chrM")&(interaction[,4]!="chrM"),]
+#  interaction_type
+Types=apply(interaction[,c(4,11)],1, function(x) paste(sort(x)[1],sort(x)[2],sep='-'))
+type_n = c("snRNA","lincRNA","snoRNA","miRNA","protein_coding")
+Types[!((interaction[,4] %in% type_n)&(interaction[,11] %in% type_n))]="Other"
+Types[(interaction[,1]==interaction[,8])&(interaction[,5]=interaction[,12])]="Self"
+
+cat("Count of different interaction types: \n")
+print(table(Types))
+Type_int = as.integer(factor(Types)) 
+
+interaction_p=interaction[,16] # for the alpha channel of color, based on -log(p-value)
 interaction=interaction[,c(1:3,8:10)]
 data(RCircos.Link.Data)
 colnames(interaction)<-colnames(RCircos.Link.Data)
-interaction=interaction[(interaction[,1]!="chrM")&(interaction[,4]!="chrM"),]
 rm(RCircos.Link.Data)
 
 
@@ -321,7 +335,7 @@ RCircos.Histogram.Plot(part2_cov, 4, 2, "in","#0288ad");
 
 #  Link plot for interactions
 cat("Draw Interaction links ...\n");
-RCircos.Link.Plot(interaction,3,interaction_p)
+RCircos.Link.Plot(interaction,3,cbind(Type_int,interaction_p))   # Type_int for color and interaction_p for alpha
 
 #  Close the graphic device and clear memory
 dev.off()

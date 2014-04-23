@@ -25,7 +25,8 @@ def ParseArg():
     p.add_argument("--blast_path",dest="blast_path",type=str,help="path for the local blast program",default="~/Softwares/ncbi-blast-2.2.27+/bin/blastn")
     p.add_argument("-o","--output",dest="output",type=str,help="output file containing sequences of two sepatated parts")
     p.add_argument("-t","--trim",type=int,default=10,help="trim off the first this number of nt as index, default:10")
-    p.add_argument("-b","--batch",type=int,default=200000,help="batch this number of fragments for BLAST at a time. default: 100000")
+    p.add_argument("-b","--batch",type=int,default=200000,help="batch this number of fragments for BLAST at a time. default: 200000")
+    p.add_argument("-r","--release",action='store_true',help="set to allow released criterion for Paired fragment in Type 3, include those ones with no linker in two reads")
     p.add_argument("-l","--length",type=int,default=15,help="shortest length to be considered for each part of the pair, default: 15")
     if len(sys.argv)==1:
         print >>sys.stderr,p.print_help()
@@ -252,6 +253,7 @@ def main():
           
             if (start1==len(read1) and start2==len(read2)):
                 align_no_linker+=1
+                if not args.realse: continue
             if (start1>trim_n+min_l) and (start2>min_l):
                 SeqIO.write(read1[trim_n:start1],output4, types)
                 SeqIO.write(read2[:start2],output5, types)

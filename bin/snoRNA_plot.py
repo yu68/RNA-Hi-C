@@ -70,16 +70,16 @@ def Main():
         ax.bar(p2_start,0.7*space,p2_end-p2_start,facecolor=col2,edgecolor=col2,bottom=y_bottom,lw=0.1)
         rev_table=string.maketrans('ACGTacgt', 'TGCAtgca')
         if p[3]=='+':
-            print p1_end,p[4][-10:],
+            print p1_end-geneStart,p[4][-10:],
             ax.bar(p1_end-5,0.7*space,5,facecolor='k',edgecolor='k',bottom=y_bottom,lw=0.1)
         else:
-            print p1_start,revcomp(p[4][:10],rev_table),
+            print p1_start-geneStart,revcomp(p[4][:10],rev_table),
             ax.bar(p1_start,0.7*space,5,facecolor='k',edgecolor='k',bottom=y_bottom,lw=0.1)
         if p[12]=='+':
-            print p2_end,revcomp(p[13][-10:],rev_table)
+            print p2_end-geneStart,revcomp(p[13][-10:],rev_table)
             ax.bar(p2_end-5,0.7*space,5,facecolor='k',edgecolor='k',bottom=y_bottom,lw=0.1)
         else:
-            print p2_start,p[13][:10]
+            print p2_start-geneStart,p[13][:10]
             ax.bar(p2_start,0.7*space,5,facecolor='k',edgecolor='k',bottom=y_bottom,lw=0.1)
         i=i+1
     plt.savefig(args.output)

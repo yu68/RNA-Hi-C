@@ -172,8 +172,8 @@ RCircos.Link.Plot<-function(link.data, track.num, color_list)
   base.positions <- RCircos.Pos*start;
   
   data.points <- matrix(rep(0, nrow(link.data)*2), ncol=2);
-  colors <- colors=cbind(rep("#FFFFFF11",max(color_list[1,])),rainbow(max(color_list[1,])))
-  line.colors <- apply(color_list,1, function (x) colorRampPalette(colors[x[1],])(12)[-2*log10(x[2]+1e-6)]);
+  colors <- cbind(rep("#FFFFFF11",max(color_list[,1])),rainbow(max(color_list[,1])))
+  line.colors <- apply(color_list,1, function (x) colorRampPalette(colors[x[1],])(12)[floor((18-x[2])/4)]);
   for(a.link in 1:nrow(link.data))
   {
     data.points[a.link, 1] <- RCircos.Data.Point(
@@ -302,13 +302,18 @@ interaction=interaction[(interaction[,1]!="chrM")&(interaction[,4]!="chrM"),]
 Types=apply(interaction[,c(4,11)],1, function(x) paste(sort(x)[1],sort(x)[2],sep='-'))
 type_n = c("snRNA","lincRNA","snoRNA","miRNA","protein_coding")
 Types[!((interaction[,4] %in% type_n)&(interaction[,11] %in% type_n))]="Other"
-Types[(interaction[,1]==interaction[,8])&(interaction[,5]=interaction[,12])]="Self"
+Types[(as.character(interaction[,1])==as.character(interaction[,8]))&(as.character(interaction[,5])==as.character(interaction[,12]))]="Self"
 
+Types[Types=="miRNA-snRNA"]="Other"
+Types[Types=="miRNA-miRNA"]="Other"
 cat("Count of different interaction types: \n")
 print(table(Types))
-Type_int = as.integer(factor(Types)) 
+
+All_types = c("lincRNA-lincRNA","lincRNA-protein_coding","lincRNA-snoRNA","lincRNA-snRNA","miRNA-protein_coding","miRNA-snoRNA","protein_coding-protein_coding","protein_coding-snoRNA","protein_coding-snRNA","snoRNA-snoRNA","snoRNA-snRNA","snRNA-snRNA","Self","Other")
+Type_int = match(Types,All_types)
 
 interaction_p=interaction[,16] # for the alpha channel of color, based on -log(p-value)
+interaction_p[interaction_p==-Inf]=-30.0
 interaction=interaction[,c(1:3,8:10)]
 data(RCircos.Link.Data)
 colnames(interaction)<-colnames(RCircos.Link.Data)

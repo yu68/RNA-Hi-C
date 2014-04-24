@@ -16,9 +16,9 @@ def ParseArg():
     p=argparse.ArgumentParser( description = 'DESCRIPTION: Run BLAST and select positive results from BLAST XML output for both miRNA and mRNA database', epilog='')
     p.add_argument("input",type=str,help="the input fastq/fasta file containing reads sequences")
     p.add_argument("-e","--evalue",dest="evalue",nargs='+',default=0,help="cutoff evalues, only choose alignment with evalue less than this cutoffs (need two, first for miRNA and second for mRNA, default: 1e-5, 1e-15).")
-    p.add_argument("--mRNA_db",dest="mRNA_db",type=str,help="BLAST database of mRNA sequences",default="~/Stitch-seq/blast_db/mouse_RefSeq_mRNA.fasta")
-    p.add_argument("--miRNA_db",dest="miRNA_db",type=str,help="BLAST database of miRNA sequences",default="~/Stitch-seq/blast_db/mouse_miRNA_mature.fa")
-    p.add_argument("--blast_path",dest="blast_path",type=str,help="path for the local blast program",default="~/Softwares/ncbi-blast-2.2.27+/bin/blastn")
+    p.add_argument("--mRNA_db",dest="mRNA_db",type=str,help="BLAST database of mRNA sequences",default="/home/yu68/Stitch-seq/blast_db/mouse_RefSeq_mRNA.fasta")
+    p.add_argument("--miRNA_db",dest="miRNA_db",type=str,help="BLAST database of miRNA sequences",default="/home/yu68/Stitch-seq/blast_db/mouse_miRNA_mature.fa")
+    p.add_argument("--blast_path",dest="blast_path",type=str,help="path for the local blast program",default="/home/yu68/Softwares/ncbi-blast-2.2.27+/bin/blastn")
     p.add_argument("-o","--output",dest="output",type=str,help="output prefix. The program will generate three output file: prefix_all.txt - output all matches for reads; prefix_both.txt - output only reads with both miRNA and mRNA matches; prefix_stringent.txt - with requirement in both but also the one miRNA match need to be before mRNA matches in the read.")
     if len(sys.argv)==1:
         print >>sys.stderr,p.print_help()

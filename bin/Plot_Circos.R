@@ -176,6 +176,7 @@ RCircos.Link.Plot<-function(link.data, track.num, color_list)
   line.colors <- apply(color_list,1, function (x) colorRampPalette(colors[x[1],])(12)[floor((18-x[2])/4)]);
   for(a.link in 1:nrow(link.data))
   {
+    if(color_list[a.link,1]==14) { next; }   #  remove "Other" types 
     data.points[a.link, 1] <- RCircos.Data.Point(
       link.data[a.link, 1], link.data[a.link, 2]);
     data.points[a.link, 2] <- RCircos.Data.Point(
@@ -312,6 +313,9 @@ print(table(Types))
 All_types = c("lincRNA-lincRNA","lincRNA-protein_coding","lincRNA-snoRNA","lincRNA-snRNA","miRNA-protein_coding","miRNA-snoRNA","protein_coding-protein_coding","protein_coding-snoRNA","protein_coding-snRNA","snoRNA-snoRNA","snoRNA-snRNA","snRNA-snRNA","Self","Other")
 Type_int = match(Types,All_types)
 
+Type_int = Type_int[Types!="Other"]
+
+interaction = interaction[Types!="Other",]
 interaction_p=interaction[,16] # for the alpha channel of color, based on -log(p-value)
 interaction_p[interaction_p==-Inf]=-30.0
 interaction=interaction[,c(1:3,8:10)]

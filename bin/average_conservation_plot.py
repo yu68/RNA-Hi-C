@@ -11,6 +11,7 @@ import sys,argparse
 from bx.bbi.bigwig_file import BigWigFile
 import matplotlib.pyplot as plt
 import numpy as np
+import random
 
 def ParseArg():
     p=argparse.ArgumentParser( description = 'plot average conservation score near linker connection point',epilog="library denpenddency: bx-python, matplotlib,numpy")
@@ -64,6 +65,15 @@ def read_linkedPair(File,s,span):
         bed2=Bed([lsep[s],connectP-span,connectP+span],strand=lsep[s+3])
         yield (bed1,bed2,l)
 
+def RandomBed(bed):
+    '''
+    generate a random region with the same chr and length as the given bed
+    '''
+    start = random.randint(0,50000000)
+    length = bed.stop-bed.start
+    Strand = random.choice("+-")
+    return(Bed([bed.chr,start,start+length],strand=Strand))
+
 def WigToCount(bed,bw):
     '''
     find intensity of wig within bed range, strand specific
@@ -108,37 +118,53 @@ def Main():
     span=args.span
     arrays1=[]
     arrays2=[]
+    arrays3=[]
+    arrays4=[]
     bw=BigWigFile(open(phyloP_wig))
     n=0
     for i in read_linkedPair(linkedPair,s,span):
         bed1=i[0]
         bed2=i[1]
+        bed3=RandomBed(bed1)
+        bed4=RandomBed(bed2)
         arrays1.append(WigToCount(bed1,bw))
         arrays2.append(WigToCount(bed2,bw))
+        arrays3.append(WigToCount(bed3,bw))
+        arrays4.append(WigToCount(bed3,bw))
         n+=1
         if n%100==0:
             print >>sys.stderr, "%d th linkedPair now\r"%(n),
-        if n>5000:
+        if n>1000:
             break
     arrays1=np.array(arrays1)
     arrays2=np.array(arrays2)
+    arrays3=np.array(arrays3)
+    arrays4=np.array(arrays4)
     average1=np.sum(arrays1,axis=0)/arrays1.shape[0]
     average2=np.sum(arrays2,axis=0)/arrays2.shape[0]
+    average3=np.sum(arrays3,axis=0)/arrays3.shape[0]
+    average4=np.sum(arrays4,axis=0)/arrays4.shape[0]
     average2=average2[::-1]
+    average4=average4[::-1]
     average1=smooth(average1,w)
     average2=smooth(average2,w)
+    average3=smooth(average3,w)
+    average4=smooth(average4,w)
     plt.figure(figsize=(8,4))
     plt.xlim=(-span,3*span)
     plt.plot(range(-span,span),average1,label="part1",color="blue")
     plt.plot(range(span,3*span),average2,label="part2",color="red")
-    plt.bar(-200,0.05,200,facecolor='blue',edgecolor='blue',bottom=0.1,lw=0.1)
-    plt.bar(-10,0.05,10,facecolor='k',edgecolor='k',bottom=0.1,lw=0.1)
-    plt.bar(2*span,0.05,200,facecolor='red',edgecolor='red',bottom=0.1,lw=0.1)
-    plt.bar(2*span,0.05,10,facecolor='k',edgecolor='k',bottom=0.1,lw=0.1)
+    plt.plot(range(-span,span),average3,"b--",label="part1_ctl",color="blue")
+    plt.plot(range(span,3*span),average4,"r--",label="part2_ctl",color="red")
+    plt.bar(-200,0.05,200,facecolor='blue',edgecolor='blue',bottom=-0.05,lw=0.1)
+    plt.bar(-10,0.05,10,facecolor='k',edgecolor='k',bottom=-0.05,lw=0.1)
+    plt.bar(2*span,0.05,200,facecolor='red',edgecolor='red',bottom=-0.05,lw=0.1)
+    plt.bar(2*span,0.05,10,facecolor='k',edgecolor='k',bottom=-0.05,lw=0.1)
     plt.xticks([-span,0,span,2*span,3*span],[-span,0,"...",0,span])
-    plt.bar(0,0.01,2*span,facecolor='k',edgecolor='k',bottom=0.12,lw=0.1)
+    plt.bar(0,0.01,2*span,facecolor='k',edgecolor='k',bottom=-0.03,lw=0.1)
     plt.ylabel("Conservation Pylop Score")
     plt.xlabel("length (bp)")
+    plt.ylim(-0.1,1.2)
     plt.tight_layout()
     plt.savefig(args.output)
     plt.close()

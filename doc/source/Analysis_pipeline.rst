@@ -416,11 +416,9 @@ The script tool 'intersectInteraction.py' could be used to identify overlap of i
                         interactions to call intersections, default: 1
     -o OUTPUT, --output OUTPUT
                           specify output file
-    -c, --compare         Use a set of different 'nbase' to call overlaps and
-                          find the best one. if nbase=-200, then choose from
-                          [0,-10,-20,...,-200]
+    -p, --pvalue          calculate p-values based on 100times permutations
 
-  require numpy and matplotlib if set '-c'
+  require 'random'&'numpy'&'scipy' module if set '-p'
 
-if "-c" option is set, then the program will also output a plot to show different numbers of intersections (overlaps) given a sequence of different "-n" parameters.
+if "-p" option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in set a. A p-value will be calculate based on permutation distribution.
 

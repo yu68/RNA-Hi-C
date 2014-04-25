@@ -289,14 +289,15 @@ The format for the output file ``ACCT_fragment_paired_align.txt`` will be:
   =============  ===========================
     1            chromosome name of part1
    2,3           start/end position of part1
-    4            sequence of part1
-    5            RNA type for part1
-    6            RNA name for part1
-    7            RNA subtype [#f2]_ for part1
-    8            name of the pair
+    4            strand information of part1
+    5            sequence of part1
+    6            RNA type for part1
+    7            RNA name for part1
+    8            RNA subtype [#f2]_ for part1
+    9            name of the pair
   =============  ===========================
 
-.. [#f1] column 9-15 are the same as column 1-7 except they are for part2 instead of part1.
+.. [#f1] column 10-17 are the same as column 1-8 except they are for part2 instead of part1.
 .. [#f2] subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), '.' for others
 
 .. _step6:
@@ -368,7 +369,10 @@ The column description for output file ``ACCT_interaction_clusters.txt`` is:
 Step 7: Visualization of interactions and coverages.
 ----------------------------------------------------
 
-:ref:`Visualization`
+There are two ways of visulization provided ( LOCAL and GLOBAL ):
+
+ * :ref:`Visualization of local interactions <VisualizationLocal>`.
+ * :ref:`Visualization of global interactome <VisualizationGlobal>`.
 
 Other functions
 ===============
@@ -384,3 +388,37 @@ Determine the RNA types of different parts within fragments.
 
 Find linker sequences within the library.
 -----------------------------------------
+
+.. _intersection:
+
+Find intersections between two different interaction sets.
+----------------------------------------------------------
+.. index:: intersectInteraction.py
+
+The script tool 'intersectInteraction.py' could be used to identify overlap of interactions between two interaction set from independent experiments (two replicates or treatment v.s. control) ::
+
+  usage: intersectInteraction.py [-h] -a FILEA -b FILEB [-s START] [-n NBASE]
+                                 [-o OUTPUT] [-c]
+
+  find intersections (overlaps) between two interaction sets
+  
+  optional arguments:
+    -h, --help            show this help message and exit
+    -a FILEA, --filea FILEA
+                          file for interaction set a
+    -b FILEB, --fileb FILEB
+                          file for interaction set b
+    -s START, --start START
+                          start column number of the second part in each
+                          interaction (0-based), default:7
+    -n NBASE, --nbase NBASE
+                          number of overlapped nucleotides for each part of
+                        interactions to call intersections, default: 1
+    -o OUTPUT, --output OUTPUT
+                          specify output file
+    -p, --pvalue          calculate p-values based on 100times permutations
+
+  require 'random'&'numpy'&'scipy' module if set '-p'
+
+if "-p" option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in set a. A p-value will be calculate based on permutation distribution.
+

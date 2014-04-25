@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  7 FEB 2014 10:42
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  24 APR 2014 21:12
 entering extended mode
  %&-line parsing enabled.
 **Stitch-seq-tools.tex
@@ -951,17 +951,17 @@ g>]
 Chapter 4.
 [17
 
-] <Interactome_GGCG.JPG, id=279, 476.0184pt x 439.8834pt>
-File: Interactome_GGCG.JPG Graphic file (type jpg)
+] <GGCG-MEF_interactome.jpg, id=279, 578.16pt x 578.16pt>
+File: GGCG-MEF_interactome.jpg Graphic file (type jpg)
 
-<use Interactome_GGCG.JPG>
-File: Interactome_GGCG.JPG Graphic file (type jpg)
- <use Interactome_GGCG.JPG> [18 <./Interactome_GGCG.JPG>]
+<use GGCG-MEF_interactome.jpg>
+File: GGCG-MEF_interactome.jpg Graphic file (type jpg)
+ <use GGCG-MEF_interactome.jpg> [18 <./GGCG-MEF_interactome.jpg>]
 Chapter 5.
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 953.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 951.
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <9> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 975.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 973.
 [19
 
 ] [20] [21] [22
@@ -985,9 +985,9 @@ Chapter 7.
 
 ]) (./Stitch-seq-tools.aux) ) 
 Here is how much of TeX's memory you used:
- 8233 strings out of 495061
- 112783 string characters out of 1182621
- 199181 words of memory out of 3000000
+ 8232 strings out of 495061
+ 112799 string characters out of 1182621
+ 199178 words of memory out of 3000000
  11037 multiletter control sequences out of 15000+50000
  72437 words of font info for 83 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
@@ -1002,7 +1002,7 @@ ourier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb
 mf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/
 type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr
 8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Stitch-seq-tools.pdf (33 pages, 2086958 bytes).
+Output written on Stitch-seq-tools.pdf (33 pages, 2109434 bytes).
 PDF statistics:
  425 PDF objects out of 1000 (max. 8388607)
  87 named destinations out of 1000 (max. 500000)

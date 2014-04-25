@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Python APIs created for this project &mdash; RNA-Stitch-seq-tools 0.2.1 documentation</title>
+    <title>Python APIs created for this project &mdash; RNA-Stitch-seq-tools 0.2.2 documentation</title>
     
     <link rel="stylesheet" href="_static/labibi.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.1',
+        VERSION:     '0.2.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="RNA-Stitch-seq-tools 0.2.1 documentation" href="index.html" />
-    <link rel="prev" title="Visualization of RNA-RNA interactome" href="Visualization.html" />
+    <link rel="top" title="RNA-Stitch-seq-tools 0.2.2 documentation" href="index.html" />
+    <link rel="prev" title="Visualization of local RNA-RNA interactions" href="Visualization.html" />
 
 
 <script src="_static/labibi.js"></script>
@@ -47,9 +47,9 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="Visualization.html" title="Visualization of RNA-RNA interactome"
+          <a href="Visualization.html" title="Visualization of local RNA-RNA interactions"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">RNA-Stitch-seq-tools 0.2.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">RNA-Stitch-seq-tools 0.2.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -130,7 +130,7 @@
 
 <dl class="function">
 <dt id="Annotation.annotation">
-<tt class="descclassname">Annotation.</tt><tt class="descname">annotation</tt><big>(</big><em>bed</em>, <em>ref_allRNA</em>, <em>ref_detail</em>, <em>genome</em><big>)</big><a class="headerlink" href="#Annotation.annotation" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">Annotation.</tt><tt class="descname">annotation</tt><big>(</big><em>bed</em>, <em>ref_allRNA</em>, <em>ref_detail</em>, <em>ref_repeat</em><big>)</big><a class="headerlink" href="#Annotation.annotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is based on <a class="reference internal" href="#Annotation.overlap" title="Annotation.overlap"><tt class="xref py py-func docutils literal"><span class="pre">overlap()</span></tt></a> and <a class="reference internal" href="#Annotation.Subtype" title="Annotation.Subtype"><tt class="xref py py-func docutils literal"><span class="pre">Subtype()</span></tt></a> functions to annotate RNA type/name/subtype for any genomic region.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -154,13 +154,12 @@
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib.Annotation</span> <span class="kn">import</span> <span class="n">Bed</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib</span> <span class="kn">import</span> <span class="n">DBI</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cogent.db.ensembl</span> <span class="kn">import</span> <span class="n">Genome</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Annotation</span> <span class="kn">import</span> <span class="n">annotation</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bed</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="mi">40975747</span><span class="p">,</span><span class="mi">40975770</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ref_allRNA</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/all_RNAs-rRNA_repeat.txt.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ref_detail</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/Ensembl_mm9.genebed.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">genome</span><span class="o">=</span><span class="n">Genome</span><span class="p">(</span><span class="s">&#39;mouse&#39;</span><span class="p">,</span> <span class="n">Release</span><span class="o">=</span><span class="mi">67</span><span class="p">,</span> <span class="n">account</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">annotation</span><span class="p">(</span><span class="n">bed</span><span class="p">,</span><span class="n">ref_allRNA</span><span class="p">,</span><span class="n">ref_detail</span><span class="p">,</span><span class="n">genome</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ref_repeat</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/mouse.repeat.txt.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">annotation</span><span class="p">(</span><span class="n">bed</span><span class="p">,</span><span class="n">ref_allRNA</span><span class="p">,</span><span class="n">ref_detail</span><span class="p">,</span><span class="n">ref_repeat</span><span class="p">)</span>
 <span class="go">[&quot;protein_coding&quot;,&quot;gcnt2&quot;,&quot;intron&quot;]</span>
 </pre></div>
 </div>
@@ -227,10 +226,10 @@
 <dt id="data_structure.annotated_bed.__init__">
 <tt class="descname">__init__</tt><big>(</big><em>x=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#data_structure.annotated_bed.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initiation example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="o">=</span><span class="s">&quot;chr13  40975747        40975770        ATTAAG...TGA    protein_coding  gcnt2   intron&quot;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="o">=</span><span class="s">&quot;chr13  40975747        40975770        +       ATTAAG...TGA    protein_coding  gcnt2   intron&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 <span class="go">or</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">40975747</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">40975770</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="s">&quot;protein_coding&quot;</span><span class="p">,)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">40975747</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">40975770</span><span class="p">,</span><span class="n">strand</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="s">&quot;protein_coding&quot;</span><span class="p">,)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -332,7 +331,7 @@
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="Visualization.html"
-                        title="previous chapter">Visualization of RNA-RNA interactome</a></p>
+                        title="previous chapter">Visualization of local RNA-RNA interactions</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/Other_api.txt"
@@ -365,9 +364,9 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="Visualization.html" title="Visualization of RNA-RNA interactome"
+          <a href="Visualization.html" title="Visualization of local RNA-RNA interactions"
              >previous</a> |</li>
-        <li><a href="index.html">RNA-Stitch-seq-tools 0.2.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">RNA-Stitch-seq-tools 0.2.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
 

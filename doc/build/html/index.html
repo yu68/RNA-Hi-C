@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to RNA-Stitch-seq-tools’s documentation! &mdash; RNA-Stitch-seq-tools 0.2.1 documentation</title>
+    <title>Welcome to RNA-Stitch-seq-tools’s documentation! &mdash; RNA-Stitch-seq-tools 0.2.2 documentation</title>
     
     <link rel="stylesheet" href="_static/labibi.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.1',
+        VERSION:     '0.2.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="RNA-Stitch-seq-tools 0.2.1 documentation" href="#" />
+    <link rel="top" title="RNA-Stitch-seq-tools 0.2.2 documentation" href="#" />
     <link rel="next" title="RNA-Stitch-seq-tools 0.2 documentation" href="Stitch-seq-tools.html" />
 
 
@@ -49,7 +49,7 @@
         <li class="right" >
           <a href="Stitch-seq-tools.html" title="RNA-Stitch-seq-tools 0.2 documentation"
              accesskey="N">next</a> |</li>
-        <li><a href="#">RNA-Stitch-seq-tools 0.2.1 documentation</a> &raquo;</li> 
+        <li><a href="#">RNA-Stitch-seq-tools 0.2.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -90,14 +90,21 @@
 <li class="toctree-l2"><a class="reference internal" href="Analysis_pipeline.html#other-functions">Other functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#determine-the-rna-types-of-different-parts-within-fragments">Determine the RNA types of different parts within fragments.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-linker-sequences-within-the-library">Find linker sequences within the library.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-intersections-between-two-different-interaction-sets">Find intersections between two different interaction sets.</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Visualization of RNA-RNA interactome</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Visualization of local RNA-RNA interactions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Visualization.html#prerequirement">Prerequirement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Visualization.html#run-the-program-to-generate-visualization">Run the program to generate visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Visualization.html#example-of-result-graph">Example of result graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html#visualization-of-global-rna-rna-interactome">Visualization of global RNA-RNA interactome</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id1">Prerequirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id2">Run the program to generate visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id3">Example of result graph</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Other_api.html">Python APIs created for this project</a><ul>
@@ -110,6 +117,17 @@
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">RNA-Stitch-seq-tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. <a class="reference external" href="http://bam2xwiki.appspot.com/">Try BAM2X now</a>!</p>
+</div>
+<div class="section" id="updates">
+<h2>Updates<a class="headerlink" href="#updates" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>New features in 0.2.2:</dt>
+<dd><ul class="first last simple">
+<li>&#8220;<a class="reference internal" href="Visualization.html#plotinteraction"><em>Plot_interaction.py</em></a>&#8221; function to plot local RNA-RNA interactions.</li>
+<li>&#8220;<a class="reference internal" href="Analysis_pipeline.html#intersection"><em>intersectInteraction.py</em></a>&#8221; function to call overlap between two independent interaction sets.</li>
+</ul>
+</dd>
+</dl>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -151,6 +169,7 @@
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Welcome to RNA-Stitch-seq-tools&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#updates">Updates</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
@@ -193,7 +212,7 @@
         <li class="right" >
           <a href="Stitch-seq-tools.html" title="RNA-Stitch-seq-tools 0.2 documentation"
              >next</a> |</li>
-        <li><a href="#">RNA-Stitch-seq-tools 0.2.1 documentation</a> &raquo;</li> 
+        <li><a href="#">RNA-Stitch-seq-tools 0.2.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
 

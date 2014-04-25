@@ -144,7 +144,7 @@ Example of result graph
 
 *Result figure:*
 
-.. image:: Interactome_GGCG.JPG
+.. image:: GGCG-MEF_interactome.jpg
 
 *Explanation:*
 
@@ -153,5 +153,5 @@ Example of result graph
  <ul>
  <li>The <font color="#763a7a"> purple </font>track right inside chromatin cytoband ideogram is the coverage of part1 (the first genomic regions connected with linker sequences) of this sample.</li> 
  <li>The <font color="#0288ad"> light blue </font>track next is the coverage of part2 (the other genomic regions connected with linkers). </li>
- <li>The <font color="red">inner </font>links are the strong interactions after removing rRNA. colors represent the confidence of the interaction (the ones with lower p-values are stronger) </li>
+ <li>The inner links are the strong interactions after removing rRNA. colors represent different types of interactions and the transparency represents the confidence of the interaction (the ones with lower p-values are stronger) </li>
  </ul>

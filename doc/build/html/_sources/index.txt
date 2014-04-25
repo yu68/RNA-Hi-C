@@ -24,6 +24,14 @@ Welcome to RNA-Stitch-seq-tools's documentation!
 
    RNA-Stitch-seq-tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. `Try BAM2X now <http://bam2xwiki.appspot.com/>`_!
 
+
+Updates
+-------
+  
+New features in 0.2.2:
+  * ":ref:`Plot_interaction.py<plotInteraction>`" function to plot local RNA-RNA interactions. 
+  * ":ref:`intersectInteraction.py<intersection>`" function to call overlap between two independent interaction sets.  
+
 Indices and tables
 ==================
 

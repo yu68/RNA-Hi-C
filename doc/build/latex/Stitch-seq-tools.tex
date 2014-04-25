@@ -14,7 +14,7 @@
 
 
 \title{Stitch-seq-tools Documentation}
-\date{February 07, 2014}
+\date{April 24, 2014}
 \release{0.2.2}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -787,14 +787,12 @@ optional arguments:
                       interactions to call intersections, default: 1
   -o OUTPUT, --output OUTPUT
                         specify output file
-  -c, --compare         Use a set of different 'nbase' to call overlaps and
-                        find the best one. if nbase=-200, then choose from
-                        [0,-10,-20,...,-200]
+  -p, --pvalue          calculate p-values based on 100times permutations
 
-require numpy and matplotlib if set '-c'
+require 'random'\&'numpy'\&'scipy' module if set '-p'
 \end{Verbatim}
 
-if ``-c'' option is set, then the program will also output a plot to show different numbers of intersections (overlaps) given a sequence of different ``-n'' parameters.
+if ``-p'' option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in set a. A p-value will be calculate based on permutation distribution.
 
 
 \chapter{Visualization of local RNA-RNA interactions}
@@ -936,7 +934,7 @@ Rscript Plot\_Circos.R GGCG\_interaction\_clusters.txt
 
 \emph{Result figure:}
 
-\includegraphics{Interactome_GGCG.JPG}
+\includegraphics{GGCG-MEF_interactome.jpg}
 
 \emph{Explanation:}
 

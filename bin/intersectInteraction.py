@@ -29,6 +29,8 @@ class Bed:
         self.end=int(x[2])
     def overlap(self,bed2,n):
         return (self.chro==bed2.chro) and (self.start+n<bed2.end) and (bed2.start+n<self.end)
+    def __str__(self):
+        return "%s:%d-%d"%(self.chro,self.start,self.end)
 
 def read_interaction(File,s):
     '''
@@ -92,7 +94,6 @@ perm_N = 100
 perm_positive = 0   # store permutation number larger than real
 perm_num = []
 for i in range(perm_N):
-    print >>sys.stderr,"  Permutation -  %d\r"%(i),
     random.shuffle(part2_a)
     m=0
     for j in range(num):
@@ -101,12 +102,13 @@ for i in range(perm_N):
         k = 0
         os.system("tabix temp.txt.gz %s:%i-%i > temp2.txt"%(a0.chro,a0.start+N,a0.end-N))        
         for b in read_interaction("temp2.txt",args.start):
-            if a[0].overlap(b[0],N) and a[1].overlap(b[1],N):
+            if a0.overlap(b[0],N) and a1.overlap(b[1],N):
                 k=k+1
         if k>0:
             m+=1
     if m >= real_inter_n:
         perm_positive+=1
+    print >>sys.stderr,"  Permutation-%d: Overlap %d\r"%(i+1,m),
     perm_num.append(m)
 
 mean = np.mean(perm_num)

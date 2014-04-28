@@ -253,7 +253,7 @@ def main():
           
             if (start1==len(read1) and start2==len(read2)):
                 align_no_linker+=1
-                if not args.realse: continue
+                if not args.release: continue
             if (start1>trim_n+min_l) and (start2>min_l):
                 SeqIO.write(read1[trim_n:start1],output4, types)
                 SeqIO.write(read2[:start2],output5, types)

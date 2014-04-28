@@ -27,6 +27,7 @@ def ParseArg():
     p.add_argument('input1',type=str,metavar='part1_reads',help='paired part1 fasta file')
     p.add_argument('input2',type=str,metavar='part2_reads',help='paired part2 fasta file')
     p.add_argument('bowtie_path',type=str,metavar='bowtie_path',help="path for the bowtie program")
+    p.add_argument('-b','--bowtie2',action="store_true",help="set to use bowtie2 (--sensitive-local) for alignment")
     p.add_argument('-s','--samtool_path',dest='spath', type=str,metavar='samtool_path',help="path for the samtool program",default='samtools')
     p.add_argument('miRNA_ref',type=str,metavar='part1_ref',default="mm9",help="reference genomic seq for part1")
     p.add_argument('mRNA_ref',type=str,metavar='part2_ref',help="reference genomic seq for part2")
@@ -40,18 +41,26 @@ def ParseArg():
         exit(0)
     return p.parse_args()
 
-def bowtie_align(b_path,read,ref,s_path):
+def bowtie_align(b_path,read,ref,s_path,bowtie2):
     # b_path: bowtie path;
     # s_path: samtools path;
+    # bowtie2: logic, true/false
+    
     sam=read.split("/")[-1].split(".")[0]+".sam"
     if ref.split(".")[-1] in ["fa","fasta"]:
         base=ref.split("/")[-1].split(".")[0]
         os.system("rm "+read+".log")
         os.system(b_path+"-build "+ref+" "+base+" >> "+read+".log 2>&1")
-        os.system(b_path+ " -f -n 1 -l 15 -e 200 -p 9 -S "+base+" "+read+" "+sam+" >> "+read+".log 2>&1")
+        if not bowtie2:
+            os.system(b_path+ " -f -n 1 -l 15 -e 200 -p 9 -S "+base+" "+read+" "+sam+" >> "+read+".log 2>&1")
+        else:
+            os.system(b_path+ " -x "+base+" -f -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read+".log 2>&1")
     else:
         os.system("rm "+read+".log")
-        os.system(b_path+ " -f -n 1 -l 15 -e 200 -p 9 -S "+ref+" "+read+" "+sam+" >> "+read+".log 2>&1")
+        if not bowtie2:
+            os.system(b_path+ " -f -n 1 -l 15 -e 200 -p 9 -S "+ref+" "+read+" "+sam+" >> "+read+".log 2>&1")
+        else:
+            os.system(b_path+ " -x "+ref+" -f -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read+".log 2>&1")
     bam=read.split("/")[-1].split(".")[0]+".bam"
     os.system(s_path+ " view -Sb -o "+bam +" "+sam)
     os.system("rm "+sam)
@@ -66,8 +75,8 @@ def bowtie_align(b_path,read,ref,s_path):
 def Main():
     args=ParseArg()
 
-    miRNA_align=bowtie_align(args.bowtie_path,args.input1,args.miRNA_ref,args.spath)
-    mRNA_align=bowtie_align(args.bowtie_path,args.input2,args.mRNA_ref,args.spath)
+    miRNA_align=bowtie_align(args.bowtie_path,args.input1,args.miRNA_ref,args.spath,args.bowtie2)
+    mRNA_align=bowtie_align(args.bowtie_path,args.input2,args.mRNA_ref,args.spath,args.bowtie2)
     
     if args.annotation:
         dbi1=DBI.init(args.annotation,"bed")
@@ -77,6 +86,8 @@ def Main():
     for record1, record2 in itertools.izip(miRNA_align, mRNA_align):
         
         if record1.qname.split(" ")[0]!=record2.qname.split(" ")[0]:
+            print record1.qname.split(" ")[0]
+            print record2.qname.split(" ")[0]
             print >> sys.stderr, "Not match!!"
             sys.exit(0)
         if ( not record1.is_unmapped) & ( not record2.is_unmapped):

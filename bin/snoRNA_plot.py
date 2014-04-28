@@ -1,6 +1,9 @@
 import sys,os,argparse
+import numpy as np
 import matplotlib.pyplot as plt
 import string
+from matplotlib.colors import LogNorm
+from pylab import cm
 
 def ParseArg():
     p=argparse.ArgumentParser(description='plot read stack in snoRNA regions')
@@ -36,7 +39,8 @@ def Main():
         Pairs=os.popen('grep "'+ID+'" '+args.linkedPair+" | awk '$7==$16' | sort -k2,2n -k12,12n").read().split('\n')
 
     fig = plt.figure(figsize=(4,4))
-    ax = plt.subplot(111,frameon=False,yticks=[],xticks=[])
+    ax = plt.subplot(121,frameon=False,yticks=[],xticks=[])
+    ax2 = plt.subplot(122)
     ax.set_xlim(1.2*geneStart-0.2*geneEnd,1.2*geneEnd-0.2*geneStart)
     
     #set x ticks withour offset
@@ -56,7 +60,10 @@ def Main():
     i=0
     col1="#4F81BD"
     col2="#C0504D"
-    
+
+    geneLen = geneEnd-geneStart+1
+    matrix = np.zeros((geneLen,geneLen))
+    matrix = matrix+0.01        
     for p in Pairs:
         if p.strip()=='': continue
         p=p.split('\t')
@@ -71,17 +78,26 @@ def Main():
         rev_table=string.maketrans('ACGTacgt', 'TGCAtgca')
         if p[3]=='+':
             print p1_end-geneStart,p[4][-10:],
+            x=p1_end-5-geneStart
             ax.bar(p1_end-5,0.7*space,5,facecolor='k',edgecolor='k',bottom=y_bottom,lw=0.1)
         else:
             print p1_start-geneStart,revcomp(p[4][:10],rev_table),
+            x=p1_start+5-geneStart
             ax.bar(p1_start,0.7*space,5,facecolor='k',edgecolor='k',bottom=y_bottom,lw=0.1)
         if p[12]=='+':
             print p2_end-geneStart,revcomp(p[13][-10:],rev_table)
+            y=p2_end-5-geneStart
             ax.bar(p2_end-5,0.7*space,5,facecolor='k',edgecolor='k',bottom=y_bottom,lw=0.1)
         else:
             print p2_start-geneStart,p[13][:10]
+            y=p2_start+5-geneStart
             ax.bar(p2_start,0.7*space,5,facecolor='k',edgecolor='k',bottom=y_bottom,lw=0.1)
+        x = min(max(x,0),geneLen-1)
+        y = min(max(y,0),geneLen-1)
+        matrix[x,y] +=1
         i=i+1
+    cax2=ax2.matshow(matrix,norm=LogNorm(vmin=0.01, vmax=matrix.max()))
+    fig.colorbar(cax2)
     plt.savefig(args.output)
     plt.show()
 

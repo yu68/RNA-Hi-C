@@ -72,7 +72,7 @@ def bowtie_align(b_path,read,ref,s_path,bowtie2):
     os.system("rm "+bam)
     return align
 
-def Included(record,RequireUnque):
+def Included(record,RequireUnique):
     # record is a pysam read
     # non-unique alignment in Bowtie2 has 'XS' tag: https://www.biostars.org/p/18965/ 
     if RequireUnique:

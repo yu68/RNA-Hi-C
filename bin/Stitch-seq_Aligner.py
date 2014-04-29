@@ -28,6 +28,7 @@ def ParseArg():
     p.add_argument('input2',type=str,metavar='part2_reads',help='paired part2 fasta file')
     p.add_argument('bowtie_path',type=str,metavar='bowtie_path',help="path for the bowtie program")
     p.add_argument('-b','--bowtie2',action="store_true",help="set to use bowtie2 (--sensitive-local) for alignment")
+    p.add_argument('-u','--unique',action="store_true",help="set to only allow unique alignment")
     p.add_argument('-s','--samtool_path',dest='spath', type=str,metavar='samtool_path',help="path for the samtool program",default='samtools')
     p.add_argument('miRNA_ref',type=str,metavar='part1_ref',default="mm9",help="reference genomic seq for part1")
     p.add_argument('mRNA_ref',type=str,metavar='part2_ref',help="reference genomic seq for part2")
@@ -71,6 +72,19 @@ def bowtie_align(b_path,read,ref,s_path,bowtie2):
     os.system("rm "+bam)
     return align
 
+def Included(record,RequireUnqiue):
+    # record is a pysam read
+    # non-unique alignment in Bowtie2 has 'XS' tag: https://www.biostars.org/p/18965/ 
+    if RequireUnique:
+        try:
+            record.opt('XS')
+            unique=False
+        except:
+            unique=True
+    else:
+        unique=True # not consider unique
+    return (not record1.is_unmapped)&unique
+
 
 def Main():
     args=ParseArg()
@@ -90,7 +104,8 @@ def Main():
             print record2.qname.split(" ")[0]
             print >> sys.stderr, "Not match!!"
             sys.exit(0)
-        if ( not record1.is_unmapped) & ( not record2.is_unmapped):
+
+        if Included(record1,args.unique) & Included(record2,args.unique):
             strand1="+"
             strand2="+"
             if record1.is_reverse:

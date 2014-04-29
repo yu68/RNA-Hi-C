@@ -203,7 +203,8 @@ def Main():
         part1_temp=filter(lambda p: p.chr==chro, part1)
         jobs1.append(job_server.submit(cluster_regions,(part1_temp,min_clusterS),(annotated_bed,),("UnionFind","copy",)))
         part2_temp=filter(lambda p: p.chr==chro, part2)
-        jobs2.append(job_server.submit(cluster_regions,(part2_temp,min_clusterS),(annotated_bed,),("UnionFind","copy",)))    
+        jobs2.append(job_server.submit(cluster_regions,(part2_temp,min_clusterS),(annotated_bed,),("UnionFind","copy",)))
+        
 
     cluster_pool1={}
     part1=[]
@@ -224,6 +225,7 @@ def Main():
     part1=sorted(part1, key=attrgetter('id'))
     part2=sorted(part2, key=attrgetter('id'))
 
+    print >> sys.stderr,"size of part1&2:",len(part1),len(part2)
 
     c_interaction={}
     for i in range(len(part1)):

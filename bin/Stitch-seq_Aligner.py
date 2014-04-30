@@ -83,7 +83,7 @@ def Included(record,RequireUnique):
             unique=True
     else:
         unique=True # not consider unique
-    return (not record1.is_unmapped)&unique
+    return (not record.is_unmapped)&unique
 
 
 def Main():

@@ -208,14 +208,20 @@ def Main():
 
     cluster_pool1={}
     part1=[]
-    for job in jobs1:
-        cluster_pool1.update(job()[0])
+    for job in jobs1: 
         part1=part1+job()[1]
+        try:
+            cluster_pool1.update(job()[0])
+        except:
+            continue
     cluster_pool2={}
     part2=[]
     for job in jobs2:
-        cluster_pool2.update(job()[0])
         part2=part2+job()[1]
+        try:
+            cluster_pool2.update(job()[0])
+        except:
+            continue
 
 
     print >>sys.stderr,"   cluster number for part1 is %d          "%(len(cluster_pool1))

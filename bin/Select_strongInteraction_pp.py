@@ -65,7 +65,7 @@ def cluster_regions(part,min_clusterS):
                 cluster_loc[uf_object.find(j)].Update(min(part[i].start,part[j].start),max(part[i].end,part[j].end))
             if part[i]<part[j]:
                 break
-        if i%10000==0: print >> sys.stderr, "  Merging segment for clusters (%d/%d)\r"%(i,N),
+        if i%10000==0: print >> sys.stderr, "  Merging segment for clusters %s,(%d/%d)\r"%(chro,i,N),
     
     c_pool=[] # cluster pool
     for i in range(N):
@@ -80,7 +80,7 @@ def cluster_regions(part,min_clusterS):
         if count>=min_clusterS:
             cluster_pool[chro+".%d"%(c)]=cluster_loc[c]
             cluster_pool[chro+".%d"%(c)].cluster=count
-    return (cluster_pool,part)
+    return (cluster_pool,part,chro)
 
 
 def Random_strongInteraction(part1,part2,cluster_pool1,cluster_pool2):
@@ -201,24 +201,27 @@ def Main():
     jobs2=[]
     for chro in chr_list:
         part1_temp=filter(lambda p: p.chr==chro, part1)
-        jobs1.append(job_server.submit(cluster_regions,(part1_temp,min_clusterS),(annotated_bed,),("UnionFind","copy",)))
+        if len(part1_temp)>0:
+            jobs1.append(job_server.submit(cluster_regions,(part1_temp,min_clusterS),(annotated_bed,),("UnionFind","copy",)))
         part2_temp=filter(lambda p: p.chr==chro, part2)
-        jobs2.append(job_server.submit(cluster_regions,(part2_temp,min_clusterS),(annotated_bed,),("UnionFind","copy",)))
+        if len(part2_temp)>0:
+            jobs2.append(job_server.submit(cluster_regions,(part2_temp,min_clusterS),(annotated_bed,),("UnionFind","copy",)))
         
 
     cluster_pool1={}
     part1=[]
     for job in jobs1: 
-        part1=part1+job()[1]
         try:
+            part1=part1+job()[1]
             cluster_pool1.update(job()[0])
         except:
+            print >> sys.stderr, "Wrong in %s, part1"%(job()[2])
             continue
     cluster_pool2={}
     part2=[]
     for job in jobs2:
-        part2=part2+job()[1]
         try:
+            part2=part2+job()[1]
             cluster_pool2.update(job()[0])
         except:
             continue

@@ -27,7 +27,16 @@ Welcome to RNA-Stitch-seq-tools's documentation!
 
 Updates
 -------
-  
+
+New features in 0.3.1:
+  * Add "--release" option in ":ref:`split_partner.py<Step4>`" function. Allow a Type3 read-pair considered to be a "Paired" chimeric fragment even linker does not show up.
+  * Fix bugs on ":ref:`Select_strongInteraction_pp.py<Step6>`" function when the number of mapped pairs is low and some chromosomes don't have any mapped read in part1 or part2.
+  * Add bowtie 2 option and Unique-align option in ":ref:`Stitch-seq_Aligner.py<Step5>`" function. 
+  * Different colors for different types of interactions in the :ref:`visualization of interactome<VisualizationGlobal>`. 
+  * New API for folding energies of two RNA molecules, see ":ref:`RNAstructure<rnafold>`". 
+  * Allow permutation-based strategies to calculate the p-value for the overlap between two independent interaction sets in ":ref:`intersectInteraction.py<intersection>`" function
+
+ 
 New features in 0.2.2:
   * ":ref:`Plot_interaction.py<plotInteraction>`" function to plot local RNA-RNA interactions. 
   * ":ref:`intersectInteraction.py<intersection>`" function to call overlap between two independent interaction sets.  

@@ -20,6 +20,7 @@ Other functions:
 
 1. :ref:`RNA_types`
 2. :ref:`find_linker`
+3. :ref:`intersection`
 
 Pipeline
 ========
@@ -197,12 +198,17 @@ This will be done by ``split_partner.py`` ::
                           default:10
     -b BATCH, --batch BATCH
                           batch this number of fragments for BLAST at a time.
-                          default: 100000
+                          default: 200000
+    -r, --release         set to allow released criterion for Paired fragment in
+                          Type 3, include those ones with no linker in two reads
     -l LENGTH, --length LENGTH
                           shortest length to be considered for each part of the
                           pair, default: 15
 
   Library dependency: Bio, itertools
+
+.. note::
+  New option added in version 0.3.1, which could allow two different strategies for selection of "Paired" fragments from the Type3 fragments. The ``--release`` option will allow a read pair to be called as "Paired" fragment even when the linker are not detected in both reads.
 
 The linker fasta file contain sequences of all linkers ::
 
@@ -262,6 +268,9 @@ All of these are implemented using script ``Stitch-seq_Aligner.py``. ::
 
   optional arguments:
     -h, --help            show this help message and exit
+    -b, --bowtie2         set to use bowtie2 (--sensitive-local) for alignment,
+                          need to change reference index and bowtie_path
+    -u, --unique          set to only allow unique alignment
     -s samtool_path, --samtool_path samtool_path
                           path for the samtool program
     -a ANNOTATION, --annotation ANNOTATION
@@ -299,6 +308,9 @@ The format for the output file ``ACCT_fragment_paired_align.txt`` will be:
 
 .. [#f1] column 10-17 are the same as column 1-8 except they are for part2 instead of part1.
 .. [#f2] subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), '.' for others
+
+.. note::
+  Bowtie2 ("--sensitive-local" mode) option is added in version 0.3.1 for the user to choose, the ``reference index`` and ``bowtie_path`` need to be changed accordingly if you use bowtie2 instead of bowtie. User can also choose unique aligned reads or not by setting ``--unique`` option.
 
 .. _step6:
 

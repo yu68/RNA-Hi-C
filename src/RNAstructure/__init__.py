@@ -12,7 +12,20 @@ import tempfile
 import sys
 
 class RNAstructure(object):
+    """
+    Interface class for `RNAstructure <http://rna.urmc.rochester.edu/RNAstructure.html>`_ executable programs.
+    """
     def __init__(self, exe_path=None):
+        """
+        Initiation of object
+        
+        :param exe_path: the folder path of the RNAstructure executables
+        
+        Example:
+
+        >>> from RNAstructure import RNAstructure
+        >>> RNA_prog = RNAstructure(exe_path="~/Software/RNAstructure/exe/")
+        """
         if exe_path==None:
             self.exe_path=''
         else:
@@ -21,6 +34,20 @@ class RNAstructure(object):
         os.environ['DATAPATH'] = self.datapath
     
     def DuplexFold(self,seq1=None,seq2=None,dna=False):
+        '''
+        Use "DuplexFold" program to calculate the minimum folding between two input sequences
+
+        :param seq1,seq2: two DNA/RNA sequences as string
+        :param dna: boolean input. Specify then DNA parameters are to be used
+        :returns: minimum binding energy, (unit: kCal/Mol)
+
+        Example:
+
+        >>> seq1 = "TAGACTGATCAGTAAGTCGGTA"
+        >>> seq2 = "GACTAGCTTAGGTAGGATAGTCAGTA"
+        >>> energy=RNA_prog.DuplexFold(seq1,seq2)
+        >>> print energy
+        '''
         cmd = [os.path.join(self.exe_path,"DuplexFold")]
         #sequences
         seq1_file=None

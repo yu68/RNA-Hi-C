@@ -37,12 +37,14 @@ class RNAstructure(object):
         '''
         Use "DuplexFold" program to calculate the minimum folding between two input sequences
 
-        :param seq1,seq2: two DNA/RNA sequences as string
+        :param seq1,seq2: two DNA/RNA sequences as string, or existing fasta file name
         :param dna: boolean input. Specify then DNA parameters are to be used
         :returns: minimum binding energy, (unit: kCal/Mol)
 
         Example:
 
+        >>> from RNAstructure import RNAstructure
+        >>> RNA_prog = RNAstructure(exe_path="/home/yu68/Software/RNAstructure/exe/")
         >>> seq1 = "TAGACTGATCAGTAAGTCGGTA"
         >>> seq2 = "GACTAGCTTAGGTAGGATAGTCAGTA"
         >>> energy=RNA_prog.DuplexFold(seq1,seq2)
@@ -89,3 +91,62 @@ class RNAstructure(object):
             return float(decoded.groupdict()['prob'])
         except:
             return 0.0
+
+    def Fold(self,seq=None,ct_name=None):
+        '''
+        Use "Fold" program to predict the secondary structure and output dot format.
+
+        :param seq: one DNA/RNA sequence as string, or existing fasta file name
+        :param ct_name: specify to putput a ct file with this name, otherwise store in temp
+        :returns: dot format of RNA secondary structure and RNA sequence.
+
+        Example:
+
+        >>> from RNAstructure import RNAstructure
+        >>> RNA_prog = RNAstructure(exe_path="/home/yu68/Software/RNAstructure/exe/")
+        >>> seq = "AUAUAAUUAAAAAAUGCAACUACAAGUUCCGUGUUUCUGACUGUUAGUUAUUGAGUUAUU"
+        >>> sequence,dot=RNA_prog.Fold(seq)
+        >>> assert(seq==sequence)
+        '''
+        cmd = [os.path.join(self.exe_path,"Fold")]
+        cmd2 = [os.path.join(self.exe_path,"ct2dot")]
+        #sequences
+        seq_file=None
+        if seq.endswith("fasta"):
+            cmd.append(seq)
+        elif seq is not None:
+            seq_file = tempfile.NamedTemporaryFile(mode='w')
+            seq_file.write(">seq\n")
+            seq_file.write(seq)
+            seq_file.flush()
+            cmd.append(seq_file.name)
+        # output ct file
+        if ct_name==None:
+            ct_file = tempfile.NamedTemporaryFile(mode='w')
+            cmd.append(ct_file.name)
+            cmd2.append(ct_file.name)
+        else:
+            cmd.append(ct_name)
+            cmd2.append(ct_name)
+        # output dot file
+        dot_file = tempfile.NamedTemporaryFile(mode='w')
+        #cmd.append('-mfe') # only the best one
+        cmd2.append('1')
+        cmd2.append(dot_file.name)
+        # Excuting program
+        cmd = " ".join(cmd)
+        cmd2 = " ".join(cmd2)
+        print cmd
+        print cmd2
+        os.environ['DATAPATH'] = self.datapath
+        print os.environ['DATAPATH']
+        os.system('echo $DATAPATH')
+        os.system(cmd+"")
+        os.system(cmd2+"> /dev/null 2>/dev/null")
+        if seq_file is not None:
+            seq_file.close()
+        #parsing result
+        out = open(dot_file.name).read().split('\n')
+        sequence = out[1].strip()
+        dot = out[2].strip()
+        return sequence,dot

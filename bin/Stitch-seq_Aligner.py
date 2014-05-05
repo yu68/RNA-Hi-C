@@ -24,8 +24,8 @@ from cogent.db.ensembl import HostAccount, Genome
 
 def ParseArg():
     p=argparse.ArgumentParser( description = 'Align miRNA-mRNA pairs for Stitch-seq. print the alignable miRNA-mRNA pairs with coordinates', epilog = 'Library dependency: Bio, pysam, itertools')
-    p.add_argument('input1',type=str,metavar='part1_reads',help='paired part1 fasta file')
-    p.add_argument('input2',type=str,metavar='part2_reads',help='paired part2 fasta file')
+    p.add_argument('input1',type=str,metavar='part1_reads',help='paired part1 fasta/fastq file')
+    p.add_argument('input2',type=str,metavar='part2_reads',help='paired part2 fasta/fastq file')
     p.add_argument('bowtie_path',type=str,metavar='bowtie_path',help="path for the bowtie program")
     p.add_argument('-b','--bowtie2',action="store_true",help="set to use bowtie2 (--sensitive-local) for alignment")
     p.add_argument('-u','--unique',action="store_true",help="set to only allow unique alignment")
@@ -48,20 +48,24 @@ def bowtie_align(b_path,read,ref,s_path,bowtie2):
     # bowtie2: logic, true/false
     
     sam=read.split("/")[-1].split(".")[0]+".sam"
+    if read.split(".")[-1] in ["fa","fasta"]:   # allow fasta and fastq for read
+        foption=" -f"
+    else:
+        foption=""
     if ref.split(".")[-1] in ["fa","fasta"]:
         base=ref.split("/")[-1].split(".")[0]
         os.system("rm "+read+".log")
         os.system(b_path+"-build "+ref+" "+base+" >> "+read+".log 2>&1")
         if not bowtie2:
-            os.system(b_path+ " -f -n 1 -l 15 -e 200 -p 9 -S "+base+" "+read+" "+sam+" >> "+read+".log 2>&1")
+            os.system(b_path+ foption+" -n 1 -l 15 -e 200 -p 9 -S "+base+" "+read+" "+sam+" >> "+read+".log 2>&1")
         else:
-            os.system(b_path+ " -x "+base+" -f -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read+".log 2>&1")
+            os.system(b_path+ " -x "+base+foption+" -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read+".log 2>&1")
     else:
         os.system("rm "+read+".log")
         if not bowtie2:
-            os.system(b_path+ " -f -n 1 -l 15 -e 200 -p 9 -S "+ref+" "+read+" "+sam+" >> "+read+".log 2>&1")
+            os.system(b_path+ foption+" -n 1 -l 15 -e 200 -p 9 -S "+ref+" "+read+" "+sam+" >> "+read+".log 2>&1")
         else:
-            os.system(b_path+ " -x "+ref+" -f -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read+".log 2>&1")
+            os.system(b_path+ " -x "+ref+foption+" -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read+".log 2>&1")
     bam=read.split("/")[-1].split(".")[0]+".bam"
     os.system(s_path+ " view -Sb -o "+bam +" "+sam)
     os.system("rm "+sam)

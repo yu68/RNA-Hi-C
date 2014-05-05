@@ -24,7 +24,7 @@ class RNAstructure(object):
         Example:
 
         >>> from RNAstructure import RNAstructure
-        >>> RNA_prog = RNAstructure(exe_path="~/Software/RNAstructure/exe/")
+        >>> RNA_prog = RNAstructure(exe_path="/home/yu68/Software/RNAstructure/exe/")
         """
         if exe_path==None:
             self.exe_path=''
@@ -97,7 +97,7 @@ class RNAstructure(object):
         Use "Fold" program to predict the secondary structure and output dot format.
 
         :param seq: one DNA/RNA sequence as string, or existing fasta file name
-        :param ct_name: specify to putput a ct file with this name, otherwise store in temp
+        :param ct_name: specify to output a ct file with this name, otherwise store in temp, default: None
         :returns: dot format of RNA secondary structure and RNA sequence.
 
         Example:

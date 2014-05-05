@@ -28,7 +28,7 @@ Welcome to RNA-Stitch-seq-tools's documentation!
 Updates
 -------
 
-New features in 0.3.1:
+New features in 0.3.1 (2014-05-02):
   * Add "--release" option in ":ref:`split_partner.py<Step4>`" function. Allow a Type3 read-pair considered to be a "Paired" chimeric fragment even linker does not show up.
   * Fix bugs on ":ref:`Select_strongInteraction_pp.py<Step6>`" function when the number of mapped pairs is low and some chromosomes don't have any mapped read in part1 or part2.
   * Add bowtie 2 option and Unique-align option in ":ref:`Stitch-seq_Aligner.py<Step5>`" function. 

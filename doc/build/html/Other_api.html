@@ -328,6 +328,35 @@
 </dd></dl>
 
 <dl class="method">
+<dt id="RNAstructure.RNAstructure.Fold">
+<tt class="descname">Fold</tt><big>(</big><em>seq=None</em>, <em>ct_name=None</em><big>)</big><a class="headerlink" href="#RNAstructure.RNAstructure.Fold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use &#8220;Fold&#8221; program to predict the secondary structure and output dot format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>seq</strong> &#8211; one DNA/RNA sequence as string, or existing fasta file name</li>
+<li><strong>ct_name</strong> &#8211; specify to putput a ct file with this name, otherwise store in temp</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dot format of RNA secondary structure and RNA sequence.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">RNAstructure</span> <span class="kn">import</span> <span class="n">RNAstructure</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RNA_prog</span> <span class="o">=</span> <span class="n">RNAstructure</span><span class="p">(</span><span class="n">exe_path</span><span class="o">=</span><span class="s">&quot;/home/yu68/Software/RNAstructure/exe/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq</span> <span class="o">=</span> <span class="s">&quot;AUAUAAUUAAAAAAUGCAACUACAAGUUCCGUGUUUCUGACUGUUAGUUAUUGAGUUAUU&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sequence</span><span class="p">,</span><span class="n">dot</span><span class="o">=</span><span class="n">RNA_prog</span><span class="o">.</span><span class="n">Fold</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span><span class="p">(</span><span class="n">seq</span><span class="o">==</span><span class="n">sequence</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
 <dt id="RNAstructure.RNAstructure.__init__">
 <tt class="descname">__init__</tt><big>(</big><em>exe_path=None</em><big>)</big><a class="headerlink" href="#RNAstructure.RNAstructure.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initiation of object</p>

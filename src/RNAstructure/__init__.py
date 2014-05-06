@@ -92,12 +92,14 @@ class RNAstructure(object):
         except:
             return 0.0
 
-    def Fold(self,seq=None,ct_name=None):
+    def Fold(self,seq=None,ct_name=None,sso_file=None,Num=1):
         '''
         Use "Fold" program to predict the secondary structure and output dot format.
 
         :param seq: one DNA/RNA sequence as string, or existing fasta file name
         :param ct_name: specify to output a ct file with this name, otherwise store in temp, default: None
+        :param sso_file: give a single strand offset file, format see http://rna.urmc.rochester.edu/Text/File_Formats.html#Offset
+        :param Num: choose Num th predicted structure
         :returns: dot format of RNA secondary structure and RNA sequence.
 
         Example:
@@ -131,17 +133,22 @@ class RNAstructure(object):
         # output dot file
         dot_file = tempfile.NamedTemporaryFile(mode='w')
         #cmd.append('-mfe') # only the best one
-        cmd2.append('1')
+        # single strand offset
+        if sso_file!=None:
+            cmd.append("-sso")
+            cmd.append(sso_file)     
+
+        cmd2.append('%d'%(Num))  # Num th structure
         cmd2.append(dot_file.name)
+        
+        # only the best one
+        #cmd.append("-m 1")       
+ 
         # Excuting program
         cmd = " ".join(cmd)
         cmd2 = " ".join(cmd2)
-        print cmd
-        print cmd2
         os.environ['DATAPATH'] = self.datapath
-        print os.environ['DATAPATH']
-        os.system('echo $DATAPATH')
-        os.system(cmd+"")
+        os.system(cmd+"> /dev/null 2>/dev/null")
         os.system(cmd2+"> /dev/null 2>/dev/null")
         if seq_file is not None:
             seq_file.close()
@@ -150,3 +157,49 @@ class RNAstructure(object):
         sequence = out[1].strip()
         dot = out[2].strip()
         return sequence,dot
+ 
+    def scorer(self,ct_name1,ct_name2):
+        '''
+        Use 'scorer' pogram to compare a predicted secondary structure to an accepted structure. It calculates two quality metrics, sensitivity and PPV
+        
+        :param ct_name1: The name of a CT file containing predicted structure data.
+        :param ct_name2: The name of a CT file containing accepted structure data, can only store one structure.
+        :return: sensitivity, PPV, number of the best predicted structure.
+        
+        Example:
+
+        >>> ct_name1 = "temp_prediction.ct"
+        >>> ct_name2 = "temp_accept.ct"
+        >>> from RNAstructure import RNAstructure
+        >>> RNA_prog = RNAstructure(exe_path="/home/yu68/Software/RNAstructure/exe/")
+        >>> sensitivity, PPV, Number = RNA_prog.scorer(ct_name1,ct_name2)
+        '''
+        cmd = [os.path.join(self.exe_path,"scorer")]
+        cmd.append(ct_name1)
+        cmd.append(ct_name2)
+        output_file = tempfile.NamedTemporaryFile(mode='w')
+        cmd.append(output_file.name)
+        cmd=" ".join(cmd)
+        os.system(cmd+"> /dev/null 2>/dev/null")
+        out=open(output_file.name).read().split("\n")
+        n=0
+        maximum=0.0
+        sensitivity = 0.0
+        PPV = 0.0
+        number = 1
+        for l in out:
+            if l.startswith("Score"):
+                n+=1
+                continue
+            if l.startswith("Sensitivity"):
+                o = re.search(r'Sensitivity: (?P<portion>.*) = (?P<percent>.*)%',l)
+                s = float(o.groupdict()['percent'])/100
+            if l.startswith("PPV"):
+                o = re.search(r'PPV: (?P<portion>.*) = (?P<percent>.*)%',l)
+                p = float(o.groupdict()['percent'])/100
+                if s+p > maximum:
+                    sensitivity = s
+                    PPV = p
+                    maximum = s+p
+                    number=n
+        return sensitivity, PPV, number

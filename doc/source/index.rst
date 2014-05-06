@@ -27,10 +27,13 @@ Welcome to RNA-Stitch-seq-tools's documentation!
 
 Updates
 -------
+2014-05-06:
+  * In ":ref:`Select_strongInteraction_pp.py<Step6>`" function, now annotations are updated after doing clustering and for strong interaction. The indexing of annotation files may take some time.
+  * New "RNA_structure_prediction.py" function to refine RNA structure prediction based on empirical offset of free energies for single strand nucleotide.
 
 New features in 0.3.1 (2014-05-02):
   * Add "--release" option in ":ref:`split_partner.py<Step4>`" function. Allow a Type3 read-pair considered to be a "Paired" chimeric fragment even linker does not show up.
-  * Fix bugs on ":ref:`Select_strongInteraction_pp.py<Step6>`" function when the number of mapped pairs is low and some chromosomes don't have any mapped read in part1 or part2.
+  * Fix bugs in ":ref:`Select_strongInteraction_pp.py<Step6>`" function when the number of mapped pairs is low and some chromosomes don't have any mapped read in part1 or part2.
   * Add bowtie 2 option and Unique-align option in ":ref:`Stitch-seq_Aligner.py<Step5>`" function. 
   * Different colors for different types of interactions in the :ref:`visualization of interactome<VisualizationGlobal>`. 
   * New API for folding energies of two RNA molecules, see ":ref:`RNAstructure<rnafold>`". 

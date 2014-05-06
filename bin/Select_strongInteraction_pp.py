@@ -10,6 +10,7 @@ import math
 import pp
 import copy
 from data_structure import *
+from xplib import DBI
 
 from UnionFind import *
 # include functions UF, find, merge, connected, count
@@ -125,6 +126,8 @@ def ParseArg():
     p.add_argument('-o','--output',type=str,help="specify output file")
     p.add_argument("-P","--parallel",type=int,default=5,help="number of workers for parallel computing, default: 5")
     p.add_argument("-F","--FDR",action='store_true', help="Compute FDR if specified")
+    p.add_argument('-a','--annotation',type=str,default="/home/yu68/bharat-interaction/new_lincRNA_data/all_RNAs-rRNA_repeat.txt",help='If specified, include the RNA type annotation for each aligned pair, need to give bed annotation RNA file')
+    p.add_argument("-A","--annotationGenebed",dest="db_detail",type=str,default="/home/yu68/bharat-interaction/new_lincRNA_data/Ensembl_mm9.genebed",help="annotation bed12 file for lincRNA and mRNA with intron and exon")
     if len(sys.argv)==1:
         print >>sys.stderr,p.print_help()
         sys.exit(0)
@@ -250,9 +253,19 @@ def Main():
         else:
             c_interaction[inter]=1
 
+    # annotation file
+    print >> sys.stderr,"# Indexing annotation files"
+    dbi_all=DBI.init(args.annotation,"bed")
+    dbi_detail=DBI.init(args.db_detail,"bed")
+    dbi_repeat=DBI.init("/home/yu68/bharat-interaction/new_lincRNA_data/mouse.repeat.txt","bed")
+
+
     print >> sys.stderr,"# finding strong interactions from clusters..."
     k=0 # record for strong interactions
     n=0
+
+    # annotation file
+
     for interaction in c_interaction:
         n=n+1
         count=c_interaction[interaction]
@@ -267,6 +280,8 @@ def Main():
         real_p=1-hypergeom.cdf(count,len(part1),count1,count2)
         if real_p<=p_value:
             k=k+1
+            cluster_pool1[i].Annotate(dbi_all,dbi_detail,dbi_repeat)
+            cluster_pool2[j].Annotate(dbi_all,dbi_detail,dbi_repeat)
             try:
                 log_p = math.log(real_p)
             except:

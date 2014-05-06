@@ -1,4 +1,5 @@
-
+from xplib.Annotation import Bed
+from Annotation import *
 
 class annotated_bed():
     """
@@ -14,13 +15,14 @@ class annotated_bed():
         or
         >>> a=annotated_bed(chr="chr13",start=40975747,end=40975770,strand='+',type="protein_coding",)
         """
+        self.annotated = False
         if x is not None:
             if type(x)==type("str"):
                 x=x.split("\t")
             self.chr=str(x[0]).strip()
             self.start=int(x[1])
             self.end=int(x[2])
-            self.strand=str(x[4]).strip()
+            self.strand=str(x[3]).strip()
             try:
                 self.seq=str(x[4]).strip()
                 self.type=str(x[5]).strip()
@@ -98,13 +100,38 @@ class annotated_bed():
 
         self.start=min(self.start,S)
         self.end=max(self.end,E)
+    def Annotate(self,dbi1,dbi2,dbi3): # do RNA annotation if not annotated
+        """
+        Update annotation.
+
+        :param ref_allRNA: the `DBI.init <http://bam2xwiki.appspot.com/DBI>`_ object (from BAM2X) for bed6 file of all kinds of RNA
+        :param ref_detail: the `DBI.init <http://bam2xwiki.appspot.com/DBI>`_ object for bed12 file of lincRNA and mRNA with intron, exon, UTR   
+        :param ref_detail: the `DBI.init <http://bam2xwiki.appspot.com/DBI>`_ object for bed6 file of mouse repeat
+
+        Example:
+        
+        >>> str="chr13\t40975747\t40975770\t+"
+        >>> a=annotated_bed(str)
+        >>> a.Cluster(3)
+        >>> ref_allRNA=DBI.init("../../Data/all_RNAs-rRNA_repeat.txt.gz","bed")
+        >>> ref_detail=DBI.init("../../Data/Ensembl_mm9.genebed.gz","bed")
+        >>> ref_repeat=DBI.init("../../Data/mouse.repeat.txt.gz","bed")
+        >>> a.Annotate(ref_allRNA,ref_detail,ref_repeat)
+        >>> print a
+        "chr13\t40975747\t40975770\tprotein_coding\tgcnt2\tintron\t3"
+        """
+        if not self.annotated:
+            bed=Bed([self.chr,self.start,self.end])
+            [self.type,self.name,self.subtype]=annotation(bed,dbi1,dbi2,dbi3)
+            self.annotated = True
+
     def __str__(self):
         """
         Use print function to output the cluster information (chr, start, end, type, name, subtype,cluster)
         
         Example:
         
-        >>> str="chr13\t40975747\t40975770\tATTAAG...TGA\tprotein_coding\tgcnt2\tintron"
+        >>> str="chr13\t40975747\t40975770\t+\tATTAAG...TGA\tprotein_coding\tgcnt2\tintron"
         >>> a=annotated_bed(str)
         >>> a.Cluster(3)
         >>> a.Update(40975700,40975800)

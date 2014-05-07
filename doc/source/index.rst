@@ -27,6 +27,9 @@ Welcome to RNA Hi-C tools's documentation!
 
 Updates
 -------
+Version 0.3.2 (2014-05-07):
+  * change the name into RNA-Hi-C
+
 2014-05-06:
   * In ":ref:`Select_strongInteraction_pp.py<Step6>`" function, now annotations are updated after doing clustering and for strong interaction. The indexing of annotation files may take some time.
   * New "RNA_structure_prediction.py" function to refine RNA structure prediction based on empirical offset of free energies for single strand nucleotide.

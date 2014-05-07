@@ -1,5 +1,5 @@
-stitch-seq
-==========
+RNA Hi-C
+========
 
 ## program for RNA-RNA interactome and RNA-chromatin interactome ##
 

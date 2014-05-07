@@ -3,15 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to RNA-Stitch-seq-tools's documentation!
-================================================
+Welcome to RNA Hi-C tools's documentation!
+==========================================
 
 **Contents:**
 
 .. toctree::
    :maxdepth: 3
 
-   Stitch-seq-tools
+   RNA-Hi-C-tools
    
    Analysis_pipeline
 
@@ -22,7 +22,7 @@ Welcome to RNA-Stitch-seq-tools's documentation!
 
 .. note::
 
-   RNA-Stitch-seq-tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. `Try BAM2X now <http://bam2xwiki.appspot.com/>`_!
+   RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. `Try BAM2X now <http://bam2xwiki.appspot.com/>`_!
 
 
 Updates

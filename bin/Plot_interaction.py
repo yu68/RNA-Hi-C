@@ -2,12 +2,12 @@ import sys,argparse,os
 from xplib import DBI
 from bx.bbi.bigwig_file import BigWigFile
 import matplotlib
-#matplotlib.use('Agg')
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.cm as cm
 import numpy as np
-#plt.ioff()
+plt.ioff()
 
 def ParseArg():
     p=argparse.ArgumentParser(description="plot linked pairs around a given interaction. information of linked pairs are stored in file '*_fragment_paired_align.txt'",epilog="Require: matplotlib, numpy")

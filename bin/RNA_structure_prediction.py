@@ -4,6 +4,10 @@ import string
 import numpy as np
 from RNAstructure import RNAstructure
 import math
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+plt.ioff()
 
 
 def ParseArg():
@@ -13,7 +17,7 @@ def ParseArg():
     p.add_argument('-g',"--genomeFa",type=str,default="/home/yu68/Software/bowtie-0.12.7/indexes/mm9.fa",help="genomic sequence,need to be fadix-ed")
     p.add_argument("-R","--RNAstructureExe",type=str,default="/home/yu68/Software/RNAstructure/exe/",help="folder of RNAstrucutre suite excutable")
     p.add_argument("-a","--acceptDot",type=str,help="accepted structure in dot format, for comparing of accuracy, no comparison if not set")
-    p.add_argument("-o","--output",help="output structure plot file with color map, can be format of eps, pdf, png,...")
+    p.add_argument("-o","--output",help="output distribution of digested sites with dot structures, can be format of eps, pdf, png,...")
     p.add_argument('-s','--samtool_path',dest='spath', type=str,metavar='samtool_path',help="path for the samtool program",default='samtools')
     p.add_argument("-v",'--varna',type=str,help="path for the VARNA visualization for RNA", default="/home/yu68/Software/VARNA/VARNAv3-9.jar")
     p.add_argument("-c","--colorMapStyle",type=str,help='style of color map, choose from: "red", "blue", "green", "heat", "energy", and "bw",default:"heat"',default="heat")
@@ -42,7 +46,8 @@ def relativeLoc(geneStart,geneEnd,geneStrand,loc):
         rela_loc = geneEnd-loc
     return rela_loc
 
-def Count_DS_SS(geneSeq,geneDot,count):
+def Count_DS_SS(geneSeq,geneDot,count,ax=None,title=""):
+    ''' count of digested sites in non base pairing and base pairing nucleotide with box plot '''
     count_SS=[]  # store single strand (non base pairing) count
     count_DS=[]  # store double strand (base pairing) count
     for i in range(len(geneSeq)):
@@ -50,8 +55,21 @@ def Count_DS_SS(geneSeq,geneDot,count):
             count_SS.append(count[i])
         else:
             count_DS.append(count[i])
+    if ax!=None:
+        ax.boxplot([count_SS,count_DS],0,"",patch_artist=True,widths=0.5)
+        ax.get_xaxis().tick_bottom()
+        ax.get_yaxis().tick_left()
+        ax.set_title(title)
+        ax.set_ylabel("Digested site count")
+        ax.set_xticklabels(["SS","DS"])
     print >> sys.stderr, np.mean(count_SS), np.mean(count_DS)
+    return count_SS,count_DS
 
+def DrawShadowDot(geneDot,ax,ymin,ymax,col="g"):
+    for i in range(len(geneDot)):
+        if geneDot[i]==".":
+            rect = matplotlib.patches.Rectangle((i+0.5,ymin),1,ymax-ymin,color=col,alpha=0.3)
+            ax.add_patch(rect)
 
 def Main():
     GeneLoc='/home/yu68/bharat-interaction/new_lincRNA_data/all_RNAs-rRNA_repeat.txt'
@@ -105,9 +123,10 @@ def Main():
             try:
                 count[relativeLoc(geneStart,geneEnd,geneStrand,p2_start)]+=1
             except: pass
-    #print >> sys.stderr, ";".join([str(f) for f in count])
+    print >> sys.stderr, ",".join(["%.2f"%(math.log(f+1)) for f in count])
 
     assert(len(geneSeq)==len(geneDot))
+    
 
     sso=open("temp_sso.txt",'w')
     for i in range(len(geneSeq)):
@@ -142,11 +161,34 @@ def Main():
     print >> sys.stderr, "refined structure: "
     print >> sys.stderr, "\t", geneDot_refine
 
+    # plot digested site distribution
+    fig = plt.figure(figsize=(10,4))
+    ax1 = plt.subplot2grid((1,8),(0,0),colspan=5,frameon=False)  # plot the digested site distribution
+    ax2 = plt.subplot2grid((1,8),(0,5))  # predicted counts of digested site in predicted structure
+    ax3 = plt.subplot2grid((1,8),(0,6))  # predicted counts of digested site in refined structure
+    ax4 = plt.subplot2grid((1,8),(0,7))  # predicted counts of digested site in accepted structure
+
+
     # count digested site in ds ss for each structure
-    print >> sys.stderr, "Structure count:"
-    Count_DS_SS(geneSeq,geneDot,count)
+    print >> sys.stderr, "Predicted Structure count:"
+    Count_DS_SS(geneSeq,geneDot,count,ax2,"Predicted")
+
     print >> sys.stderr, "Refined structure count:"
-    Count_DS_SS(geneSeq,geneDot_refine,count)
+    Count_DS_SS(geneSeq,geneDot_refine,count,ax3,"Refined")
+    
+
+    ax1.bar(range(len(count)),[math.log(f+1) for f in count],edgecolor = "none",facecolor="#545454")
+    ax1.set_ylabel("log(count+1)")
+    ax1.get_xaxis().tick_bottom()
+    ax1.get_yaxis().tick_left()
+    ax1.set_xlim((1,len(geneSeq)))
+    DrawShadowDot(geneDot,ax1,1.5,2.0,col='g')
+    DrawShadowDot(geneDot_refine,ax1,2.5,3.0,col='y')
+    if args.acceptDot!=None:
+        ax1.text(0.01,0.90,"Prediction: SEN- %.3f; PPV- %.3f"%(sen_predict, PPV_predict),horizontalalignment="left",verticalalignment="bottom",transform=ax1.transAxes,color='g',fontsize=10)
+        ax1.text(0.01,0.99,"Refined: SEN- %.3f; PPV- %.3f"%(sen_refine, PPV_refine),horizontalalignment="left",verticalalignment="bottom",transform=ax1.transAxes,color='y',fontsize=10)
+
+
 
     # draw structure with color map
     cmd = ["java -cp"]
@@ -177,13 +219,20 @@ def Main():
     os.system(cmd)
 
     if args.acceptDot==None:
+        plt.savefig(args.output)
         sys.exit(0)
     # draw accept structure with color map
     accept = open(args.acceptDot).read().split('\n')
     geneSeq = accept[1]
     geneDot_accept = accept[2]
-    print >> sys.stderr, "Accept structure count:"
-    Count_DS_SS(geneSeq,geneDot_accept,count)
+
+    print >> sys.stderr, "Accept structure count: "
+    Count_DS_SS(geneSeq,geneDot_accept,count,ax4,"Accepted")
+
+    ax1.set_xticks(range(len(count)))
+    ax1.set_xticklabels(list(geneDot_accept))
+    plt.savefig(args.output)
+
     cmd = ["java -cp"]
     cmd.append(args.varna)
     cmd.append("fr.orsay.lri.varna.applications.VARNAcmd -sequenceDBN")

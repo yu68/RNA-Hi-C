@@ -19,4 +19,4 @@ Annotation module
 "RNAstructure" class
 ====================
 .. autoclass:: RNAstructure.RNAstructure
-   :members: __init__,DuplexFold,Fold
+   :members: __init__,DuplexFold,Fold,scorer

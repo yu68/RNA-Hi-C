@@ -91,6 +91,7 @@
 <li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#determine-the-rna-types-of-different-parts-within-fragments">Determine the RNA types of different parts within fragments.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-linker-sequences-within-the-library">Find linker sequences within the library.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-intersections-between-two-different-interaction-sets">Find intersections between two different interaction sets.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#rna-structure-prediction-by-adding-digestion-site-information">RNA structure prediction by adding digestion site information</a></li>
 </ul>
 </li>
 </ul>
@@ -122,10 +123,16 @@
 <div class="section" id="updates">
 <h2>Updates<a class="headerlink" href="#updates" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
+<dt>2014-05-06:</dt>
+<dd><ul class="first last simple">
+<li>In &#8220;<a class="reference internal" href="Analysis_pipeline.html#step6"><em>Select_strongInteraction_pp.py</em></a>&#8221; function, now annotations are updated after doing clustering and for strong interaction. The indexing of annotation files may take some time.</li>
+<li>New &#8220;RNA_structure_prediction.py&#8221; function to refine RNA structure prediction based on empirical offset of free energies for single strand nucleotide.</li>
+</ul>
+</dd>
 <dt>New features in 0.3.1 (2014-05-02):</dt>
 <dd><ul class="first last simple">
 <li>Add &#8220;&#8211;release&#8221; option in &#8220;<a class="reference internal" href="Analysis_pipeline.html#step4"><em>split_partner.py</em></a>&#8221; function. Allow a Type3 read-pair considered to be a &#8220;Paired&#8221; chimeric fragment even linker does not show up.</li>
-<li>Fix bugs on &#8220;<a class="reference internal" href="Analysis_pipeline.html#step6"><em>Select_strongInteraction_pp.py</em></a>&#8221; function when the number of mapped pairs is low and some chromosomes don&#8217;t have any mapped read in part1 or part2.</li>
+<li>Fix bugs in &#8220;<a class="reference internal" href="Analysis_pipeline.html#step6"><em>Select_strongInteraction_pp.py</em></a>&#8221; function when the number of mapped pairs is low and some chromosomes don&#8217;t have any mapped read in part1 or part2.</li>
 <li>Add bowtie 2 option and Unique-align option in &#8220;<a class="reference internal" href="Analysis_pipeline.html#step5"><em>Stitch-seq_Aligner.py</em></a>&#8221; function.</li>
 <li>Different colors for different types of interactions in the <a class="reference internal" href="Visualization.html#visualizationglobal"><em>visualization of interactome</em></a>.</li>
 <li>New API for folding energies of two RNA molecules, see &#8220;<a class="reference internal" href="Other_api.html#rnafold"><em>RNAstructure</em></a>&#8221;.</li>

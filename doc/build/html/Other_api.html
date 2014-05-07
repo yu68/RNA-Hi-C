@@ -142,7 +142,8 @@
 <li><strong>ref_allRNA</strong> &#8211; the <a class="reference external" href="http://bam2xwiki.appspot.com/DBI">DBI.init</a> object (from BAM2X) for bed6 file of all kinds of RNA</li>
 <li><strong>ref_detail</strong> &#8211; <p>the <a class="reference external" href="http://bam2xwiki.appspot.com/DBI">DBI.init</a> object for bed12 file of lincRNA and mRNA with intron, exon, UTR</p>
 </li>
-<li><strong>genome</strong> &#8211; the <a class="reference external" href="http://pycogent.org/cookbook/accessing_databases.html#get-genomic-features">Genome object from PyCogent</a>.</li>
+<li><strong>ref_detail</strong> &#8211; <p>the <a class="reference external" href="http://bam2xwiki.appspot.com/DBI">DBI.init</a> object for bed6 file of mouse repeat</p>
+</li>
 </ul>
 </td>
 </tr>
@@ -262,7 +263,7 @@
 <tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#data_structure.annotated_bed.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use print function to output the cluster information (chr, start, end, type, name, subtype,cluster)</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="o">=</span><span class="s">&quot;chr13  40975747        40975770        ATTAAG...TGA    protein_coding  gcnt2   intron&quot;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="o">=</span><span class="s">&quot;chr13  40975747        40975770        +       ATTAAG...TGA    protein_coding  gcnt2   intron&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">Cluster</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">Update</span><span class="p">(</span><span class="mi">40975700</span><span class="p">,</span><span class="mi">40975800</span><span class="p">)</span>
@@ -329,7 +330,7 @@
 
 <dl class="method">
 <dt id="RNAstructure.RNAstructure.Fold">
-<tt class="descname">Fold</tt><big>(</big><em>seq=None</em>, <em>ct_name=None</em><big>)</big><a class="headerlink" href="#RNAstructure.RNAstructure.Fold" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">Fold</tt><big>(</big><em>seq=None</em>, <em>ct_name=None</em>, <em>sso_file=None</em>, <em>Num=1</em><big>)</big><a class="headerlink" href="#RNAstructure.RNAstructure.Fold" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use &#8220;Fold&#8221; program to predict the secondary structure and output dot format.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -338,6 +339,8 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>seq</strong> &#8211; one DNA/RNA sequence as string, or existing fasta file name</li>
 <li><strong>ct_name</strong> &#8211; specify to output a ct file with this name, otherwise store in temp, default: None</li>
+<li><strong>sso_file</strong> &#8211; give a single strand offset file, format see <a class="reference external" href="http://rna.urmc.rochester.edu/Text/File_Formats.html#Offset">http://rna.urmc.rochester.edu/Text/File_Formats.html#Offset</a></li>
+<li><strong>Num</strong> &#8211; choose Num th predicted structure</li>
 </ul>
 </td>
 </tr>
@@ -371,6 +374,35 @@
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">RNAstructure</span> <span class="kn">import</span> <span class="n">RNAstructure</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">RNA_prog</span> <span class="o">=</span> <span class="n">RNAstructure</span><span class="p">(</span><span class="n">exe_path</span><span class="o">=</span><span class="s">&quot;/home/yu68/Software/RNAstructure/exe/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="RNAstructure.RNAstructure.scorer">
+<tt class="descname">scorer</tt><big>(</big><em>ct_name1</em>, <em>ct_name2</em><big>)</big><a class="headerlink" href="#RNAstructure.RNAstructure.scorer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use &#8216;scorer&#8217; pogram to compare a predicted secondary structure to an accepted structure. It calculates two quality metrics, sensitivity and PPV</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ct_name1</strong> &#8211; The name of a CT file containing predicted structure data.</li>
+<li><strong>ct_name2</strong> &#8211; The name of a CT file containing accepted structure data, can only store one structure.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">sensitivity, PPV, number of the best predicted structure.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ct_name1</span> <span class="o">=</span> <span class="s">&quot;temp_prediction.ct&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ct_name2</span> <span class="o">=</span> <span class="s">&quot;temp_accept.ct&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">RNAstructure</span> <span class="kn">import</span> <span class="n">RNAstructure</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RNA_prog</span> <span class="o">=</span> <span class="n">RNAstructure</span><span class="p">(</span><span class="n">exe_path</span><span class="o">=</span><span class="s">&quot;/home/yu68/Software/RNAstructure/exe/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sensitivity</span><span class="p">,</span> <span class="n">PPV</span><span class="p">,</span> <span class="n">Number</span> <span class="o">=</span> <span class="n">RNA_prog</span><span class="o">.</span><span class="n">scorer</span><span class="p">(</span><span class="n">ct_name1</span><span class="p">,</span><span class="n">ct_name2</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>

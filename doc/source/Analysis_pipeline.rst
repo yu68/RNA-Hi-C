@@ -434,3 +434,10 @@ The script tool 'intersectInteraction.py' could be used to identify overlap of i
 
 if "-p" option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in set a. A p-value will be calculate based on permutation distribution.
 
+.. _srtuctrure:
+
+RNA structure prediction by adding digestion site information
+-------------------------------------------------------------
+.. index:: RNA_structure_prediction.py
+
+

@@ -407,7 +407,7 @@ Find intersections between two different interaction sets.
 ----------------------------------------------------------
 .. index:: intersectInteraction.py
 
-The script tool 'intersectInteraction.py' could be used to identify overlap of interactions between two interaction set from independent experiments (two replicates or treatment v.s. control) ::
+The script tool ``intersectInteraction.py`` could be used to identify overlap of interactions between two interaction set from independent experiments (two replicates or treatment v.s. control) ::
 
   usage: intersectInteraction.py [-h] -a FILEA -b FILEB [-s START] [-n NBASE]
                                  [-o OUTPUT] [-c]
@@ -434,10 +434,54 @@ The script tool 'intersectInteraction.py' could be used to identify overlap of i
 
 if "-p" option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in set a. A p-value will be calculate based on permutation distribution.
 
-.. _srtuctrure:
+.. _Structure:
 
 RNA structure prediction by adding digestion site information
 -------------------------------------------------------------
 .. index:: RNA_structure_prediction.py
 
+The script will take selfligated chimeric fragments from given snoRNA (ID) and predict secondary structures with and without constraints of digested single strand sites. It is also able to compare the known structure in dot format if the known structure is available and specified by "-a". The script needs RNAStructure software for structure prediction ("-R") and  and VARNA command line tool for visualization ("-v"). ::
 
+  usage: RNA_structure_prediction.py [-h] [-g GENOMEFA] [-R RNASTRUCTUREEXE]
+                                   [-a ACCEPTDOT] [-o OUTPUT]
+                                   [-s samtool_path] [-v VARNA]
+                                   [-c COLORMAPSTYLE]
+                                   ID linkedPair
+
+  plot RNA structure with distribution of digested end, refine structure with
+  loc of digested end
+  
+  positional arguments:
+    ID                    Ensembl gene ID of RNA
+    linkedPair            file for information of linked pairs, which is output
+                          of 'Stitch-seq_Aligner.py'
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -g GENOMEFA, --genomeFa GENOMEFA
+                          genomic sequence,need to be fadix-ed
+    -R RNASTRUCTUREEXE, --RNAstructureExe RNASTRUCTUREEXE
+                          folder of RNAstrucutre suite excutable
+    -a ACCEPTDOT, --acceptDot ACCEPTDOT
+                          accepted structure in dot format, for comparing of
+                          accuracy, no comparison if not set
+    -o OUTPUT, --output OUTPUT
+                          output distribution of digested sites with dot
+                          structures, can be format of eps, pdf, png,...
+    -s samtool_path, --samtool_path samtool_path
+                          path for the samtool program
+    -v VARNA, --varna VARNA
+                          path for the VARNA visualization for RNA
+    -c COLORMAPSTYLE, --colorMapStyle COLORMAPSTYLE
+                          style of color map, choose from: "red", "blue",
+                          "green", "heat", "energy", and "bw",default:"heat"
+
+Here is a example: ::
+  python RNA_structure_prediction.py \
+    ENSMUSG00000064380 \
+    /data2/sysbio/UCSD-sequencing/2013-11-27-Bharat_Tri_Shu/Undetermined_indices/Sample_lane8/ACCT_GGCG_combine/ACCT_GGCG_fragment_paired_align_selfLigation.txt \
+    -a Snora73_real_dot.txt \
+    -o Snora73_distribution.pdf 
+
+Here "Snora73_real_dot.txt" is dot format of known Snora73 structure
+This will generate three eps files with secondary structures ("Predict", "Refine", "Accepted (known)". Also the output pdf file contains the distribution of digested sites in whole RNA molecule.

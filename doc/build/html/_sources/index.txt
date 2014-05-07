@@ -32,7 +32,7 @@ Version 0.3.2 (2014-05-07):
 
 2014-05-06:
   * In ":ref:`Select_strongInteraction_pp.py<Step6>`" function, now annotations are updated after doing clustering and for strong interaction. The indexing of annotation files may take some time.
-  * New "RNA_structure_prediction.py" function to refine RNA structure prediction based on empirical offset of free energies for single strand nucleotide.
+  * New ":ref:`RNA_structure_prediction.py<Structure>`" function to refine RNA structure prediction based on empirical offset of free energies for single strand nucleotide.
 
 New features in 0.3.1 (2014-05-02):
   * Add "--release" option in ":ref:`split_partner.py<Step4>`" function. Allow a Type3 read-pair considered to be a "Paired" chimeric fragment even linker does not show up.

@@ -4,7 +4,8 @@
 \indexentry{split\_partner.py|hyperpage}{8}
 \indexentry{Stitch-seq\_Aligner.py|hyperpage}{10}
 \indexentry{Select\_strongInteraction\_pp.py|hyperpage}{11}
-\indexentry{intersectInteraction.py|hyperpage}{12}
+\indexentry{intersectInteraction.py|hyperpage}{13}
+\indexentry{RNA\_structure\_prediction.py|hyperpage}{13}
 \indexentry{Plot\_interaction.py|hyperpage}{15}
 \indexentry{Plot\_Circos.R|hyperpage}{17}
 \indexentry{Annotation (module)|hyperpage}{19}
@@ -18,3 +19,8 @@
 \indexentry{\_\_lt\_\_() (data\_structure.annotated\_bed method)|hyperpage}{21}
 \indexentry{\_\_str\_\_() (data\_structure.annotated\_bed method)|hyperpage}{21}
 \indexentry{overlap() (data\_structure.annotated\_bed method)|hyperpage}{21}
+\indexentry{RNAstructure (class in RNAstructure)|hyperpage}{21}
+\indexentry{DuplexFold() (RNAstructure.RNAstructure method)|hyperpage}{21}
+\indexentry{Fold() (RNAstructure.RNAstructure method)|hyperpage}{22}
+\indexentry{\_\_init\_\_() (RNAstructure.RNAstructure method)|hyperpage}{22}
+\indexentry{scorer() (RNAstructure.RNAstructure method)|hyperpage}{22}

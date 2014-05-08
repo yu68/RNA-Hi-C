@@ -13,9 +13,9 @@
 \usepackage{multirow}
 
 
-\title{Stitch-seq-tools Documentation}
-\date{April 24, 2014}
-\release{0.2.2}
+\title{RNA-Hi-C-tools Documentation}
+\date{May 08, 2014}
+\release{0.3.2}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
 \renewcommand{\releasename}{Release}
@@ -124,12 +124,12 @@
 \textbf{Contents:}
 
 
-\chapter{RNA-Stitch-seq-tools 0.2 documentation}
-\label{Stitch-seq-tools::doc}\label{Stitch-seq-tools:welcome-to-rna-stitch-seq-tools-s-documentation}\label{Stitch-seq-tools:rna-stitch-seq-tools-version-documentation}
+\chapter{RNA-Hi-C-tools 0.3 documentation}
+\label{RNA-Hi-C-tools:welcome-to-rna-hi-c-tools-s-documentation}\label{RNA-Hi-C-tools::doc}\label{RNA-Hi-C-tools:rna-hi-c-tools-version-documentation}
 
 \section{Overview}
-\label{Stitch-seq-tools:overview}
-\textbf{RNA-Stitch-seq-tools} is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome (RNA-chromatin interactome is coming soon).
+\label{RNA-Hi-C-tools:overview}
+\textbf{RNA-Hi-C-tools} is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome (RNA-chromatin interactome is coming soon).
 
 Below is a illustration for the experimental design of this new technology
 
@@ -141,10 +141,10 @@ Below is a illustration for the experimental design of this new technology
 
 Offline documentation.
 
-Download a copy of RNA-stitch-seq-tools documentation:
+Download a copy of RNA-Hi-C-tools documentation:
 \begin{itemize}
 \item {} 
-\href{https://media.readthedocs.org/pdf/stitch-seq-tools/latest/stitch-seq-tools.pdf}{PDF}
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/\_sources/Stitch-seq-tools.pdf}{PDF}
 
 \item {} 
 \href{https://media.readthedocs.org/epub/stitch-seq-tools/latest/stitch-seq-tools.epub}{Epub}
@@ -155,10 +155,10 @@ Download a copy of RNA-stitch-seq-tools documentation:
 
 
 \section{Installation}
-\label{Stitch-seq-tools:installation}
+\label{RNA-Hi-C-tools:installation}
 
 \subsection{step 1: Install the dependent prerequisites:}
-\label{Stitch-seq-tools:step-1-install-the-dependent-prerequisites}\begin{enumerate}
+\label{RNA-Hi-C-tools:step-1-install-the-dependent-prerequisites}\begin{enumerate}
 \item {} 
 Python libraries {[}for python 2.x{]}:
 
@@ -178,9 +178,6 @@ Python libraries {[}for python 2.x{]}:
 
 \item {} 
 \href{http://www.parallelpython.com/}{Parallel python} (Only for \code{Select\_strongInteraction\_pp.py})
-
-\item {} 
-\href{http://pycogent.org/}{PyCogent} (for annotation of RNA types) {[}see note{]}
 
 \end{itemize}
 \begin{enumerate}
@@ -204,26 +201,22 @@ Other softwares needed:
 
 \end{itemize}
 
-\begin{notice}{note}{Note:}
-the Annotation feature need the development version of PyCogent (\href{http://pycogent.org/install.html\#to-use-the-development-version-of-pycogent}{install instruction}). Since we need the getTranscriptByStableId function which is described \href{https://github.com/pycogent/pycogent/issues/21}{here}.
-\end{notice}
-
 
 \subsection{Step 2: Download the package}
-\label{Stitch-seq-tools:step-2-download-the-package}
+\label{RNA-Hi-C-tools:step-2-download-the-package}
 Clone the package from GitHub:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-git clone http://github.com/yu68/stitch-seq.git
+git clone http://github.com/yu68/RNA-Hi-C.git
 \end{Verbatim}
 
 
 \subsection{Step 3: Add library source to your python path}
-\label{Stitch-seq-tools:step-3-add-library-source-to-your-python-path}
+\label{RNA-Hi-C-tools:step-3-add-library-source-to-your-python-path}
 Add these lines into your \textasciitilde{}/.bash\_profile or \textasciitilde{}/.profile
 
 \begin{Verbatim}[commandchars=\\\{\}]
-Location="/path/of/RNA-Stitch-seq-tools" \# change accordingly
+Location="/path/of/RNA-Hi-C-tools" \# change accordingly
 export PYTHONPATH="\$Location/src:\$PYTHONPATH"
 export PATH="\$PATH:\$Location/bin"
 Loc\_lib="/path/of/boost\_1\_xx\_0/lib/"  \# change accordingly
@@ -232,8 +225,8 @@ export LD\_LIBRARY\_PATH="\$Loc\_lib:\$LD\_LIBRARY\_PATH"
 
 
 \section{Support}
-\label{Stitch-seq-tools:support}
-For issues related to the use of RNA-Stitch-seq-tools, or if you want to \textbf{report a bug or request a feature}, please contact Pengfei Yu \textless{}p3yu at ucsd dot edu\textgreater{}
+\label{RNA-Hi-C-tools:support}
+For issues related to the use of RNA-Hi-C-tools, or if you want to \textbf{report a bug or request a feature}, please contact Pengfei Yu \textless{}p3yu at ucsd dot edu\textgreater{}
 
 
 \chapter{Analysis pipeline}
@@ -274,6 +267,9 @@ Other functions:
 
 \item {} 
 {\hyperref[Analysis_pipeline:find-linker]{\emph{Find linker sequences within the library.}}}
+
+\item {} 
+{\hyperref[Analysis_pipeline:intersection]{\emph{Find intersections between two different interaction sets.}}}
 
 \end{enumerate}
 
@@ -465,13 +461,19 @@ optional arguments:
                         default:10
   -b BATCH, --batch BATCH
                         batch this number of fragments for BLAST at a time.
-                        default: 100000
+                        default: 200000
+  -r, --release         set to allow released criterion for Paired fragment in
+                        Type 3, include those ones with no linker in two reads
   -l LENGTH, --length LENGTH
                         shortest length to be considered for each part of the
                         pair, default: 15
 
 Library dependency: Bio, itertools
 \end{Verbatim}
+
+\begin{notice}{note}{Note:}
+New option added in version 0.3.1, which could allow two different strategies for selection of ``Paired'' fragments from the Type3 fragments. The \code{-{-}release} option will allow a read pair to be called as ``Paired'' fragment even when the linker are not detected in both reads.
+\end{notice}
 
 The linker fasta file contain sequences of all linkers
 
@@ -551,6 +553,9 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
+  -b, --bowtie2         set to use bowtie2 (--sensitive-local) for alignment,
+                        need to change reference index and bowtie\_path
+  -u, --unique          set to only allow unique alignment
   -s samtool\_path, --samtool\_path samtool\_path
                         path for the samtool program
   -a ANNOTATION, --annotation ANNOTATION
@@ -631,6 +636,10 @@ name of the pair
 \hline\end{tabulary}
 
 \end{quote}
+
+\begin{notice}{note}{Note:}
+Bowtie2 (``--sensitive-local'' mode) option is added in version 0.3.1 for the user to choose, the \code{reference index} and \code{bowtie\_path} need to be changed accordingly if you use bowtie2 instead of bowtie. User can also choose unique aligned reads or not by setting \code{-{-}unique} option.
+\end{notice}
 
 
 \subsection{Step 6: Determine strong interactions.}
@@ -765,7 +774,7 @@ There are two ways of visulization provided ( LOCAL and GLOBAL ):
 \subsection{Find intersections between two different interaction sets.}
 \label{Analysis_pipeline:find-intersections-between-two-different-interaction-sets}\label{Analysis_pipeline:intersection}
 \index{intersectInteraction.py}
-The script tool `intersectInteraction.py' could be used to identify overlap of interactions between two interaction set from independent experiments (two replicates or treatment v.s. control)
+The script tool \code{intersectInteraction.py} could be used to identify overlap of interactions between two interaction set from independent experiments (two replicates or treatment v.s. control)
 
 \begin{Verbatim}[commandchars=\\\{\}]
 usage: intersectInteraction.py [-h] -a FILEA -b FILEB [-s START] [-n NBASE]
@@ -793,6 +802,61 @@ require 'random'\&'numpy'\&'scipy' module if set '-p'
 \end{Verbatim}
 
 if ``-p'' option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in set a. A p-value will be calculate based on permutation distribution.
+
+
+\subsection{RNA structure prediction by adding digestion site information}
+\label{Analysis_pipeline:rna-structure-prediction-by-adding-digestion-site-information}\label{Analysis_pipeline:structure}
+\index{RNA\_structure\_prediction.py}
+The script will take selfligated chimeric fragments from given snoRNA (ID) and predict secondary structures with and without constraints of digested single strand sites. It is also able to compare the known structure in dot format if the known structure is available and specified by ``-a''. The script needs RNAStructure software for structure prediction (``-R'') and  and VARNA command line tool for visualization (``-v'').
+
+\begin{Verbatim}[commandchars=\\\{\}]
+usage: RNA\_structure\_prediction.py [-h] [-g GENOMEFA] [-R RNASTRUCTUREEXE]
+                                 [-a ACCEPTDOT] [-o OUTPUT]
+                                 [-s samtool\_path] [-v VARNA]
+                                 [-c COLORMAPSTYLE]
+                                 ID linkedPair
+
+plot RNA structure with distribution of digested end, refine structure with
+loc of digested end
+
+positional arguments:
+  ID                    Ensembl gene ID of RNA
+  linkedPair            file for information of linked pairs, which is output
+                        of 'Stitch-seq\_Aligner.py'
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -g GENOMEFA, --genomeFa GENOMEFA
+                        genomic sequence,need to be fadix-ed
+  -R RNASTRUCTUREEXE, --RNAstructureExe RNASTRUCTUREEXE
+                        folder of RNAstrucutre suite excutable
+  -a ACCEPTDOT, --acceptDot ACCEPTDOT
+                        accepted structure in dot format, for comparing of
+                        accuracy, no comparison if not set
+  -o OUTPUT, --output OUTPUT
+                        output distribution of digested sites with dot
+                        structures, can be format of eps, pdf, png,...
+  -s samtool\_path, --samtool\_path samtool\_path
+                        path for the samtool program
+  -v VARNA, --varna VARNA
+                        path for the VARNA visualization for RNA
+  -c COLORMAPSTYLE, --colorMapStyle COLORMAPSTYLE
+                        style of color map, choose from: "red", "blue",
+                        "green", "heat", "energy", and "bw",default:"heat"
+\end{Verbatim}
+
+Here is a example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+python RNA\_structure\_prediction.py \PYGZbs{}
+  ENSMUSG00000064380 \PYGZbs{}
+  /data2/sysbio/UCSD-sequencing/2013-11-27-Bharat\_Tri\_Shu/Undetermined\_indices/Sample\_lane8/ACCT\_GGCG\_combine/ACCT\_GGCG\_fragment\_paired\_align\_selfLigation.txt \PYGZbs{}
+  -a Snora73\_real\_dot.txt \PYGZbs{}
+  -o Snora73\_distribution.pdf
+\end{Verbatim}
+
+Here ``Snora73\_real\_dot.txt'' is dot format of known Snora73 structure
+This will generate three eps files with secondary structures (``Predict'', ``Refine'', ``Accepted (known)''. Also the output pdf file contains the distribution of digested sites in whole RNA molecule.
 
 
 \chapter{Visualization of local RNA-RNA interactions}
@@ -1038,7 +1102,9 @@ the \href{http://bam2xwiki.appspot.com/DBI}{DBI.init} object for bed12 file of l
 
 
 \item {} 
-\textbf{genome} -- the \href{http://pycogent.org/cookbook/accessing\_databases.html\#get-genomic-features}{Genome object from PyCogent}.
+\textbf{ref\_detail} -- 
+the \href{http://bam2xwiki.appspot.com/DBI}{DBI.init} object for bed6 file of mouse repeat
+
 
 \end{itemize}
 
@@ -1174,7 +1240,7 @@ Use print function to output the cluster information (chr, start, end, type, nam
 Example:
 
 \begin{Verbatim}[commandchars=\\\{\}]
-\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n+nb}{str}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13  40975747        40975770        ATTAAG...TGA    protein\PYGZus{}coding  gcnt2   intron}\PYG{l+s}{\PYGZdq{}}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n+nb}{str}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{chr13  40975747        40975770        +       ATTAAG...TGA    protein\PYGZus{}coding  gcnt2   intron}\PYG{l+s}{\PYGZdq{}}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{=}\PYG{n}{annotated\PYGZus{}bed}\PYG{p}{(}\PYG{n+nb}{str}\PYG{p}{)}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{.}\PYG{n}{Cluster}\PYG{p}{(}\PYG{l+m+mi}{3}\PYG{p}{)}
 \PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{a}\PYG{o}{.}\PYG{n}{Update}\PYG{p}{(}\PYG{l+m+mi}{40975700}\PYG{p}{,}\PYG{l+m+mi}{40975800}\PYG{p}{)}
@@ -1204,13 +1270,183 @@ boolean
 \end{fulllineitems}
 
 
+
+\section{``RNAstructure'' class}
+\label{Other_api:rnastructure-class}\label{Other_api:rnafold}\index{RNAstructure (class in RNAstructure)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:RNAstructure.RNAstructure}\pysiglinewithargsret{\strong{class }\code{RNAstructure.}\bfcode{RNAstructure}}{\emph{exe\_path=None}}{}
+Interface class for \href{http://rna.urmc.rochester.edu/RNAstructure.html}{RNAstructure} executable programs.
+\index{DuplexFold() (RNAstructure.RNAstructure method)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:RNAstructure.RNAstructure.DuplexFold}\pysiglinewithargsret{\bfcode{DuplexFold}}{\emph{seq1=None}, \emph{seq2=None}, \emph{dna=False}}{}
+Use ``DuplexFold'' program to calculate the minimum folding between two input sequences
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{seq1,seq2} -- two DNA/RNA sequences as string, or existing fasta file name
+
+\item {} 
+\textbf{dna} -- boolean input. Specify then DNA parameters are to be used
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+minimum binding energy, (unit: kCal/Mol)
+
+\end{description}\end{quote}
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{RNAstructure} \PYG{k+kn}{import} \PYG{n}{RNAstructure}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{RNA\PYGZus{}prog} \PYG{o}{=} \PYG{n}{RNAstructure}\PYG{p}{(}\PYG{n}{exe\PYGZus{}path}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/home/yu68/Software/RNAstructure/exe/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{seq1} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{TAGACTGATCAGTAAGTCGGTA}\PYG{l+s}{\PYGZdq{}}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{seq2} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{GACTAGCTTAGGTAGGATAGTCAGTA}\PYG{l+s}{\PYGZdq{}}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{energy}\PYG{o}{=}\PYG{n}{RNA\PYGZus{}prog}\PYG{o}{.}\PYG{n}{DuplexFold}\PYG{p}{(}\PYG{n}{seq1}\PYG{p}{,}\PYG{n}{seq2}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{print} \PYG{n}{energy}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{Fold() (RNAstructure.RNAstructure method)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:RNAstructure.RNAstructure.Fold}\pysiglinewithargsret{\bfcode{Fold}}{\emph{seq=None}, \emph{ct\_name=None}, \emph{sso\_file=None}, \emph{Num=1}}{}
+Use ``Fold'' program to predict the secondary structure and output dot format.
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{seq} -- one DNA/RNA sequence as string, or existing fasta file name
+
+\item {} 
+\textbf{ct\_name} -- specify to output a ct file with this name, otherwise store in temp, default: None
+
+\item {} 
+\textbf{sso\_file} -- give a single strand offset file, format see \href{http://rna.urmc.rochester.edu/Text/File\_Formats.html\#Offset}{http://rna.urmc.rochester.edu/Text/File\_Formats.html\#Offset}
+
+\item {} 
+\textbf{Num} -- choose Num th predicted structure
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+dot format of RNA secondary structure and RNA sequence.
+
+\end{description}\end{quote}
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{RNAstructure} \PYG{k+kn}{import} \PYG{n}{RNAstructure}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{RNA\PYGZus{}prog} \PYG{o}{=} \PYG{n}{RNAstructure}\PYG{p}{(}\PYG{n}{exe\PYGZus{}path}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/home/yu68/Software/RNAstructure/exe/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{seq} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{AUAUAAUUAAAAAAUGCAACUACAAGUUCCGUGUUUCUGACUGUUAGUUAUUGAGUUAUU}\PYG{l+s}{\PYGZdq{}}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{sequence}\PYG{p}{,}\PYG{n}{dot}\PYG{o}{=}\PYG{n}{RNA\PYGZus{}prog}\PYG{o}{.}\PYG{n}{Fold}\PYG{p}{(}\PYG{n}{seq}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k}{assert}\PYG{p}{(}\PYG{n}{seq}\PYG{o}{==}\PYG{n}{sequence}\PYG{p}{)}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{\_\_init\_\_() (RNAstructure.RNAstructure method)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:RNAstructure.RNAstructure.__init__}\pysiglinewithargsret{\bfcode{\_\_init\_\_}}{\emph{exe\_path=None}}{}
+Initiation of object
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode
+\textbf{exe\_path} -- the folder path of the RNAstructure executables
+
+\end{description}\end{quote}
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{RNAstructure} \PYG{k+kn}{import} \PYG{n}{RNAstructure}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{RNA\PYGZus{}prog} \PYG{o}{=} \PYG{n}{RNAstructure}\PYG{p}{(}\PYG{n}{exe\PYGZus{}path}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/home/yu68/Software/RNAstructure/exe/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+\index{scorer() (RNAstructure.RNAstructure method)}
+
+\begin{fulllineitems}
+\phantomsection\label{Other_api:RNAstructure.RNAstructure.scorer}\pysiglinewithargsret{\bfcode{scorer}}{\emph{ct\_name1}, \emph{ct\_name2}}{}
+Use `scorer' pogram to compare a predicted secondary structure to an accepted structure. It calculates two quality metrics, sensitivity and PPV
+\begin{quote}\begin{description}
+\item[{Parameters}] \leavevmode\begin{itemize}
+\item {} 
+\textbf{ct\_name1} -- The name of a CT file containing predicted structure data.
+
+\item {} 
+\textbf{ct\_name2} -- The name of a CT file containing accepted structure data, can only store one structure.
+
+\end{itemize}
+
+\item[{Returns}] \leavevmode
+sensitivity, PPV, number of the best predicted structure.
+
+\end{description}\end{quote}
+
+Example:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{ct\PYGZus{}name1} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{temp\PYGZus{}prediction.ct}\PYG{l+s}{\PYGZdq{}}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{ct\PYGZus{}name2} \PYG{o}{=} \PYG{l+s}{\PYGZdq{}}\PYG{l+s}{temp\PYGZus{}accept.ct}\PYG{l+s}{\PYGZdq{}}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{k+kn}{from} \PYG{n+nn}{RNAstructure} \PYG{k+kn}{import} \PYG{n}{RNAstructure}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{RNA\PYGZus{}prog} \PYG{o}{=} \PYG{n}{RNAstructure}\PYG{p}{(}\PYG{n}{exe\PYGZus{}path}\PYG{o}{=}\PYG{l+s}{\PYGZdq{}}\PYG{l+s}{/home/yu68/Software/RNAstructure/exe/}\PYG{l+s}{\PYGZdq{}}\PYG{p}{)}
+\PYG{g+gp}{\PYGZgt{}\PYGZgt{}\PYGZgt{} }\PYG{n}{sensitivity}\PYG{p}{,} \PYG{n}{PPV}\PYG{p}{,} \PYG{n}{Number} \PYG{o}{=} \PYG{n}{RNA\PYGZus{}prog}\PYG{o}{.}\PYG{n}{scorer}\PYG{p}{(}\PYG{n}{ct\PYGZus{}name1}\PYG{p}{,}\PYG{n}{ct\PYGZus{}name2}\PYG{p}{)}
+\end{Verbatim}
+
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+
 \begin{notice}{note}{Note:}
-RNA-Stitch-seq-tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. \href{http://bam2xwiki.appspot.com/}{Try BAM2X now}!
+RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. \href{http://bam2xwiki.appspot.com/}{Try BAM2X now}!
 \end{notice}
 
 
 \chapter{Updates}
 \label{index:updates}\begin{description}
+\item[{Version 0.3.2 (2014-05-07):}] \leavevmode\begin{itemize}
+\item {} 
+change the name into RNA-Hi-C
+
+\end{itemize}
+
+\item[{2014-05-06:}] \leavevmode\begin{itemize}
+\item {} 
+In ``{\hyperref[Analysis_pipeline:step6]{\emph{Select\_strongInteraction\_pp.py}}}'' function, now annotations are updated after doing clustering and for strong interaction. The indexing of annotation files may take some time.
+
+\item {} 
+New ``{\hyperref[Analysis_pipeline:structure]{\emph{RNA\_structure\_prediction.py}}}'' function to refine RNA structure prediction based on empirical offset of free energies for single strand nucleotide.
+
+\end{itemize}
+
+\item[{New features in 0.3.1 (2014-05-02):}] \leavevmode\begin{itemize}
+\item {} 
+Add ``--release'' option in ``{\hyperref[Analysis_pipeline:step4]{\emph{split\_partner.py}}}'' function. Allow a Type3 read-pair considered to be a ``Paired'' chimeric fragment even linker does not show up.
+
+\item {} 
+Fix bugs in ``{\hyperref[Analysis_pipeline:step6]{\emph{Select\_strongInteraction\_pp.py}}}'' function when the number of mapped pairs is low and some chromosomes don't have any mapped read in part1 or part2.
+
+\item {} 
+Add bowtie 2 option and Unique-align option in ``{\hyperref[Analysis_pipeline:step5]{\emph{Stitch-seq\_Aligner.py}}}'' function.
+
+\item {} 
+Different colors for different types of interactions in the {\hyperref[Visualization:visualizationglobal]{\emph{visualization of interactome}}}.
+
+\item {} 
+New API for folding energies of two RNA molecules, see ``{\hyperref[Other_api:rnafold]{\emph{RNAstructure}}}''.
+
+\item {} 
+Allow permutation-based strategies to calculate the p-value for the overlap between two independent interaction sets in ``{\hyperref[Analysis_pipeline:intersection]{\emph{intersectInteraction.py}}}'' function
+
+\end{itemize}
+
 \item[{New features in 0.2.2:}] \leavevmode\begin{itemize}
 \item {} 
 ``{\hyperref[Visualization:plotinteraction]{\emph{Plot\_interaction.py}}}'' function to plot local RNA-RNA interactions.

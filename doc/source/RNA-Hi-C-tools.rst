@@ -18,7 +18,7 @@ Below is a illustration for the experimental design of this new technology
 
   Download a copy of RNA-Hi-C-tools documentation:
 
-   * `PDF <https://media.readthedocs.org/pdf/stitch-seq-tools/latest/stitch-seq-tools.pdf>`_
+   * `PDF <http://systemsbio.ucsd.edu/RNA-Hi-C/_sources/Stitch-seq-tools.pdf>`_
    * `Epub <https://media.readthedocs.org/epub/stitch-seq-tools/latest/stitch-seq-tools.epub>`_
 
 Installation

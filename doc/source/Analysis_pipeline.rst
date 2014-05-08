@@ -477,6 +477,7 @@ The script will take selfligated chimeric fragments from given snoRNA (ID) and p
                           "green", "heat", "energy", and "bw",default:"heat"
 
 Here is a example: ::
+
   python RNA_structure_prediction.py \
     ENSMUSG00000064380 \
     /data2/sysbio/UCSD-sequencing/2013-11-27-Bharat_Tri_Shu/Undetermined_indices/Sample_lane8/ACCT_GGCG_combine/ACCT_GGCG_fragment_paired_align_selfLigation.txt \

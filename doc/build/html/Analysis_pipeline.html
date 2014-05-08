@@ -538,14 +538,13 @@ optional arguments:
                         style of color map, choose from: "red", "blue",
                         "green", "heat", "energy", and "bw",default:"heat"</pre>
 </div>
-<dl class="docutils">
-<dt>Here is a example: ::</dt>
-<dd><dl class="first last docutils">
-<dt>python RNA_structure_prediction.py </dt>
-<dd>ENSMUSG00000064380 /data2/sysbio/UCSD-sequencing/2013-11-27-Bharat_Tri_Shu/Undetermined_indices/Sample_lane8/ACCT_GGCG_combine/ACCT_GGCG_fragment_paired_align_selfLigation.txt -a Snora73_real_dot.txt -o Snora73_distribution.pdf</dd>
-</dl>
-</dd>
-</dl>
+<p>Here is a example:</p>
+<div class="highlight-python"><pre>python RNA_structure_prediction.py \
+  ENSMUSG00000064380 \
+  /data2/sysbio/UCSD-sequencing/2013-11-27-Bharat_Tri_Shu/Undetermined_indices/Sample_lane8/ACCT_GGCG_combine/ACCT_GGCG_fragment_paired_align_selfLigation.txt \
+  -a Snora73_real_dot.txt \
+  -o Snora73_distribution.pdf</pre>
+</div>
 <p>Here &#8220;Snora73_real_dot.txt&#8221; is dot format of known Snora73 structure
 This will generate three eps files with secondary structures (&#8220;Predict&#8221;, &#8220;Refine&#8221;, &#8220;Accepted (known)&#8221;. Also the output pdf file contains the distribution of digested sites in whole RNA molecule.</p>
 </div>

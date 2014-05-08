@@ -2,6 +2,7 @@
 \def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
 
   \bigletter {Symbols}
+  \item \_\_init\_\_() (RNAstructure.RNAstructure method), \hyperpage{22}
   \item \_\_init\_\_() (data\_structure.annotated\_bed method), \hyperpage{21}
   \item \_\_lt\_\_() (data\_structure.annotated\_bed method), \hyperpage{21}
   \item \_\_str\_\_() (data\_structure.annotated\_bed method), \hyperpage{21}
@@ -17,8 +18,16 @@
   \item Cluster() (data\_structure.annotated\_bed method), \hyperpage{20}
 
   \indexspace
+  \bigletter D
+  \item DuplexFold() (RNAstructure.RNAstructure method), \hyperpage{21}
+
+  \indexspace
+  \bigletter F
+  \item Fold() (RNAstructure.RNAstructure method), \hyperpage{22}
+
+  \indexspace
   \bigletter I
-  \item intersectInteraction.py, \hyperpage{12}
+  \item intersectInteraction.py, \hyperpage{13}
 
   \indexspace
   \bigletter O
@@ -34,9 +43,12 @@
   \bigletter R
   \item recoverFragment, \hyperpage{7}
   \item remove\_dup\_PE.py, \hyperpage{5}
+  \item RNA\_structure\_prediction.py, \hyperpage{13}
+  \item RNAstructure (class in RNAstructure), \hyperpage{21}
 
   \indexspace
   \bigletter S
+  \item scorer() (RNAstructure.RNAstructure method), \hyperpage{22}
   \item Select\_strongInteraction\_pp.py, \hyperpage{11}
   \item split\_library\_pairend.py, \hyperpage{6}
   \item split\_partner.py, \hyperpage{8}

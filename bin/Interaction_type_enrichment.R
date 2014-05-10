@@ -9,7 +9,7 @@ suppressPackageStartupMessages(require(ggplot2))
 suppressPackageStartupMessages(require(scales))
 
 # creat parser object
-parser <- ArgumentParser(description="Call intersections based on gene pairs")
+parser <- ArgumentParser(description="plot the statistical significance of different interaction types")
 
 # specify options
 parser$add_argument("interaction",help="the strong interaction file,[required]")

@@ -82,7 +82,7 @@ my.colors = colorRampPalette(c("white",'pink','red'))(100)
 pdf(output,width=8,height=6)
 po.nopanel <- list(theme(panel.background=element_blank(),panel.grid.minor=element_blank(),panel.grid.major=element_blank()))
 plot = ggplot(count)+geom_tile(aes(x=part1,y=part2,fill=logRatio),colour='black')+
-  scale_fill_gradientn(values=rescale(b),colours=my.colors,name='log(p_value))')+
+  scale_fill_gradientn(values=rescale(b),colours=my.colors,name='-log(p_value))')+
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 print(plot)
 dev.off()

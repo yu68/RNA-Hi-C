@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  8 MAY 2014 14:22
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  11 MAY 2014 17:20
 entering extended mode
  %&-line parsing enabled.
 **Stitch-seq-tools.tex
@@ -889,7 +889,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 127.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 127.
-<exp.jpg, id=157, 475.02469pt x 314.67563pt>
+<exp.jpg, id=177, 475.02469pt x 314.67563pt>
 File: exp.jpg Graphic file (type jpg)
  <use exp.jpg>
 File: exp.jpg Graphic file (type jpg)
@@ -917,20 +917,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 355--356
 /10 Rm_dupPE_example.F1.fastq \T1/ptm/m/n/10 and
  []
 
-[6] <workflow_for_recoverFragment.jpg, id=218, 904.3386pt x 540.3387pt>
+[6] <workflow_for_recoverFragment.jpg, id=238, 904.3386pt x 540.3387pt>
 File: workflow_for_recoverFragment.jpg Graphic file (type jpg)
 
 <use workflow_for_recoverFragment.jpg>
 File: workflow_for_recoverFragment.jpg Graphic file (type jpg)
  <use workflow_for_recoverFragment.jpg>
 [7 <./workflow_for_recoverFragment.jpg>]
-<summary.jpg, id=223, 688.974pt x 274.1442pt>
+<summary.jpg, id=243, 688.974pt x 274.1442pt>
 File: summary.jpg Graphic file (type jpg)
  <use summary.jpg>
 File: summary.jpg Graphic file (type jpg)
 
 <use summary.jpg> [8 <./summary.jpg>] [9] [10]
-<Find_strong_interaction.jpg, id=239, 755.82375pt x 405.515pt>
+<Find_strong_interaction.jpg, id=259, 755.82375pt x 405.515pt>
 File: Find_strong_interaction.jpg Graphic file (type jpg)
 
 <use Find_strong_interaction.jpg>
@@ -940,7 +940,7 @@ File: Find_strong_interaction.jpg Graphic file (type jpg)
 Chapter 3.
 [15
 
-] <local_interaction_malat1_ACCT.jpg, id=269, 477.9456pt x 240.9pt>
+] <local_interaction_malat1_ACCT.jpg, id=289, 477.9456pt x 240.9pt>
 File: local_interaction_malat1_ACCT.jpg Graphic file (type jpg)
 
 <use local_interaction_malat1_ACCT.jpg>
@@ -951,52 +951,61 @@ g>]
 Chapter 4.
 [17
 
-] <GGCG-MEF_interactome.jpg, id=284, 803.0pt x 803.0pt>
+] <GGCG-MEF_interactome.jpg, id=304, 803.0pt x 803.0pt>
 File: GGCG-MEF_interactome.jpg Graphic file (type jpg)
 
 <use GGCG-MEF_interactome.jpg>
 File: GGCG-MEF_interactome.jpg Graphic file (type jpg)
  <use GGCG-MEF_interactome.jpg> [18 <./GGCG-MEF_interactome.jpg>]
 Chapter 5.
-LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1015.
-LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <9> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1037.
 [19
 
-] [20] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 1327--1328
+] <ES1_interaction_type.jpg, id=314, 579.1236pt x 434.5836pt>
+File: ES1_interaction_type.jpg Graphic file (type jpg)
+
+<use ES1_interaction_type.jpg>
+File: ES1_interaction_type.jpg Graphic file (type jpg)
+ <use ES1_interaction_type.jpg> [20 <./ES1_interaction_type.jpg>]
+Chapter 6.
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1077.
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <9> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1099.
+[21
+
+] [22] [23]
+Underfull \hbox (badness 10000) in paragraph at lines 1389--1390
 []\T1/ptm/b/n/10 sso_file \T1/ptm/m/n/10 -- give a sin-gle strand off-set file,
  for-mat see
  []
 
-[22] [23] [24
-
-]
-Chapter 6.
-[25] [26
+[24] [25] [26
 
 ]
 Chapter 7.
 [27] [28
 
-] [29
-
-
-] (./Stitch-seq-tools.ind [30
-
+]
+Chapter 8.
+[29] [30
 
 ] [31
 
+
+] (./Stitch-seq-tools.ind [32
+
+
+] [33
+
 ]) (./Stitch-seq-tools.aux) ) 
 Here is how much of TeX's memory you used:
- 8252 strings out of 495061
- 113287 string characters out of 1182621
- 201707 words of memory out of 3000000
- 11047 multiletter control sequences out of 15000+50000
+ 8272 strings out of 495061
+ 113773 string characters out of 1182621
+ 202062 words of memory out of 3000000
+ 11060 multiletter control sequences out of 15000+50000
  72437 words of font info for 83 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
- 45i,16n,45p,547b,514s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 45i,16n,45p,729b,514s stack positions out of 5000i,500n,10000p,200000b,50000s
 pdfTeX warning (dest): name{Hfootnote.1} has been 
 referenced but does not exist, replaced by a fixed one
 
@@ -1007,9 +1016,9 @@ ourier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb
 mf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/
 type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr
 8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Stitch-seq-tools.pdf (35 pages, 1710074 bytes).
+Output written on Stitch-seq-tools.pdf (37 pages, 1868275 bytes).
 PDF statistics:
- 461 PDF objects out of 1000 (max. 8388607)
- 97 named destinations out of 1000 (max. 500000)
- 243 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 497 PDF objects out of 1000 (max. 8388607)
+ 103 named destinations out of 1000 (max. 500000)
+ 280 words of extra memory for PDF output out of 10000 (max. 10000000)
 

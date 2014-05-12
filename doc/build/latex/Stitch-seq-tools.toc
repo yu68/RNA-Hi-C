@@ -29,11 +29,15 @@
 \contentsline {section}{\numberline {4.1}Prerequirement}{17}{section.4.1}
 \contentsline {section}{\numberline {4.2}Run the program to generate visualization}{17}{section.4.2}
 \contentsline {section}{\numberline {4.3}Example of result graph}{17}{section.4.3}
-\contentsline {chapter}{\numberline {5}Python APIs created for this project}{19}{chapter.5}
-\contentsline {section}{\numberline {5.1}Annotation module}{19}{section.5.1}
-\contentsline {section}{\numberline {5.2}``annotated\_bed'' data class}{20}{section.5.2}
-\contentsline {section}{\numberline {5.3}``RNAstructure'' class}{21}{section.5.3}
-\contentsline {chapter}{\numberline {6}Updates}{25}{chapter.6}
-\contentsline {chapter}{\numberline {7}Indices and tables}{27}{chapter.7}
-\contentsline {chapter}{Python Module Index}{29}{section*.18}
-\contentsline {chapter}{Index}{31}{section*.19}
+\contentsline {chapter}{\numberline {5}Visualization of interaction types enrichment}{19}{chapter.5}
+\contentsline {section}{\numberline {5.1}Prerequirement}{19}{section.5.1}
+\contentsline {section}{\numberline {5.2}Run the program to generate visualization for enrichment of different types of interactions}{19}{section.5.2}
+\contentsline {section}{\numberline {5.3}Example of result graph}{19}{section.5.3}
+\contentsline {chapter}{\numberline {6}Python APIs created for this project}{21}{chapter.6}
+\contentsline {section}{\numberline {6.1}Annotation module}{21}{section.6.1}
+\contentsline {section}{\numberline {6.2}``annotated\_bed'' data class}{22}{section.6.2}
+\contentsline {section}{\numberline {6.3}``RNAstructure'' class}{23}{section.6.3}
+\contentsline {chapter}{\numberline {7}Updates}{27}{chapter.7}
+\contentsline {chapter}{\numberline {8}Indices and tables}{29}{chapter.8}
+\contentsline {chapter}{Python Module Index}{31}{section*.18}
+\contentsline {chapter}{Index}{33}{section*.19}

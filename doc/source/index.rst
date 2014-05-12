@@ -27,6 +27,9 @@ Welcome to RNA Hi-C tools's documentation!
 
 Updates
 -------
+2014-05-11:
+  * Add new function to show enrichment of different types of interactions: :ref:`Interaction_type_enrichment.R<VisualizationEnrich>`.
+
 Version 0.3.2 (2014-05-07):
   * change the name into RNA-Hi-C
 

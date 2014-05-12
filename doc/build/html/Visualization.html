@@ -70,7 +70,7 @@
 <p>This program require python modules: xplib, matplotlib, numpy, bx-python</p>
 </div>
 <div class="section" id="run-the-program-to-generate-visualization">
-<h2>Run the program to generate visualization<a class="headerlink" href="#run-the-program-to-generate-visualization" title="Permalink to this headline">¶</a></h2>
+<span id="plotinteraction"></span><h2>Run the program to generate visualization<a class="headerlink" href="#run-the-program-to-generate-visualization" title="Permalink to this headline">¶</a></h2>
 <p id="index-0">The script &#8220;Plot_interaction.py&#8221; will be used for this purpose,</p>
 <div class="highlight-python"><pre>usage: Plot_interaction.py [-h] [-n N] [-s START [START ...]] [-d DISTANCE]
                            [-g GENEBED] [-w PHYLOP_WIG] [-p PAIR_DIST] [-S]
@@ -138,7 +138,7 @@ optional arguments:
 </ul></div>
 </div>
 <div class="section" id="visualization-of-global-rna-rna-interactome">
-<h1>Visualization of global RNA-RNA interactome<a class="headerlink" href="#visualization-of-global-rna-rna-interactome" title="Permalink to this headline">¶</a></h1>
+<span id="visualizationglobal"></span><h1>Visualization of global RNA-RNA interactome<a class="headerlink" href="#visualization-of-global-rna-rna-interactome" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2>Prerequirement<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>This program is powered by <a class="reference external" href="http://cran.r-project.org/web/packages/RCircos/index.html">RCircos</a>.</p>
@@ -191,6 +191,56 @@ optional arguments:
 <li>The inner links are the strong interactions after removing rRNA. colors represent different types of interactions and the transparency represents the confidence of the interaction (the ones with lower p-values are stronger) </li>
 </ul></div>
 </div>
+<div class="section" id="visualization-of-interaction-types-enrichment">
+<span id="visualizationenrich"></span><h1>Visualization of interaction types enrichment<a class="headerlink" href="#visualization-of-interaction-types-enrichment" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id4">
+<h2>Prerequirement<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;argparse&#8221;,&#8221;ggplot2&#8221;,&#8221;scales&#8221;</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions">
+<h2>Run the program to generate visualization for enrichment of different types of interactions<a class="headerlink" href="#run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions" title="Permalink to this headline">¶</a></h2>
+<p id="index-2">We will use the script &#8220;Interaction_type_enrichment.R&#8221; for this purpose.</p>
+<div class="highlight-python"><pre>usage: ../../bin/Interaction_type_enrichment.R [-h] [-n NUM [NUM ...]]
+                                                [-o OUTPUT]
+                                                interaction
+
+ plot the statistical significance for enrichment of different interaction
+ types
+
+ positional arguments:
+   interaction           the strong interaction file,[required]
+
+ optional arguments:
+   -h, --help            show this help message and exit
+   -n NUM [NUM ...], --num NUM [NUM ...]
+                         Column numbers for the type name in two part,[default:
+                         [4, 11]]
+   -o OUTPUT, --output OUTPUT
+                         output pdf figure file, [default:
+                         interaction_type.pdf]</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Interaction txt file is the output of <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Step6:Select_strongInteraction_pp.py</em></a>.</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>Example of result graph<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p><em>Example code:</em></p>
+<div class="highlight-python"><pre>Rscript Plot_Circos.R ACCT_interaction_clusters.txt
+  -n 4 11 -o ACCT_interaction_type.pdf</pre>
+</div>
+<p><em>Result figure:</em></p>
+<img alt="_images/ES1_interaction_type.jpg" src="_images/ES1_interaction_type.jpg" />
+<p><em>Explanation:</em></p>
+<p>For each interaction types (Type1_in_Part1&lt;-&gt;Type2_in_Part2), we calculated the number of Type1 in Part1 from all intereactions <tt class="docutils literal"><span class="pre">n1</span></tt> and number of Type2 in Part2 from all interactions <tt class="docutils literal"><span class="pre">n2</span></tt>. Then we calculate the number of interactions with this type: Type1_in_Part1&lt;-&gt;Type2_in_Part2 <tt class="docutils literal"><span class="pre">n12</span></tt>. The p-value for each interacction type is calculated based on the hypergeometric distribution with R command: <tt class="docutils literal"><span class="pre">phyper(n12,</span> <span class="pre">n1,</span> <span class="pre">total_n</span> <span class="pre">-</span> <span class="pre">n1,</span> <span class="pre">n2,</span> <span class="pre">lower.tail=F)</span></tt>. Here <tt class="docutils literal"><span class="pre">total_n</span></tt> is the total number of strong interactions. The color for each cell (each interaction type) are coded based on the value of &#8220;-ln(p-value)&#8221;.</p>
+</div>
+</div>
 
 
 
@@ -231,6 +281,12 @@ optional arguments:
 <li><a class="reference internal" href="#id1">Prerequirement</a></li>
 <li><a class="reference internal" href="#id2">Run the program to generate visualization</a></li>
 <li><a class="reference internal" href="#id3">Example of result graph</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#visualization-of-interaction-types-enrichment">Visualization of interaction types enrichment</a><ul>
+<li><a class="reference internal" href="#id4">Prerequirement</a></li>
+<li><a class="reference internal" href="#run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions">Run the program to generate visualization for enrichment of different types of interactions</a></li>
+<li><a class="reference internal" href="#id5">Example of result graph</a></li>
 </ul>
 </li>
 </ul>

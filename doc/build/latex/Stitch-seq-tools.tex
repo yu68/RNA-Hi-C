@@ -14,7 +14,7 @@
 
 
 \title{RNA-Hi-C-tools Documentation}
-\date{May 08, 2014}
+\date{May 11, 2014}
 \release{0.3.2}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -1003,6 +1003,68 @@ Rscript Plot\_Circos.R GGCG\_interaction\_clusters.txt
 \emph{Explanation:}
 
 
+\chapter{Visualization of interaction types enrichment}
+\label{Visualization:visualizationenrich}\label{Visualization:visualization-of-interaction-types-enrichment}
+
+\section{Prerequirement}
+\label{Visualization:id4}
+Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):
+\begin{itemize}
+\item {} 
+``argparse'',''ggplot2'',''scales''
+
+\end{itemize}
+
+
+\section{Run the program to generate visualization for enrichment of different types of interactions}
+\label{Visualization:run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions}
+\index{Interaction\_type\_enrichment.R}
+We will use the script ``Interaction\_type\_enrichment.R'' for this purpose.
+
+\begin{Verbatim}[commandchars=\\\{\}]
+usage: ../../bin/Interaction\_type\_enrichment.R [-h] [-n NUM [NUM ...]]
+                                                [-o OUTPUT]
+                                                interaction
+
+ plot the statistical significance for enrichment of different interaction
+ types
+
+ positional arguments:
+   interaction           the strong interaction file,[required]
+
+ optional arguments:
+   -h, --help            show this help message and exit
+   -n NUM [NUM ...], --num NUM [NUM ...]
+                         Column numbers for the type name in two part,[default:
+                         [4, 11]]
+   -o OUTPUT, --output OUTPUT
+                         output pdf figure file, [default:
+                         interaction\_type.pdf]
+\end{Verbatim}
+
+\begin{notice}{note}{Note:}
+Interaction txt file is the output of {\hyperref[Analysis_pipeline:step6]{\emph{Step6:Select\_strongInteraction\_pp.py}}}.
+\end{notice}
+
+
+\section{Example of result graph}
+\label{Visualization:id5}
+\emph{Example code:}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+Rscript Plot\_Circos.R ACCT\_interaction\_clusters.txt
+  -n 4 11 -o ACCT\_interaction\_type.pdf
+\end{Verbatim}
+
+\emph{Result figure:}
+
+\includegraphics{ES1_interaction_type.jpg}
+
+\emph{Explanation:}
+
+For each interaction types (Type1\_in\_Part1\textless{}-\textgreater{}Type2\_in\_Part2), we calculated the number of Type1 in Part1 from all intereactions \code{n1} and number of Type2 in Part2 from all interactions \code{n2}. Then we calculate the number of interactions with this type: Type1\_in\_Part1\textless{}-\textgreater{}Type2\_in\_Part2 \code{n12}. The p-value for each interacction type is calculated based on the hypergeometric distribution with R command: \code{phyper(n12, n1, total\_n - n1, n2, lower.tail=F)}. Here \code{total\_n} is the total number of strong interactions. The color for each cell (each interaction type) are coded based on the value of ``-ln(p-value)''.
+
+
 \chapter{Python APIs created for this project}
 \label{Other_api:python-apis-created-for-this-project}\label{Other_api::doc}
 
@@ -1411,6 +1473,12 @@ RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most
 
 \chapter{Updates}
 \label{index:updates}\begin{description}
+\item[{2014-05-11:}] \leavevmode\begin{itemize}
+\item {} 
+Add new function to show enrichment of different types of interactions: {\hyperref[Visualization:visualizationenrich]{\emph{Interaction\_type\_enrichment.R}}}.
+
+\end{itemize}
+
 \item[{Version 0.3.2 (2014-05-07):}] \leavevmode\begin{itemize}
 \item {} 
 change the name into RNA-Hi-C

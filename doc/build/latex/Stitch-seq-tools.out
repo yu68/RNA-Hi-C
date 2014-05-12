@@ -14,11 +14,15 @@
 \BOOKMARK [1][-]{section.4.1}{Prerequirement}{chapter.4}
 \BOOKMARK [1][-]{section.4.2}{Run the program to generate visualization}{chapter.4}
 \BOOKMARK [1][-]{section.4.3}{Example of result graph}{chapter.4}
-\BOOKMARK [0][-]{chapter.5}{Python APIs created for this project}{}
-\BOOKMARK [1][-]{section.5.1}{Annotation module}{chapter.5}
-\BOOKMARK [1][-]{section.5.2}{``annotated\137bed'' data class}{chapter.5}
-\BOOKMARK [1][-]{section.5.3}{``RNAstructure'' class}{chapter.5}
-\BOOKMARK [0][-]{chapter.6}{Updates}{}
-\BOOKMARK [0][-]{chapter.7}{Indices and tables}{}
+\BOOKMARK [0][-]{chapter.5}{Visualization of interaction types enrichment}{}
+\BOOKMARK [1][-]{section.5.1}{Prerequirement}{chapter.5}
+\BOOKMARK [1][-]{section.5.2}{Run the program to generate visualization for enrichment of different types of interactions}{chapter.5}
+\BOOKMARK [1][-]{section.5.3}{Example of result graph}{chapter.5}
+\BOOKMARK [0][-]{chapter.6}{Python APIs created for this project}{}
+\BOOKMARK [1][-]{section.6.1}{Annotation module}{chapter.6}
+\BOOKMARK [1][-]{section.6.2}{``annotated\137bed'' data class}{chapter.6}
+\BOOKMARK [1][-]{section.6.3}{``RNAstructure'' class}{chapter.6}
+\BOOKMARK [0][-]{chapter.7}{Updates}{}
+\BOOKMARK [0][-]{chapter.8}{Indices and tables}{}
 \BOOKMARK [0][-]{section*.18}{Python Module Index}{}
 \BOOKMARK [0][-]{section*.19}{Index}{}

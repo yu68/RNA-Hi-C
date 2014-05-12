@@ -10,6 +10,7 @@ Prerequirement
 This program require python modules: xplib, matplotlib, numpy, bx-python
 
 .. _plotInteraction:
+
 Run the program to generate visualization
 -----------------------------------------
 .. index:: Plot_interaction.py
@@ -90,6 +91,7 @@ Example of result graph
 
 
 .. _VisualizationGlobal:
+
 ===========================================
 Visualization of global RNA-RNA interactome
 ===========================================
@@ -155,3 +157,64 @@ Example of result graph
  <li>The <font color="#0288ad"> light blue </font>track next is the coverage of part2 (the other genomic regions connected with linkers). </li>
  <li>The inner links are the strong interactions after removing rRNA. colors represent different types of interactions and the transparency represents the confidence of the interaction (the ones with lower p-values are stronger) </li>
  </ul>
+
+
+.. _VisualizationEnrich:
+
+=============================================
+Visualization of interaction types enrichment
+=============================================
+
+Prerequirement
+--------------
+
+Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):
+
+ * "argparse","ggplot2","scales"
+
+Run the program to generate visualization for enrichment of different types of interactions
+-------------------------------------------------------------------------------------------
+.. index:: Interaction_type_enrichment.R
+
+We will use the script "Interaction_type_enrichment.R" for this purpose. ::
+
+ usage: ../../bin/Interaction_type_enrichment.R [-h] [-n NUM [NUM ...]]
+                                                 [-o OUTPUT]
+                                                 interaction
+
+  plot the statistical significance for enrichment of different interaction
+  types
+  
+  positional arguments:
+    interaction           the strong interaction file,[required]
+  
+  optional arguments:
+    -h, --help            show this help message and exit
+    -n NUM [NUM ...], --num NUM [NUM ...]
+                          Column numbers for the type name in two part,[default:
+                          [4, 11]]
+    -o OUTPUT, --output OUTPUT
+                          output pdf figure file, [default:
+                          interaction_type.pdf]
+  
+.. note::
+
+  Interaction txt file is the output of :ref:`Step6:Select_strongInteraction_pp.py<Step6>`.
+
+
+Example of result graph
+-----------------------
+
+*Example code:* ::
+
+  Rscript Plot_Circos.R ACCT_interaction_clusters.txt
+    -n 4 11 -o ACCT_interaction_type.pdf
+
+*Result figure:*
+
+.. image:: ES1_interaction_type.jpg
+
+*Explanation:*
+
+For each interaction types (Type1_in_Part1<->Type2_in_Part2), we calculated the number of Type1 in Part1 from all intereactions ``n1`` and number of Type2 in Part2 from all interactions ``n2``. Then we calculate the number of interactions with this type: Type1_in_Part1<->Type2_in_Part2 ``n12``. The p-value for each interacction type is calculated based on the hypergeometric distribution with R command: ``phyper(n12, n1, total_n - n1, n2, lower.tail=F)``. Here ``total_n`` is the total number of strong interactions. The color for each cell (each interaction type) are coded based on the value of "-ln(p-value)".
+

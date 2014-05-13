@@ -13,7 +13,8 @@ def ParseArg():
     p=argparse.ArgumentParser(description="plot linked pairs around a given interaction. information of linked pairs are stored in file '*_fragment_paired_align.txt'",epilog="Require: matplotlib, numpy")
     p.add_argument("interaction",type=str,help="Interaction file from output of 'Select_strongInteraction_pp.py'")
     p.add_argument("linkedPair",type=str,help="file for information of linked pairs, which is output of 'Stitch-seq_Aligner.py'")
-    p.add_argument('-n',type=int,default=1,help="Choose region to plot, it can be a number (around n-th interaction in the interaction file) or one/two regions with format 'chr:start-end', default=1")
+    p.add_argument('-n',type=int,help="Choose region to plot, it can be a number (around n-th interaction in the interaction file). This is mutually exclusive with '-r' option")
+    p.add_argument('-r',type=str,nargs='+',help="Choose region to plot, give two interaction regions with format 'chr:start-end', this is mutually exclusive with '-n' option")
     p.add_argument('-s','--start',type=int,nargs='+',default=(7,9),help='start column number of the second region in interaction file and linkedPair file, default=(7,9)')
     p.add_argument('-d','--distance',type=int,default=10,help='the plus-minus distance (unit: kbp) flanking the interaction regions to be plotted, default=10')
     p.add_argument('-g','--genebed',type=str,default='/home/yu68/bharat-interaction/new_lincRNA_data/Ensembl_mm9.genebed',help='the genebed file from Ensembl, default: Ensembl_mm9.genebed')
@@ -42,6 +43,13 @@ class Bed:
         return (self.chr==bed2.chr) and (self.start+n<bed2.stop) and (bed2.start+n<self.stop)
     def str_region(self):
         return self.chr+":%d-%d"%(self.start,self.stop)
+
+def read_region(Str):
+    ''' input str has format 'chr:start-end'  '''
+    chro = Str.split(':')[0]
+    start = Str.split(':')[1].split("-")[0]
+    end = Str.split(':')[1].split("-")[1]
+    return Bed([chro,start,end,Str,".","."])
 
 def read_interaction(File,s):
     '''
@@ -195,10 +203,17 @@ def Main():
     (s1,s2)=args.start
 
     print "\nExtracting interaction information..."
-    Interactions=open(args.interaction,'r')
-    l=Interactions.read().split('\n')[args.n-1].split('\t')
-    part1=Bed(l[0:6])
-    part2=Bed(l[s1:(s1+6)])
+    if args.n:
+        Interactions=open(args.interaction,'r')
+        l=Interactions.read().split('\n')[args.n-1].split('\t')
+        part1=Bed(l[0:6])
+        part2=Bed(l[s1:(s1+6)])
+    elif len(args.r)==2:
+        part1=read_region(args.r[0])
+        part2=read_region(args.r[1])
+    else:
+        print >> sys.stderr, "need to specify two regions using '-r'"
+        
     start1=part1.start-distance
     end1=part1.stop+distance
     start2=part2.start-distance

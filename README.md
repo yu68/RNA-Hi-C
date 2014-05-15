@@ -4,7 +4,7 @@ RNA Hi-C
 ## program for RNA-RNA interactome and RNA-chromatin interactome ##
 
 ### Documentation ###
-[HTML](http://stitch-seq-tools.readthedocs.org/)
+[HTML](http://systemsbio.ucsd.edu/RNA-Hi-C/)
 
 ### pipeline (start from pair-end fastq file): ###
 1. Remove duplicates  `rm_dup\remove_dup_PE.py`
@@ -67,5 +67,3 @@ linkers:
 
 2. [Boost.Python](http://www.boost.org/doc/libs/1_54_0/libs/python/doc/index.html)  
 
-#### Notes: ####
-1. the Annotation feature need the development version of PyCogent [install instruction](http://pycogent.org/install.html#to-use-the-development-version-of-pycogent). Since we need the getTranscriptByStableId function which is described [here](https://github.com/pycogent/pycogent/issues/21).

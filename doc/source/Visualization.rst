@@ -34,8 +34,11 @@ The script "Plot_interaction.py" will be used for this purpose, ::
   optional arguments:
     -h, --help            show this help message and exit
     -n N                  Choose region to plot, it can be a number (around n-th
-                          interaction in the interaction file) or one/two
-                          regions with format 'chr:start-end', default=1
+                          interaction in the interaction file). This is mutually
+                          exclusive with '-r' option
+    -r R [R ...]          Choose region to plot, give two interaction regions
+                          with format 'chr:start-end', this is mutually
+                          exclusive with '-n' option
     -s START [START ...], --start START [START ...]
                           start column number of the second region in
                           interaction file and linkedPair file, default=(7,8)

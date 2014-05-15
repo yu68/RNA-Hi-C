@@ -21,6 +21,8 @@ Other functions:
 1. :ref:`RNA_types`
 2. :ref:`find_linker`
 3. :ref:`intersection`
+4. :ref:`intersectiongene`
+5. :ref:`Structure`
 
 Pipeline
 ========
@@ -403,11 +405,11 @@ Find linker sequences within the library.
 
 .. _intersection:
 
-Find intersections between two different interaction sets.
-----------------------------------------------------------
+Find intersections between two different interaction sets based on genomic locations
+------------------------------------------------------------------------------------
 .. index:: intersectInteraction.py
 
-The script tool ``intersectInteraction.py`` could be used to identify overlap of interactions between two interaction set from independent experiments (two replicates or treatment v.s. control) ::
+The script tool ``intersectInteraction.py`` could be used to identify overlap of interactions between two interaction set from independent experiments based on genomic locations (two replicates or two different samples) ::
 
   usage: intersectInteraction.py [-h] -a FILEA -b FILEB [-s START] [-n NBASE]
                                  [-o OUTPUT] [-c]
@@ -433,6 +435,39 @@ The script tool ``intersectInteraction.py`` could be used to identify overlap of
   require 'random'&'numpy'&'scipy' module if set '-p'
 
 if "-p" option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in set a. A p-value will be calculate based on permutation distribution.
+
+.. _intersectiongene:
+
+Find intersections between two different interaction sets based on annotation
+-----------------------------------------------------------------------------
+.. index:: intersectInteraction_genePair.R
+
+The script tool ``intersectInteraction_genePair.R`` could be used to identify overlap of interactions between two interaction set from independent experiments based on the RNA annotations (two replicates or two different samples) ::
+
+  usage: intersectInteraction_genePair.R [-h] [-n NUM [NUM ...]] [-p] [-r]
+                                         [-o OUTPUT]
+                                         interactionA interactionB
+
+  Call intersections based on gene pairs
+  
+  positional arguments:
+    interactionA          the interaction file a,[required]
+    interactionB          the interaction file b,[required]
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -n NUM [NUM ...], --num NUM [NUM ...]
+                          Column numbers for the gene name in two part,[default:
+                          [5, 12]]
+    -p, --pvalue          set to do 100 permutations for p-value of overlap
+    -r, --release         set to only require match of chromosome and RNA name,
+                          but not subtype
+    -o OUTPUT, --output OUTPUT
+                          output intersection file name, pairs in A that overlap
+                          with B, [default: intersect.txt]
+
+if "-p" option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in both set a and set b. A p-value will be calculate based on permutation distribution.
+
 
 .. _Structure:
 

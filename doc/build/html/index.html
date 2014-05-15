@@ -90,7 +90,8 @@
 <li class="toctree-l2"><a class="reference internal" href="Analysis_pipeline.html#other-functions">Other functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#determine-the-rna-types-of-different-parts-within-fragments">Determine the RNA types of different parts within fragments.</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-linker-sequences-within-the-library">Find linker sequences within the library.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-intersections-between-two-different-interaction-sets">Find intersections between two different interaction sets.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-intersections-between-two-different-interaction-sets-based-on-genomic-locations">Find intersections between two different interaction sets based on genomic locations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-intersections-between-two-different-interaction-sets-based-on-annotation">Find intersections between two different interaction sets based on annotation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#rna-structure-prediction-by-adding-digestion-site-information">RNA structure prediction by adding digestion site information</a></li>
 </ul>
 </li>
@@ -129,6 +130,12 @@
 <div class="section" id="updates">
 <h2>Updates<a class="headerlink" href="#updates" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
+<dt>2014-05-14:</dt>
+<dd><ul class="first last simple">
+<li>Add new function to find overlap between two interaction sets based on their RNA annotations, see: <a class="reference internal" href="Analysis_pipeline.html#intersectiongene"><em>intersectInteraction_genePair.R</em></a>.</li>
+<li>Allow input of two genomic regions to visualize local interactions using <tt class="docutils literal"><span class="pre">-r</span></tt> option in &#8220;<a class="reference internal" href="Visualization.html#plotinteraction"><em>Plot_interaction.py</em></a>&#8221; function</li>
+</ul>
+</dd>
 <dt>2014-05-11:</dt>
 <dd><ul class="first last simple">
 <li>Add new function to show enrichment of different types of interactions: <a class="reference internal" href="Visualization.html#visualizationenrich"><em>Interaction_type_enrichment.R</em></a>.</li>

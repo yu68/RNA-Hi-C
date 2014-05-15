@@ -15,29 +15,30 @@
 \contentsline {subsection}{\numberline {2.2.4}Step 4: Split partners and classify different types of fragments.}{8}{subsection.2.2.4}
 \contentsline {subsection}{\numberline {2.2.5}Step 5: Align both parts of ``Paired'' fragment to the genome.}{10}{subsection.2.2.5}
 \contentsline {subsection}{\numberline {2.2.6}Step 6: Determine strong interactions.}{11}{subsection.2.2.6}
-\contentsline {subsection}{\numberline {2.2.7}Step 7: Visualization of interactions and coverages.}{12}{subsection.2.2.7}
+\contentsline {subsection}{\numberline {2.2.7}Step 7: Visualization of interactions and coverages.}{13}{subsection.2.2.7}
 \contentsline {section}{\numberline {2.3}Other functions}{13}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Determine the RNA types of different parts within fragments.}{13}{subsection.2.3.1}
 \contentsline {subsection}{\numberline {2.3.2}Find linker sequences within the library.}{13}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {2.3.3}Find intersections between two different interaction sets.}{13}{subsection.2.3.3}
-\contentsline {subsection}{\numberline {2.3.4}RNA structure prediction by adding digestion site information}{13}{subsection.2.3.4}
-\contentsline {chapter}{\numberline {3}Visualization of local RNA-RNA interactions}{15}{chapter.3}
-\contentsline {section}{\numberline {3.1}Prerequirement}{15}{section.3.1}
-\contentsline {section}{\numberline {3.2}Run the program to generate visualization}{15}{section.3.2}
-\contentsline {section}{\numberline {3.3}Example of result graph}{16}{section.3.3}
-\contentsline {chapter}{\numberline {4}Visualization of global RNA-RNA interactome}{17}{chapter.4}
-\contentsline {section}{\numberline {4.1}Prerequirement}{17}{section.4.1}
-\contentsline {section}{\numberline {4.2}Run the program to generate visualization}{17}{section.4.2}
-\contentsline {section}{\numberline {4.3}Example of result graph}{17}{section.4.3}
-\contentsline {chapter}{\numberline {5}Visualization of interaction types enrichment}{19}{chapter.5}
-\contentsline {section}{\numberline {5.1}Prerequirement}{19}{section.5.1}
-\contentsline {section}{\numberline {5.2}Run the program to generate visualization for enrichment of different types of interactions}{19}{section.5.2}
-\contentsline {section}{\numberline {5.3}Example of result graph}{19}{section.5.3}
-\contentsline {chapter}{\numberline {6}Python APIs created for this project}{21}{chapter.6}
-\contentsline {section}{\numberline {6.1}Annotation module}{21}{section.6.1}
-\contentsline {section}{\numberline {6.2}``annotated\_bed'' data class}{22}{section.6.2}
-\contentsline {section}{\numberline {6.3}``RNAstructure'' class}{23}{section.6.3}
-\contentsline {chapter}{\numberline {7}Updates}{27}{chapter.7}
-\contentsline {chapter}{\numberline {8}Indices and tables}{29}{chapter.8}
-\contentsline {chapter}{Python Module Index}{31}{section*.18}
-\contentsline {chapter}{Index}{33}{section*.19}
+\contentsline {subsection}{\numberline {2.3.3}Find intersections between two different interaction sets based on genomic locations}{13}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Find intersections between two different interaction sets based on annotation}{14}{subsection.2.3.4}
+\contentsline {subsection}{\numberline {2.3.5}RNA structure prediction by adding digestion site information}{14}{subsection.2.3.5}
+\contentsline {chapter}{\numberline {3}Visualization of local RNA-RNA interactions}{17}{chapter.3}
+\contentsline {section}{\numberline {3.1}Prerequirement}{17}{section.3.1}
+\contentsline {section}{\numberline {3.2}Run the program to generate visualization}{17}{section.3.2}
+\contentsline {section}{\numberline {3.3}Example of result graph}{18}{section.3.3}
+\contentsline {chapter}{\numberline {4}Visualization of global RNA-RNA interactome}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}Prerequirement}{19}{section.4.1}
+\contentsline {section}{\numberline {4.2}Run the program to generate visualization}{19}{section.4.2}
+\contentsline {section}{\numberline {4.3}Example of result graph}{19}{section.4.3}
+\contentsline {chapter}{\numberline {5}Visualization of interaction types enrichment}{21}{chapter.5}
+\contentsline {section}{\numberline {5.1}Prerequirement}{21}{section.5.1}
+\contentsline {section}{\numberline {5.2}Run the program to generate visualization for enrichment of different types of interactions}{21}{section.5.2}
+\contentsline {section}{\numberline {5.3}Example of result graph}{21}{section.5.3}
+\contentsline {chapter}{\numberline {6}Python APIs created for this project}{23}{chapter.6}
+\contentsline {section}{\numberline {6.1}Annotation module}{23}{section.6.1}
+\contentsline {section}{\numberline {6.2}``annotated\_bed'' data class}{24}{section.6.2}
+\contentsline {section}{\numberline {6.3}``RNAstructure'' class}{25}{section.6.3}
+\contentsline {chapter}{\numberline {7}Updates}{29}{chapter.7}
+\contentsline {chapter}{\numberline {8}Indices and tables}{31}{chapter.8}
+\contentsline {chapter}{Python Module Index}{33}{section*.18}
+\contentsline {chapter}{Index}{35}{section*.19}

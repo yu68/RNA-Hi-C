@@ -82,7 +82,9 @@ This bioinformatic pipeline is trying to obtain the strong interactions from raw
 <ol class="arabic simple">
 <li><a class="reference internal" href="#rna-types"><em>Determine the RNA types of different parts within fragments.</em></a></li>
 <li><a class="reference internal" href="#find-linker"><em>Find linker sequences within the library.</em></a></li>
-<li><a class="reference internal" href="#intersection"><em>Find intersections between two different interaction sets.</em></a></li>
+<li><a class="reference internal" href="#intersection"><em>Find intersections between two different interaction sets based on genomic locations</em></a></li>
+<li><a class="reference internal" href="#intersectiongene"><em>Find intersections between two different interaction sets based on annotation</em></a></li>
+<li><a class="reference internal" href="#structure"><em>RNA structure prediction by adding digestion site information</em></a></li>
 </ol>
 </div>
 <div class="section" id="pipeline">
@@ -473,9 +475,9 @@ need Scipy for hypergeometric distribution</pre>
 <div class="section" id="find-linker-sequences-within-the-library">
 <span id="find-linker"></span><h3>Find linker sequences within the library.<a class="headerlink" href="#find-linker-sequences-within-the-library" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="find-intersections-between-two-different-interaction-sets">
-<span id="intersection"></span><h3>Find intersections between two different interaction sets.<a class="headerlink" href="#find-intersections-between-two-different-interaction-sets" title="Permalink to this headline">¶</a></h3>
-<p id="index-6">The script tool <tt class="docutils literal"><span class="pre">intersectInteraction.py</span></tt> could be used to identify overlap of interactions between two interaction set from independent experiments (two replicates or treatment v.s. control)</p>
+<div class="section" id="find-intersections-between-two-different-interaction-sets-based-on-genomic-locations">
+<span id="intersection"></span><h3>Find intersections between two different interaction sets based on genomic locations<a class="headerlink" href="#find-intersections-between-two-different-interaction-sets-based-on-genomic-locations" title="Permalink to this headline">¶</a></h3>
+<p id="index-6">The script tool <tt class="docutils literal"><span class="pre">intersectInteraction.py</span></tt> could be used to identify overlap of interactions between two interaction set from independent experiments based on genomic locations (two replicates or two different samples)</p>
 <div class="highlight-python"><pre>usage: intersectInteraction.py [-h] -a FILEA -b FILEB [-s START] [-n NBASE]
                                [-o OUTPUT] [-c]
 
@@ -501,9 +503,36 @@ require 'random'&amp;'numpy'&amp;'scipy' module if set '-p'</pre>
 </div>
 <p>if &#8220;-p&#8221; option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in set a. A p-value will be calculate based on permutation distribution.</p>
 </div>
+<div class="section" id="find-intersections-between-two-different-interaction-sets-based-on-annotation">
+<span id="intersectiongene"></span><h3>Find intersections between two different interaction sets based on annotation<a class="headerlink" href="#find-intersections-between-two-different-interaction-sets-based-on-annotation" title="Permalink to this headline">¶</a></h3>
+<p id="index-7">The script tool <tt class="docutils literal"><span class="pre">intersectInteraction_genePair.R</span></tt> could be used to identify overlap of interactions between two interaction set from independent experiments based on the RNA annotations (two replicates or two different samples)</p>
+<div class="highlight-python"><pre>usage: intersectInteraction_genePair.R [-h] [-n NUM [NUM ...]] [-p] [-r]
+                                       [-o OUTPUT]
+                                       interactionA interactionB
+
+Call intersections based on gene pairs
+
+positional arguments:
+  interactionA          the interaction file a,[required]
+  interactionB          the interaction file b,[required]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NUM [NUM ...], --num NUM [NUM ...]
+                        Column numbers for the gene name in two part,[default:
+                        [5, 12]]
+  -p, --pvalue          set to do 100 permutations for p-value of overlap
+  -r, --release         set to only require match of chromosome and RNA name,
+                        but not subtype
+  -o OUTPUT, --output OUTPUT
+                        output intersection file name, pairs in A that overlap
+                        with B, [default: intersect.txt]</pre>
+</div>
+<p>if &#8220;-p&#8221; option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in both set a and set b. A p-value will be calculate based on permutation distribution.</p>
+</div>
 <div class="section" id="rna-structure-prediction-by-adding-digestion-site-information">
 <span id="structure"></span><h3>RNA structure prediction by adding digestion site information<a class="headerlink" href="#rna-structure-prediction-by-adding-digestion-site-information" title="Permalink to this headline">¶</a></h3>
-<p id="index-7">The script will take selfligated chimeric fragments from given snoRNA (ID) and predict secondary structures with and without constraints of digested single strand sites. It is also able to compare the known structure in dot format if the known structure is available and specified by &#8220;-a&#8221;. The script needs RNAStructure software for structure prediction (&#8220;-R&#8221;) and  and VARNA command line tool for visualization (&#8220;-v&#8221;).</p>
+<p id="index-8">The script will take selfligated chimeric fragments from given snoRNA (ID) and predict secondary structures with and without constraints of digested single strand sites. It is also able to compare the known structure in dot format if the known structure is available and specified by &#8220;-a&#8221;. The script needs RNAStructure software for structure prediction (&#8220;-R&#8221;) and  and VARNA command line tool for visualization (&#8220;-v&#8221;).</p>
 <div class="highlight-python"><pre>usage: RNA_structure_prediction.py [-h] [-g GENOMEFA] [-R RNASTRUCTUREEXE]
                                  [-a ACCEPTDOT] [-o OUTPUT]
                                  [-s samtool_path] [-v VARNA]
@@ -595,7 +624,8 @@ This will generate three eps files with secondary structures (&#8220;Predict&#82
 <li><a class="reference internal" href="#other-functions">Other functions</a><ul>
 <li><a class="reference internal" href="#determine-the-rna-types-of-different-parts-within-fragments">Determine the RNA types of different parts within fragments.</a></li>
 <li><a class="reference internal" href="#find-linker-sequences-within-the-library">Find linker sequences within the library.</a></li>
-<li><a class="reference internal" href="#find-intersections-between-two-different-interaction-sets">Find intersections between two different interaction sets.</a></li>
+<li><a class="reference internal" href="#find-intersections-between-two-different-interaction-sets-based-on-genomic-locations">Find intersections between two different interaction sets based on genomic locations</a></li>
+<li><a class="reference internal" href="#find-intersections-between-two-different-interaction-sets-based-on-annotation">Find intersections between two different interaction sets based on annotation</a></li>
 <li><a class="reference internal" href="#rna-structure-prediction-by-adding-digestion-site-information">RNA structure prediction by adding digestion site information</a></li>
 </ul>
 </li>

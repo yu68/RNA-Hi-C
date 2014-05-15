@@ -14,7 +14,7 @@
 
 
 \title{RNA-Hi-C-tools Documentation}
-\date{May 11, 2014}
+\date{May 14, 2014}
 \release{0.3.2}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -269,7 +269,13 @@ Other functions:
 {\hyperref[Analysis_pipeline:find-linker]{\emph{Find linker sequences within the library.}}}
 
 \item {} 
-{\hyperref[Analysis_pipeline:intersection]{\emph{Find intersections between two different interaction sets.}}}
+{\hyperref[Analysis_pipeline:intersection]{\emph{Find intersections between two different interaction sets based on genomic locations}}}
+
+\item {} 
+{\hyperref[Analysis_pipeline:intersectiongene]{\emph{Find intersections between two different interaction sets based on annotation}}}
+
+\item {} 
+{\hyperref[Analysis_pipeline:structure]{\emph{RNA structure prediction by adding digestion site information}}}
 
 \end{enumerate}
 
@@ -771,10 +777,10 @@ There are two ways of visulization provided ( LOCAL and GLOBAL ):
 \subsection{Find linker sequences within the library.}
 \label{Analysis_pipeline:find-linker-sequences-within-the-library}\label{Analysis_pipeline:find-linker}
 
-\subsection{Find intersections between two different interaction sets.}
-\label{Analysis_pipeline:find-intersections-between-two-different-interaction-sets}\label{Analysis_pipeline:intersection}
+\subsection{Find intersections between two different interaction sets based on genomic locations}
+\label{Analysis_pipeline:find-intersections-between-two-different-interaction-sets-based-on-genomic-locations}\label{Analysis_pipeline:intersection}
 \index{intersectInteraction.py}
-The script tool \code{intersectInteraction.py} could be used to identify overlap of interactions between two interaction set from independent experiments (two replicates or treatment v.s. control)
+The script tool \code{intersectInteraction.py} could be used to identify overlap of interactions between two interaction set from independent experiments based on genomic locations (two replicates or two different samples)
 
 \begin{Verbatim}[commandchars=\\\{\}]
 usage: intersectInteraction.py [-h] -a FILEA -b FILEB [-s START] [-n NBASE]
@@ -802,6 +808,38 @@ require 'random'\&'numpy'\&'scipy' module if set '-p'
 \end{Verbatim}
 
 if ``-p'' option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in set a. A p-value will be calculate based on permutation distribution.
+
+
+\subsection{Find intersections between two different interaction sets based on annotation}
+\label{Analysis_pipeline:intersectiongene}\label{Analysis_pipeline:find-intersections-between-two-different-interaction-sets-based-on-annotation}
+\index{intersectInteraction\_genePair.R}
+The script tool \code{intersectInteraction\_genePair.R} could be used to identify overlap of interactions between two interaction set from independent experiments based on the RNA annotations (two replicates or two different samples)
+
+\begin{Verbatim}[commandchars=\\\{\}]
+usage: intersectInteraction\_genePair.R [-h] [-n NUM [NUM ...]] [-p] [-r]
+                                       [-o OUTPUT]
+                                       interactionA interactionB
+
+Call intersections based on gene pairs
+
+positional arguments:
+  interactionA          the interaction file a,[required]
+  interactionB          the interaction file b,[required]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NUM [NUM ...], --num NUM [NUM ...]
+                        Column numbers for the gene name in two part,[default:
+                        [5, 12]]
+  -p, --pvalue          set to do 100 permutations for p-value of overlap
+  -r, --release         set to only require match of chromosome and RNA name,
+                        but not subtype
+  -o OUTPUT, --output OUTPUT
+                        output intersection file name, pairs in A that overlap
+                        with B, [default: intersect.txt]
+\end{Verbatim}
+
+if ``-p'' option is set, then the program will do permutation for 100 times by shuffling the two partners of interactions in both set a and set b. A p-value will be calculate based on permutation distribution.
 
 
 \subsection{RNA structure prediction by adding digestion site information}
@@ -890,8 +928,11 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -n N                  Choose region to plot, it can be a number (around n-th
-                        interaction in the interaction file) or one/two
-                        regions with format 'chr:start-end', default=1
+                        interaction in the interaction file). This is mutually
+                        exclusive with '-r' option
+  -r R [R ...]          Choose region to plot, give two interaction regions
+                        with format 'chr:start-end', this is mutually
+                        exclusive with '-n' option
   -s START [START ...], --start START [START ...]
                         start column number of the second region in
                         interaction file and linkedPair file, default=(7,8)
@@ -1473,6 +1514,15 @@ RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most
 
 \chapter{Updates}
 \label{index:updates}\begin{description}
+\item[{2014-05-14:}] \leavevmode\begin{itemize}
+\item {} 
+Add new function to find overlap between two interaction sets based on their RNA annotations, see: {\hyperref[Analysis_pipeline:intersectiongene]{\emph{intersectInteraction\_genePair.R}}}.
+
+\item {} 
+Allow input of two genomic regions to visualize local interactions using \code{-r} option in ``{\hyperref[Visualization:plotinteraction]{\emph{Plot\_interaction.py}}}'' function
+
+\end{itemize}
+
 \item[{2014-05-11:}] \leavevmode\begin{itemize}
 \item {} 
 Add new function to show enrichment of different types of interactions: {\hyperref[Visualization:visualizationenrich]{\emph{Interaction\_type\_enrichment.R}}}.

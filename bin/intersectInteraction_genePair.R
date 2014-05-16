@@ -31,7 +31,7 @@ interactionB = read.table(interactionB,sep='\t',header=F)
 # get gene pair string for each interaction
 Pair <- function(interaction,col_n,release) {
   # release option only require chromosome and name to be the same but not subtype
-  if release {
+  if (release) {
     part1 = paste(as.character(interaction[c(1,col_n[1])]),collapse=":")
     part2 = paste(as.character(interaction[c(1+col_n[2]-col_n[1],col_n[2])]),collapse=":")
   } else {

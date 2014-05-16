@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Resources of strong interactions from two mouse cell types &mdash; RNA-Hi-C-tools 0.3.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/labibi.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.3.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="RNA-Hi-C-tools 0.3.2 documentation" href="index.html" />
+    <link rel="prev" title="Python APIs created for this project" href="Other_api.html" />
+
+
+<script src="_static/labibi.js"></script>
+
+
+
+<!-- Google Analytics JS is disabled; set google_analytics_id -->
+
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Other_api.html" title="Python APIs created for this project"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">RNA-Hi-C-tools 0.3.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="resources-of-strong-interactions-from-two-mouse-cell-types">
+<span id="resource"></span><h1>Resources of strong interactions from two mouse cell types<a class="headerlink" href="#resources-of-strong-interactions-from-two-mouse-cell-types" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description-of-different-samples">
+<h2>Description of different samples<a class="headerlink" href="#description-of-different-samples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="e14-wp-1">
+<h3>E14_WP_1<a class="headerlink" href="#e14-wp-1" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Cell line:</th><td class="field-body">ESC E14</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Barcode:</th><td class="field-body">ACCT</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Experimental Details:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Actively growing E14 cells were UV irradiated (254 nm) at 200mJ/cm
+to crosslink proteins to interacting RNAs. After cell lysis, we trim down RNAs into
+1000-2000 nt using RNase I and remove DNA by TURBO DNase. To recover RNAs bound to
+RNA-binding proteins, we biotin-labeled them with EZ-Link Iodoacetyl-PEG2-Biotin from
+Pierce. RNA-protein complexes were next immobilized on Streptavidin-coated beads. The
+beads are then saturated with free biotin, preventing it from interfering with following
+ligation with biotin-tagged linker. A biotin-tagged RNA linker was ligated to the 5’-end
+of immobilized RNAs. Proximity ligation was then carried out under diluted conditions
+while the RNA-protein complexes are still bound on bead. After RNA purification by
+Proteinase K and phenol-chloroform extraction, we specifically removed the unligated
+biotin by first anneal a complementary DNA oligo to the biotin-tagged linker by using
+the annealing protocol: 70oC for 5 min, 25oC for 20 min, T7 Exo for 30 min. Exonuclease
+T7 was added to remove terminal unligated biotin at the double-stranded RNAlinker-DNAoligo
+hybrid. T7 Exonuclease acts in the 5&#8217; to 3&#8217; direction, catalyzing the removal of 5&#8217;
+mononucleotides from duplex DNA and RNA/DNA hybrids in the 5’ to 3’ direction. The resulted
+RNAs were fragmented again into ~200 nt using RNase III RNA Fragmentation Module from NEB
+(1ul of RNase III in 6 min at 37C). The RNAs were purified by column and ligated with
+sequencing adapter, then reverse-transcribed and PCR for library construction. We applied
+an rRNA removal step after constructing cDNA by using an rRNA removal protocol based on
+the Duplex-Specific thermostable nuclease (DSN) enzyme using the protocol recommended by
+<a class="reference external" href="http://supportres.illumina.com/documents/myillumina/7836bd3e-3358-4834-b2f7-80f80acb4e3f/dsn_normalization_sampleprep_application_note_15014673_c.pdf">Illumina</a>.
+The constructed cDNAs were quality-checked by Bioanalyzer. The cDNAs were next
+subjected paired-end sequencing on HiSeq-2500 platform.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Linker:</th><td class="field-body"><em>mL5</em>: 5&#8217; - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="e14-wp-2">
+<h3>E14_WP_2<a class="headerlink" href="#e14-wp-2" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Cell line:</th><td class="field-body">ESC E14</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Barcode:</th><td class="field-body">GGCG</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Experimental Details:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Same as E14_WP_1 but this time rRNA removal was performed right after
+Proteinase K and phenol-chloroform treatment using the GeneRead rRNA Depletion Kit by
+Qiagen. Furthermore, the annealing of RNA linker and complementary DNA oligo was changed
+into: denature for 90 s at 90°C, and then anneal at -0.1°C/s to 25 °C and then incubate
+for 25 min at 25 °C. Since after rRNA depletion the amount of RNA remained was less than
+that obtained from E14 #1, we reduced the duration of RNA fragmentation by RNase III from
+6 min to 3 min. However, this reduction in RNase III treatment led to large fragments than
+desirable.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Linker:</th><td class="field-body"><em>mL5</em>: 5&#8217; - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="e14-wp-3">
+<h3>E14_WP_3<a class="headerlink" href="#e14-wp-3" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Cell line:</th><td class="field-body"><p class="first">ESC E14</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Barcode:</th><td class="field-body"><p class="first">AATG</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Experimental Details:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><p class="first">To detect interactions between RNAs that are not bound to the same protein
+but to interacting proteins, we used formaldehyde in conjunction with a second crosslinker, EGS.
+The combination of formaldehyde and EGS crosslinks both RNA-protein and protein-protein
+interactions thereby maximize the detection of RNA-RNA interactions that are facilitated by
+interacting proteins. Actively grown E14 cells was crosslinked with 1.5 mM of freshly prepared
+EthylGlycol bis(SuccinimidylSuccinate) (EGS)) for 45 minutes at room temperature and then 1% of
+formaldehyde for 10 minutes also at room temperature. Since crosslinking by formaldehyde makes
+the cells very rigid and less amenable to be broken down lysis buffer. Therefore, we utilized
+sonication to fragment the protein-bound RNA into ~1000 nt size range. The remaining steps were
+performed similarly to E14_WP_2.</p>
+<p>Another main difference between this sample and other samples is that we didn&#8217;t remove the nuclei,
+thus effectively including RNA-RNA interactions inside the nucleus into the sample. In other
+samples, only the cytoplasm was enriched.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Linker:</th><td class="field-body"><p class="first last"><em>mL5</em>: 5&#8217; - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3&#8217;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mef-wp-1">
+<h3>MEF_WP_1<a class="headerlink" href="#mef-wp-1" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Cell line:</th><td class="field-body">ESC E14</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Barcode:</th><td class="field-body">GGCG</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Experimental Details:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">We irradiated actively grown 1E8 MEF cells (254 nm). This time, the RNAs
+were fragmented into 300nt size range. RNase III fragmentation was also modified accordingly
+to adjust for smaller amount of RNAs: instead of adding 1ul of RNase III, we added only 0.5uL
+of RNase III and then incubated at 37C for 5 min. The subsequent steps were performed using
+the same procedure as E14_WP_2.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Linker:</th><td class="field-body"><em>mL5</em>: 5&#8217; - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="resources-of-strong-interactions">
+<h2>Resources of Strong Interactions<a class="headerlink" href="#resources-of-strong-interactions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="from-merged-data-of-e14-wp-1-and-e14-wp-2">
+<h3>From merged data of E14_WP_1 and E14_WP_2:<a class="headerlink" href="#from-merged-data-of-e14-wp-1-and-e14-wp-2" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters.xlsx">Download</a></p>
+</div>
+<div class="section" id="from-e14-wp-3-dual-crosslinking">
+<h3>From E14_WP_3 dual crosslinking:<a class="headerlink" href="#from-e14-wp-3-dual-crosslinking" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters.xlsx">Download</a></p>
+</div>
+<div class="section" id="from-mef-wp-1-sample">
+<h3>From MEF_WP_1 sample:<a class="headerlink" href="#from-mef-wp-1-sample" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters.xlsx">Download</a></p>
+</div>
+</div>
+</div>
+
+
+
+
+  
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'stitchseqtools'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Resources of strong interactions from two mouse cell types</a><ul>
+<li><a class="reference internal" href="#description-of-different-samples">Description of different samples</a><ul>
+<li><a class="reference internal" href="#e14-wp-1">E14_WP_1</a></li>
+<li><a class="reference internal" href="#e14-wp-2">E14_WP_2</a></li>
+<li><a class="reference internal" href="#e14-wp-3">E14_WP_3</a></li>
+<li><a class="reference internal" href="#mef-wp-1">MEF_WP_1</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resources-of-strong-interactions">Resources of Strong Interactions</a><ul>
+<li><a class="reference internal" href="#from-merged-data-of-e14-wp-1-and-e14-wp-2">From merged data of E14_WP_1 and E14_WP_2:</a></li>
+<li><a class="reference internal" href="#from-e14-wp-3-dual-crosslinking">From E14_WP_3 dual crosslinking:</a></li>
+<li><a class="reference internal" href="#from-mef-wp-1-sample">From MEF_WP_1 sample:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Other_api.html"
+                        title="previous chapter">Python APIs created for this project</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Data_Resources.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Other_api.html" title="Python APIs created for this project"
+             >previous</a> |</li>
+        <li><a href="index.html">RNA-Hi-C-tools 0.3.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Pengfei Yu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+
+
+
+<div id="editor-trap">
+      <h3>Edit this document!</h3>
+
+      <p>
+        This file can be edited directly through the Web. Anyone can
+        update and fix errors in this document with few clicks --
+        no downloads needed.
+      <p>
+
+      <ol>
+
+        <li>
+          Go to
+        <a href="https://github.com/yu68/RNA-Hi-C/blob/master/Data_Resources.rst">
+          Resources of strong interactions from two mouse cell types
+        </a> on GitHub.
+      </li>
+
+        <li>
+        <b>Edit</b> files using GitHub's text editor in your web browser (see the 'Edit' tab on the top right of the file)
+      </li>
+
+      <li>
+        Fill in the <b>Commit message</b> text box at the bottom of the page describing <i>why</i>
+        you made the changes. Press the <b>Propose file change</b> button next to it when done.
+      </li>
+
+      <li>
+        Then click <b>Send a pull request</b>.
+      </li>
+
+      <li>
+        Your changes are now queued for review under the project's <a href="https://github.com/yu68/RNA-Hi-C/pulls">Pull requests</a> tab on GitHub!
+      </li>
+      </ol>
+
+      <p>
+        For an introduction to the documentation format please see <a href="http://docutils.sourceforge.net/docs/user/rst/quickstart.html">the reST primer</a>.
+      </p>
+
+  </div>
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', ]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </body>
+</html>

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  14 MAY 2014 17:29
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  15 MAY 2014 17:08
 entering extended mode
  %&-line parsing enabled.
 **Stitch-seq-tools.tex
@@ -889,7 +889,7 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 127.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 127.
-<exp.jpg, id=177, 475.02469pt x 314.67563pt>
+<exp.jpg, id=192, 475.02469pt x 314.67563pt>
 File: exp.jpg Graphic file (type jpg)
  <use exp.jpg>
 File: exp.jpg Graphic file (type jpg)
@@ -917,20 +917,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 361--362
 /10 Rm_dupPE_example.F1.fastq \T1/ptm/m/n/10 and
  []
 
-<workflow_for_recoverFragment.jpg, id=244, 904.3386pt x 540.3387pt>
+<workflow_for_recoverFragment.jpg, id=259, 904.3386pt x 540.3387pt>
 File: workflow_for_recoverFragment.jpg Graphic file (type jpg)
 
 <use workflow_for_recoverFragment.jpg>
 File: workflow_for_recoverFragment.jpg Graphic file (type jpg)
  <use workflow_for_recoverFragment.jpg>
 [7 <./workflow_for_recoverFragment.jpg>]
-<summary.jpg, id=249, 688.974pt x 274.1442pt>
+<summary.jpg, id=264, 688.974pt x 274.1442pt>
 File: summary.jpg Graphic file (type jpg)
  <use summary.jpg>
 File: summary.jpg Graphic file (type jpg)
 
 <use summary.jpg> [8 <./summary.jpg>] [9] [10]
-<Find_strong_interaction.jpg, id=265, 755.82375pt x 405.515pt>
+<Find_strong_interaction.jpg, id=280, 755.82375pt x 405.515pt>
 File: Find_strong_interaction.jpg Graphic file (type jpg)
 
 <use Find_strong_interaction.jpg>
@@ -940,7 +940,7 @@ File: Find_strong_interaction.jpg Graphic file (type jpg)
 
 ]
 Chapter 3.
-[17] <local_interaction_malat1_ACCT.jpg, id=302, 477.9456pt x 240.9pt>
+[17] <local_interaction_malat1_ACCT.jpg, id=317, 477.9456pt x 240.9pt>
 File: local_interaction_malat1_ACCT.jpg Graphic file (type jpg)
 
 <use local_interaction_malat1_ACCT.jpg>
@@ -951,7 +951,7 @@ g>]
 Chapter 4.
 [19
 
-] <GGCG-MEF_interactome.jpg, id=317, 803.0pt x 803.0pt>
+] <GGCG-MEF_interactome.jpg, id=332, 803.0pt x 803.0pt>
 File: GGCG-MEF_interactome.jpg Graphic file (type jpg)
 
 <use GGCG-MEF_interactome.jpg>
@@ -960,7 +960,7 @@ File: GGCG-MEF_interactome.jpg Graphic file (type jpg)
 Chapter 5.
 [21
 
-] <ES1_interaction_type.jpg, id=328, 579.1236pt x 434.5836pt>
+] <ES1_interaction_type.jpg, id=343, 579.1236pt x 434.5836pt>
 File: ES1_interaction_type.jpg Graphic file (type jpg)
 
 <use ES1_interaction_type.jpg>
@@ -979,30 +979,34 @@ Underfull \hbox (badness 10000) in paragraph at lines 1430--1431
  for-mat see
  []
 
-[26] [27] [28
-
-]
+[26]
 Chapter 7.
-[29] [30
+[27
+
+] [28] [29] [30
 
 ]
 Chapter 8.
 [31] [32
 
-] [33
-
-
-] (./Stitch-seq-tools.ind [34
-
+]
+Chapter 9.
+[33] [34
 
 ] [35
 
+
+] (./Stitch-seq-tools.ind [36
+
+
+] [37
+
 ]) (./Stitch-seq-tools.aux) ) 
 Here is how much of TeX's memory you used:
- 8279 strings out of 495061
- 113975 string characters out of 1182621
- 201344 words of memory out of 3000000
- 11062 multiletter control sequences out of 15000+50000
+ 8307 strings out of 495061
+ 114644 string characters out of 1182621
+ 202094 words of memory out of 3000000
+ 11078 multiletter control sequences out of 15000+50000
  72437 words of font info for 83 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
  45i,16n,45p,729b,514s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1016,9 +1020,9 @@ ourier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb
 mf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/
 type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr
 8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Stitch-seq-tools.pdf (39 pages, 1872414 bytes).
+Output written on Stitch-seq-tools.pdf (41 pages, 1884637 bytes).
 PDF statistics:
- 514 PDF objects out of 1000 (max. 8388607)
- 108 named destinations out of 1000 (max. 500000)
- 280 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 552 PDF objects out of 1000 (max. 8388607)
+ 120 named destinations out of 1000 (max. 500000)
+ 304 words of extra memory for PDF output out of 10000 (max. 10000000)
 

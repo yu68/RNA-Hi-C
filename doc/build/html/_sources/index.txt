@@ -19,6 +19,7 @@ Welcome to RNA Hi-C tools's documentation!
 
    Other_api.rst
 
+   Data_Resources
 
 .. note::
 
@@ -27,6 +28,10 @@ Welcome to RNA Hi-C tools's documentation!
 
 Updates
 -------
+
+2014-5-15:
+  * Add result :ref:`resources<Resource>` for identified strong interactions in mouse E14 cells and MEF cells.
+
 2014-05-14:
   * Add new function to find overlap between two interaction sets based on their RNA annotations, see: :ref:`intersectInteraction_genePair.R<intersectiongene>`.
   * Allow input of two genomic regions to visualize local interactions using ``-r`` option in ":ref:`Plot_interaction.py<plotInteraction>`" function

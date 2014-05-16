@@ -14,7 +14,7 @@
 
 
 \title{RNA-Hi-C-tools Documentation}
-\date{May 14, 2014}
+\date{May 15, 2014}
 \release{0.3.2}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -1507,6 +1507,144 @@ Example:
 \end{fulllineitems}
 
 
+
+\chapter{Resources of strong interactions from two mouse cell types}
+\label{Data_Resources:resource}\label{Data_Resources::doc}\label{Data_Resources:resources-of-strong-interactions-from-two-mouse-cell-types}
+
+\section{Description of different samples}
+\label{Data_Resources:description-of-different-samples}
+
+\subsection{E14\_WP\_1}
+\label{Data_Resources:e14-wp-1}\begin{quote}\begin{description}
+\item[{Cell line}] \leavevmode
+ESC E14
+
+\item[{Barcode}] \leavevmode
+ACCT
+
+\item[{Experimental Details}] \leavevmode
+Actively growing E14 cells were UV irradiated (254 nm) at 200mJ/cm
+to crosslink proteins to interacting RNAs. After cell lysis, we trim down RNAs into
+1000-2000 nt using RNase I and remove DNA by TURBO DNase. To recover RNAs bound to
+RNA-binding proteins, we biotin-labeled them with EZ-Link Iodoacetyl-PEG2-Biotin from
+Pierce. RNA-protein complexes were next immobilized on Streptavidin-coated beads. The
+beads are then saturated with free biotin, preventing it from interfering with following
+ligation with biotin-tagged linker. A biotin-tagged RNA linker was ligated to the 5’-end
+of immobilized RNAs. Proximity ligation was then carried out under diluted conditions
+while the RNA-protein complexes are still bound on bead. After RNA purification by
+Proteinase K and phenol-chloroform extraction, we specifically removed the unligated
+biotin by first anneal a complementary DNA oligo to the biotin-tagged linker by using
+the annealing protocol: 70oC for 5 min, 25oC for 20 min, T7 Exo for 30 min. Exonuclease
+T7 was added to remove terminal unligated biotin at the double-stranded RNAlinker-DNAoligo
+hybrid. T7 Exonuclease acts in the 5' to 3' direction, catalyzing the removal of 5'
+mononucleotides from duplex DNA and RNA/DNA hybrids in the 5’ to 3’ direction. The resulted
+RNAs were fragmented again into \textasciitilde{}200 nt using RNase III RNA Fragmentation Module from NEB
+(1ul of RNase III in 6 min at 37C). The RNAs were purified by column and ligated with
+sequencing adapter, then reverse-transcribed and PCR for library construction. We applied
+an rRNA removal step after constructing cDNA by using an rRNA removal protocol based on
+the Duplex-Specific thermostable nuclease (DSN) enzyme using the protocol recommended by
+\href{http://supportres.illumina.com/documents/myillumina/7836bd3e-3358-4834-b2f7-80f80acb4e3f/dsn\_normalization\_sampleprep\_application\_note\_15014673\_c.pdf}{Illumina}.
+The constructed cDNAs were quality-checked by Bioanalyzer. The cDNAs were next
+subjected paired-end sequencing on HiSeq-2500 platform.
+
+\item[{Linker}] \leavevmode
+\emph{mL5}: 5' - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3'
+
+\end{description}\end{quote}
+
+
+\subsection{E14\_WP\_2}
+\label{Data_Resources:e14-wp-2}\begin{quote}\begin{description}
+\item[{Cell line}] \leavevmode
+ESC E14
+
+\item[{Barcode}] \leavevmode
+GGCG
+
+\item[{Experimental Details}] \leavevmode
+Same as E14\_WP\_1 but this time rRNA removal was performed right after
+Proteinase K and phenol-chloroform treatment using the GeneRead rRNA Depletion Kit by
+Qiagen. Furthermore, the annealing of RNA linker and complementary DNA oligo was changed
+into: denature for 90 s at 90°C, and then anneal at -0.1°C/s to 25 °C and then incubate
+for 25 min at 25 °C. Since after rRNA depletion the amount of RNA remained was less than
+that obtained from E14 \#1, we reduced the duration of RNA fragmentation by RNase III from
+6 min to 3 min. However, this reduction in RNase III treatment led to large fragments than
+desirable.
+
+\item[{Linker}] \leavevmode
+\emph{mL5}: 5' - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3'
+
+\end{description}\end{quote}
+
+
+\subsection{E14\_WP\_3}
+\label{Data_Resources:e14-wp-3}\begin{quote}\begin{description}
+\item[{Cell line}] \leavevmode
+ESC E14
+
+\item[{Barcode}] \leavevmode
+AATG
+
+\item[{Experimental Details}] \leavevmode
+To detect interactions between RNAs that are not bound to the same protein
+but to interacting proteins, we used formaldehyde in conjunction with a second crosslinker, EGS.
+The combination of formaldehyde and EGS crosslinks both RNA-protein and protein-protein
+interactions thereby maximize the detection of RNA-RNA interactions that are facilitated by
+interacting proteins. Actively grown E14 cells was crosslinked with 1.5 mM of freshly prepared
+EthylGlycol bis(SuccinimidylSuccinate) (EGS)) for 45 minutes at room temperature and then 1\% of
+formaldehyde for 10 minutes also at room temperature. Since crosslinking by formaldehyde makes
+the cells very rigid and less amenable to be broken down lysis buffer. Therefore, we utilized
+sonication to fragment the protein-bound RNA into \textasciitilde{}1000 nt size range. The remaining steps were
+performed similarly to E14\_WP\_2.
+
+Another main difference between this sample and other samples is that we didn't remove the nuclei,
+thus effectively including RNA-RNA interactions inside the nucleus into the sample. In other
+samples, only the cytoplasm was enriched.
+
+\item[{Linker}] \leavevmode
+\emph{mL5}: 5' - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3'
+
+\end{description}\end{quote}
+
+
+\subsection{MEF\_WP\_1}
+\label{Data_Resources:mef-wp-1}\begin{quote}\begin{description}
+\item[{Cell line}] \leavevmode
+ESC E14
+
+\item[{Barcode}] \leavevmode
+GGCG
+
+\item[{Experimental Details}] \leavevmode
+We irradiated actively grown 1E8 MEF cells (254 nm). This time, the RNAs
+were fragmented into 300nt size range. RNase III fragmentation was also modified accordingly
+to adjust for smaller amount of RNAs: instead of adding 1ul of RNase III, we added only 0.5uL
+of RNase III and then incubated at 37C for 5 min. The subsequent steps were performed using
+the same procedure as E14\_WP\_2.
+
+\item[{Linker}] \leavevmode
+\emph{mL5}: 5' - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3'
+
+\end{description}\end{quote}
+
+
+\section{Resources of Strong Interactions}
+\label{Data_Resources:resources-of-strong-interactions}
+
+\subsection{From merged data of E14\_WP\_1 and E14\_WP\_2:}
+\label{Data_Resources:from-merged-data-of-e14-wp-1-and-e14-wp-2}
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT\_GGCG\_interaction\_clusters.xlsx}{Download}
+
+
+\subsection{From E14\_WP\_3 dual crosslinking:}
+\label{Data_Resources:from-e14-wp-3-dual-crosslinking}
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters.xlsx}{Download}
+
+
+\subsection{From MEF\_WP\_1 sample:}
+\label{Data_Resources:from-mef-wp-1-sample}
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG\_MEF\_interaction\_clusters.xlsx}{Download}
+
 \begin{notice}{note}{Note:}
 RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. \href{http://bam2xwiki.appspot.com/}{Try BAM2X now}!
 \end{notice}
@@ -1514,6 +1652,12 @@ RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most
 
 \chapter{Updates}
 \label{index:updates}\begin{description}
+\item[{2014-5-15:}] \leavevmode\begin{itemize}
+\item {} 
+Add result {\hyperref[Data_Resources:resource]{\emph{resources}}} for identified strong interactions in mouse E14 cells and MEF cells.
+
+\end{itemize}
+
 \item[{2014-05-14:}] \leavevmode\begin{itemize}
 \item {} 
 Add new function to find overlap between two interaction sets based on their RNA annotations, see: {\hyperref[Analysis_pipeline:intersectiongene]{\emph{intersectInteraction\_genePair.R}}}.

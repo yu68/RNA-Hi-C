@@ -38,7 +38,17 @@
 \contentsline {section}{\numberline {6.1}Annotation module}{23}{section.6.1}
 \contentsline {section}{\numberline {6.2}``annotated\_bed'' data class}{24}{section.6.2}
 \contentsline {section}{\numberline {6.3}``RNAstructure'' class}{25}{section.6.3}
-\contentsline {chapter}{\numberline {7}Updates}{29}{chapter.7}
-\contentsline {chapter}{\numberline {8}Indices and tables}{31}{chapter.8}
-\contentsline {chapter}{Python Module Index}{33}{section*.18}
-\contentsline {chapter}{Index}{35}{section*.19}
+\contentsline {chapter}{\numberline {7}Resources of strong interactions from two mouse cell types}{27}{chapter.7}
+\contentsline {section}{\numberline {7.1}Description of different samples}{27}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}E14\_WP\_1}{27}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}E14\_WP\_2}{27}{subsection.7.1.2}
+\contentsline {subsection}{\numberline {7.1.3}E14\_WP\_3}{28}{subsection.7.1.3}
+\contentsline {subsection}{\numberline {7.1.4}MEF\_WP\_1}{28}{subsection.7.1.4}
+\contentsline {section}{\numberline {7.2}Resources of Strong Interactions}{28}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}From merged data of E14\_WP\_1 and E14\_WP\_2:}{28}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}From E14\_WP\_3 dual crosslinking:}{28}{subsection.7.2.2}
+\contentsline {subsection}{\numberline {7.2.3}From MEF\_WP\_1 sample:}{29}{subsection.7.2.3}
+\contentsline {chapter}{\numberline {8}Updates}{31}{chapter.8}
+\contentsline {chapter}{\numberline {9}Indices and tables}{33}{chapter.9}
+\contentsline {chapter}{Python Module Index}{35}{section*.18}
+\contentsline {chapter}{Index}{37}{section*.19}

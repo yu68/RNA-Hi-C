@@ -31,6 +31,7 @@ Updates
 
 2014-5-15:
   * Add result :ref:`resources<Resource>` for identified strong interactions in mouse E14 cells and MEF cells.
+  * New function to generate heatmap for intra-RNA interactions: :ref:`Plot_interaction_heatmap.py<VisualizationHeatmap>`.
 
 2014-05-14:
   * Add new function to find overlap between two interaction sets based on their RNA annotations, see: :ref:`intersectInteraction_genePair.R<intersectiongene>`.

@@ -206,7 +206,9 @@ def Main():
         print >> sys.stderr, "Error: Need to specify the region by '-r' or specify the gene name by '-n'"
         sys.exit(0)
 
+    
     print "\n Start plot heatmaps on region: "+Region.str_region()
+    fig = plt.figure(figsize=(8,6))
     ax = plt.subplot(111,frameon=False,yticks=[])
     start = Region.start
     end = Region.stop
@@ -214,7 +216,7 @@ def Main():
 
     #set x ticks withour offset
     locs=ax.get_xticks()
-    ax.set_xticklabels(map(lambda x: "%i"%x, locs),fontsize=8)
+    ax.set_xticklabels(map(lambda x: "%i"%x, locs),fontsize=6)
 
 
     print "\nStart draw gene track"
@@ -263,16 +265,20 @@ def Main():
             patches.append(PatchGen(i,j,h,step,gene_top+0.01))
             colors.append(np.log(Count[(i,j)]+1))
 
-    p = PatchCollection(patches, cmap=matplotlib.cm.Reds, alpha=0.7, linewidths=0.)
+    p = PatchCollection(patches, cmap=matplotlib.cm.Reds, alpha=0.7, edgecolor='none',linewidths=0.0)
     p.set_array(np.array(colors))
     ax.add_collection(p)
 
     ax.set_ylim(0,((end-start)/step+2)*h+gene_top+0.01)
     plt.colorbar(p)
-    fig = plt.figure(figsize=(8,6))
 
     if not args.SI:
         plt.savefig(args.output)
+        plt.show()
+        os.system("rm temp_interaction.txt.gz*")
+        if not os.path.isfile(args.linkedPair+".tbi"):
+            os.system("rm temp_linkedPair.txt.gz*")
+        os.system("rm temp2.txt")
         sys.exit(0)
 
     print "\nQuery interactions"

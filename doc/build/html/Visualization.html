@@ -140,10 +140,83 @@ optional arguments:
 <li>The lines connecting to regions are evidence of linkedPairs, where <font color="#00dd00"> green </font> lines are the ones with distance between two ends less than what specified in option '-p'. This implies self ligation. All others are colored black </li>
 </ul></div>
 </div>
-<div class="section" id="visualization-of-global-rna-rna-interactome">
-<span id="visualizationglobal"></span><h1>Visualization of global RNA-RNA interactome<a class="headerlink" href="#visualization-of-global-rna-rna-interactome" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="visualization-of-intra-rna-interactions-by-heatmap">
+<span id="visualizationheatmap"></span><h1>Visualization of intra-RNA interactions by heatmap<a class="headerlink" href="#visualization-of-intra-rna-interactions-by-heatmap" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2>Prerequirement<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>This program require python modules: xplib, matplotlib, numpy</p>
+</div>
+<div class="section" id="run-the-program-to-generate-heatmap-for-interactions-within-rna-molecule">
+<h2>Run the program to generate heatmap for interactions within RNA molecule<a class="headerlink" href="#run-the-program-to-generate-heatmap-for-interactions-within-rna-molecule" title="Permalink to this headline">¶</a></h2>
+<p id="index-1">This program could generate an heatmap to show interactions between different regions within an RNA molecule which are spatially proximate to each other. We use the script &#8220;Plot_interaction_heatmap.py&#8221;</p>
+<div class="highlight-python"><pre>usage: Plot_interaction_heatmap.py [-h] [-n NAME] [-r R]
+                                   [-s START [START ...]] [-g GENEBED]
+                                   [-p PAIR_DIST] [-S] [-t STEP] [-I]
+                                   [-o OUTPUT]
+                                   interaction linkedPair
+
+plot interactions using a heatmap. information of linked pairs are stored in
+file '*_fragment_paired_align.txt'
+
+positional arguments:
+  interaction           Interaction file from output of
+                        'Select_strongInteraction_pp.py'
+  linkedPair            file for information of linked pairs, which is output
+                        of 'Stitch-seq_Aligner.py'
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NAME, --name NAME  give a gene name and plot the interaction heatmap new
+                        the gene region, exclusive with '-r' option
+  -r R                  Choose region to plot, give region with format 'chr
+                        :start-end', exclusive with '-n' option
+  -s START [START ...], --start START [START ...]
+                        start column number of the second region in
+                        interaction file and linkedPair file, default=(7,9)
+  -g GENEBED, --genebed GENEBED
+                        the genebed file from Ensembl, default:
+                        Ensembl_mm9.genebed
+  -p PAIR_DIST, --pair_dist PAIR_DIST
+                        two interacted parts within this distance are
+                        considered as self-ligated and they are marked or
+                        eliminated (see option -s for slim mode), default:
+                        1000bp
+  -S, --Slim            set slim mode to eliminate self ligated interactions
+  -t STEP, --step STEP  step or resolution or unit size of the heatmap,
+                        default=10bp
+  -I, --SI              Specify to add strong interaction in the
+                        figure,default: False
+  -o OUTPUT, --output OUTPUT
+                        output plot file, can be format of emf, eps, pdf, png,
+                        ps, raw, rgba, svg, svgz
+
+Require: xplib, matplotlib, numpy</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">linkedPair file is the output *_fragment_paired_align.txt from <a class="reference internal" href="Analysis_pipeline.html#step5"><em>Step5:Stitch-seq_Aligner.py</em></a> of the pipeline; Interaction txt file is the output of <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Step6:Select_strongInteraction_pp.py</em></a>. Users can use two different ways to give the region to be plotted. One is directly use the &#8216;-r&#8217; option to specify the region, another is to give a gene name and the script can find a larger region covering the gene region.</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>Example of result graph<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><em>Example code:</em></p>
+<div class="highlight-python"><pre>python Plot_interaction_heatmap.py
+        ACCT_GGCG_interaction_clusters.txt \
+        ACCT_GGCG_fragment_paired_align_rmRNA_sort.txt.gz \
+        -r chr9:120038418-120038722 \
+        -t 5 \
+        -s 7 9 \
+        -g ../Data/Ensembl_mm9.genebed.gz \
+        -o Snora73_intra_interaction.pdf</pre>
+</div>
+<p><em>Result figure:</em></p>
+<img alt="_images/Snora73_intra_interaction.jpg" src="_images/Snora73_intra_interaction.jpg" />
+</div>
+</div>
+<div class="section" id="visualization-of-global-rna-rna-interactome">
+<span id="visualizationglobal"></span><h1>Visualization of global RNA-RNA interactome<a class="headerlink" href="#visualization-of-global-rna-rna-interactome" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id3">
+<h2>Prerequirement<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>This program is powered by <a class="reference external" href="http://cran.r-project.org/web/packages/RCircos/index.html">RCircos</a>.</p>
 <p>Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):</p>
 <blockquote>
@@ -153,9 +226,9 @@ optional arguments:
 </div></blockquote>
 <p>The program also require a python script &#8220;bam2tab.py&#8221; (already in /bin/ folder) to call coverage from <a class="reference external" href="https://github.com/nimezhu/bam2x/blob/master/scripts/bed2tab.py">BAM2X</a></p>
 </div>
-<div class="section" id="id2">
-<h2>Run the program to generate visualization<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p id="index-1">We will use the script &#8220;Plot_Circos.R&#8221; for this purpose.</p>
+<div class="section" id="id4">
+<h2>Run the program to generate visualization<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p id="index-2">We will use the script &#8220;Plot_Circos.R&#8221; for this purpose.</p>
 <div class="highlight-python"><pre>usage: Plot_Circos.R [-h] [-g GENOME] [-b BIN] [-o OUTPUT]
                    interaction part1 part2
 
@@ -178,8 +251,8 @@ optional arguments:
 <p class="last">part1, part2 BAM files are the ones generated from <a class="reference internal" href="Analysis_pipeline.html#step5"><em>Step5:Stitch-seq_Aligner.py</em></a> of the pipeline; Interaction txt file is the output of <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Step6:Select_strongInteraction_pp.py</em></a>.</p>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>Example of result graph<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>Example of result graph<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p><em>Example code:</em></p>
 <div class="highlight-python"><pre>Rscript Plot_Circos.R GGCG_interaction_clusters.txt
   sort_Paired1_fragment_GGCG.bam sort_Paired2_fragment_GGCG.bam
@@ -196,8 +269,8 @@ optional arguments:
 </div>
 <div class="section" id="visualization-of-interaction-types-enrichment">
 <span id="visualizationenrich"></span><h1>Visualization of interaction types enrichment<a class="headerlink" href="#visualization-of-interaction-types-enrichment" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id4">
-<h2>Prerequirement<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>Prerequirement<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):</p>
 <blockquote>
 <div><ul class="simple">
@@ -207,7 +280,7 @@ optional arguments:
 </div>
 <div class="section" id="run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions">
 <h2>Run the program to generate visualization for enrichment of different types of interactions<a class="headerlink" href="#run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions" title="Permalink to this headline">¶</a></h2>
-<p id="index-2">We will use the script &#8220;Interaction_type_enrichment.R&#8221; for this purpose.</p>
+<p id="index-3">We will use the script &#8220;Interaction_type_enrichment.R&#8221; for this purpose.</p>
 <div class="highlight-python"><pre>usage: ../../bin/Interaction_type_enrichment.R [-h] [-n NUM [NUM ...]]
                                                 [-o OUTPUT]
                                                 interaction
@@ -232,8 +305,8 @@ optional arguments:
 <p class="last">Interaction txt file is the output of <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Step6:Select_strongInteraction_pp.py</em></a>.</p>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>Example of result graph<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>Example of result graph<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p><em>Example code:</em></p>
 <div class="highlight-python"><pre>Rscript Plot_Circos.R ACCT_interaction_clusters.txt
   -n 4 11 -o ACCT_interaction_type.pdf</pre>
@@ -280,16 +353,22 @@ optional arguments:
 <li><a class="reference internal" href="#example-of-result-graph">Example of result graph</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#visualization-of-global-rna-rna-interactome">Visualization of global RNA-RNA interactome</a><ul>
+<li><a class="reference internal" href="#visualization-of-intra-rna-interactions-by-heatmap">Visualization of intra-RNA interactions by heatmap</a><ul>
 <li><a class="reference internal" href="#id1">Prerequirement</a></li>
-<li><a class="reference internal" href="#id2">Run the program to generate visualization</a></li>
-<li><a class="reference internal" href="#id3">Example of result graph</a></li>
+<li><a class="reference internal" href="#run-the-program-to-generate-heatmap-for-interactions-within-rna-molecule">Run the program to generate heatmap for interactions within RNA molecule</a></li>
+<li><a class="reference internal" href="#id2">Example of result graph</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#visualization-of-global-rna-rna-interactome">Visualization of global RNA-RNA interactome</a><ul>
+<li><a class="reference internal" href="#id3">Prerequirement</a></li>
+<li><a class="reference internal" href="#id4">Run the program to generate visualization</a></li>
+<li><a class="reference internal" href="#id5">Example of result graph</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#visualization-of-interaction-types-enrichment">Visualization of interaction types enrichment</a><ul>
-<li><a class="reference internal" href="#id4">Prerequirement</a></li>
+<li><a class="reference internal" href="#id6">Prerequirement</a></li>
 <li><a class="reference internal" href="#run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions">Run the program to generate visualization for enrichment of different types of interactions</a></li>
-<li><a class="reference internal" href="#id5">Example of result graph</a></li>
+<li><a class="reference internal" href="#id7">Example of result graph</a></li>
 </ul>
 </li>
 </ul>

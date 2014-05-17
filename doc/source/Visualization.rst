@@ -92,6 +92,90 @@ Example of result graph
  <li>The lines connecting to regions are evidence of linkedPairs, where <font color="#00dd00"> green </font> lines are the ones with distance between two ends less than what specified in option '-p'. This implies self ligation. All others are colored black </li>
  </ul>
 
+.. _VisualizationHeatmap:
+
+==================================================
+Visualization of intra-RNA interactions by heatmap
+==================================================
+
+Prerequirement
+--------------
+This program require python modules: xplib, matplotlib, numpy
+
+Run the program to generate heatmap for interactions within RNA molecule
+------------------------------------------------------------------------
+
+.. index:: Plot_interaction_heatmap.py
+
+This program could generate an heatmap to show interactions between different regions within an RNA molecule which are spatially proximate to each other. We use the script "Plot_interaction_heatmap.py" ::
+
+  usage: Plot_interaction_heatmap.py [-h] [-n NAME] [-r R]
+                                     [-s START [START ...]] [-g GENEBED]
+                                     [-p PAIR_DIST] [-S] [-t STEP] [-I]
+                                     [-o OUTPUT]
+                                     interaction linkedPair
+  
+  plot interactions using a heatmap. information of linked pairs are stored in
+  file '*_fragment_paired_align.txt'
+  
+  positional arguments:
+    interaction           Interaction file from output of
+                          'Select_strongInteraction_pp.py'
+    linkedPair            file for information of linked pairs, which is output
+                          of 'Stitch-seq_Aligner.py'
+
+  optional arguments:
+    -h, --help            show this help message and exit
+    -n NAME, --name NAME  give a gene name and plot the interaction heatmap new
+                          the gene region, exclusive with '-r' option
+    -r R                  Choose region to plot, give region with format 'chr
+                          :start-end', exclusive with '-n' option
+    -s START [START ...], --start START [START ...]
+                          start column number of the second region in
+                          interaction file and linkedPair file, default=(7,9)
+    -g GENEBED, --genebed GENEBED
+                          the genebed file from Ensembl, default:
+                          Ensembl_mm9.genebed
+    -p PAIR_DIST, --pair_dist PAIR_DIST
+                          two interacted parts within this distance are
+                          considered as self-ligated and they are marked or
+                          eliminated (see option -s for slim mode), default:
+                          1000bp
+    -S, --Slim            set slim mode to eliminate self ligated interactions
+    -t STEP, --step STEP  step or resolution or unit size of the heatmap,
+                          default=10bp
+    -I, --SI              Specify to add strong interaction in the
+                          figure,default: False
+    -o OUTPUT, --output OUTPUT
+                          output plot file, can be format of emf, eps, pdf, png,
+                          ps, raw, rgba, svg, svgz
+
+  Require: xplib, matplotlib, numpy
+
+.. note::
+
+  linkedPair file is the output \*_fragment_paired_align.txt from :ref:`Step5:Stitch-seq_Aligner.py<Step5>` of the pipeline; Interaction txt file is the output of :ref:`Step6:Select_strongInteraction_pp.py<Step6>`. Users can use two different ways to give the region to be plotted. One is directly use the '-r' option to specify the region, another is to give a gene name and the script can find a larger region covering the gene region.
+
+
+Example of result graph
+-----------------------
+
+*Example code:* ::
+
+  python Plot_interaction_heatmap.py
+          ACCT_GGCG_interaction_clusters.txt \
+          ACCT_GGCG_fragment_paired_align_rmRNA_sort.txt.gz \
+          -r chr9:120038418-120038722 \
+          -t 5 \
+          -s 7 9 \
+          -g ../Data/Ensembl_mm9.genebed.gz \
+          -o Snora73_intra_interaction.pdf
+
+*Result figure:*
+
+.. image:: Snora73_intra_interaction.jpg
+
+
 
 .. _VisualizationGlobal:
 

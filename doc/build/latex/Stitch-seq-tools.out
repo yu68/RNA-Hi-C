@@ -10,22 +10,26 @@
 \BOOKMARK [1][-]{section.3.1}{Prerequirement}{chapter.3}
 \BOOKMARK [1][-]{section.3.2}{Run the program to generate visualization}{chapter.3}
 \BOOKMARK [1][-]{section.3.3}{Example of result graph}{chapter.3}
-\BOOKMARK [0][-]{chapter.4}{Visualization of global RNA-RNA interactome}{}
+\BOOKMARK [0][-]{chapter.4}{Visualization of intra-RNA interactions by heatmap}{}
 \BOOKMARK [1][-]{section.4.1}{Prerequirement}{chapter.4}
-\BOOKMARK [1][-]{section.4.2}{Run the program to generate visualization}{chapter.4}
+\BOOKMARK [1][-]{section.4.2}{Run the program to generate heatmap for interactions within RNA molecule}{chapter.4}
 \BOOKMARK [1][-]{section.4.3}{Example of result graph}{chapter.4}
-\BOOKMARK [0][-]{chapter.5}{Visualization of interaction types enrichment}{}
+\BOOKMARK [0][-]{chapter.5}{Visualization of global RNA-RNA interactome}{}
 \BOOKMARK [1][-]{section.5.1}{Prerequirement}{chapter.5}
-\BOOKMARK [1][-]{section.5.2}{Run the program to generate visualization for enrichment of different types of interactions}{chapter.5}
+\BOOKMARK [1][-]{section.5.2}{Run the program to generate visualization}{chapter.5}
 \BOOKMARK [1][-]{section.5.3}{Example of result graph}{chapter.5}
-\BOOKMARK [0][-]{chapter.6}{Python APIs created for this project}{}
-\BOOKMARK [1][-]{section.6.1}{Annotation module}{chapter.6}
-\BOOKMARK [1][-]{section.6.2}{``annotated\137bed'' data class}{chapter.6}
-\BOOKMARK [1][-]{section.6.3}{``RNAstructure'' class}{chapter.6}
-\BOOKMARK [0][-]{chapter.7}{Resources of strong interactions from two mouse cell types}{}
-\BOOKMARK [1][-]{section.7.1}{Description of different samples}{chapter.7}
-\BOOKMARK [1][-]{section.7.2}{Resources of Strong Interactions}{chapter.7}
-\BOOKMARK [0][-]{chapter.8}{Updates}{}
-\BOOKMARK [0][-]{chapter.9}{Indices and tables}{}
+\BOOKMARK [0][-]{chapter.6}{Visualization of interaction types enrichment}{}
+\BOOKMARK [1][-]{section.6.1}{Prerequirement}{chapter.6}
+\BOOKMARK [1][-]{section.6.2}{Run the program to generate visualization for enrichment of different types of interactions}{chapter.6}
+\BOOKMARK [1][-]{section.6.3}{Example of result graph}{chapter.6}
+\BOOKMARK [0][-]{chapter.7}{Python APIs created for this project}{}
+\BOOKMARK [1][-]{section.7.1}{Annotation module}{chapter.7}
+\BOOKMARK [1][-]{section.7.2}{``annotated\137bed'' data class}{chapter.7}
+\BOOKMARK [1][-]{section.7.3}{``RNAstructure'' class}{chapter.7}
+\BOOKMARK [0][-]{chapter.8}{Resources of strong interactions from two mouse cell types}{}
+\BOOKMARK [1][-]{section.8.1}{Description of different samples}{chapter.8}
+\BOOKMARK [1][-]{section.8.2}{Resources of Strong Interactions}{chapter.8}
+\BOOKMARK [0][-]{chapter.9}{Updates}{}
+\BOOKMARK [0][-]{chapter.10}{Indices and tables}{}
 \BOOKMARK [0][-]{section*.18}{Python Module Index}{}
 \BOOKMARK [0][-]{section*.19}{Index}{}

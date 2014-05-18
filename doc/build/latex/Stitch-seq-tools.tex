@@ -14,7 +14,7 @@
 
 
 \title{RNA-Hi-C-tools Documentation}
-\date{May 15, 2014}
+\date{May 16, 2014}
 \release{0.3.2}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -981,11 +981,98 @@ python Plot\_interaction.py
 \emph{Explanation:}
 
 
+\chapter{Visualization of intra-RNA interactions by heatmap}
+\label{Visualization:visualizationheatmap}\label{Visualization:visualization-of-intra-rna-interactions-by-heatmap}
+
+\section{Prerequirement}
+\label{Visualization:id1}
+This program require python modules: xplib, matplotlib, numpy
+
+
+\section{Run the program to generate heatmap for interactions within RNA molecule}
+\label{Visualization:run-the-program-to-generate-heatmap-for-interactions-within-rna-molecule}
+\index{Plot\_interaction\_heatmap.py}
+This program could generate an heatmap to show interactions between different regions within an RNA molecule which are spatially proximate to each other. We use the script ``Plot\_interaction\_heatmap.py''
+
+\begin{Verbatim}[commandchars=\\\{\}]
+usage: Plot\_interaction\_heatmap.py [-h] [-n NAME] [-r R]
+                                   [-s START [START ...]] [-g GENEBED]
+                                   [-p PAIR\_DIST] [-S] [-t STEP] [-I]
+                                   [-o OUTPUT]
+                                   interaction linkedPair
+
+plot interactions using a heatmap. information of linked pairs are stored in
+file '*\_fragment\_paired\_align.txt'
+
+positional arguments:
+  interaction           Interaction file from output of
+                        'Select\_strongInteraction\_pp.py'
+  linkedPair            file for information of linked pairs, which is output
+                        of 'Stitch-seq\_Aligner.py'
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NAME, --name NAME  give a gene name and plot the interaction heatmap new
+                        the gene region, exclusive with '-r' option
+  -r R                  Choose region to plot, give region with format 'chr
+                        :start-end', exclusive with '-n' option
+  -s START [START ...], --start START [START ...]
+                        start column number of the second region in
+                        interaction file and linkedPair file, default=(7,9)
+  -g GENEBED, --genebed GENEBED
+                        the genebed file from Ensembl, default:
+                        Ensembl\_mm9.genebed
+  -p PAIR\_DIST, --pair\_dist PAIR\_DIST
+                        two interacted parts within this distance are
+                        considered as self-ligated and they are marked or
+                        eliminated (see option -s for slim mode), default:
+                        1000bp
+  -S, --Slim            set slim mode to eliminate self ligated interactions
+  -t STEP, --step STEP  step or resolution or unit size of the heatmap,
+                        default=10bp
+  -I, --SI              Specify to add strong interaction in the
+                        figure,default: False
+  -o OUTPUT, --output OUTPUT
+                        output plot file, can be format of emf, eps, pdf, png,
+                        ps, raw, rgba, svg, svgz
+
+Require: xplib, matplotlib, numpy
+\end{Verbatim}
+
+\begin{notice}{note}{Note:}
+linkedPair file is the output *\_fragment\_paired\_align.txt from {\hyperref[Analysis_pipeline:step5]{\emph{Step5:Stitch-seq\_Aligner.py}}} of the pipeline; Interaction txt file is the output of {\hyperref[Analysis_pipeline:step6]{\emph{Step6:Select\_strongInteraction\_pp.py}}}. Users can use two different ways to give the region to be plotted. One is directly use the `-r' option to specify the region, another is to give a gene name and the script can find a larger region covering the gene region.
+\end{notice}
+
+
+\section{Example of result graph}
+\label{Visualization:id2}
+\emph{Example code:}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+python Plot\_interaction\_heatmap.py
+        ACCT\_GGCG\_interaction\_clusters.txt \PYGZbs{}
+        ACCT\_GGCG\_fragment\_paired\_align\_rmRNA\_sort.txt.gz \PYGZbs{}
+        -r chr9:120038418-120038722 \PYGZbs{}
+        -t 5 \PYGZbs{}
+        -s 7 9 \PYGZbs{}
+        -g ../Data/Ensembl\_mm9.genebed.gz \PYGZbs{}
+        -o Snora73\_intra\_interaction.pdf
+\end{Verbatim}
+
+\emph{Result figure:}
+
+\includegraphics{Snora73_intra_interaction.jpg}
+
+\emph{Explanation:}
+
+The heatmap is basd on the log(count+1) of mapped linkage pairs across two windows with size {[}step{]}bp
+
+
 \chapter{Visualization of global RNA-RNA interactome}
 \label{Visualization:visualizationglobal}\label{Visualization:visualization-of-global-rna-rna-interactome}
 
 \section{Prerequirement}
-\label{Visualization:id1}
+\label{Visualization:id3}
 This program is powered by \href{http://cran.r-project.org/web/packages/RCircos/index.html}{RCircos}.
 
 Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):
@@ -999,7 +1086,7 @@ The program also require a python script ``bam2tab.py'' (already in /bin/ folder
 
 
 \section{Run the program to generate visualization}
-\label{Visualization:id2}
+\label{Visualization:id4}
 \index{Plot\_Circos.R}
 We will use the script ``Plot\_Circos.R'' for this purpose.
 
@@ -1028,7 +1115,7 @@ part1, part2 BAM files are the ones generated from {\hyperref[Analysis_pipeline:
 
 
 \section{Example of result graph}
-\label{Visualization:id3}
+\label{Visualization:id5}
 \emph{Example code:}
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -1048,7 +1135,7 @@ Rscript Plot\_Circos.R GGCG\_interaction\_clusters.txt
 \label{Visualization:visualizationenrich}\label{Visualization:visualization-of-interaction-types-enrichment}
 
 \section{Prerequirement}
-\label{Visualization:id4}
+\label{Visualization:id6}
 Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):
 \begin{itemize}
 \item {} 
@@ -1089,7 +1176,7 @@ Interaction txt file is the output of {\hyperref[Analysis_pipeline:step6]{\emph{
 
 
 \section{Example of result graph}
-\label{Visualization:id5}
+\label{Visualization:id7}
 \emph{Example code:}
 
 \begin{Verbatim}[commandchars=\\\{\}]
@@ -1655,6 +1742,9 @@ RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most
 \item[{2014-5-15:}] \leavevmode\begin{itemize}
 \item {} 
 Add result {\hyperref[Data_Resources:resource]{\emph{resources}}} for identified strong interactions in mouse E14 cells and MEF cells.
+
+\item {} 
+New function to generate heatmap for intra-RNA interactions: {\hyperref[Visualization:visualizationheatmap]{\emph{Plot\_interaction\_heatmap.py}}}.
 
 \end{itemize}
 

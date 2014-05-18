@@ -2,63 +2,64 @@
 \def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
 
   \bigletter {Symbols}
-  \item \_\_init\_\_() (RNAstructure.RNAstructure method), \hyperpage{26}
-  \item \_\_init\_\_() (data\_structure.annotated\_bed method), \hyperpage{25}
-  \item \_\_lt\_\_() (data\_structure.annotated\_bed method), \hyperpage{25}
-  \item \_\_str\_\_() (data\_structure.annotated\_bed method), \hyperpage{25}
+  \item \_\_init\_\_() (RNAstructure.RNAstructure method), \hyperpage{30}
+  \item \_\_init\_\_() (data\_structure.annotated\_bed method), \hyperpage{29}
+  \item \_\_lt\_\_() (data\_structure.annotated\_bed method), \hyperpage{29}
+  \item \_\_str\_\_() (data\_structure.annotated\_bed method), \hyperpage{29}
 
   \indexspace
   \bigletter A
-  \item annotated\_bed (class in data\_structure), \hyperpage{24}
-  \item Annotation (module), \hyperpage{23}
-  \item annotation() (in module Annotation), \hyperpage{23}
+  \item annotated\_bed (class in data\_structure), \hyperpage{28}
+  \item Annotation (module), \hyperpage{27}
+  \item annotation() (in module Annotation), \hyperpage{27}
 
   \indexspace
   \bigletter C
-  \item Cluster() (data\_structure.annotated\_bed method), \hyperpage{24}
+  \item Cluster() (data\_structure.annotated\_bed method), \hyperpage{28}
 
   \indexspace
   \bigletter D
-  \item DuplexFold() (RNAstructure.RNAstructure method), \hyperpage{25}
+  \item DuplexFold() (RNAstructure.RNAstructure method), \hyperpage{29}
 
   \indexspace
   \bigletter F
-  \item Fold() (RNAstructure.RNAstructure method), \hyperpage{26}
+  \item Fold() (RNAstructure.RNAstructure method), \hyperpage{30}
 
   \indexspace
   \bigletter I
-  \item Interaction\_type\_enrichment.R, \hyperpage{21}
+  \item Interaction\_type\_enrichment.R, \hyperpage{25}
   \item intersectInteraction.py, \hyperpage{13}
   \item intersectInteraction\_genePair.R, \hyperpage{14}
 
   \indexspace
   \bigletter O
-  \item overlap() (data\_structure.annotated\_bed method), \hyperpage{25}
-  \item overlap() (in module Annotation), \hyperpage{23}
+  \item overlap() (data\_structure.annotated\_bed method), \hyperpage{29}
+  \item overlap() (in module Annotation), \hyperpage{27}
 
   \indexspace
   \bigletter P
-  \item Plot\_Circos.R, \hyperpage{19}
+  \item Plot\_Circos.R, \hyperpage{23}
   \item Plot\_interaction.py, \hyperpage{17}
+  \item Plot\_interaction\_heatmap.py, \hyperpage{19}
 
   \indexspace
   \bigletter R
   \item recoverFragment, \hyperpage{7}
   \item remove\_dup\_PE.py, \hyperpage{5}
   \item RNA\_structure\_prediction.py, \hyperpage{14}
-  \item RNAstructure (class in RNAstructure), \hyperpage{25}
+  \item RNAstructure (class in RNAstructure), \hyperpage{29}
 
   \indexspace
   \bigletter S
-  \item scorer() (RNAstructure.RNAstructure method), \hyperpage{26}
+  \item scorer() (RNAstructure.RNAstructure method), \hyperpage{30}
   \item Select\_strongInteraction\_pp.py, \hyperpage{11}
   \item split\_library\_pairend.py, \hyperpage{6}
   \item split\_partner.py, \hyperpage{8}
   \item Stitch-seq\_Aligner.py, \hyperpage{10}
-  \item Subtype() (in module Annotation), \hyperpage{23}
+  \item Subtype() (in module Annotation), \hyperpage{27}
 
   \indexspace
   \bigletter U
-  \item Update() (data\_structure.annotated\_bed method), \hyperpage{24}
+  \item Update() (data\_structure.annotated\_bed method), \hyperpage{28}
 
 \end{theindex}

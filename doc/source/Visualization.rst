@@ -175,7 +175,9 @@ Example of result graph
 
 .. image:: Snora73_intra_interaction.jpg
 
-
+*Explanation:*
+  
+The heatmap is basd on the log(count+1) of mapped linkage pairs across two windows with size [step]bp
 
 .. _VisualizationGlobal:
 

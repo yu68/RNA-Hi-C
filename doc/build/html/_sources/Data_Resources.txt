@@ -79,7 +79,7 @@ E14_WP_3
 MEF_WP_1
 --------
 
-:Cell line: ESC E14
+:Cell line: MEF
 :Barcode: GGCG
 :Experimental Details: We irradiated actively grown 1E8 MEF cells (254 nm). This time, the RNAs 
   were fragmented into 300nt size range. RNase III fragmentation was also modified accordingly 

@@ -134,7 +134,7 @@ def Main():
         n+=1
         if n%100==0:
             print >>sys.stderr, "%d th linkedPair now\r"%(n),
-        if n>1000:
+        if n>10000:
             break
     arrays1=np.array(arrays1)
     arrays2=np.array(arrays2)
@@ -154,17 +154,17 @@ def Main():
     plt.xlim=(-span,3*span)
     plt.plot(range(-span,span),average1,label="part1",color="blue")
     plt.plot(range(span,3*span),average2,label="part2",color="red")
-    plt.plot(range(-span,span),average3,"b--",label="part1_ctl",color="blue")
-    plt.plot(range(span,3*span),average4,"r--",label="part2_ctl",color="red")
-    plt.bar(-200,0.05,200,facecolor='blue',edgecolor='blue',bottom=-0.05,lw=0.1)
+    plt.plot(range(-span,span),average3,"b--",label="part1_ctl",color="#8787F9")
+    plt.plot(range(span,3*span),average4,"r--",label="part2_ctl",color="#F98C8C")
+    plt.bar(-100,0.05,100,facecolor='blue',edgecolor='blue',bottom=-0.05,lw=0.1)
     plt.bar(-10,0.05,10,facecolor='k',edgecolor='k',bottom=-0.05,lw=0.1)
-    plt.bar(2*span,0.05,200,facecolor='red',edgecolor='red',bottom=-0.05,lw=0.1)
+    plt.bar(2*span,0.05,100,facecolor='red',edgecolor='red',bottom=-0.05,lw=0.1)
     plt.bar(2*span,0.05,10,facecolor='k',edgecolor='k',bottom=-0.05,lw=0.1)
     plt.xticks([-span,0,span,2*span,3*span],[-span,0,"...",0,span])
     plt.bar(0,0.01,2*span,facecolor='k',edgecolor='k',bottom=-0.03,lw=0.1)
     plt.ylabel("Conservation Pylop Score")
     plt.xlabel("length (bp)")
-    plt.ylim(-0.1,1.2)
+    plt.ylim(-0.1,1.0)
     plt.tight_layout()
     plt.savefig(args.output)
     plt.close()

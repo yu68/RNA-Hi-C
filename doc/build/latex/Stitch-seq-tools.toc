@@ -50,8 +50,9 @@
 \contentsline {subsection}{\numberline {8.1.4}MEF\_WP\_1}{32}{subsection.8.1.4}
 \contentsline {section}{\numberline {8.2}Resources of Strong Interactions}{32}{section.8.2}
 \contentsline {subsection}{\numberline {8.2.1}From merged data of E14\_WP\_1 and E14\_WP\_2:}{32}{subsection.8.2.1}
-\contentsline {subsection}{\numberline {8.2.2}From E14\_WP\_3 dual crosslinking:}{32}{subsection.8.2.2}
+\contentsline {subsection}{\numberline {8.2.2}From E14\_WP\_3 dual crosslinking:}{33}{subsection.8.2.2}
 \contentsline {subsection}{\numberline {8.2.3}From MEF\_WP\_1 sample:}{33}{subsection.8.2.3}
+\contentsline {subsection}{\numberline {8.2.4}Number of different types of interactions:}{33}{subsection.8.2.4}
 \contentsline {chapter}{\numberline {9}Updates}{35}{chapter.9}
 \contentsline {chapter}{\numberline {10}Indices and tables}{37}{chapter.10}
 \contentsline {chapter}{Python Module Index}{39}{section*.18}

@@ -95,17 +95,43 @@ Resources of Strong Interactions
 
 From merged data of E14_WP_1 and E14_WP_2:
 ------------------------------------------
+
+:Genome: mm9															
+ * First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
+ *  *Type*: RNA types or repeat types; *Name*: RNA or repeat names; *Subtype*: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; *Count*: number of supported reads in that cluster
+ * Second last column is the number of mapped pairs that support this interaction.
+ * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
+
 `Download <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters.xlsx>`_
 
 From E14_WP_3 dual crosslinking:
 --------------------------------
+
+:Genome: mm9                                                                    
+ * First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
+ *  *Type*: RNA types or repeat types; *Name*: RNA or repeat names; *Subtype*: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; *Count*: number of supported reads in that cluster
+ * Second last column is the number of mapped pairs that support this interaction.
+ * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
+
 `Download <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters.xlsx>`_
 
 From MEF_WP_1 sample:
 ---------------------
+
+:Genome: mm9                                                                    
+ * First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
+ *  *Type*: RNA types or repeat types; *Name*: RNA or repeat names; *Subtype*: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; *Count*: number of supported reads in that cluster
+ * Second last column is the number of mapped pairs that support this interaction.
+ * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
+
 `Download <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters.xlsx>`_
 
 
 Number of different types of interactions:
 ------------------------------------------
-`Download excel here <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction.xlsx>`_
+
+ * For each cell type, there are two columns,
+ * The first column gives the number of strong interactions with this interaction type,
+ * the second column gives the number of mapped pairs that support this interaction type.
+
+`Link <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction.htm>`_

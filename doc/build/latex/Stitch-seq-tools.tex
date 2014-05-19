@@ -14,7 +14,7 @@
 
 
 \title{RNA-Hi-C-tools Documentation}
-\date{May 16, 2014}
+\date{May 19, 2014}
 \release{0.3.2}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -1697,7 +1697,7 @@ samples, only the cytoplasm was enriched.
 \subsection{MEF\_WP\_1}
 \label{Data_Resources:mef-wp-1}\begin{quote}\begin{description}
 \item[{Cell line}] \leavevmode
-ESC E14
+MEF
 
 \item[{Barcode}] \leavevmode
 GGCG
@@ -1719,18 +1719,61 @@ the same procedure as E14\_WP\_2.
 \label{Data_Resources:resources-of-strong-interactions}
 
 \subsection{From merged data of E14\_WP\_1 and E14\_WP\_2:}
-\label{Data_Resources:from-merged-data-of-e14-wp-1-and-e14-wp-2}
+\label{Data_Resources:from-merged-data-of-e14-wp-1-and-e14-wp-2}\begin{quote}\begin{description}
+\item[{Genome}] \leavevmode
+mm9
+* First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
+*  \emph{Type}: RNA types or repeat types; \emph{Name}: RNA or repeat names; \emph{Subtype}: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; \emph{Count}: number of supported reads in that cluster
+* Second last column is the number of mapped pairs that support this interaction.
+* Last column is the ``ln(p\_value)'' for the significance of interaction. P\_value is based on a hypergeometric test
+
+\end{description}\end{quote}
+
 \href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT\_GGCG\_interaction\_clusters.xlsx}{Download}
 
 
 \subsection{From E14\_WP\_3 dual crosslinking:}
-\label{Data_Resources:from-e14-wp-3-dual-crosslinking}
+\label{Data_Resources:from-e14-wp-3-dual-crosslinking}\begin{quote}\begin{description}
+\item[{Genome}] \leavevmode
+mm9
+* First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
+*  \emph{Type}: RNA types or repeat types; \emph{Name}: RNA or repeat names; \emph{Subtype}: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; \emph{Count}: number of supported reads in that cluster
+* Second last column is the number of mapped pairs that support this interaction.
+* Last column is the ``ln(p\_value)'' for the significance of interaction. P\_value is based on a hypergeometric test
+
+\end{description}\end{quote}
+
 \href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters.xlsx}{Download}
 
 
 \subsection{From MEF\_WP\_1 sample:}
-\label{Data_Resources:from-mef-wp-1-sample}
+\label{Data_Resources:from-mef-wp-1-sample}\begin{quote}\begin{description}
+\item[{Genome}] \leavevmode
+mm9
+* First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
+*  \emph{Type}: RNA types or repeat types; \emph{Name}: RNA or repeat names; \emph{Subtype}: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; \emph{Count}: number of supported reads in that cluster
+* Second last column is the number of mapped pairs that support this interaction.
+* Last column is the ``ln(p\_value)'' for the significance of interaction. P\_value is based on a hypergeometric test
+
+\end{description}\end{quote}
+
 \href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG\_MEF\_interaction\_clusters.xlsx}{Download}
+
+
+\subsection{Number of different types of interactions:}
+\label{Data_Resources:number-of-different-types-of-interactions}\begin{itemize}
+\item {} 
+For each cell type, there are two columns,
+
+\item {} 
+The first column gives the number of strong interactions with this interaction type,
+
+\item {} 
+the second column gives the number of mapped pairs that support this interaction type.
+
+\end{itemize}
+
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count\_types\_interaction.htm}{Link}
 
 \begin{notice}{note}{Note:}
 RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. \href{http://bam2xwiki.appspot.com/}{Try BAM2X now}!

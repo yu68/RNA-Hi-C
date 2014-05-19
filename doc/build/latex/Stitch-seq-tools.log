@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  16 MAY 2014 18:05
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  19 MAY 2014 15:59
 entering extended mode
  %&-line parsing enabled.
 **Stitch-seq-tools.tex
@@ -858,12 +858,12 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 2.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 57.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 58.
 pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.57 ...ter}{Python Module Index}{39}{section*.18}
+l.58 ...ter}{Python Module Index}{39}{section*.18}
                                                    [1
 
 ])
@@ -1011,10 +1011,10 @@ Chapter 10.
 
 ]) (./Stitch-seq-tools.aux) ) 
 Here is how much of TeX's memory you used:
- 8329 strings out of 495061
- 115158 string characters out of 1182621
- 202442 words of memory out of 3000000
- 11091 multiletter control sequences out of 15000+50000
+ 8331 strings out of 495061
+ 115232 string characters out of 1182621
+ 202520 words of memory out of 3000000
+ 11092 multiletter control sequences out of 15000+50000
  72437 words of font info for 83 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
  45i,16n,48p,729b,514s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1028,9 +1028,9 @@ ourier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb
 mf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/
 type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr
 8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Stitch-seq-tools.pdf (45 pages, 1942498 bytes).
+Output written on Stitch-seq-tools.pdf (45 pages, 1944183 bytes).
 PDF statistics:
- 596 PDF objects out of 1000 (max. 8388607)
- 128 named destinations out of 1000 (max. 500000)
+ 598 PDF objects out of 1000 (max. 8388607)
+ 129 named destinations out of 1000 (max. 500000)
  341 words of extra memory for PDF output out of 10000 (max. 10000000)
 

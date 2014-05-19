@@ -105,3 +105,7 @@ From MEF_WP_1 sample:
 ---------------------
 `Download <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters.xlsx>`_
 
+
+Number of different types of interactions:
+------------------------------------------
+`Download excel here <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction.xlsx>`_

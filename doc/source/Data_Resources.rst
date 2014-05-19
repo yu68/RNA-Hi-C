@@ -96,7 +96,8 @@ Resources of Strong Interactions
 From merged data of E14_WP_1 and E14_WP_2:
 ------------------------------------------
 
-:Genome: mm9															
+:Genome: mm9
+:Explanation:
  * First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
  *  *Type*: RNA types or repeat types; *Name*: RNA or repeat names; *Subtype*: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; *Count*: number of supported reads in that cluster
  * Second last column is the number of mapped pairs that support this interaction.
@@ -107,7 +108,8 @@ From merged data of E14_WP_1 and E14_WP_2:
 From E14_WP_3 dual crosslinking:
 --------------------------------
 
-:Genome: mm9                                                                    
+:Genome: mm9
+:Explanation:
  * First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
  *  *Type*: RNA types or repeat types; *Name*: RNA or repeat names; *Subtype*: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; *Count*: number of supported reads in that cluster
  * Second last column is the number of mapped pairs that support this interaction.
@@ -118,7 +120,8 @@ From E14_WP_3 dual crosslinking:
 From MEF_WP_1 sample:
 ---------------------
 
-:Genome: mm9                                                                    
+:Genome: mm9
+:Explanation:
  * First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
  *  *Type*: RNA types or repeat types; *Name*: RNA or repeat names; *Subtype*: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; *Count*: number of supported reads in that cluster
  * Second last column is the number of mapped pairs that support this interaction.
@@ -130,8 +133,7 @@ From MEF_WP_1 sample:
 Number of different types of interactions:
 ------------------------------------------
 
+`Link to file <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment.htm>`_
  * For each cell type, there are two columns,
  * The first column gives the number of strong interactions with this interaction type,
  * the second column gives the number of mapped pairs that support this interaction type.
-
-`Link <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction.htm>`_

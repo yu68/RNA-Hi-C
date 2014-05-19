@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  19 MAY 2014 15:59
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  19 MAY 2014 16:10
 entering extended mode
  %&-line parsing enabled.
 **Stitch-seq-tools.tex
@@ -991,11 +991,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 1517--1518
 Chapter 8.
 [31
 
-] [32] [33] [34
-
-]
+] [32] [33] [34]
 Chapter 9.
-[35] [36
+[35
+
+] [36
 
 ]
 Chapter 10.

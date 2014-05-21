@@ -68,6 +68,6 @@ if (args$pvalue==T) {
   Mean = mean(perm_num)
   SD = sd(perm_num)
   cat("Permutation p-value:",mean(perm_num>real_intersection_n),"mean:",Mean,"sd:",SD,"\n")
-  cat("Permutation distribution p-value",1-pnorm(real_intersection_n,Mean,SD),"\n")
+  cat("Permutation distribution p-value",pnorm(real_intersection_n,Mean,SD,lower.tail=F),"\n")
 }
 

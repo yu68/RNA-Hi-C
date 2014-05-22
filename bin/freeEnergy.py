@@ -9,13 +9,15 @@ from scipy import stats
 
 if len(sys.argv)<2:
     print "Usage:"
-    print "  python freeEnergy.py fragment_file.txt"
+    print "  python freeEnergy.py fragment_file.txt figure.pdf"
     print "\nOutput:"
     print "  txt file with two groups of free energies"
-    print "  pdf file for the plot of distribution of free energies"
-
+    print "  pdf file for the plot of distribution of free energies, the name the pdf file could be assigned in the command line"
+    sys.exit(0)
 
 mappedPair=open(sys.argv[1],'r')
+output_fig = sys.argv[2]
+
 
 rev_table=string.maketrans('ACGTacgt', 'TGCAtgca')
 def revcomp(seq, rev_table):
@@ -59,7 +61,7 @@ for l in mappedPair.read().split('\n'):
     print >>output, printline
     if i%100==0:
         print >>sys.stderr, "processing %d %.2f %.2f\r"%(i,sum(energies)/float(i),sum(random_energies)/float(i)),
-    if i==40000:
+    if i==60000:
         break
 
 energies=np.array(energies)
@@ -81,5 +83,5 @@ _,pvalue1=stats.wilcoxon(energies,random_energies)
 _,pvalue2=stats.ttest_rel(energies,random_energies)
 plt.legend()
 print "wilcoxon signed-rank test:",pvalue1,"Paired t-test:",pvalue2
-plt.savefig("free_energy.pdf")
+plt.savefig(output_fig)
 plt.close()    

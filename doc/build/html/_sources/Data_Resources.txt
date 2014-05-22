@@ -133,7 +133,7 @@ From MEF_WP_1 sample:
 Number of different types of interactions:
 ------------------------------------------
 
-`Strong interactions based on clusters of genomic locations <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment.htm>`_  
+`Strong interactions based on clusters of genomic locations <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment.htm>`_ (There are three sheets, "All_interactions", "Inter-RNA_interactions", "Intra-RNA interactions") 
 
 `Strong interactions based on annotations of RNAs <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment_wholeRNA.htm>`_
 

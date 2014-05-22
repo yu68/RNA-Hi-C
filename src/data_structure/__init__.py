@@ -3,7 +3,7 @@ from Annotation import *
 
 class annotated_bed():
     """
-    To store, compare, cluster for the genomic regions with RNA annotation information. Utlized in the program :ref:`Select_stronginteraction_pp.py<Step6>`
+    To store, compare, cluster for the genomic regions with RNA annotation information. Utilized in the program :ref:`Select_stronginteraction_pp.py<Step6>`
     """
     
     def __init__(self,x=None,**kwargs):

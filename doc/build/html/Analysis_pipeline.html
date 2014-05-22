@@ -1,32 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Analysis pipeline &mdash; RNA-Hi-C-tools 0.3.2 documentation</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
     
-    <title>Analysis pipeline &mdash; RNA-Hi-C-tools 0.3.2 documentation</title>
-    
+
+  
+
+  
+  
     <link rel="stylesheet" href="_static/labibi.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.3.2',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="RNA-Hi-C-tools 0.3.2 documentation" href="index.html" />
-    <link rel="next" title="Visualization of local RNA-RNA interactions" href="Visualization.html" />
-    <link rel="prev" title="RNA-Hi-C-tools 0.3 documentation" href="RNA-Hi-C-tools.html" />
+  
+
+  
+    <link rel="top" title="RNA-Hi-C-tools 0.3.2 documentation" href="index.html"/>
+        <link rel="next" title="Visualization of local RNA-RNA interactions" href="Visualization.html"/>
+        <link rel="prev" title="RNA-Hi-C-tools 0.3 documentation" href="RNA-Hi-C-tools.html"/>
 
 
 <script src="_static/labibi.js"></script>
@@ -36,31 +40,113 @@
 <!-- Google Analytics JS is disabled; set google_analytics_id -->
 
 
-  </head>
-  <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="Visualization.html" title="Visualization of local RNA-RNA interactions"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="RNA-Hi-C-tools.html" title="RNA-Hi-C-tools 0.3 documentation"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">RNA-Hi-C-tools 0.3.2 documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> RNA-Hi-C-tools</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="RNA-Hi-C-tools.html">RNA-Hi-C-tools 0.3 documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="RNA-Hi-C-tools.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RNA-Hi-C-tools.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RNA-Hi-C-tools.html#support">Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Analysis pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pipeline">Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-functions">Other functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Visualization of local RNA-RNA interactions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#prerequirement">Prerequirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#run-the-program-to-generate-visualization">Run the program to generate visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#example-of-result-graph">Example of result graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html#visualization-of-intra-rna-interactions-by-heatmap">Visualization of intra-RNA interactions by heatmap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id1">Prerequirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#run-the-program-to-generate-heatmap-for-interactions-within-rna-molecule">Run the program to generate heatmap for interactions within RNA molecule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id2">Example of result graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html#visualization-of-global-rna-rna-interactome">Visualization of global RNA-RNA interactome</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id3">Prerequirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id4">Run the program to generate visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id5">Example of result graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html#visualization-of-interaction-types-enrichment">Visualization of interaction types enrichment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id6">Prerequirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions">Run the program to generate visualization for enrichment of different types of interactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id7">Example of result graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Other_api.html">Python APIs created for this project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Other_api.html#module-Annotation">Annotation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Other_api.html#annotated-bed-data-class">&#8220;annotated_bed&#8221; data class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Other_api.html#rnastructure-class">&#8220;RNAstructure&#8221; class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Data_Resources.html">Resources of strong interactions from two mouse cell types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Data_Resources.html#description-of-different-samples">Description of different samples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Data_Resources.html#resources-of-strong-interactions">Resources of Strong Interactions</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">RNA-Hi-C-tools</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Analysis pipeline</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/Analysis_pipeline.txt" rel="nofollow"> View page source</a>
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
             
   
   <div class="section" id="analysis-pipeline">
@@ -603,87 +689,69 @@ This will generate three eps files with secondary structures (&#8220;Predict&#82
 
 
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Analysis pipeline</a><ul>
-<li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#pipeline">Pipeline</a><ul>
-<li><a class="reference internal" href="#step-1-remove-pcr-duplicates">Step 1: Remove PCR duplicates.</a></li>
-<li><a class="reference internal" href="#step-2-split-library-based-on-barcode-txt">Step 2: Split library based on barcode.txt.</a></li>
-<li><a class="reference internal" href="#step-3-recover-fragments-for-each-library">Step 3: Recover fragments for each library.</a></li>
-<li><a class="reference internal" href="#step-4-split-partners-and-classify-different-types-of-fragments">Step 4: Split partners and classify different types of fragments.</a></li>
-<li><a class="reference internal" href="#step-5-align-both-parts-of-paired-fragment-to-the-genome">Step 5: Align both parts of &#8220;Paired&#8221; fragment to the genome.</a></li>
-<li><a class="reference internal" href="#step-6-determine-strong-interactions">Step 6: Determine strong interactions.</a></li>
-<li><a class="reference internal" href="#step-7-visualization-of-interactions-and-coverages">Step 7: Visualization of interactions and coverages.</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#other-functions">Other functions</a><ul>
-<li><a class="reference internal" href="#determine-the-rna-types-of-different-parts-within-fragments">Determine the RNA types of different parts within fragments.</a></li>
-<li><a class="reference internal" href="#find-linker-sequences-within-the-library">Find linker sequences within the library.</a></li>
-<li><a class="reference internal" href="#find-intersections-between-two-different-interaction-sets-based-on-genomic-locations">Find intersections between two different interaction sets based on genomic locations</a></li>
-<li><a class="reference internal" href="#find-intersections-between-two-different-interaction-sets-based-on-annotation">Find intersections between two different interaction sets based on annotation</a></li>
-<li><a class="reference internal" href="#rna-structure-prediction-by-adding-digestion-site-information">RNA structure prediction by adding digestion site information</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="RNA-Hi-C-tools.html"
-                        title="previous chapter">RNA-Hi-C-tools 0.3 documentation</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="Visualization.html"
-                        title="next chapter">Visualization of local RNA-RNA interactions</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/Analysis_pipeline.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Visualization.html" class="btn btn-neutral float-right" title="Visualization of local RNA-RNA interactions"/>Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="RNA-Hi-C-tools.html" class="btn btn-neutral" title="RNA-Hi-C-tools 0.3 documentation"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="Visualization.html" title="Visualization of local RNA-RNA interactions"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="RNA-Hi-C-tools.html" title="RNA-Hi-C-tools 0.3 documentation"
-             >previous</a> |</li>
-        <li><a href="index.html">RNA-Hi-C-tools 0.3.2 documentation</a> &raquo;</li> 
-      </ul>
-    </div>
+  
 
-    <div class="footer">
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
         &copy; Copyright 2013, Pengfei Yu.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
-    </div>
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.3.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
 
 
 
@@ -746,5 +814,6 @@ This will generate three eps files with secondary structures (&#8220;Predict&#82
 </script>
 
 
-  </body>
+
+</body>
 </html>

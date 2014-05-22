@@ -14,7 +14,7 @@
 
 
 \title{RNA-Hi-C-tools Documentation}
-\date{May 19, 2014}
+\date{May 22, 2014}
 \release{0.3.2}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -191,7 +191,7 @@ Other softwares needed:
 \end{enumerate}
 \begin{itemize}
 \item {} 
-\href{http://bowtie-bio.sourceforge.net/index.shtml}{Bowtie} (not Bowtie 2)
+\href{http://bowtie-bio.sourceforge.net/index.shtml}{Bowtie} (or Bowtie 2 if you set Bowtie2 option in \code{Stitch-seq\_Aligner.py})
 
 \item {} 
 \href{http://samtools.sourceforge.net/}{samtools}
@@ -1794,8 +1794,11 @@ Last column is the ``ln(p\_value)'' for the significance of interaction. P\_valu
 
 
 \subsection{Number of different types of interactions:}
-\label{Data_Resources:number-of-different-types-of-interactions}\begin{description}
-\item[{\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count\_types\_interaction\_fragment.htm}{Link to file}}] \leavevmode\begin{itemize}
+\label{Data_Resources:number-of-different-types-of-interactions}
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count\_types\_interaction\_fragment.htm}{Strong interactions based on clusters of genomic locations}
+
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count\_types\_interaction\_fragment\_wholeRNA.htm}{Strong interactions based on annotations of RNAs}
+\begin{itemize}
 \item {} 
 For each cell type, there are two columns,
 
@@ -1807,10 +1810,8 @@ the second column gives the number of mapped pairs that support this interaction
 
 \end{itemize}
 
-\end{description}
-
 \begin{notice}{note}{Note:}
-RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. \href{http://bam2xwiki.appspot.com/}{Try BAM2X now}!
+RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. \href{http://www.bam2x.net/}{Try BAM2X now}!
 \end{notice}
 
 

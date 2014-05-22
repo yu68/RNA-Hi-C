@@ -23,7 +23,7 @@ Welcome to RNA Hi-C tools's documentation!
 
 .. note::
 
-   RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. `Try BAM2X now <http://bam2xwiki.appspot.com/>`_!
+   RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. `Try BAM2X now <http://www.bam2x.net/>`_!
 
 
 Updates

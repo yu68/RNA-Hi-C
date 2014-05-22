@@ -133,7 +133,10 @@ From MEF_WP_1 sample:
 Number of different types of interactions:
 ------------------------------------------
 
-`Link to file <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment.htm>`_
+`Strong interactions based on clusters of genomic locations <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment.htm>`_  
+
+`Strong interactions based on annotations of RNAs <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment_wholeRNA.htm>`_
+
  * For each cell type, there are two columns,
  * The first column gives the number of strong interactions with this interaction type,
  * the second column gives the number of mapped pairs that support this interaction type.

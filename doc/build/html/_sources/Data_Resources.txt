@@ -96,39 +96,85 @@ Resources of Strong Interactions
 From merged data of E14_WP_1 and E14_WP_2:
 ------------------------------------------
 
+Strong interactions based on clustering of genomic locations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 :Genome: mm9
 :Explanation:
  * First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
- *  *Type*: RNA types or repeat types; *Name*: RNA or repeat names; *Subtype*: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; *Count*: number of supported reads in that cluster
+ *  **Type**: RNA types or repeat types; **Name**: RNA or repeat names; **Subtype**: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; **Count**: number of supported reads in that cluster
  * Second last column is the number of mapped pairs that support this interaction.
  * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
 
-`Download <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters.xlsx>`_
+`Download1 <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters.xlsx>`_ (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)
+
+Strong interactions based on annotation of RNAs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:Genome: mm9
+:Explanation:
+  * First six column is for information of RNA in Part1 of interaction (5'side of linker); second six column is for information of RNA in Part2 of interaction (3'side of linker)
+  * **Type**: RNA or repeat types; **Name**: RNA or repeat names; **Count**: number of supported reads in that RNA
+  * Second last column is the number of mapped pairs that support this interaction.
+  * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
+
+`Download2 <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_RNA.xlsx>`_
+
 
 From E14_WP_3 dual crosslinking:
 --------------------------------
 
+Strong interactions based on clustering of genomic locations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 :Genome: mm9
 :Explanation:
  * First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
- *  *Type*: RNA types or repeat types; *Name*: RNA or repeat names; *Subtype*: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; *Count*: number of supported reads in that cluster
+ *  **Type**: RNA types or repeat types; **Name**: RNA or repeat names; **Subtype**: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; **Count**: number of supported reads in that cluster
  * Second last column is the number of mapped pairs that support this interaction.
  * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
 
-`Download <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters.xlsx>`_
+`Download3 <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters.xlsx>`_ (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)
+
+Strong interactions based on annotation of RNAs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:Genome: mm9
+:Explanation:
+  * First six column is for information of RNA in Part1 of interaction (5'side of linker); second six column is for information of RNA in Part2 of interaction (3'side of linker)
+  * **Type**: RNA or repeat types; **Name**: RNA or repeat names; **Count**: number of supported reads in that RNA
+  * Second last column is the number of mapped pairs that support this interaction.
+  * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
+
+`Download4 <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_RNA.xlsx>`_
+
 
 From MEF_WP_1 sample:
 ---------------------
 
+Strong interactions based on clustering of genomic locations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 :Genome: mm9
 :Explanation:
  * First seven column is for information of cluster in Part1 of interaction (5'side of linker); second seven column is for information of cluster in Part2 of interaction (3'side of linker)
- *  *Type*: RNA types or repeat types; *Name*: RNA or repeat names; *Subtype*: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; *Count*: number of supported reads in that cluster
+ *  **Type**: RNA types or repeat types; **Name**: RNA or repeat names; **Subtype**: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; **Count**: number of supported reads in that cluster
  * Second last column is the number of mapped pairs that support this interaction.
  * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
 
-`Download <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters.xlsx>`_
+`Download5 <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters.xlsx>`_ (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)
 
+Strong interactions based on annotation of RNAs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:Genome: mm9
+:Explanation:
+  * First six column is for information of RNA in Part1 of interaction (5'side of linker); second six column is for information of RNA in Part2 of interaction (3'side of linker)
+  * **Type**: RNA or repeat types; **Name**: RNA or repeat names; **Count**: number of supported reads in that RNA
+  * Second last column is the number of mapped pairs that support this interaction.
+  * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
+
+`Download6 <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_interaction_clusters_RNA.xlsx>`_
 
 Number of different types of interactions:
 ------------------------------------------

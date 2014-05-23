@@ -17,6 +17,7 @@ if len(sys.argv)<2:
 
 mappedPair=open(sys.argv[1],'r')
 output_fig = sys.argv[2]
+output_txt = sys.argv[2].split(".")[0]+".txt"
 
 
 rev_table=string.maketrans('ACGTacgt', 'TGCAtgca')
@@ -33,7 +34,7 @@ RNA_prog = RNAstructure(exe_path="/home/yu68/Software/RNAstructure/exe/")
 energies=[]
 random_energies=[]
 
-output = open("free_energy.txt",'w')
+output = open(output_txt,'w')
 
 print >> output, "Paire_ID\tName_1\tName_2\treal_FE\trandom_FE"
 
@@ -79,6 +80,7 @@ xs = np.linspace(min(energies),0,500)
 plt.figure(figsize=(6,4))
 plt.plot(xs,density(xs),label="ChimericRNA")
 plt.plot(xs,density_r(xs),label="Random")
+plt.xlim(-60,0)
 _,pvalue1=stats.wilcoxon(energies,random_energies)
 _,pvalue2=stats.ttest_rel(energies,random_energies)
 plt.legend()

@@ -107,6 +107,7 @@ Strong interactions based on clustering of genomic locations
  * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
 
 `Download1 <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters.xlsx>`_ (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)
+`List of clusters <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_cluster_total_sort.xlsx>`_ (Removing rRNA/rRNA_repeats)
 
 Strong interactions based on annotation of RNAs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -135,6 +136,7 @@ Strong interactions based on clustering of genomic locations
  * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
 
 `Download3 <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters.xlsx>`_ (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)
+`List of clusters <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_cluster_total_sort.xlsx>`_ (Removing rRNA/rRNA_repeats)
 
 Strong interactions based on annotation of RNAs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -163,6 +165,7 @@ Strong interactions based on clustering of genomic locations
  * Last column is the "ln(p_value)" for the significance of interaction. P_value is based on a hypergeometric test
 
 `Download5 <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters.xlsx>`_ (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)
+`List of clusters <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_cluster_total_sort.xlsx>`_ (Removing rRNA/rRNA_repeats)
 
 Strong interactions based on annotation of RNAs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

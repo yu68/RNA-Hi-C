@@ -118,14 +118,13 @@ def Random_strongInteraction(part1,part2,cluster_pool1,cluster_pool2):
 #parameters
 
 def ParseArg():
-    p=argparse.ArgumentParser(description="find strong interactions from paired genomic location data",epilog="need Scipy for hypergeometric distribution")
+    p=argparse.ArgumentParser(description="find strong interactions from paired genomic location data, NOT SEPARATE LEFT-RIGHT",epilog="need Scipy for hypergeometric distribution")
     p.add_argument("-i","--input",type=str,required=True,help="input file which is the output file of Stitch-seq-Aligner.py")
     p.add_argument("-M","--min_clusterS",type=int,default=5,help="minimum number of segments allowed in each cluster, default:5")
     p.add_argument("-m","--min_interaction",type=int,default=3,help="minimum number of interactions to support a strong interaction, default:3")
     p.add_argument('-p',"--p_value",type=float,default=0.05,help="the p-value based on hypergeometric distribution to call strong interactions, default: 0.05")
     p.add_argument('-o','--output',type=str,help="specify output file")
     p.add_argument("-P","--parallel",type=int,default=5,help="number of workers for parallel computing, default: 5")
-    p.add_argument("-F","--FDR",action='store_true', help="Compute FDR if specified")
     p.add_argument('-a','--annotation',type=str,default="/home/yu68/bharat-interaction/new_lincRNA_data/all_RNAs-rRNA_repeat.txt",help='If specified, include the RNA type annotation for each aligned pair, need to give bed annotation RNA file')
     p.add_argument("-A","--annotationGenebed",dest="db_detail",type=str,default="/home/yu68/bharat-interaction/new_lincRNA_data/Ensembl_mm9.genebed",help="annotation bed12 file for lincRNA and mRNA with intron and exon")
     if len(sys.argv)==1:
@@ -161,8 +160,7 @@ def Main():
 
 
     #store genomic location of part1 and part2
-    part1=[]
-    part2=[]
+    part=[]
 
 
     k=0
@@ -173,81 +171,67 @@ def Main():
     for line in inp.read().split('\n'):
         if line=='': continue
         line=line.strip().split('\t')
-        p1=annotated_bed(line[0:8],id=k)
-        p2=annotated_bed(line[9:],id=k)
+        p1=annotated_bed(line[0:8],id=k,part=1)
+        p2=annotated_bed(line[9:],id=k,part=2)
         if SingleFragment(p1,p2): continue
         k+=1
-        part1.append(p1)
-        part2.append(p2)
+        part.append(p1)
+        part.append(p2)
         if p1.chr not in chr_list: chr_list.append(p1.chr)
         if p2.chr not in chr_list: chr_list.append(p2.chr)
         if k%20000==0: 
             print >> sys.stderr,"  Reading %d pairs of segments\r"%(k),
     print >> sys.stderr,"Get total %d pairs."%(k)
     
-    if len(part1)!=len(part2):
-        print >> sys.stderr, "## ERROR: number of regions in two part not match!!"
-        sys.exit(0)
 
     # sort in genomic order, easy for clustering
-    part1=sorted(part1, key=attrgetter('start'))
-    part1=sorted(part1, key=attrgetter('chr'))
-    part2=sorted(part2, key=attrgetter('start'))
-    part2=sorted(part2, key=attrgetter('chr'))
+    part=sorted(part, key=attrgetter('start'))
+    part=sorted(part, key=attrgetter('chr'))
 
     # for parallel computing 
     print >>sys.stderr,"# Generating clusters for two parts..."
     # tuple of all parallel python servers to connect with
     ppservers = ()
     job_server = pp.Server(ncpus, ppservers=ppservers)
-    jobs1=[]
-    jobs2=[]
+    jobs=[]
     for chro in chr_list:
-        part1_temp=filter(lambda p: p.chr==chro, part1)
-        if len(part1_temp)>0:
-            jobs1.append(job_server.submit(cluster_regions,(part1_temp,min_clusterS),(annotated_bed,),("UnionFind","copy",)))
-        part2_temp=filter(lambda p: p.chr==chro, part2)
-        if len(part2_temp)>0:
-            jobs2.append(job_server.submit(cluster_regions,(part2_temp,min_clusterS),(annotated_bed,),("UnionFind","copy",)))
+        part_temp=filter(lambda p: p.chr==chro, part)
+        if len(part_temp)>0:
+            jobs.append(job_server.submit(cluster_regions,(part_temp,min_clusterS),(annotated_bed,),("UnionFind","copy",)))
         
 
-    cluster_pool1={}
-    part1=[]
-    for job in jobs1: 
+    cluster_pool={}
+    part=[]
+    for job in jobs: 
         try:
-            part1=part1+job()[1]
-            cluster_pool1.update(job()[0])
+            part=part+job()[1]
+            cluster_pool.update(job()[0])
         except:
             print >> sys.stderr, "Wrong in %s, part1"%(job()[2])
             continue
-    cluster_pool2={}
-    part2=[]
-    for job in jobs2:
-        try:
-            part2=part2+job()[1]
-            cluster_pool2.update(job()[0])
-        except:
-            continue
 
 
-    print >>sys.stderr,"   cluster number for part1 is %d          "%(len(cluster_pool1))
-    print >>sys.stderr,"   cluster number for part2 is %d          "%(len(cluster_pool2))
+    print >>sys.stderr,"   cluster number is %d             "%(len(cluster_pool))
 
     # sort back to pair two parts
-    part1=sorted(part1, key=attrgetter('id'))
-    part2=sorted(part2, key=attrgetter('id'))
+    part=sorted(part, key=attrgetter('part'))
+    part=sorted(part, key=attrgetter('id'))
 
-    print >> sys.stderr,"size of part1&2:",len(part1),len(part2)
+    print >> sys.stderr,"size of part",len(part)
 
     c_interaction={}
-    for i in range(len(part1)):
-        region1=str(part1[i])
-        region2=str(part2[i])
-        try:
-            inter=part1[i].cluster+"--"+part2[i].cluster
-        except:
-            print >> sys.stderr,i,part1[i].cluster,part2[i].cluster
-            sys.exit()
+    i=0
+    while i<len(part):
+        P1=part[i]
+        P2=part[i+1]
+        assert P1.id==P2.id
+        i+=2
+        print >> sys.stderr,"%d\r"%(i),
+        if P1.cluster==P2.cluster: continue
+        if P1.cluster<P2.cluster:
+            inter=P1.cluster+"--"+P2.cluster
+        else:
+            inter=P2.cluster+"--"+P1.cluster
         if c_interaction.has_key(inter):
             c_interaction[inter]+=1
         else:
@@ -273,30 +257,24 @@ def Main():
         i=interaction.split("--")[0]
         j=interaction.split("--")[1]
         try:  # we select clusters with size no less than 5, so some interactions cannot be found in clusters
-            count1=cluster_pool1[i].cluster
-            count2=cluster_pool2[j].cluster
+            count1=cluster_pool[i].cluster
+            count2=cluster_pool[j].cluster
         except:
             continue
-        real_p=1-hypergeom.cdf(count,len(part1),count1,count2)
+        real_p=1-hypergeom.cdf(count,len(part)/2,count1,count2)
         if real_p<=p_value:
             k=k+1
-            cluster_pool1[i].Annotate(dbi_all,dbi_detail,dbi_repeat)
-            cluster_pool2[j].Annotate(dbi_all,dbi_detail,dbi_repeat)
+            cluster_pool[i].Annotate(dbi_all,dbi_detail,dbi_repeat)
+            cluster_pool[j].Annotate(dbi_all,dbi_detail,dbi_repeat)
             try:
                 log_p = math.log(real_p)
             except:
                 log_p = -float("Inf")
-            print >> output,str(cluster_pool1[i])+'\t'+str(cluster_pool2[j])+'\t%d\t%.4f'%(count,log_p)
+            print >> output,str(cluster_pool[i])+'\t'+str(cluster_pool[j])+'\t%d\t%.4f'%(count,log_p)
         if n%1000==0: print >> sys.stderr, "  Progress ( %d / %d )\r"%(n,len(c_interaction)),
 
     print >> sys.stderr,"# Find %d strong interactions. Cost time: %.2f s"%(k,time()-t1)
 
-    if args.FDR:
-        print >> sys.stderr, "# Permutated results:"
-        for i in range(10):
-            shuffle(part2)
-            [n_r_I,n_r_SI]=Random_strongInteraction(part1,part2,cluster_pool1,cluster_pool2)
-            print >> sys.stderr, "  ",i, n_r_I, n_r_SI, n_r_SI*1.0/n_r_I
             
 
 if __name__=="__main__":

@@ -5,7 +5,7 @@ from data_structure import *
 from scipy.stats import hypergeom
 
 def ParseArg():
-    p=argparse.ArgumentParser(description="find strong interactions from paired genomic location data",epilog="need Scipy for hypergeometric distribution")
+    p=argparse.ArgumentParser(description="find strong interactions between RNAs from annotation of RNAs, intron regions are removed, no self interactions",epilog="need Scipy for hypergeometric distribution")
     p.add_argument("-i","--input",type=str,required=True,help="input file which is the output file of Stitch-seq-Aligner.py")
     p.add_argument("-M","--min_clusterS",type=int,default=5,help="minimum number of segments allowed in each cluster, default:5")
     p.add_argument("-m","--min_interaction",type=int,default=3,help="minimum number of interactions to support a strong interaction, default:3")
@@ -37,8 +37,7 @@ def Main():
     output=open(args.output,'w')
 
     #store count of RNA for part1 and part2
-    part1={}
-    part2={}
+    part={}
 
 
     k=0
@@ -54,20 +53,27 @@ def Main():
         p2=annotated_bed(line[9:],id=k,cluster=1)
         if SingleFragment(p1,p2): continue
         k+=1
+        if p1.subtype=="intron" or p2.subtype=="intron": continue
         if p1.type in Types:
             p1_name = p1.chr+":"+p1.name
-            if p1_name not in part1:
-                part1[p1_name]=1
+            if p1_name not in part:
+                part[p1_name]=1
             else:
-                part1[p1_name]+=1  
+                part[p1_name]+=1  
         if p2.type in Types:
             p2_name = p2.chr+":"+p2.name
-            if p2_name not in part2:
-                part2[p2_name]=1
+            if p1_name == p2_name: continue # count once for self-interaction
+            if p2_name not in part:
+                part[p2_name]=1
             else:
-                part2[p2_name]+=1
-        if p1.type in Types and p2.type in Types:            
-            inter_name = p1_name+"--"+p2_name
+                part[p2_name]+=1
+        if p1.type in Types and p2.type in Types:
+            if p1_name == p2_name: continue 
+            if p1_name>p2_name:
+                temp = p1
+                p1 = p2
+                p2 = temp
+            inter_name = p1.chr+":"+p1.name+"--"+p2.chr+":"+p2.name
             if inter_name not in interaction:
                 interaction[inter_name]=[copy.deepcopy(p1),copy.deepcopy(p2)]
             else:
@@ -78,8 +84,7 @@ def Main():
             print >> sys.stderr,"  Reading %d pairs of segments\r"%(k),
     print >> sys.stderr,"Get total %d pairs."%(k)
 
-    print >>sys.stderr,"   number of different RNAs for part1 is %d          "%(len(part1))
-    print >>sys.stderr,"   number of different RNAs for part2 is %d          "%(len(part2))
+    print >>sys.stderr,"   number of different RNAs is %d          "%(len(part))
     
     total = k # total pairs used
     n=0
@@ -92,10 +97,10 @@ def Main():
         p2_name = i.split("--")[1]
         P1 = interaction[i][0]
         P2 = interaction[i][1]
-        P1.cluster = part1[p1_name]
-        P2.cluster = part2[p2_name]
-        if part1[p1_name]<min_clusterS or part2[p2_name]<min_clusterS: continue
-        real_p=1-hypergeom.cdf(count,total,part1[p1_name],part2[p2_name])
+        P1.cluster = part[p1_name]
+        P2.cluster = part[p2_name]
+        if part[p1_name]<min_clusterS or part[p2_name]<min_clusterS: continue
+        real_p=1-hypergeom.cdf(count,total,part[p1_name],part[p2_name])
         if real_p<=p_value:
             k=k+1
             try:
@@ -108,4 +113,3 @@ def Main():
 
 if __name__=="__main__":
     Main()
-

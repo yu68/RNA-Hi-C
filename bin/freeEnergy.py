@@ -51,11 +51,16 @@ for l in mappedPair.read().split('\n'):
         seq1=revcomp(seq1,rev_table)
     if strand2=='+':
         seq2=revcomp(seq2,rev_table)
+    seq1=seq1.replace("N","T")
+    seq2=seq2.replace("N","T")
     energy=RNA_prog.DuplexFold(seq1,seq2)
     printline = l[8]+"\t"+l[6]+"\t"+l[15]+"\t%.4f"%(energy)
     energies.append(energy)
-    r_seq1=dinuclShuffle(seq1.replace("T","U"))
-    r_seq2=dinuclShuffle(seq2.replace("T","U"))
+    try:
+        r_seq1=dinuclShuffle(seq1.replace("T","U"))
+        r_seq2=dinuclShuffle(seq2.replace("T","U"))
+    except:
+        print seq1,seq2
     #r_seq1=shuffleseq(seq1)
     #r_seq2=shuffleseq(seq2)
     energy=RNA_prog.DuplexFold(r_seq1,r_seq2)

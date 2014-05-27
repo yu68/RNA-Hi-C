@@ -203,6 +203,8 @@ Number of different types of interactions:
 
 `Strong interactions based on annotations of RNAs <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment_wholeRNA.htm>`_
 
+`Strong interactions based on annotations of RNAs noLeftRight no Intron <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment_wholeRNA_noLeftRight.htm>`_
+
  * For each cell type, there are two columns,
  * The first column gives the number of strong interactions with this interaction type,
  * the second column gives the number of mapped pairs that support this interaction type.

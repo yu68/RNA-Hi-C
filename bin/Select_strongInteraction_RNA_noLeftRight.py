@@ -62,7 +62,7 @@ def Main():
                 part[p1_name]+=1  
         if p2.type in Types:
             p2_name = p2.chr+":"+p2.name
-            if p1_name == p2_name: continue # count once for self-interaction
+            if p1.chr == p2.chr and p1.name == p2.name: continue # count once for self-interaction
             if p2_name not in part:
                 part[p2_name]=1
             else:

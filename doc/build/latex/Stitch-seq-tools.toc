@@ -50,10 +50,16 @@
 \contentsline {subsection}{\numberline {8.1.4}MEF\_WP\_1}{32}{subsection.8.1.4}
 \contentsline {section}{\numberline {8.2}Resources of Strong Interactions}{32}{section.8.2}
 \contentsline {subsection}{\numberline {8.2.1}From merged data of E14\_WP\_1 and E14\_WP\_2:}{32}{subsection.8.2.1}
+\contentsline {subsubsection}{Strong interactions based on clustering of genomic locations}{32}{subsubsection*.18}
+\contentsline {subsubsection}{Strong interactions based on annotation of RNAs}{33}{subsubsection*.19}
 \contentsline {subsection}{\numberline {8.2.2}From E14\_WP\_3 dual crosslinking:}{33}{subsection.8.2.2}
-\contentsline {subsection}{\numberline {8.2.3}From MEF\_WP\_1 sample:}{33}{subsection.8.2.3}
-\contentsline {subsection}{\numberline {8.2.4}Number of different types of interactions:}{33}{subsection.8.2.4}
-\contentsline {chapter}{\numberline {9}Updates}{35}{chapter.9}
-\contentsline {chapter}{\numberline {10}Indices and tables}{37}{chapter.10}
-\contentsline {chapter}{Python Module Index}{39}{section*.18}
-\contentsline {chapter}{Index}{41}{section*.19}
+\contentsline {subsubsection}{Strong interactions based on clustering of genomic locations}{33}{subsubsection*.20}
+\contentsline {subsubsection}{Strong interactions based on annotation of RNAs}{34}{subsubsection*.21}
+\contentsline {subsection}{\numberline {8.2.3}From MEF\_WP\_1 sample:}{34}{subsection.8.2.3}
+\contentsline {subsubsection}{Strong interactions based on clustering of genomic locations}{34}{subsubsection*.22}
+\contentsline {subsubsection}{Strong interactions based on annotation of RNAs}{35}{subsubsection*.23}
+\contentsline {subsection}{\numberline {8.2.4}Number of different types of interactions:}{35}{subsection.8.2.4}
+\contentsline {chapter}{\numberline {9}Updates}{37}{chapter.9}
+\contentsline {chapter}{\numberline {10}Indices and tables}{39}{chapter.10}
+\contentsline {chapter}{Python Module Index}{41}{section*.24}
+\contentsline {chapter}{Index}{43}{section*.25}

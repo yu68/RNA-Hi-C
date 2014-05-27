@@ -6,6 +6,7 @@ from RNAstructure import RNAstructure
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
+from altschulEriksonDinuclShuffle import dinuclShuffle
 
 if len(sys.argv)<2:
     print "Usage:"
@@ -53,8 +54,10 @@ for l in mappedPair.read().split('\n'):
     energy=RNA_prog.DuplexFold(seq1,seq2)
     printline = l[8]+"\t"+l[6]+"\t"+l[15]+"\t%.4f"%(energy)
     energies.append(energy)
-    r_seq1=shuffleseq(seq1)
-    r_seq2=shuffleseq(seq2)
+    r_seq1=dinuclShuffle(seq1.replace("T","U"))
+    r_seq2=dinuclShuffle(seq2.replace("T","U"))
+    #r_seq1=shuffleseq(seq1)
+    #r_seq2=shuffleseq(seq2)
     energy=RNA_prog.DuplexFold(r_seq1,r_seq2)
     printline += '\t%.4f\t%.1f'%(energy,(len(seq1)+len(seq2))/2.0)
     random_energies.append(energy)

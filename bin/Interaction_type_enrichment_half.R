@@ -1,3 +1,4 @@
+
 list.of.packages <- c("argparse","ggplot2","scales")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) {
@@ -42,7 +43,7 @@ part2 = apply(interaction,1,function(x)
 part1=gsub("protein_coding","mRNA",part1)
 part2=gsub("protein_coding","mRNA",part2)
 
-pairs = apply(cbind(part1,part2),1,function(x) paste(x,collapse="--"))
+pairs = apply(cbind(part1,part2),1,function(x) paste(sort(x)[1],sort(x)[2],sep='--'))
 
 count = as.data.frame(table(pairs))
 
@@ -60,11 +61,16 @@ count = count[count$Freq>0,]
 
 log_ratio <- function(count,part1,part2) {
   temp = strsplit(as.character(count[1]), "--")[[1]]
-  count1 = sum(part1==temp[1])
-  count2 = sum(part2==temp[2])
-  #ratio = as.numeric(count[2])*length(part1)/count1/count2
-  cat(temp,count1,count2,as.integer(count[2]),'\n')
-  p_value = phyper(as.integer(count[2])-1,count1,length(part1)-count1,count2,lower.tail=F)
+  if (temp[1]!=temp[2]) {
+    count1 = sum(grepl(temp[1],pairs))/2
+    count2 = sum(grepl(temp[2],pairs))/2
+    #ratio = as.numeric(count[2])*length(part1)/count1/count2
+    p_value = phyper(as.integer(count[2])/2-1,count1,length(part1)-count1,count2,lower.tail=F)
+  } else {
+    count1 = sum(part1==temp[1])
+    count2 = sum(part2==temp[2])
+    p_value = phyper(as.integer(count[2])-1,count1,length(part1)-count1,count2,lower.tail=F)
+  }
   return(-log(p_value))
 } 
 

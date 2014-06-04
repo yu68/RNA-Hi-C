@@ -59,6 +59,9 @@
 \contentsline {subsubsection}{Strong interactions based on clustering of genomic locations}{34}{subsubsection*.22}
 \contentsline {subsubsection}{Strong interactions based on annotation of RNAs}{35}{subsubsection*.23}
 \contentsline {subsection}{\numberline {8.2.4}Number of different types of interactions:}{35}{subsection.8.2.4}
+\contentsline {section}{\numberline {8.3}Target of miRNA in mir-290-295 clusters and mmu-mir-703}{35}{section.8.3}
+\contentsline {subsection}{\numberline {8.3.1}From merged data of E14\_WP\_1 and E14\_WP\_2:}{35}{subsection.8.3.1}
+\contentsline {subsection}{\numberline {8.3.2}From E14\_WP\_3 dual crosslinking:}{35}{subsection.8.3.2}
 \contentsline {chapter}{\numberline {9}Updates}{37}{chapter.9}
 \contentsline {chapter}{\numberline {10}Indices and tables}{39}{chapter.10}
 \contentsline {chapter}{Python Module Index}{41}{section*.24}

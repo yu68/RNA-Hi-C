@@ -208,3 +208,23 @@ Number of different types of interactions:
  * For each cell type, there are two columns,
  * The first column gives the number of strong interactions with this interaction type,
  * the second column gives the number of mapped pairs that support this interaction type.
+
+
+Target of miRNA in mir-290-295 clusters and mmu-mir-703
+=======================================================
+
+* The information of miRNAs are in columns 1-5;
+* The information of target locations are in columns 6-11; 
+* The the last column gives the count of supported mapped pairs.
+
+From merged data of E14_WP_1 and E14_WP_2:
+------------------------------------------
+
+`Target of miRNA in mir-290-295 clusters and mmu-mir-703 (ES_UV) <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_miRNA.xlsx>`_
+
+From E14_WP_3 dual crosslinking:
+--------------------------------
+
+`Target of miRNA in mir-290-295 clusters and mmu-mir-703 (ES_dual) <http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_miRNA.xlsx>`_
+
+

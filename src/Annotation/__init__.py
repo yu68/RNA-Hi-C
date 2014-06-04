@@ -135,7 +135,7 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
                    break 
         except: pass
         '''
-    if typ=="lincRNA" and name!="intron":
+    if typ=="lincRNA" and subtype!="intron":
         subtype="utr"
     if typ=="pseudogene":
         subtype="."

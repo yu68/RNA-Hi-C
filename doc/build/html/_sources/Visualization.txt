@@ -296,7 +296,7 @@ Example of result graph
 
 *Example code:* ::
 
-  Rscript Plot_Circos.R ACCT_interaction_clusters.txt
+  Rscript Interaction_type_enrichment.R ACCT_interaction_clusters.txt
     -n 4 11 -o ACCT_interaction_type.pdf
 
 *Result figure:*

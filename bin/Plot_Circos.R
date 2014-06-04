@@ -172,7 +172,7 @@ RCircos.Link.Plot<-function(link.data, track.num, color_list)
   base.positions <- RCircos.Pos*start;
   
   data.points <- matrix(rep(0, nrow(link.data)*2), ncol=2);
-  colors <- cbind(rep("#FFFFFF11",max(color_list[,1])),rainbow(max(color_list[,1])))
+  colors <- cbind(rep("#FFFFFF11",14),rainbow(14))
   line.colors <- apply(color_list,1, function (x) colorRampPalette(colors[x[1],])(12)[floor((18-x[2])/4)]);
   for(a.link in 1:nrow(link.data))
   {
@@ -314,7 +314,7 @@ All_types = c("lincRNA-lincRNA","lincRNA-protein_coding","lincRNA-snoRNA","lincR
 Type_int = match(Types,All_types)
 
 Type_int = Type_int[Types!="Other"]
-
+print(table(Type_int))
 interaction = interaction[Types!="Other",]
 interaction_p=interaction[,16] # for the alpha channel of color, based on -log(p-value)
 interaction_p[interaction_p==-Inf]=-30.0

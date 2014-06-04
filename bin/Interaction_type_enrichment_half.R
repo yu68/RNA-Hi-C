@@ -55,7 +55,8 @@ colnames(count)[3:4] = c("part1","part2")
 
 
 # remove those with non and count less than 0.05% of total interaction
-name = t(temp)[(!grepl("non",count$pairs))&(count$Freq>0.0005*length(pairs)),]
+name = t(temp)[(!grepl("Simple_repeat",count$pairs))&(!grepl("Low_complexity",count$pairs))&(!grepl("non",count$pairs))&(count$Freq>0.0005*length(pairs)),]
+
 count = count[(count$part1 %in% c(name[,1],"miRNA:."))&(count$part2 %in% c(name[,2],"miRNA:.")),]
 count = count[count$Freq>0,]
 

@@ -172,11 +172,11 @@ RCircos.Link.Plot<-function(link.data, track.num, color_list)
   base.positions <- RCircos.Pos*start;
   
   data.points <- matrix(rep(0, nrow(link.data)*2), ncol=2);
-  colors <- cbind(rep("#FFFFFF11",14),rainbow(14))
+  colors <- cbind(rep("#FFFFFF11",16),rainbow(16))
   line.colors <- apply(color_list,1, function (x) colorRampPalette(colors[x[1],])(12)[floor((18-x[2])/4)]);
   for(a.link in 1:nrow(link.data))
   {
-    if(color_list[a.link,1]==14) { next; }   #  remove "Other" types 
+    if (color_list[a.link,1]==16) { next; }   #  remove "Other" types 
     data.points[a.link, 1] <- RCircos.Data.Point(
       link.data[a.link, 1], link.data[a.link, 2]);
     data.points[a.link, 2] <- RCircos.Data.Point(
@@ -301,7 +301,7 @@ interaction=interaction[(!grepl("rRNA",interaction[,4]))&(!grepl("rRNA",interact
 interaction=interaction[(interaction[,1]!="chrM")&(interaction[,4]!="chrM"),]
 #  interaction_type
 Types=apply(interaction[,c(4,11)],1, function(x) paste(sort(x)[1],sort(x)[2],sep='-'))
-type_n = c("snRNA","lincRNA","snoRNA","miRNA","protein_coding")
+type_n = c("snRNA","lincRNA","snoRNA","miRNA","protein_coding","pseudogene")
 Types[!((interaction[,4] %in% type_n)&(interaction[,11] %in% type_n))]="Other"
 Types[(as.character(interaction[,1])==as.character(interaction[,8]))&(as.character(interaction[,5])==as.character(interaction[,12]))]="Self"
 
@@ -310,10 +310,9 @@ Types[Types=="miRNA-miRNA"]="Other"
 cat("Count of different interaction types: \n")
 print(table(Types))
 
-All_types = c("lincRNA-lincRNA","lincRNA-protein_coding","lincRNA-snoRNA","lincRNA-snRNA","miRNA-protein_coding","miRNA-snoRNA","protein_coding-protein_coding","protein_coding-snoRNA","protein_coding-snRNA","snoRNA-snoRNA","snoRNA-snRNA","snRNA-snRNA","Self","Other")
+All_types = c("lincRNA-lincRNA","lincRNA-protein_coding","lincRNA-snoRNA","lincRNA-snRNA","miRNA-protein_coding","miRNA-snoRNA","protein_coding-protein_coding","protein_coding-snoRNA","protein_coding-snRNA","snoRNA-snoRNA","snoRNA-snRNA","snRNA-snRNA","pseudogene-snoRNA","protein_coding-pseudogene","Self","Other")
 Type_int = match(Types,All_types)
-
-Type_int = Type_int[Types!="Other"]
+Type_int = Type_int[(Types!="Other")&(!is.na(Type_int))]
 print(table(Type_int))
 interaction = interaction[Types!="Other",]
 interaction_p=interaction[,16] # for the alpha channel of color, based on -log(p-value)

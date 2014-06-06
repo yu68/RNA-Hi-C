@@ -93,11 +93,15 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
     typ="non"
     name="."
     subtype="."
+    max_overlap = 0  # find annotation with largest overlap
     for hit in ref_allRNA.query(bed):
-        if flag==0:
+        overlap = min(hit.stop,bed.stop)-max(hit.start,bed.start)
+        if overlap>max_overlap:
             name=hit.id.split(".")[1]
             typ=hit.id.split(".")[0]
-            flag=1
+            max_overlap = overlap
+        if overlap == hit.stop-hit.start and typ=="snoRNA":  #annotated as snoRNA if region covers whole snoRNA
+            break
     if (typ=="lincRNA" or typ=="protein_coding"):
         flag=0
         for hit in ref_detail.query(bed):
@@ -137,6 +141,8 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
         '''
     if typ=="lincRNA" and subtype!="intron":
         subtype="utr"
+    if typ in ["snoRNA","snRNA","miRNA","miscRNA"]:
+        subtype='.'
     if typ=="pseudogene":
         subtype="."
     return [typ,name,subtype]

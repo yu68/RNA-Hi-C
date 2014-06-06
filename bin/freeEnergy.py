@@ -37,7 +37,7 @@ random_energies=[]
 
 output = open(output_txt,'w')
 
-print >> output, "Paire_ID\tName_1\tName_2\treal_FE\trandom_FE\tLength"
+print >> output, "Paire_ID\tType_1\tName_1\tType_2\tName_2\treal_FE\trandom_FE\tLength"
 
 i=0
 for l in mappedPair.read().split('\n'):
@@ -54,11 +54,11 @@ for l in mappedPair.read().split('\n'):
     seq1=seq1.replace("N","T")
     seq2=seq2.replace("N","T")
     energy=RNA_prog.DuplexFold(seq1,seq2)
-    printline = l[8]+"\t"+l[6]+"\t"+l[15]+"\t%.4f"%(energy)
+    printline = l[8]+"\t"+l[5]+"\t"+l[6]+"\t"+l[14]+"\t"+l[15]+"\t%.4f"%(energy)
     energies.append(energy)
     try:
-        r_seq1=dinuclShuffle(seq1.replace("T","U"))
-        r_seq2=dinuclShuffle(seq2.replace("T","U"))
+        r_seq1=shuffleseq(seq1.replace("T","U"))
+        r_seq2=shuffleseq(seq2.replace("T","U"))
     except:
         print seq1,seq2
     #r_seq1=shuffleseq(seq1)

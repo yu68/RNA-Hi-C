@@ -100,7 +100,7 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
             name=hit.id.split(".")[1]
             typ=hit.id.split(".")[0]
             max_overlap = overlap
-        if overlap == hit.stop-hit.start and typ=="snoRNA":  #annotated as snoRNA if region covers whole snoRNA
+        if typ=="tRNA" or typ=="snoRNA":  #annotated as snoRNA if region covers whole snoRNA
             break
     if (typ=="lincRNA" or typ=="protein_coding"):
         flag=0
@@ -122,7 +122,7 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
             name=tran.Symbol
         except: pass
         '''
-    if typ=="non":
+    if typ=="non" or subtype=="intron":
         for hit in ref_repeat.query(bed):
             tempname=hit.id.split("&")
             name = tempname[0]

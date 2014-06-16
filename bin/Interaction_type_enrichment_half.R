@@ -54,8 +54,8 @@ colnames(count)[3:4] = c("part1","part2")
 
 
 
-# remove those with non and count less than 0.05% of total interaction
-name = t(temp)[(!grepl("Simple_repeat",count$pairs))&(!grepl("Low_complexity",count$pairs))&(!grepl("non",count$pairs))&(count$Freq>0.0005*length(pairs)),]
+# remove those with non/Simple_repeat/Low_complexity/miscRNA/processed_transcript/antisense and count less than 0.05% of total interaction
+name = t(temp)[(!grepl("Simple_repeat",count$pairs))&(!grepl("Low_complexity",count$pairs))&(!grepl("misc_RNA",count$pairs))&(!grepl("processed",count$pairs))&(!grepl("antisense",count$pairs))&(!grepl("non",count$pairs))&(count$Freq>0.0005*length(pairs)),]
 
 count = count[(count$part1 %in% c(name[,1],"miRNA:."))&(count$part2 %in% c(name[,2],"miRNA:.")),]
 count = count[count$Freq>0,]
@@ -83,10 +83,27 @@ min = min(count$logRatio)
 count$logRatio[count$logRatio>300]=300
 max = max(count$logRatio)
 
+all_types = sort(unique(c(as.character(count$part1),as.character(count$part2))))
+
+print(all_types)
+
+New_count=NULL
+# add none appearing interaction types as NA
+for (i in 1:length(all_types)) {
+  for (j in i:length(all_types)) {
+    pair = paste(all_types[i],all_types[j],sep='--')
+    New_count = rbind(New_count,c(pair,all_types[i],all_types[j]))
+  }
+}
+New_count = as.data.frame(New_count)
+colnames(New_count) = c("pairs","part1","part2")
+logRatio = count$logRatio[match(New_count$pairs,count$pairs)]
+count = cbind(New_count,logRatio)
+
 #b=c(seq(min,0,length.out=50),seq(0,max,length.out=50))
 b=10^(seq(0,log(max,10),length.out=100))
 my.colors = colorRampPalette(c("white",'pink','red'))(100)
-pdf(output,width=8,height=6)
+pdf(output,width=8*length(all_types)/15,height=6*length(all_types)/15)
 po.nopanel <- list(theme(panel.background=element_blank(),panel.grid.minor=element_blank(),panel.grid.major=element_blank()))
 plot = ggplot(count)+geom_tile(aes(x=part1,y=part2,fill=logRatio),colour='black')+
   scale_fill_gradientn(values=rescale(b),colours=my.colors,name='-ln(p_value))')+

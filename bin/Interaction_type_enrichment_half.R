@@ -80,7 +80,7 @@ logRatio = apply(count,1,function(x) log_ratio(x,part1,part2))
 count = cbind(count,logRatio)
 
 min = min(count$logRatio)
-count$logRatio[count$logRatio>300]=300
+count$logRatio[count$logRatio>10]=10
 max = max(count$logRatio)
 
 all_types = sort(unique(c(as.character(count$part1),as.character(count$part2))))

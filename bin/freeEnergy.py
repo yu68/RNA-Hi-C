@@ -57,8 +57,8 @@ for l in mappedPair.read().split('\n'):
     printline = l[8]+"\t"+l[5]+"\t"+l[6]+"\t"+l[14]+"\t"+l[15]+"\t%.4f"%(energy)
     energies.append(energy)
     try:
-        r_seq1=dinuclShuffle(seq1.replace("T","U"))
-        r_seq2=dinuclShuffle(seq2.replace("T","U"))
+        r_seq1=shuffleseq(seq1.replace("T","U"))
+        r_seq2=shuffleseq(seq2.replace("T","U"))
     except:
         print seq1,seq2
     #r_seq1=shuffleseq(seq1)

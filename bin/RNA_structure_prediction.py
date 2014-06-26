@@ -112,20 +112,20 @@ def Main():
         if p[3]=="+" and p[12]=="-":
             try:
                 count[relativeLoc(geneStart,geneEnd,geneStrand,p1_start)]+=1
-                #count[relativeLoc(geneStart,geneEnd,geneStrand,p1_end)]+=1
+                count[relativeLoc(geneStart,geneEnd,geneStrand,p1_end)]+=1
             except: pass
             try:
                 count[relativeLoc(geneStart,geneEnd,geneStrand,p2_end)]+=1
-                #count[relativeLoc(geneStart,geneEnd,geneStrand,p2_start)]+=1
+                count[relativeLoc(geneStart,geneEnd,geneStrand,p2_start)]+=1
             except: pass
         elif p[3]=="-" and p[12]=="+":
             try:
                 count[relativeLoc(geneStart,geneEnd,geneStrand,p1_end)]+=1
-                #count[relativeLoc(geneStart,geneEnd,geneStrand,p1_start)]+=1
+                count[relativeLoc(geneStart,geneEnd,geneStrand,p1_start)]+=1
             except: pass
             try:
                 count[relativeLoc(geneStart,geneEnd,geneStrand,p2_start)]+=1
-                #count[relativeLoc(geneStart,geneEnd,geneStrand,p1_end)]+=1
+                count[relativeLoc(geneStart,geneEnd,geneStrand,p1_end)]+=1
             except: pass
     print >> sys.stderr, ",".join(["%.2f"%(math.log(f+1)) for f in count])
 

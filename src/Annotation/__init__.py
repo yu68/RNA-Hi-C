@@ -102,7 +102,7 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
             max_overlap = overlap
         if typ=="tRNA" or typ=="snoRNA":  #annotated as snoRNA if region covers whole snoRNA
             break
-    if (typ=="lincRNA" or typ=="protein_coding"):
+    if (typ=="lincRNA" or typ=="protein_coding" or typ=="non"):
         flag=0
         for hit in ref_detail.query(bed):
             if flag==0:

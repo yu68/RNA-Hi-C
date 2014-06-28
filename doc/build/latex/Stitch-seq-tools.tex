@@ -14,7 +14,7 @@
 
 
 \title{RNA-Hi-C-tools Documentation}
-\date{June 04, 2014}
+\date{June 27, 2014}
 \release{0.3.2}
 \author{Pengfei Yu}
 \newcommand{\sphinxlogo}{}
@@ -430,7 +430,7 @@ VERSION
 \subsection{Step 4: Split partners and classify different types of fragments.}
 \label{Analysis_pipeline:step4}\label{Analysis_pipeline:step-4-split-partners-and-classify-different-types-of-fragments}
 \index{split\_partner.py}
-When we recovered the fragments, the next we are goting to do is to find parts that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: ``IndexOnly'', ``NoLinker'', ``LinkerOnly'', ``BackOnly'', ``FrontOnly'', ``Paired''. (see the figure below).
+When we recovered the fragments, the next we are goting to do is to find RNA1 and RNA2 that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: ``IndexOnly'', ``NoLinker'', ``LinkerOnly'', ``BackOnly'', ``FrontOnly'', ``Paired''. (see the figure below).
 
 {\hfill\includegraphics{summary.jpg}\hfill}
 
@@ -551,11 +551,11 @@ Align miRNA-mRNA pairs for Stitch-seq. print the alignable miRNA-mRNA pairs
 with coordinates
 
 positional arguments:
-  part1\_reads           paired part1 fasta file
-  part2\_reads           paired part2 fasta file
+  part1\_reads           paired RNA1 fasta file
+  part2\_reads           paired RNA2 fasta file
   bowtie\_path           path for the bowtie program
-  part1\_ref             reference genomic seq for part1
-  part2\_ref             reference genomic seq for part2
+  part1\_ref             reference genomic seq for RNA1
+  part2\_ref             reference genomic seq for RNA2
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -592,7 +592,7 @@ The format for the output file \code{ACCT\_fragment\_paired\_align.txt} will be:
 \hline
 \textsf{\relax 
 Column \footnote{
-column 10-17 are the same as column 1-8 except they are for part2 instead of part1.
+column 10-17 are the same as column 1-8 except they are for RNA2 instead of RNA1.
 }
 } & \textsf{\relax 
 Description
@@ -600,39 +600,39 @@ Description
 \hline
 1
  & 
-chromosome name of part1
+chromosome name of RNA1
 \\
 
 2,3
  & 
-start/end position of part1
+start/end position of RNA1
 \\
 
 4
  & 
-strand information of part1
+strand information of RNA1
 \\
 
 5
  & 
-sequence of part1
+sequence of RNA1
 \\
 
 6
  & 
-RNA type for part1
+RNA type for RNA1
 \\
 
 7
  & 
-RNA name for part1
+RNA name for RNA1
 \\
 
 8
  & 
 RNA subtype \footnote{
 subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), `.' for others
-} for part1
+} for RNA1
 \\
 
 9
@@ -651,7 +651,7 @@ Bowtie2 (``--sensitive-local'' mode) option is added in version 0.3.1 for the us
 \subsection{Step 6: Determine strong interactions.}
 \label{Analysis_pipeline:step6}\label{Analysis_pipeline:step-6-determine-strong-interactions}
 \index{Select\_strongInteraction\_pp.py}
-In this step, we will generate clusters with high coverage separately for all part1 (R1) an part2 (R2) segments. Then based on the pairing information, we count the interactions between clusters from part1 and part2. The strong interactions can be selected by applying a p-value cutoff from hypergeometric test. (See figure below)
+In this step, we will generate clusters with high coverage separately for all RNA1 (R1) an RNA2 (R2) segments. Then based on the pairing information, we count the interactions between clusters from RNA1 and RNA2. For each interaction between clusters in RNA1 and RNA2, a p-value can be generated based on hypergeometric distribution. Given the p-values of all interactions, we could adjust the p-values controlled by False Discovery Rate (FDR, Benjamini-Hochberg procedure). The strong interactions can be selected by applying a FDR cutoff from adjusted p-values. (See figure below)
 
 {\hfill\includegraphics{Find_strong_interaction.jpg}\hfill}
 
@@ -708,37 +708,37 @@ Description
 \hline
 1
  & 
-chromosome name of cluster in part1
+chromosome name of cluster in RNA1
 \\
 
 2,3
  & 
-start/end position of cluster in part1
+start/end position of cluster in RNA1
 \\
 
 4
  & 
-RNA type for cluster in part1
+RNA type for cluster in RNA1
 \\
 
 5
  & 
-RNA name for cluster in part1
+RNA name for cluster in RNA1
 \\
 
 6
  & 
-RNA subtype for cluster in part1
+RNA subtype for cluster in RNA1
 \\
 
 7
  & 
-\# of counts for cluster in part1
+\# of counts for cluster in RNA1
 \\
 
 8-14
  & 
-Same as 1-7, but for cluster in part2
+Same as 1-7, but for cluster in RNA2
 \\
 
 15
@@ -1601,8 +1601,8 @@ Example:
 \section{Description of different samples}
 \label{Data_Resources:description-of-different-samples}
 
-\subsection{E14\_WP\_1}
-\label{Data_Resources:e14-wp-1}\begin{quote}\begin{description}
+\subsection{E14-1}
+\label{Data_Resources:e14-1}\begin{quote}\begin{description}
 \item[{Cell line}] \leavevmode
 ESC E14
 
@@ -1640,8 +1640,8 @@ subjected paired-end sequencing on HiSeq-2500 platform.
 \end{description}\end{quote}
 
 
-\subsection{E14\_WP\_2}
-\label{Data_Resources:e14-wp-2}\begin{quote}\begin{description}
+\subsection{E14-2}
+\label{Data_Resources:e14-2}\begin{quote}\begin{description}
 \item[{Cell line}] \leavevmode
 ESC E14
 
@@ -1664,8 +1664,8 @@ desirable.
 \end{description}\end{quote}
 
 
-\subsection{E14\_WP\_3}
-\label{Data_Resources:e14-wp-3}\begin{quote}\begin{description}
+\subsection{E14-indirect}
+\label{Data_Resources:e14-indirect}\begin{quote}\begin{description}
 \item[{Cell line}] \leavevmode
 ESC E14
 
@@ -1694,8 +1694,8 @@ samples, only the cytoplasm was enriched.
 \end{description}\end{quote}
 
 
-\subsection{MEF\_WP\_1}
-\label{Data_Resources:mef-wp-1}\begin{quote}\begin{description}
+\subsection{MEF}
+\label{Data_Resources:mef}\begin{quote}\begin{description}
 \item[{Cell line}] \leavevmode
 MEF
 
@@ -1718,8 +1718,8 @@ the same procedure as E14\_WP\_2.
 \section{Resources of Strong Interactions}
 \label{Data_Resources:resources-of-strong-interactions}
 
-\subsection{From merged data of E14\_WP\_1 and E14\_WP\_2:}
-\label{Data_Resources:from-merged-data-of-e14-wp-1-and-e14-wp-2}
+\subsection{From merged data of E14-1 and E14-2:}
+\label{Data_Resources:from-merged-data-of-e14-1-and-e14-2}
 
 \subsubsection{Strong interactions based on clustering of genomic locations}
 \label{Data_Resources:strong-interactions-based-on-clustering-of-genomic-locations}\begin{quote}\begin{description}
@@ -1777,8 +1777,39 @@ Last column is the ``ln(p\_value)'' for the significance of interaction. P\_valu
 \href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT\_GGCG\_interaction\_clusters\_RNA\_noLeftRight.xlsx}{Strong interactions RNA noLeftRight (ES\_UV)} (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted)
 
 
-\subsection{From E14\_WP\_3 dual crosslinking:}
-\label{Data_Resources:from-e14-wp-3-dual-crosslinking}
+\subsubsection{Strong interactions based on annotation of RNAs (FDR and using ES-indirect as control)}
+\label{Data_Resources:strong-interactions-based-on-annotation-of-rnas-fdr-and-using-es-indirect-as-control}\label{Data_Resources:sifdr}\begin{quote}\begin{description}
+\item[{Genome}] \leavevmode
+mm9
+
+\item[{Explanation}] \leavevmode\begin{itemize}
+\item {} 
+First six column is for information of RNA in Part1 of interaction (5'side of linker); second six column is for information of RNA in Part2 of interaction (3'side of linker)
+
+\item {} 
+\textbf{Type}: RNA or repeat types; \textbf{Name}: RNA or repeat names; \textbf{Count}: number of supported reads in that RNA
+
+\item {} 
+Column 15 is the number of mapped pairs that support this interaction.
+
+\item {} 
+Column 16 is the ``ln(p\_value)'' for the significance of interaction. P\_value is based on a hypergeometric test, column 17 is p-value
+
+\item {} 
+Column 18 is the FDR. FDR is calculated using the Benjamini–Hochberg procedure
+
+\item {} 
+Column 19 is the fold change between merged data of ES14-1 and ES14-2 and dual crosslink data. The fold change is the ratio (\# of interaction in merged data + 0.5)/(\# of interaction in dual crosslink data + 0.5)
+
+\end{itemize}
+
+\end{description}\end{quote}
+
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT\_GGCG\_interaction\_cluster\_noLeftRight\_RNA\_DualCrosslinkControl\_significant.xlsx}{Strong interactions RNA noLeftRight FDR and using ES-indirect as control (ES\_UV)} (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted, using FDR cutoff and using ES-indirect as control)
+
+
+\subsection{From E14-indirect dual crosslinking:}
+\label{Data_Resources:from-e14-indirect-dual-crosslinking}
 
 \subsubsection{Strong interactions based on clustering of genomic locations}
 \label{Data_Resources:id1}\begin{quote}\begin{description}
@@ -1802,11 +1833,11 @@ Last column is the ``ln(p\_value)'' for the significance of interaction. P\_valu
 
 \end{description}\end{quote}
 
-\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters.xlsx}{Strong interactions (ES\_dual)} (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters.xlsx}{Strong interactions (ES\_indirect)} (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)
 
-\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_cluster\_total\_sort.xlsx}{List of clusters (ES\_dual)} (Removing rRNA/rRNA\_repeats)
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_cluster\_total\_sort.xlsx}{List of clusters (ES\_indirect)} (Removing rRNA/rRNA\_repeats)
 
-\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters\_noLeftRight.xlsx}{Strong interactions noLeftRight (ES\_dual)} (Clusters are generated by merging RNA1 and RNA2, The directions of RNA1 and RNA2 are ignored)
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters\_noLeftRight.xlsx}{Strong interactions noLeftRight (ES\_indirect)} (Clusters are generated by merging RNA1 and RNA2, The directions of RNA1 and RNA2 are ignored)
 
 
 \subsubsection{Strong interactions based on annotation of RNAs}
@@ -1831,13 +1862,13 @@ Last column is the ``ln(p\_value)'' for the significance of interaction. P\_valu
 
 \end{description}\end{quote}
 
-\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters\_RNA.xlsx}{Strong interactions RNA (ES\_dual)}
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters\_RNA.xlsx}{Strong interactions RNA (ES\_indirect)}
 
-\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters\_RNA\_noLeftRight.xlsx}{Strong interactions RNA noLeftRight (ES\_dual)} (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted)
+\href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters\_RNA\_noLeftRight.xlsx}{Strong interactions RNA noLeftRight (ES\_indirect)} (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted)
 
 
-\subsection{From MEF\_WP\_1 sample:}
-\label{Data_Resources:from-mef-wp-1-sample}
+\subsection{From MEF sample:}
+\label{Data_Resources:from-mef-sample}
 
 \subsubsection{Strong interactions based on clustering of genomic locations}
 \label{Data_Resources:id3}\begin{quote}\begin{description}
@@ -1929,12 +1960,12 @@ The the last column gives the count of supported mapped pairs.
 \end{itemize}
 
 
-\subsection{From merged data of E14\_WP\_1 and E14\_WP\_2:}
+\subsection{From merged data of E14-1 and E14-2:}
 \label{Data_Resources:id5}
 \href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT\_GGCG\_interaction\_clusters\_miRNA.xlsx}{Target of miRNA in mir-290-295 clusters and mmu-mir-703 (ES\_UV)}
 
 
-\subsection{From E14\_WP\_3 dual crosslinking:}
+\subsection{From E14-indirect dual crosslinking:}
 \label{Data_Resources:id6}
 \href{http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG\_interaction\_clusters\_miRNA.xlsx}{Target of miRNA in mir-290-295 clusters and mmu-mir-703 (ES\_dual)}
 
@@ -1945,6 +1976,12 @@ RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most
 
 \chapter{Updates}
 \label{index:updates}\begin{description}
+\item[{2014-6-27:}] \leavevmode\begin{itemize}
+\item {} 
+new strong interaction list added based on whole RNA annotation using a FDR cutoff, and using ES-indirect (dual crosslinking) sample as control. See: {\hyperref[Data_Resources:sifdr]{\emph{resources}}}, update in ``{\hyperref[Analysis_pipeline:step6]{\emph{Select\_strongInteraction\_pp.py}}}'' as well.
+
+\end{itemize}
+
 \item[{2014-5-15:}] \leavevmode\begin{itemize}
 \item {} 
 Add result {\hyperref[Data_Resources:resource]{\emph{resources}}} for identified strong interactions in mouse E14 cells and MEF cells.

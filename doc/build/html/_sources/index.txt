@@ -29,6 +29,9 @@ Welcome to RNA Hi-C tools's documentation!
 Updates
 -------
 
+2014-6-27:
+  * new strong interaction list added based on whole RNA annotation using a FDR cutoff, and using ES-indirect (dual crosslinking) sample as control. See: :ref:`resources<SIFDR>`, update in ":ref:`Select_strongInteraction_pp.py<Step6>`" as well.
+
 2014-5-15:
   * Add result :ref:`resources<Resource>` for identified strong interactions in mouse E14 cells and MEF cells.
   * New function to generate heatmap for intra-RNA interactions: :ref:`Plot_interaction_heatmap.py<VisualizationHeatmap>`.

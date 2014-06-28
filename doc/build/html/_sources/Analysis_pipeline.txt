@@ -162,7 +162,7 @@ Step 4: Split partners and classify different types of fragments.
 -----------------------------------------------------------------
 .. index:: split_partner.py
 
-When we recovered the fragments, the next we are goting to do is to find parts that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: "IndexOnly", "NoLinker", "LinkerOnly", "BackOnly", "FrontOnly", "Paired". (see the figure below).
+When we recovered the fragments, the next we are goting to do is to find RNA1 and RNA2 that are seprarated by the linkers, and from here, we will be able to classify the fragments into different types: "IndexOnly", "NoLinker", "LinkerOnly", "BackOnly", "FrontOnly", "Paired". (see the figure below).
 
 .. image:: summary.jpg
    :width: 600 px
@@ -262,11 +262,11 @@ All of these are implemented using script ``Stitch-seq_Aligner.py``. ::
   with coordinates
   
   positional arguments:
-    part1_reads           paired part1 fasta file
-    part2_reads           paired part2 fasta file
+    part1_reads           paired RNA1 fasta file
+    part2_reads           paired RNA2 fasta file
     bowtie_path           path for the bowtie program
-    part1_ref             reference genomic seq for part1
-    part2_ref             reference genomic seq for part2
+    part1_ref             reference genomic seq for RNA1
+    part2_ref             reference genomic seq for RNA2
 
   optional arguments:
     -h, --help            show this help message and exit
@@ -298,17 +298,17 @@ The format for the output file ``ACCT_fragment_paired_align.txt`` will be:
   =============  ===========================
   Column [#f1]_   Description
   =============  ===========================
-    1            chromosome name of part1
-   2,3           start/end position of part1
-    4            strand information of part1
-    5            sequence of part1
-    6            RNA type for part1
-    7            RNA name for part1
-    8            RNA subtype [#f2]_ for part1
+    1            chromosome name of RNA1
+   2,3           start/end position of RNA1
+    4            strand information of RNA1
+    5            sequence of RNA1
+    6            RNA type for RNA1
+    7            RNA name for RNA1
+    8            RNA subtype [#f2]_ for RNA1
     9            name of the pair
   =============  ===========================
 
-.. [#f1] column 10-17 are the same as column 1-8 except they are for part2 instead of part1.
+.. [#f1] column 10-17 are the same as column 1-8 except they are for RNA2 instead of RNA1.
 .. [#f2] subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), '.' for others
 
 .. note::
@@ -320,7 +320,7 @@ Step 6: Determine strong interactions.
 --------------------------------------
 .. index:: Select_strongInteraction_pp.py
 
-In this step, we will generate clusters with high coverage separately for all part1 (R1) an part2 (R2) segments. Then based on the pairing information, we count the interactions between clusters from part1 and part2. The strong interactions can be selected by applying a p-value cutoff from hypergeometric test. (See figure below)
+In this step, we will generate clusters with high coverage separately for all RNA1 (R1) an RNA2 (R2) segments. Then based on the pairing information, we count the interactions between clusters from RNA1 and RNA2. For each interaction between clusters in RNA1 and RNA2, a p-value can be generated based on hypergeometric distribution. Given the p-values of all interactions, we could adjust the p-values controlled by False Discovery Rate (FDR, Benjamini-Hochberg procedure). The strong interactions can be selected by applying a FDR cutoff from adjusted p-values. (See figure below)
 
 .. image:: Find_strong_interaction.jpg
    :width: 600 px
@@ -367,13 +367,13 @@ The column description for output file ``ACCT_interaction_clusters.txt`` is:
   =========  =====================================
   Column         Description
   =========  =====================================
-    1            chromosome name of cluster in part1
-   2,3           start/end position of cluster in part1
-    4            RNA type for cluster in part1
-    5            RNA name for cluster in part1
-    6            RNA subtype for cluster in part1
-    7            # of counts for cluster in part1
-   8-14          Same as 1-7, but for cluster in part2
+    1            chromosome name of cluster in RNA1
+   2,3           start/end position of cluster in RNA1
+    4            RNA type for cluster in RNA1
+    5            RNA name for cluster in RNA1
+    6            RNA subtype for cluster in RNA1
+    7            # of counts for cluster in RNA1
+   8-14          Same as 1-7, but for cluster in RNA2
     15           # of interactions between these two clusters
     16           log(p-value) of the hypergeometric testing
   =========  =====================================

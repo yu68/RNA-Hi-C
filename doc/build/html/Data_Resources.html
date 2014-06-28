@@ -153,8 +153,8 @@
 <span id="resource"></span><h1>Resources of strong interactions from two mouse cell types<a class="headerlink" href="#resources-of-strong-interactions-from-two-mouse-cell-types" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="description-of-different-samples">
 <h2>Description of different samples<a class="headerlink" href="#description-of-different-samples" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="e14-wp-1">
-<h3>E14_WP_1<a class="headerlink" href="#e14-wp-1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="e14-1">
+<h3>E14-1<a class="headerlink" href="#e14-1" title="Permalink to this headline">¶</a></h3>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -193,8 +193,8 @@ subjected paired-end sequencing on HiSeq-2500 platform.</td>
 </tbody>
 </table>
 </div>
-<div class="section" id="e14-wp-2">
-<h3>E14_WP_2<a class="headerlink" href="#e14-wp-2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="e14-2">
+<h3>E14-2<a class="headerlink" href="#e14-2" title="Permalink to this headline">¶</a></h3>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -218,8 +218,8 @@ desirable.</td>
 </tbody>
 </table>
 </div>
-<div class="section" id="e14-wp-3">
-<h3>E14_WP_3<a class="headerlink" href="#e14-wp-3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="e14-indirect">
+<h3>E14-indirect<a class="headerlink" href="#e14-indirect" title="Permalink to this headline">¶</a></h3>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -252,8 +252,8 @@ samples, only the cytoplasm was enriched.</p>
 </tbody>
 </table>
 </div>
-<div class="section" id="mef-wp-1">
-<h3>MEF_WP_1<a class="headerlink" href="#mef-wp-1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="mef">
+<h3>MEF<a class="headerlink" href="#mef" title="Permalink to this headline">¶</a></h3>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -277,8 +277,8 @@ the same procedure as E14_WP_2.</td>
 </div>
 <div class="section" id="resources-of-strong-interactions">
 <h2>Resources of Strong Interactions<a class="headerlink" href="#resources-of-strong-interactions" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="from-merged-data-of-e14-wp-1-and-e14-wp-2">
-<h3>From merged data of E14_WP_1 and E14_WP_2:<a class="headerlink" href="#from-merged-data-of-e14-wp-1-and-e14-wp-2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="from-merged-data-of-e14-1-and-e14-2">
+<h3>From merged data of E14-1 and E14-2:<a class="headerlink" href="#from-merged-data-of-e14-1-and-e14-2" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="strong-interactions-based-on-clustering-of-genomic-locations">
 <h4>Strong interactions based on clustering of genomic locations<a class="headerlink" href="#strong-interactions-based-on-clustering-of-genomic-locations" title="Permalink to this headline">¶</a></h4>
 <table class="docutils field-list" frame="void" rules="none">
@@ -324,9 +324,32 @@ the same procedure as E14_WP_2.</td>
 <p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_RNA.xlsx">Strong interactions RNA (ES_UV)</a></p>
 <p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_RNA_noLeftRight.xlsx">Strong interactions RNA noLeftRight (ES_UV)</a> (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted)</p>
 </div>
+<div class="section" id="strong-interactions-based-on-annotation-of-rnas-fdr-and-using-es-indirect-as-control">
+<span id="sifdr"></span><h4>Strong interactions based on annotation of RNAs (FDR and using ES-indirect as control)<a class="headerlink" href="#strong-interactions-based-on-annotation-of-rnas-fdr-and-using-es-indirect-as-control" title="Permalink to this headline">¶</a></h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Genome:</th><td class="field-body"><p class="first">mm9</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Explanation:</th><td class="field-body"><ul class="first last simple">
+<li>First six column is for information of RNA in Part1 of interaction (5&#8217;side of linker); second six column is for information of RNA in Part2 of interaction (3&#8217;side of linker)</li>
+<li><strong>Type</strong>: RNA or repeat types; <strong>Name</strong>: RNA or repeat names; <strong>Count</strong>: number of supported reads in that RNA</li>
+<li>Column 15 is the number of mapped pairs that support this interaction.</li>
+<li>Column 16 is the &#8220;ln(p_value)&#8221; for the significance of interaction. P_value is based on a hypergeometric test, column 17 is p-value</li>
+<li>Column 18 is the FDR. FDR is calculated using the Benjamini–Hochberg procedure</li>
+<li>Column 19 is the fold change between merged data of ES14-1 and ES14-2 and dual crosslink data. The fold change is the ratio (# of interaction in merged data + 0.5)/(# of interaction in dual crosslink data + 0.5)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_cluster_noLeftRight_RNA_DualCrosslinkControl_significant.xlsx">Strong interactions RNA noLeftRight FDR and using ES-indirect as control (ES_UV)</a> (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted, using FDR cutoff and using ES-indirect as control)</p>
 </div>
-<div class="section" id="from-e14-wp-3-dual-crosslinking">
-<h3>From E14_WP_3 dual crosslinking:<a class="headerlink" href="#from-e14-wp-3-dual-crosslinking" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="from-e14-indirect-dual-crosslinking">
+<h3>From E14-indirect dual crosslinking:<a class="headerlink" href="#from-e14-indirect-dual-crosslinking" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id1">
 <h4>Strong interactions based on clustering of genomic locations<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <table class="docutils field-list" frame="void" rules="none">
@@ -346,9 +369,9 @@ the same procedure as E14_WP_2.</td>
 </tr>
 </tbody>
 </table>
-<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters.xlsx">Strong interactions (ES_dual)</a> (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)</p>
-<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_cluster_total_sort.xlsx">List of clusters (ES_dual)</a> (Removing rRNA/rRNA_repeats)</p>
-<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_noLeftRight.xlsx">Strong interactions noLeftRight (ES_dual)</a> (Clusters are generated by merging RNA1 and RNA2, The directions of RNA1 and RNA2 are ignored)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters.xlsx">Strong interactions (ES_indirect)</a> (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_cluster_total_sort.xlsx">List of clusters (ES_indirect)</a> (Removing rRNA/rRNA_repeats)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_noLeftRight.xlsx">Strong interactions noLeftRight (ES_indirect)</a> (Clusters are generated by merging RNA1 and RNA2, The directions of RNA1 and RNA2 are ignored)</p>
 </div>
 <div class="section" id="id2">
 <h4>Strong interactions based on annotation of RNAs<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
@@ -369,12 +392,12 @@ the same procedure as E14_WP_2.</td>
 </tr>
 </tbody>
 </table>
-<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_RNA.xlsx">Strong interactions RNA (ES_dual)</a></p>
-<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_RNA_noLeftRight.xlsx">Strong interactions RNA noLeftRight (ES_dual)</a> (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_RNA.xlsx">Strong interactions RNA (ES_indirect)</a></p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_RNA_noLeftRight.xlsx">Strong interactions RNA noLeftRight (ES_indirect)</a> (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted)</p>
 </div>
 </div>
-<div class="section" id="from-mef-wp-1-sample">
-<h3>From MEF_WP_1 sample:<a class="headerlink" href="#from-mef-wp-1-sample" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="from-mef-sample">
+<h3>From MEF sample:<a class="headerlink" href="#from-mef-sample" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id3">
 <h4>Strong interactions based on clustering of genomic locations<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <table class="docutils field-list" frame="void" rules="none">
@@ -443,11 +466,11 @@ the same procedure as E14_WP_2.</td>
 <li>The the last column gives the count of supported mapped pairs.</li>
 </ul>
 <div class="section" id="id5">
-<h3>From merged data of E14_WP_1 and E14_WP_2:<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3>From merged data of E14-1 and E14-2:<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_miRNA.xlsx">Target of miRNA in mir-290-295 clusters and mmu-mir-703 (ES_UV)</a></p>
 </div>
 <div class="section" id="id6">
-<h3>From E14_WP_3 dual crosslinking:<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3>From E14-indirect dual crosslinking:<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_miRNA.xlsx">Target of miRNA in mir-290-295 clusters and mmu-mir-703 (ES_dual)</a></p>
 </div>
 </div>

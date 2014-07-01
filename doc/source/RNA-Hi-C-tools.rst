@@ -5,12 +5,19 @@ RNA-Hi-C-tools |version| documentation
 Overview
 ========
 
-**RNA-Hi-C-tools** is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome (RNA-chromatin interactome is coming soon).
+**RNA-Hi-C-tools** is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome (RNA-chromatin interactome is coming soon).  
 
-Below is a illustration for the experimental design of this new technology
+RNA-HiC-tools automated all the analysis steps, including removing PCR duplicates, splitting multiplexed samples, identifying the linker sequence, splitting junction reads, calling interacting RNAs, statistical assessments, categorizing RNA interaction types, calling interacting sites, and RNA structure analysis, as well as visualization tools for the RNA interactome (:ref:`Visualization of global interactome <VisualizationGlobal>`) and the proximal sites within an RNA (:ref:`Heatmap for Intra-RNA interactions <VisualizationHeatmap>`).  
+
+
+Below is a illustration for the experimental design of this new technology. This procedure crosslinks RNAs with their bound proteins, and ligates the RNAs co-bound by the same protein into a chimeric RNA. The chimeric RNA is interspersed by a predesigned biotinylated RNA linker, in the form of RNA1-Linker-RNA2. These linker-containing chimeric RNAs are selected by streptavidin and then subjected to pair-end sequencing  
 
 .. image:: exp.jpg
   :align: center
+
+The RNA Hi-C method offers several advantages for mapping RNA-RNA interactions. First, the one-to-one pairing of interacting RNAs is experimentally captured. Second, by using the biotinylated linker as a selection marker, it circumvents the requirement for either a protein-specific antibody or expressing a tagged protein, allowing for an as unbiased mapping of the entire RNA interactome as possible. Third, false positive interactions, produced by ligation of random RNAs that happened to be proximal in space, are minimized by performing RNA ligation on streptavidin beads in a dilute condition. Fourth, the predesigned RNA linker provides a clear boundary to split any sequencing read that spans across the ligation spot, thus avoids ambiguities in mapping the sequencing reads. Fifth, RNA Hi-C directly analyzes the endogenous cellular condition without introducing any exogenous nucleotides or protein-coding genes before crosslinking. Sixth, potential PCR amplification biases were removed by attaching a random 6nt barcode to each chimeric RNA before PCR amplification, where the completely overlapping sequencing reads with identical barcodes are counted only once.  
+
+
 
 .. seealso:: 
 

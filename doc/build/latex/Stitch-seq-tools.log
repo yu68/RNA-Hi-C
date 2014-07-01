@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  27 JUN 2014 17:03
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.8.24)  30 JUN 2014 17:54
 entering extended mode
  %&-line parsing enabled.
 **Stitch-seq-tools.tex
@@ -863,7 +863,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.i}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.67 ...ne {10}Indices and tables}{39}{chapter.10}
+l.67 ...ne {10}Indices and tables}{41}{chapter.10}
                                                    [1
 
 ])
@@ -887,137 +887,136 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 127.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <24.88> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 127.
-<exp.jpg, id=217, 475.02469pt x 314.67563pt>
+<exp.jpg, id=219, 1534.73375pt x 1017.8025pt>
 File: exp.jpg Graphic file (type jpg)
  <use exp.jpg>
 File: exp.jpg Graphic file (type jpg)
  <use exp.jpg>
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 146.
+[3 <./exp.jpg>]
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 150.
 
-
-(/usr/share/texmf-texlive/tex/latex/psnfss/ts1ptm.fd
+ (/usr/share/texmf-texlive/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 160.
- [3 <./exp.jpg>]
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 180.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 164.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 184.
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-) [4]
-Chapter 2.
-[5
+) [4] [5] [6
 
-] [6]
-Underfull \hbox (badness 10000) in paragraph at lines 361--362
+]
+Chapter 2.
+[7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 365--366
 []\T1/ptm/m/n/10 For ex-am-ple, if the in-put fastq/fasta files are \T1/pcr/m/n
 /10 Rm_dupPE_example.F1.fastq \T1/ptm/m/n/10 and
  []
 
-<workflow_for_recoverFragment.jpg, id=284, 904.3386pt x 540.3387pt>
+<workflow_for_recoverFragment.jpg, id=295, 904.3386pt x 540.3387pt>
 File: workflow_for_recoverFragment.jpg Graphic file (type jpg)
 
 <use workflow_for_recoverFragment.jpg>
 File: workflow_for_recoverFragment.jpg Graphic file (type jpg)
  <use workflow_for_recoverFragment.jpg>
-[7 <./workflow_for_recoverFragment.jpg>]
-<summary.jpg, id=289, 688.974pt x 274.1442pt>
+[9 <./workflow_for_recoverFragment.jpg>]
+<summary.jpg, id=301, 673.0746pt x 269.3262pt>
 File: summary.jpg Graphic file (type jpg)
  <use summary.jpg>
 File: summary.jpg Graphic file (type jpg)
 
-<use summary.jpg> [8 <./summary.jpg>] [9] [10]
-<Find_strong_interaction.jpg, id=305, 756.8275pt x 397.485pt>
+<use summary.jpg> [10 <./summary.jpg>] [11] [12]
+<Find_strong_interaction.jpg, id=316, 756.8275pt x 397.485pt>
 File: Find_strong_interaction.jpg Graphic file (type jpg)
 
 <use Find_strong_interaction.jpg>
 File: Find_strong_interaction.jpg Graphic file (type jpg)
- <use Find_strong_interaction.jpg> [11]
-[12 <./Find_strong_interaction.jpg>] [13] [14] [15] [16
+ <use Find_strong_interaction.jpg> [13]
+[14 <./Find_strong_interaction.jpg>] [15] [16] [17] [18
 
 ]
 Chapter 3.
-[17] <local_interaction_malat1_ACCT.jpg, id=342, 477.9456pt x 240.9pt>
+[19] <local_interaction_malat1_ACCT.jpg, id=353, 477.9456pt x 240.9pt>
 File: local_interaction_malat1_ACCT.jpg Graphic file (type jpg)
 
 <use local_interaction_malat1_ACCT.jpg>
 File: local_interaction_malat1_ACCT.jpg Graphic file (type jpg)
 
-<use local_interaction_malat1_ACCT.jpg> [18 <./local_interaction_malat1_ACCT.jp
+<use local_interaction_malat1_ACCT.jpg> [20 <./local_interaction_malat1_ACCT.jp
 g>]
 Chapter 4.
-[19
+[21
 
-] <Snora73_intra_interaction.jpg, id=355, 433.62pt x 322.3242pt>
+] <Snora73_intra_interaction.jpg, id=367, 433.62pt x 322.3242pt>
 File: Snora73_intra_interaction.jpg Graphic file (type jpg)
 
 <use Snora73_intra_interaction.jpg>
 File: Snora73_intra_interaction.jpg Graphic file (type jpg)
  <use Snora73_intra_interaction.jpg>
-[20] [21 <./Snora73_intra_interaction.jpg>] [22
+[22] [23 <./Snora73_intra_interaction.jpg>] [24
 
 ]
 Chapter 5.
-[23] <GGCG-MEF_interactome.jpg, id=377, 803.0pt x 803.0pt>
+[25] <GGCG-MEF_interactome.jpg, id=388, 803.0pt x 803.0pt>
 File: GGCG-MEF_interactome.jpg Graphic file (type jpg)
 
 <use GGCG-MEF_interactome.jpg>
 File: GGCG-MEF_interactome.jpg Graphic file (type jpg)
- <use GGCG-MEF_interactome.jpg> [24 <./GGCG-MEF_interactome.jpg>]
+ <use GGCG-MEF_interactome.jpg> [26 <./GGCG-MEF_interactome.jpg>]
 Chapter 6.
-[25
+[27
 
-] <ES1_interaction_type.jpg, id=387, 579.1236pt x 434.5836pt>
+] <ES1_interaction_type.jpg, id=399, 579.1236pt x 434.5836pt>
 File: ES1_interaction_type.jpg Graphic file (type jpg)
 
 <use ES1_interaction_type.jpg>
 File: ES1_interaction_type.jpg Graphic file (type jpg)
- <use ES1_interaction_type.jpg> [26 <./ES1_interaction_type.jpg>]
+ <use ES1_interaction_type.jpg> [28 <./ES1_interaction_type.jpg>]
 Chapter 7.
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1205.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1209.
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <9> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1227.
-[27
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1231.
+[29
 
-] [28] [29]
-Underfull \hbox (badness 10000) in paragraph at lines 1517--1518
+] [30] [31]
+Underfull \hbox (badness 10000) in paragraph at lines 1521--1522
 []\T1/ptm/b/n/10 sso_file \T1/ptm/m/n/10 -- give a sin-gle strand off-set file,
  for-mat see
  []
 
-[30]
+[32]
 Chapter 8.
-[31
+[33
 
-] [32] [33] [34] [35] [36]
+] [34] [35] [36] [37] [38]
 Chapter 9.
-[37
-
-] [38]
-Chapter 10.
 [39
 
-] [40
+] [40]
+Chapter 10.
+[41
 
-] [41
-
-
-] (./Stitch-seq-tools.ind [42
-
+] [42
 
 ] [43
 
+
+] (./Stitch-seq-tools.ind [44
+
+
+] [45
+
 ]) (./Stitch-seq-tools.aux) ) 
 Here is how much of TeX's memory you used:
- 8360 strings out of 495061
- 115961 string characters out of 1182621
- 203524 words of memory out of 3000000
+ 8362 strings out of 495061
+ 115975 string characters out of 1182621
+ 203526 words of memory out of 3000000
  11109 multiletter control sequences out of 15000+50000
  72437 words of font info for 83 fonts, out of 3000000 for 9000
  29 hyphenation exceptions out of 8191
- 45i,16n,48p,729b,514s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 45i,16n,48p,1218b,514s stack positions out of 5000i,500n,10000p,200000b,50000s
 pdfTeX warning (dest): name{Hfootnote.1} has been 
 referenced but does not exist, replaced by a fixed one
 
@@ -1028,9 +1027,9 @@ ourier/ucrr8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/helvetic/uhvb8a.pfb
 mf-texlive/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-texlive/fonts/
 type1/urw/times/utmb8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmr
 8a.pfb></usr/share/texmf-texlive/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Stitch-seq-tools.pdf (47 pages, 1987738 bytes).
+Output written on Stitch-seq-tools.pdf (49 pages, 2376706 bytes).
 PDF statistics:
- 641 PDF objects out of 1000 (max. 8388607)
- 141 named destinations out of 1000 (max. 500000)
+ 653 PDF objects out of 1000 (max. 8388607)
+ 143 named destinations out of 1000 (max. 500000)
  349 words of extra memory for PDF output out of 10000 (max. 10000000)
 

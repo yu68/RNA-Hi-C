@@ -1,29 +1,29 @@
-\indexentry{remove\_dup\_PE.py|hyperpage}{5}
-\indexentry{split\_library\_pairend.py|hyperpage}{6}
-\indexentry{recoverFragment|hyperpage}{7}
-\indexentry{split\_partner.py|hyperpage}{8}
-\indexentry{Stitch-seq\_Aligner.py|hyperpage}{10}
-\indexentry{Select\_strongInteraction\_pp.py|hyperpage}{11}
-\indexentry{intersectInteraction.py|hyperpage}{13}
-\indexentry{intersectInteraction\_genePair.R|hyperpage}{14}
-\indexentry{RNA\_structure\_prediction.py|hyperpage}{14}
-\indexentry{Plot\_interaction.py|hyperpage}{17}
-\indexentry{Plot\_interaction\_heatmap.py|hyperpage}{19}
-\indexentry{Plot\_Circos.R|hyperpage}{23}
-\indexentry{Interaction\_type\_enrichment.R|hyperpage}{25}
-\indexentry{Annotation (module)|hyperpage}{27}
-\indexentry{overlap() (in module Annotation)|hyperpage}{27}
-\indexentry{Subtype() (in module Annotation)|hyperpage}{27}
-\indexentry{annotation() (in module Annotation)|hyperpage}{27}
-\indexentry{annotated\_bed (class in data\_structure)|hyperpage}{28}
-\indexentry{Cluster() (data\_structure.annotated\_bed method)|hyperpage}{28}
-\indexentry{Update() (data\_structure.annotated\_bed method)|hyperpage}{28}
-\indexentry{\_\_init\_\_() (data\_structure.annotated\_bed method)|hyperpage}{29}
-\indexentry{\_\_lt\_\_() (data\_structure.annotated\_bed method)|hyperpage}{29}
-\indexentry{\_\_str\_\_() (data\_structure.annotated\_bed method)|hyperpage}{29}
-\indexentry{overlap() (data\_structure.annotated\_bed method)|hyperpage}{29}
-\indexentry{RNAstructure (class in RNAstructure)|hyperpage}{29}
-\indexentry{DuplexFold() (RNAstructure.RNAstructure method)|hyperpage}{29}
-\indexentry{Fold() (RNAstructure.RNAstructure method)|hyperpage}{30}
-\indexentry{\_\_init\_\_() (RNAstructure.RNAstructure method)|hyperpage}{30}
-\indexentry{scorer() (RNAstructure.RNAstructure method)|hyperpage}{30}
+\indexentry{remove\_dup\_PE.py|hyperpage}{7}
+\indexentry{split\_library\_pairend.py|hyperpage}{8}
+\indexentry{recoverFragment|hyperpage}{9}
+\indexentry{split\_partner.py|hyperpage}{10}
+\indexentry{Stitch-seq\_Aligner.py|hyperpage}{12}
+\indexentry{Select\_strongInteraction\_pp.py|hyperpage}{13}
+\indexentry{intersectInteraction.py|hyperpage}{15}
+\indexentry{intersectInteraction\_genePair.R|hyperpage}{16}
+\indexentry{RNA\_structure\_prediction.py|hyperpage}{16}
+\indexentry{Plot\_interaction.py|hyperpage}{19}
+\indexentry{Plot\_interaction\_heatmap.py|hyperpage}{21}
+\indexentry{Plot\_Circos.R|hyperpage}{25}
+\indexentry{Interaction\_type\_enrichment.R|hyperpage}{27}
+\indexentry{Annotation (module)|hyperpage}{29}
+\indexentry{overlap() (in module Annotation)|hyperpage}{29}
+\indexentry{Subtype() (in module Annotation)|hyperpage}{29}
+\indexentry{annotation() (in module Annotation)|hyperpage}{29}
+\indexentry{annotated\_bed (class in data\_structure)|hyperpage}{30}
+\indexentry{Cluster() (data\_structure.annotated\_bed method)|hyperpage}{30}
+\indexentry{Update() (data\_structure.annotated\_bed method)|hyperpage}{30}
+\indexentry{\_\_init\_\_() (data\_structure.annotated\_bed method)|hyperpage}{31}
+\indexentry{\_\_lt\_\_() (data\_structure.annotated\_bed method)|hyperpage}{31}
+\indexentry{\_\_str\_\_() (data\_structure.annotated\_bed method)|hyperpage}{31}
+\indexentry{overlap() (data\_structure.annotated\_bed method)|hyperpage}{31}
+\indexentry{RNAstructure (class in RNAstructure)|hyperpage}{31}
+\indexentry{DuplexFold() (RNAstructure.RNAstructure method)|hyperpage}{31}
+\indexentry{Fold() (RNAstructure.RNAstructure method)|hyperpage}{32}
+\indexentry{\_\_init\_\_() (RNAstructure.RNAstructure method)|hyperpage}{32}
+\indexentry{scorer() (RNAstructure.RNAstructure method)|hyperpage}{32}

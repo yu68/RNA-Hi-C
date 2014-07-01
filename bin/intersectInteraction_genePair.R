@@ -45,6 +45,13 @@ Pair <- function(interaction,col_n,release) {
 NamesA=apply(interactionA,1, function(x) Pair(x,col_n,release))
 NamesB=apply(interactionB,1, function(x) Pair(x,col_n,release))
 
+#print(length(unique(NamesA[,3])))
+#print(length(unique(NamesB[,3])))
+#print(length(unique(intersect(NamesA[,3],NamesB[,3]))))
+#print(length(unique(union(NamesA[,1],NamesB[,1]))))
+#print(length(unique(union(NamesA[,2],NamesB[,2]))))
+
+
 
 write.table(interactionA[NamesA %in% NamesB,],output,quote=F,sep='\t',col.names=F,row.names=F)
 

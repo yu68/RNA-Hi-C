@@ -255,6 +255,7 @@ def Main():
             else:
                 Count[(i,j)] +=1
     
+    print Count
 
     patches = []
     colors = []
@@ -265,7 +266,7 @@ def Main():
             patches.append(PatchGen(i,j,h,step,gene_top+0.01))
             colors.append(np.log(Count[(i,j)]+1))
 
-    p = PatchCollection(patches, cmap=matplotlib.cm.Reds, alpha=0.7, edgecolor='none',linewidths=0.0)
+    p = PatchCollection(patches, cmap=matplotlib.cm.Reds, alpha=0.7, edgecolor='k',linewidths=0.1)
     p.set_array(np.array(colors))
     ax.add_collection(p)
 
@@ -310,6 +311,7 @@ def Main():
 
 
     plt.savefig(args.output)
+    plt.show()
 
     # remove temp file
     os.system("rm temp_interaction.txt.gz*")

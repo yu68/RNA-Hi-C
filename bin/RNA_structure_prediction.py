@@ -1,6 +1,7 @@
 
 import sys,os,argparse
 import string
+import json
 import numpy as np
 from RNAstructure import RNAstructure
 import math
@@ -70,6 +71,19 @@ def DrawShadowDot(geneDot,ax,ymin,ymax,col="g"):
         if geneDot[i]==".":
             rect = matplotlib.patches.Rectangle((i+0.5,ymin),1,ymax-ymin,color=col,alpha=0.3)
             ax.add_patch(rect)
+
+def generateJSON(geneDot,count,name,out_file_name):
+    '''
+    generate JSON file for uploading into RNA 2D browser for visualization
+    '''
+    RNA = {}
+    count=[int(x) for x in count]
+    RNA["ideograms"]=[{"id":name,"length":len(geneDot),"color":"grey"}]
+    RNA["plottracks"]=[{"name":"coverage","color":"blue","values":[{"chr":name,"values":count}]}]
+    RNA["structs"]=[{"chr":name,"struct":geneDot}]
+    out = open(out_file_name,'w')
+    print >>out, json.dumps(RNA, indent=2)
+
 
 def Main():
     GeneLoc='/home/yu68/bharat-interaction/new_lincRNA_data/all_RNAs-rRNA_repeat.txt'
@@ -142,6 +156,7 @@ def Main():
     seq, geneDot_refine = RNA_prog.Fold(geneSeq,ct_name="temp_refine.ct",sso_file="temp_sso.txt")
     assert(seq==geneSeq)
 
+
     # compare with accepted structure
     if args.acceptDot!=None:
         os.system("dos2unix %s"%(args.acceptDot))
@@ -164,6 +179,12 @@ def Main():
  
     print >> sys.stderr, "refined structure: "
     print >> sys.stderr, "\t", geneDot_refine
+
+    # output JSON file for visualization
+    generateJSON(geneDot,count,geneName,"structure_%s-%s.json"%(ID,geneName))
+    generateJSON(geneDot_refine,count,geneName,"structure_%s-%s_refine.json"%(ID,geneName))
+
+
 
     # plot digested site distribution
     fig = plt.figure(figsize=(10,4))

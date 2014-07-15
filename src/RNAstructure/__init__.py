@@ -203,3 +203,48 @@ class RNAstructure(object):
                     maximum = s+p
                     number=n
         return sensitivity, PPV, number
+
+
+# dot to block
+def dot2block(dot_string,name="Default"):
+    '''
+    convert dot format of RNA secondary structure into several linked blocks
+
+    :param dot_string: the dot format of RNA secondary structure
+    :param name: name of the RNA
+    :return: A list of all stems, each stem is a dictionary with 'source' and 'target'
+
+    Example:
+    
+    >>> from RNAstructure import dot2block
+    >>> stems = dot2block("(((((...)))...(((...)))..))","RNA_X")
+    >>> print stems
+    [{'source': {'start': 2, 'chr': 'test', 'end': 4}, 'target': {'start': 8, 'chr': 'test', 'end': 10}}, {'source': {'start': 14, 'chr': 'test', 'end': 16}, 'target': {'start': 20, 'chr': 'test', 'end': 22}}, {'source': {'start': 0, 'chr': 'test', 'end': 1}, 'target': {'start': 25, 'chr': 'test', 'end': 26}}]    
+    
+    '''
+    posRegister=[]
+    pairRegister=[]
+    stems=[]
+    def dumpPairRegister(pairRegister,stems,name):
+        print "source:%d-%d; target:%d-%d"%(pairRegister[-1][0],pairRegister[0][0],pairRegister[-1][1],pairRegister[0][1])
+        stems.append({"source":{"chr":name,"start":pairRegister[-1][0],"end":pairRegister[0][0]},"target":{"chr":name,"start":pairRegister[0][1],"end":pairRegister[-1][1]}})
+        pairRegister=[]
+        return pairRegister,stems
+
+    for i in range(len(dot_string)):
+        char = dot_string[i]
+        if char==".":  continue
+        if char=="(":
+            posRegister.append(i)
+        if char==")":
+            first = posRegister.pop()
+            pair=[first,i]
+            if (len(pairRegister)>0):
+                if (pairRegister[-1][0]-first>1) or (i-pairRegister[-1][1]>1):
+                    pairRegister,stems=dumpPairRegister(pairRegister,stems,name);
+            pairRegister.append(pair)
+    
+    if (len(pairRegister)>0):
+        pairRegister,stems=dumpPairRegister(pairRegister,stems,name);
+
+    return stems 

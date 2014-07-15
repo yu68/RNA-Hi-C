@@ -29,6 +29,9 @@ Welcome to RNA Hi-C tools's documentation!
 Updates
 -------
 
+2014-7-15:
+  * Add an API function to convert dot format of RNA secondary structure into several linked blocks. see ":ref:`dot2block<dot2block>`"
+
 2014-6-27:
   * new strong interaction list added based on whole RNA annotation using a FDR cutoff, and using ES-indirect (dual crosslinking) sample as control. See: :ref:`resources<SIFDR>`, update in ":ref:`Select_strongInteraction_pp.py<Step6>`" as well.
 

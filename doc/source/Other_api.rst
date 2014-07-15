@@ -20,3 +20,8 @@ Annotation module
 ====================
 .. autoclass:: RNAstructure.RNAstructure
    :members: __init__,DuplexFold,Fold,scorer
+
+.. _dot2block:
+
+.. automodule:: RNAstructure
+   :members: dot2block 

@@ -1,0 +1,526 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python APIs created for this project</title>
+    
+    <link rel="stylesheet" href="_static/labibi.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+<script src="_static/labibi.js"></script>
+
+
+
+<!-- Google Analytics JS is disabled; set google_analytics_id -->
+
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Data_Resources.html" title="Resources of strong interactions from two mouse cell types"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Visualization.html" title="Visualization of local RNA-RNA interactions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">RNA-HiC-tools 0.3.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="python-apis-created-for-this-project">
+<h1>Python APIs created for this project</h1>
+<div class="section" id="module-Annotation">
+<span id="annotation-module"></span><h2>Annotation module</h2>
+<p>For the purpose of annotating RNA types for genomic regions.</p>
+<dl class="function">
+<dt id="Annotation.overlap">
+<tt class="descclassname">Annotation.</tt><tt class="descname">overlap</tt><big>(</big><em>bed1</em>, <em>bed2</em><big>)</big></dt>
+<dd><p>This function compares overlap of two Bed object from same chromosome</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bed1</strong> &#8211; A Bed object from <a class="reference external" href="http://bam2xwiki.appspot.com/bed">xplib.Annotation.Bed</a><span class="link-target"> [http://bam2xwiki.appspot.com/bed]</span> (BAM2X)</li>
+<li><strong>bed2</strong> &#8211; <p>A Bed object from <a class="reference external" href="http://bam2xwiki.appspot.com/bed">xplib.Annotation.Bed</a><span class="link-target"> [http://bam2xwiki.appspot.com/bed]</span> (BAM2X)</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">boolean &#8211; True or False</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib.Annotation</span> <span class="kn">import</span> <span class="n">Bed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Annotation</span> <span class="kn">import</span> <span class="n">overlap</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bed1</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr1&quot;</span><span class="p">,</span><span class="mi">10000</span><span class="p">,</span><span class="mi">12000</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bed2</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr1&quot;</span><span class="p">,</span><span class="mi">9000</span><span class="p">,</span><span class="mi">13000</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">overlap</span><span class="p">(</span><span class="n">bed1</span><span class="p">,</span><span class="n">bed2</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="Annotation.Subtype">
+<tt class="descclassname">Annotation.</tt><tt class="descname">Subtype</tt><big>(</big><em>bed1</em>, <em>genebed</em><big>)</big></dt>
+<dd><p>This function determines intron or exon or utr from a BED12 file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bed1</strong> &#8211; <p>A Bed object defined by <a class="reference external" href="http://bam2xwiki.appspot.com/bed">xplib.Annotation.Bed</a><span class="link-target"> [http://bam2xwiki.appspot.com/bed]</span> (BAM2X)</p>
+</li>
+<li><strong>genebed</strong> &#8211; A Bed12 object representing a transcript defined by xplib Annotaton.Bed with information of exon/intron/utr from an BED12 file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">str &#8211; RNA subtype. &#8220;intron&#8221;/&#8221;exon&#8221;/&#8221;utr3&#8221;/&#8221;utr5&#8221;/&#8221;.&#8221;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib.Annotation</span> <span class="kn">import</span> <span class="n">Bed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib</span> <span class="kn">import</span> <span class="n">DBI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Annotation</span> <span class="kn">import</span> <span class="n">Subtype</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bed1</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="mi">40975747</span><span class="p">,</span><span class="mi">40975770</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/Ensembl_mm9.genebed.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">genebed</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">bed1</span><span class="p">)</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">Subtype</span><span class="p">(</span><span class="n">bed1</span><span class="p">,</span><span class="n">genebed</span><span class="p">)</span>
+<span class="go">&quot;intron&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="Annotation.annotation">
+<tt class="descclassname">Annotation.</tt><tt class="descname">annotation</tt><big>(</big><em>bed</em>, <em>ref_allRNA</em>, <em>ref_detail</em>, <em>ref_repeat</em><big>)</big></dt>
+<dd><p>This function is based on <a class="reference internal" href="#Annotation.overlap" title="Annotation.overlap"><tt class="xref py py-func docutils literal"><span class="pre">overlap()</span></tt></a> and <a class="reference internal" href="#Annotation.Subtype" title="Annotation.Subtype"><tt class="xref py py-func docutils literal"><span class="pre">Subtype()</span></tt></a> functions to annotate RNA type/name/subtype for any genomic region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bed</strong> &#8211; <p>A Bed object defined by <a class="reference external" href="http://bam2xwiki.appspot.com/bed">xplib.Annotation.Bed</a><span class="link-target"> [http://bam2xwiki.appspot.com/bed]</span> (in BAM2X).</p>
+</li>
+<li><strong>ref_allRNA</strong> &#8211; the <a class="reference external" href="http://bam2xwiki.appspot.com/DBI">DBI.init</a><span class="link-target"> [http://bam2xwiki.appspot.com/DBI]</span> object (from BAM2X) for bed6 file of all kinds of RNA</li>
+<li><strong>ref_detail</strong> &#8211; <p>the <a class="reference external" href="http://bam2xwiki.appspot.com/DBI">DBI.init</a><span class="link-target"> [http://bam2xwiki.appspot.com/DBI]</span> object for bed12 file of lincRNA and mRNA with intron, exon, UTR</p>
+</li>
+<li><strong>ref_detail</strong> &#8211; <p>the <a class="reference external" href="http://bam2xwiki.appspot.com/DBI">DBI.init</a><span class="link-target"> [http://bam2xwiki.appspot.com/DBI]</span> object for bed6 file of mouse repeat</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of str &#8211; [type,name,subtype]</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib.Annotation</span> <span class="kn">import</span> <span class="n">Bed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">xplib</span> <span class="kn">import</span> <span class="n">DBI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">Annotation</span> <span class="kn">import</span> <span class="n">annotation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bed</span><span class="o">=</span><span class="n">Bed</span><span class="p">([</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="mi">40975747</span><span class="p">,</span><span class="mi">40975770</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ref_allRNA</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/all_RNAs-rRNA_repeat.txt.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ref_detail</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/Ensembl_mm9.genebed.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ref_repeat</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/mouse.repeat.txt.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">annotation</span><span class="p">(</span><span class="n">bed</span><span class="p">,</span><span class="n">ref_allRNA</span><span class="p">,</span><span class="n">ref_detail</span><span class="p">,</span><span class="n">ref_repeat</span><span class="p">)</span>
+<span class="go">[&quot;protein_coding&quot;,&quot;gcnt2&quot;,&quot;intron&quot;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="annotated-bed-data-class">
+<h2>&#8220;annotated_bed&#8221; data class</h2>
+<dl class="class">
+<dt id="data_structure.annotated_bed">
+<em class="property">class </em><tt class="descclassname">data_structure.</tt><tt class="descname">annotated_bed</tt><big>(</big><em>x=None</em>, <em>**kwargs</em><big>)</big></dt>
+<dd><p>To store, compare, cluster for the genomic regions with RNA annotation information. Utilized in the program <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Select_stronginteraction_pp.py</em></a></p>
+<dl class="method">
+<dt id="data_structure.annotated_bed.Cluster">
+<tt class="descname">Cluster</tt><big>(</big><em>c</em><big>)</big></dt>
+<dd><p>Store cluster information of self object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>c</strong> &#8211; cluster index</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">40975747</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">40975770</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">Cluster</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span><span class="o">.</span><span class="n">cluster</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">a.cluster will be the count information when a become a cluster object in <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Select_stronginteraction_pp.py</em></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structure.annotated_bed.Update">
+<tt class="descname">Update</tt><big>(</big><em>S</em>, <em>E</em><big>)</big></dt>
+<dd><p>Update the upper and lower bound of the cluster after adding segments using Union-Find.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>S</strong> &#8211; start loc of the newly added genomic segment</li>
+<li><strong>E</strong> &#8211; end loc of the newly added genomic segment</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">40975747</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">40975770</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">Update</span><span class="p">(</span><span class="mi">40975700</span><span class="p">,</span><span class="mi">40975800</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">end</span>
+<span class="go">40975700 40975800</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structure.annotated_bed.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>x=None</em>, <em>**kwargs</em><big>)</big></dt>
+<dd><p>Initiation example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="o">=</span><span class="s">&quot;chr13  40975747        40975770        +       ATTAAG...TGA    protein_coding  gcnt2   intron&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="go">or</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">40975747</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">40975770</span><span class="p">,</span><span class="n">strand</span><span class="o">=</span><span class="s">&#39;+&#39;</span><span class="p">,</span><span class="nb">type</span><span class="o">=</span><span class="s">&quot;protein_coding&quot;</span><span class="p">,)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structure.annotated_bed.__lt__">
+<tt class="descname">__lt__</tt><big>(</big><em>other</em><big>)</big></dt>
+<dd><p>Compare two objects self and other when they are not <strong>overlapped</strong></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; another <tt class="xref py py-class docutils literal"><span class="pre">annotated_bed</span></tt> object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean &#8211; &#8220;None&#8221; if overlapped.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">40975747</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">40975770</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">chr</span><span class="o">=</span><span class="s">&quot;chr13&quot;</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="mi">10003212</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="mi">10005400</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span><span class="o">&gt;</span><span class="n">b</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structure.annotated_bed.__str__">
+<tt class="descname">__str__</tt><big>(</big><big>)</big></dt>
+<dd><p>Use print function to output the cluster information (chr, start, end, type, name, subtype,cluster)</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="o">=</span><span class="s">&quot;chr13  40975747        40975770        +       ATTAAG...TGA    protein_coding  gcnt2   intron&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">=</span><span class="n">annotated_bed</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">Cluster</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">Update</span><span class="p">(</span><span class="mi">40975700</span><span class="p">,</span><span class="mi">40975800</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span>
+<span class="go">&quot;chr13  40975700        40975800        protein_coding  gcnt2   intron  3&quot;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="data_structure.annotated_bed.overlap">
+<tt class="descname">overlap</tt><big>(</big><em>other</em><big>)</big></dt>
+<dd><p>Find overlap between regions</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> &#8211; another <tt class="xref py py-class docutils literal"><span class="pre">annotated_bed</span></tt> object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rnastructure-class">
+<span id="rnafold"></span><h2>&#8220;RNAstructure&#8221; class</h2>
+<dl class="class">
+<dt id="RNAstructure.RNAstructure">
+<em class="property">class </em><tt class="descclassname">RNAstructure.</tt><tt class="descname">RNAstructure</tt><big>(</big><em>exe_path=None</em><big>)</big></dt>
+<dd><p>Interface class for <a class="reference external" href="http://rna.urmc.rochester.edu/RNAstructure.html">RNAstructure</a><span class="link-target"> [http://rna.urmc.rochester.edu/RNAstructure.html]</span> executable programs.</p>
+<dl class="method">
+<dt id="RNAstructure.RNAstructure.DuplexFold">
+<tt class="descname">DuplexFold</tt><big>(</big><em>seq1=None</em>, <em>seq2=None</em>, <em>dna=False</em><big>)</big></dt>
+<dd><p>Use &#8220;DuplexFold&#8221; program to calculate the minimum folding between two input sequences</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>seq1,seq2</strong> &#8211; two DNA/RNA sequences as string, or existing fasta file name</li>
+<li><strong>dna</strong> &#8211; boolean input. Specify then DNA parameters are to be used</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">minimum binding energy, (unit: kCal/Mol)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">RNAstructure</span> <span class="kn">import</span> <span class="n">RNAstructure</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RNA_prog</span> <span class="o">=</span> <span class="n">RNAstructure</span><span class="p">(</span><span class="n">exe_path</span><span class="o">=</span><span class="s">&quot;/home/yu68/Software/RNAstructure/exe/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq1</span> <span class="o">=</span> <span class="s">&quot;TAGACTGATCAGTAAGTCGGTA&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq2</span> <span class="o">=</span> <span class="s">&quot;GACTAGCTTAGGTAGGATAGTCAGTA&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">energy</span><span class="o">=</span><span class="n">RNA_prog</span><span class="o">.</span><span class="n">DuplexFold</span><span class="p">(</span><span class="n">seq1</span><span class="p">,</span><span class="n">seq2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">energy</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="RNAstructure.RNAstructure.Fold">
+<tt class="descname">Fold</tt><big>(</big><em>seq=None</em>, <em>ct_name=None</em>, <em>sso_file=None</em>, <em>Num=1</em><big>)</big></dt>
+<dd><p>Use &#8220;Fold&#8221; program to predict the secondary structure and output dot format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>seq</strong> &#8211; one DNA/RNA sequence as string, or existing fasta file name</li>
+<li><strong>ct_name</strong> &#8211; specify to output a ct file with this name, otherwise store in temp, default: None</li>
+<li><strong>sso_file</strong> &#8211; give a single strand offset file, format see <a class="reference external" href="http://rna.urmc.rochester.edu/Text/File_Formats.html#Offset">http://rna.urmc.rochester.edu/Text/File_Formats.html#Offset</a></li>
+<li><strong>Num</strong> &#8211; choose Num th predicted structure</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">dot format of RNA secondary structure and RNA sequence.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">RNAstructure</span> <span class="kn">import</span> <span class="n">RNAstructure</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RNA_prog</span> <span class="o">=</span> <span class="n">RNAstructure</span><span class="p">(</span><span class="n">exe_path</span><span class="o">=</span><span class="s">&quot;/home/yu68/Software/RNAstructure/exe/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq</span> <span class="o">=</span> <span class="s">&quot;AUAUAAUUAAAAAAUGCAACUACAAGUUCCGUGUUUCUGACUGUUAGUUAUUGAGUUAUU&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sequence</span><span class="p">,</span><span class="n">dot</span><span class="o">=</span><span class="n">RNA_prog</span><span class="o">.</span><span class="n">Fold</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span><span class="p">(</span><span class="n">seq</span><span class="o">==</span><span class="n">sequence</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="RNAstructure.RNAstructure.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>exe_path=None</em><big>)</big></dt>
+<dd><p>Initiation of object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>exe_path</strong> &#8211; the folder path of the RNAstructure executables</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">RNAstructure</span> <span class="kn">import</span> <span class="n">RNAstructure</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RNA_prog</span> <span class="o">=</span> <span class="n">RNAstructure</span><span class="p">(</span><span class="n">exe_path</span><span class="o">=</span><span class="s">&quot;/home/yu68/Software/RNAstructure/exe/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="RNAstructure.RNAstructure.scorer">
+<tt class="descname">scorer</tt><big>(</big><em>ct_name1</em>, <em>ct_name2</em><big>)</big></dt>
+<dd><p>Use &#8216;scorer&#8217; pogram to compare a predicted secondary structure to an accepted structure. It calculates two quality metrics, sensitivity and PPV</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ct_name1</strong> &#8211; The name of a CT file containing predicted structure data.</li>
+<li><strong>ct_name2</strong> &#8211; The name of a CT file containing accepted structure data, can only store one structure.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">sensitivity, PPV, number of the best predicted structure.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ct_name1</span> <span class="o">=</span> <span class="s">&quot;temp_prediction.ct&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ct_name2</span> <span class="o">=</span> <span class="s">&quot;temp_accept.ct&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">RNAstructure</span> <span class="kn">import</span> <span class="n">RNAstructure</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">RNA_prog</span> <span class="o">=</span> <span class="n">RNAstructure</span><span class="p">(</span><span class="n">exe_path</span><span class="o">=</span><span class="s">&quot;/home/yu68/Software/RNAstructure/exe/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sensitivity</span><span class="p">,</span> <span class="n">PPV</span><span class="p">,</span> <span class="n">Number</span> <span class="o">=</span> <span class="n">RNA_prog</span><span class="o">.</span><span class="n">scorer</span><span class="p">(</span><span class="n">ct_name1</span><span class="p">,</span><span class="n">ct_name2</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-RNAstructure"><span id="dot2block"></span></span><p>Interface class for <a class="reference external" href="http://rna.urmc.rochester.edu/RNAstructure.html">RNAstructure</a><span class="link-target"> [http://rna.urmc.rochester.edu/RNAstructure.html]</span> executable programs.</p>
+<dl class="function">
+<dt id="RNAstructure.dot2block">
+<tt class="descclassname">RNAstructure.</tt><tt class="descname">dot2block</tt><big>(</big><em>dot_string</em>, <em>name='Default'</em><big>)</big></dt>
+<dd><p>convert dot format of RNA secondary structure into several linked blocks</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dot_string</strong> &#8211; the dot format of RNA secondary structure</li>
+<li><strong>name</strong> &#8211; name of the RNA</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A list of all stems, each stem is a dictionary with &#8216;source&#8217; and &#8216;target&#8217;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">RNAstructure</span> <span class="kn">import</span> <span class="n">dot2block</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stems</span> <span class="o">=</span> <span class="n">dot2block</span><span class="p">(</span><span class="s">&quot;(((((...)))...(((...)))..))&quot;</span><span class="p">,</span><span class="s">&quot;RNA_X&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">stems</span>
+<span class="go">[{&#39;source&#39;: {&#39;start&#39;: 2, &#39;chr&#39;: &#39;test&#39;, &#39;end&#39;: 4}, &#39;target&#39;: {&#39;start&#39;: 8, &#39;chr&#39;: &#39;test&#39;, &#39;end&#39;: 10}}, {&#39;source&#39;: {&#39;start&#39;: 14, &#39;chr&#39;: &#39;test&#39;, &#39;end&#39;: 16}, &#39;target&#39;: {&#39;start&#39;: 20, &#39;chr&#39;: &#39;test&#39;, &#39;end&#39;: 22}}, {&#39;source&#39;: {&#39;start&#39;: 0, &#39;chr&#39;: &#39;test&#39;, &#39;end&#39;: 1}, &#39;target&#39;: {&#39;start&#39;: 25, &#39;chr&#39;: &#39;test&#39;, &#39;end&#39;: 26}}]    </span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+
+
+  
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'stitchseqtools'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2014, Zhong lab.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+
+
+
+<div id="editor-trap">
+      <h3>Edit this document!</h3>
+
+      <p>
+        This file can be edited directly through the Web. Anyone can
+        update and fix errors in this document with few clicks --
+        no downloads needed.
+      <p>
+
+      <ol>
+
+        <li>
+          Go to
+        <a href="https://github.com/yu68/RNA-Hi-C/blob/master/Other_api.rst">
+          Python APIs created for this project
+        </a> on GitHub.
+      </li>
+
+        <li>
+        <b>Edit</b> files using GitHub's text editor in your web browser (see the 'Edit' tab on the top right of the file)
+      </li>
+
+      <li>
+        Fill in the <b>Commit message</b> text box at the bottom of the page describing <i>why</i>
+        you made the changes. Press the <b>Propose file change</b> button next to it when done.
+      </li>
+
+      <li>
+        Then click <b>Send a pull request</b>.
+      </li>
+
+      <li>
+        Your changes are now queued for review under the project's <a href="https://github.com/yu68/RNA-Hi-C/pulls">Pull requests</a> tab on GitHub!
+      </li>
+      </ol>
+
+      <p>
+        For an introduction to the documentation format please see <a href="http://docutils.sourceforge.net/docs/user/rst/quickstart.html">the reST primer</a>.
+      </p>
+
+  </div>
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', ]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </body>
+</html>

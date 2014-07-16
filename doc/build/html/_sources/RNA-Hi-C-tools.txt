@@ -25,8 +25,8 @@ The RNA Hi-C method offers several advantages for mapping RNA-RNA interactions. 
 
   Download a copy of RNA-Hi-C-tools documentation:
 
-   * `PDF <http://systemsbio.ucsd.edu/RNA-Hi-C/_sources/Stitch-seq-tools.pdf>`_
-   * `Epub <https://media.readthedocs.org/epub/stitch-seq-tools/latest/stitch-seq-tools.epub>`_
+   * `PDF <http://systemsbio.ucsd.edu/RNA-Hi-C/_sources/RNA-HiC-tools.pdf>`_
+   * `Epub <http://systemsbio.ucsd.edu/RNA-Hi-C/epub/RNA-HiC-tools.epub>`_
 
 Installation
 ============

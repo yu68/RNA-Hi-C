@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Analysis pipeline &mdash; RNA-Hi-C-tools 0.3.2 documentation</title>
+  <title>Analysis pipeline &mdash; RNA-HiC-tools 0.3.2 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   
 
   
-    <link rel="top" title="RNA-Hi-C-tools 0.3.2 documentation" href="index.html"/>
+    <link rel="top" title="RNA-HiC-tools 0.3.2 documentation" href="index.html"/>
         <link rel="next" title="Visualization of local RNA-RNA interactions" href="Visualization.html"/>
         <link rel="prev" title="RNA-Hi-C-tools 0.3 documentation" href="RNA-Hi-C-tools.html"/>
 
@@ -53,7 +53,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-nav-search">
-        <a href="index.html" class="fa fa-home"> RNA-Hi-C-tools</a>
+        <a href="index.html" class="fa fa-home"> RNA-HiC-tools</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -127,7 +127,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="index.html">RNA-Hi-C-tools</a>
+        <a href="index.html">RNA-HiC-tools</a>
       </nav>
 
 
@@ -498,7 +498,7 @@ need Scipy for hypergeometric distribution</pre>
 </div>
 <p>The input of the script is the output of Step 5 (<tt class="docutils literal"><span class="pre">ACCT_fragment_paired_align.txt</span></tt> in the example). &#8220;annotated_bed&#8221; class is utilized in this script.</p>
 <p>Here is a example:</p>
-<div class="highlight-python"><pre>Select_strongInteraction.py -i ACCT_fragment_paired_align.txt -o ACCT_interaction_clusters.txt</pre>
+<div class="highlight-python"><pre>Select_strongInteraction_pp.py -i ACCT_fragment_paired_align.txt -o ACCT_interaction_clusters.txt</pre>
 </div>
 <p>The column description for output file <tt class="docutils literal"><span class="pre">ACCT_interaction_clusters.txt</span></tt> is:</p>
 <blockquote>
@@ -539,6 +539,40 @@ need Scipy for hypergeometric distribution</pre>
 </tr>
 <tr class="row-even"><td>16</td>
 <td>log(p-value) of the hypergeometric testing</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>We also have a set of scripts within the package to call strong interactions based on either clusters or RNA annotations, see the following table for detail:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="21%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Call interaction based on</th>
+<th class="head">Consider Left/Right</th>
+<th class="head">Script</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Clusters (interaction sites)</td>
+<td>Yes</td>
+<td>Select_strongInteraction_pp.py</td>
+</tr>
+<tr class="row-odd"><td>Clusters (interaction sites)</td>
+<td>No</td>
+<td>Select_strongInteraction_pp_noLeftRight.py</td>
+</tr>
+<tr class="row-even"><td>RNA annotations</td>
+<td>Yes</td>
+<td>Select_strongInteraction_RNA.py</td>
+</tr>
+<tr class="row-odd"><td>RNA annotations</td>
+<td>No</td>
+<td>Select_strongInteraction_RNA_noLeftRight.py</td>
 </tr>
 </tbody>
 </table>
@@ -733,7 +767,7 @@ CCAACGUGGACAACCCAGGAGGUCACUCUCCCUGGGCUCUGUCCUAGUGGCAUAGGGGAGCAUAGGCCUUGCCCAGUGAC
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2013, Pengfei Yu.
+        &copy; Copyright 2014, Zhong lab.
     </p>
   </div>
 

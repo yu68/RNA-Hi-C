@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Visualization of local RNA-RNA interactions</title>
+    
+    <link rel="stylesheet" href="_static/labibi.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+<script src="_static/labibi.js"></script>
+
+
+
+<!-- Google Analytics JS is disabled; set google_analytics_id -->
+
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Other_api.html" title="Python APIs created for this project"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Analysis_pipeline.html" title="Analysis pipeline"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">RNA-HiC-tools 0.3.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="visualization-of-local-rna-rna-interactions">
+<span id="visualizationlocal"></span><h1>Visualization of local RNA-RNA interactions</h1>
+<div class="section" id="prerequirement">
+<h2>Prerequirement</h2>
+<p>This program require python modules: xplib, matplotlib, numpy, bx-python</p>
+</div>
+<div class="section" id="run-the-program-to-generate-visualization">
+<span id="plotinteraction"></span><h2>Run the program to generate visualization</h2>
+<p id="index-0">The script &#8220;Plot_interaction.py&#8221; will be used for this purpose,</p>
+<div class="highlight-python"><pre>usage: Plot_interaction.py [-h] [-n N] [-s START [START ...]] [-d DISTANCE]
+                           [-g GENEBED] [-w PHYLOP_WIG] [-p PAIR_DIST] [-S]
+                           [-o OUTPUT]
+                           interaction linkedPair
+
+plot linked pairs around a given interaction. information of linked pairs are
+stored in file '*_fragment_paired_align.txt'
+
+positional arguments:
+  interaction           Interaction file from output of
+                        'Select_strongInteraction_pp.py'
+  linkedPair            file for information of linked pairs, which is output
+                        of 'Stitch-seq_Aligner.py'
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n N                  Choose region to plot, it can be a number (around n-th
+                        interaction in the interaction file). This is mutually
+                        exclusive with '-r' option
+  -r R [R ...]          Choose region to plot, give two interaction regions
+                        with format 'chr:start-end', this is mutually
+                        exclusive with '-n' option
+  -s START [START ...], --start START [START ...]
+                        start column number of the second region in
+                        interaction file and linkedPair file, default=(7,8)
+  -d DISTANCE, --distance DISTANCE
+                        the plus-minus distance (unit: kbp) flanking the
+                        interaction regions to be plotted, default=10
+  -g GENEBED, --genebed GENEBED
+                        the genebed file from Ensembl, default:
+                        ../Data/Ensembl_mm9.genebed
+  -w PHYLOP_WIG, --phyloP_wig PHYLOP_WIG
+                        the bigWig file for phyloP scores,defualt:
+                        mouse.phyloP30way.bw
+  -p PAIR_DIST, --pair_dist PAIR_DIST
+                        two interacted parts within this distance are
+                        considered as self-ligated and they are marked or
+                        eliminated (see option -s for slim mode), default:
+                        200bp
+  -S, --Slim            set slim mode to eliminate self ligated interactions
+  -o OUTPUT, --output OUTPUT
+                        output plot file, can be format of emf, eps, pdf, png,
+                        ps, raw, rgba, svg, svgz</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">linkedPair file is the output *_fragment_paired_align.txt from <a class="reference internal" href="Analysis_pipeline.html#step5"><em>Step5:Stitch-seq_Aligner.py</em></a> of the pipeline; Interaction txt file is the output of <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Step6:Select_strongInteraction_pp.py</em></a>.</p>
+</div>
+</div>
+<div class="section" id="example-of-result-graph">
+<h2>Example of result graph</h2>
+<p><em>Example code:</em></p>
+<div class="highlight-python"><pre>python Plot_interaction.py
+        ACCT_interaction_clusters_rmrRNA.txt \
+        ACCT_fragment_paired_align_rmRNA_sort.txt.gz \
+        -n 2412 \
+        -d 5 \
+        -o local_interaction.pdf</pre>
+</div>
+<p><em>Result figure:</em></p>
+<img alt="_images/local_interaction_malat1_ACCT.jpg" src="_images/local_interaction_malat1_ACCT.jpg" />
+<p><em>Explanation:</em></p>
+<ul>
+<li> The <font color="#4F81BD"> blue </font> blocks are clusters generated in <font color="#4F81BD"> R1 </font>. And the <font color="#C0504D"> red </font> blocks are clusters generated in <font color="#C0504D"> R2 </font>. </li>
+<li> the semi-transparent polygons connecting clusters in <font color="#4F81BD">R1</font> and <font color="#C0504D">R2</font> pools indicate different strong interactions between clusters. </li>
+<li>The lines connecting to regions are evidence of linkedPairs, where <font color="#00dd00"> green </font> lines are the ones with distance between two ends less than what specified in option '-p'. This implies self ligation. All others are colored black </li>
+</ul></div>
+</div>
+<div class="section" id="visualization-of-intra-rna-interactions-by-heatmap">
+<span id="visualizationheatmap"></span><h1>Visualization of intra-RNA interactions by heatmap</h1>
+<div class="section" id="id1">
+<h2>Prerequirement</h2>
+<p>This program require python modules: xplib, matplotlib, numpy</p>
+</div>
+<div class="section" id="run-the-program-to-generate-heatmap-for-interactions-within-rna-molecule">
+<h2>Run the program to generate heatmap for interactions within RNA molecule</h2>
+<p id="index-1">This program could generate an heatmap to show interactions between different regions within an RNA molecule which are spatially proximate to each other. We use the script &#8220;Plot_interaction_heatmap.py&#8221;</p>
+<div class="highlight-python"><pre>usage: Plot_interaction_heatmap.py [-h] [-n NAME] [-r R]
+                                   [-s START [START ...]] [-g GENEBED]
+                                   [-p PAIR_DIST] [-S] [-t STEP] [-I]
+                                   [-o OUTPUT]
+                                   interaction linkedPair
+
+plot interactions using a heatmap. information of linked pairs are stored in
+file '*_fragment_paired_align.txt'
+
+positional arguments:
+  interaction           Interaction file from output of
+                        'Select_strongInteraction_pp.py'
+  linkedPair            file for information of linked pairs, which is output
+                        of 'Stitch-seq_Aligner.py'
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -n NAME, --name NAME  give a gene name and plot the interaction heatmap new
+                        the gene region, exclusive with '-r' option
+  -r R                  Choose region to plot, give region with format 'chr
+                        :start-end', exclusive with '-n' option
+  -s START [START ...], --start START [START ...]
+                        start column number of the second region in
+                        interaction file and linkedPair file, default=(7,9)
+  -g GENEBED, --genebed GENEBED
+                        the genebed file from Ensembl, default:
+                        Ensembl_mm9.genebed
+  -p PAIR_DIST, --pair_dist PAIR_DIST
+                        two interacted parts within this distance are
+                        considered as self-ligated and they are marked or
+                        eliminated (see option -s for slim mode), default:
+                        1000bp
+  -S, --Slim            set slim mode to eliminate self ligated interactions
+  -t STEP, --step STEP  step or resolution or unit size of the heatmap,
+                        default=10bp
+  -I, --SI              Specify to add strong interaction in the
+                        figure,default: False
+  -o OUTPUT, --output OUTPUT
+                        output plot file, can be format of emf, eps, pdf, png,
+                        ps, raw, rgba, svg, svgz
+
+Require: xplib, matplotlib, numpy</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">linkedPair file is the output *_fragment_paired_align.txt from <a class="reference internal" href="Analysis_pipeline.html#step5"><em>Step5:Stitch-seq_Aligner.py</em></a> of the pipeline; Interaction txt file is the output of <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Step6:Select_strongInteraction_pp.py</em></a>. Users can use two different ways to give the region to be plotted. One is directly use the &#8216;-r&#8217; option to specify the region, another is to give a gene name and the script can find a larger region covering the gene region.</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>Example of result graph</h2>
+<p><em>Example code:</em></p>
+<div class="highlight-python"><pre>python Plot_interaction_heatmap.py
+        ACCT_GGCG_interaction_clusters.txt \
+        ACCT_GGCG_fragment_paired_align_rmRNA_sort.txt.gz \
+        -r chr9:120038418-120038722 \
+        -t 5 \
+        -s 7 9 \
+        -g ../Data/Ensembl_mm9.genebed.gz \
+        -o Snora73_intra_interaction.pdf</pre>
+</div>
+<p><em>Result figure:</em></p>
+<img alt="_images/Snora73_intra_interaction.jpg" src="_images/Snora73_intra_interaction.jpg" />
+<p><em>Explanation:</em></p>
+<p>The heatmap is basd on the log(count+1) of mapped linkage pairs across two windows with size [step]bp</p>
+</div>
+</div>
+<div class="section" id="visualization-of-global-rna-rna-interactome">
+<span id="visualizationglobal"></span><h1>Visualization of global RNA-RNA interactome</h1>
+<div class="section" id="id3">
+<h2>Prerequirement</h2>
+<p>This program is powered by <a class="reference external" href="http://cran.r-project.org/web/packages/RCircos/index.html">RCircos</a><span class="link-target"> [http://cran.r-project.org/web/packages/RCircos/index.html]</span>.</p>
+<p>Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):</p>
+<blockquote>
+<div><ul class="simple">
+<li>argparse, RCircos, biovizBase, rtracklayer</li>
+</ul>
+</div></blockquote>
+<p>The program also require a python script &#8220;bam2tab.py&#8221; (already in /bin/ folder) to call coverage from <a class="reference external" href="https://github.com/nimezhu/bam2x/blob/master/scripts/bed2tab.py">BAM2X</a><span class="link-target"> [https://github.com/nimezhu/bam2x/blob/master/scripts/bed2tab.py]</span></p>
+</div>
+<div class="section" id="id4">
+<h2>Run the program to generate visualization</h2>
+<p id="index-2">We will use the script &#8220;Plot_Circos.R&#8221; for this purpose.</p>
+<div class="highlight-python"><pre>usage: Plot_Circos.R [-h] [-g GENOME] [-b BIN] [-o OUTPUT]
+                   interaction part1 part2
+
+positional arguments:
+  interaction           the interaction file,[required]
+  part1                 aligned BAM file for part1,[required]
+  part2                 aligned BAM file for part2,[required]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -g GENOME, --genome GENOME
+                        genome information, choice: mm9/mm10/hg19 et.al.,
+                        [default: mm9]
+  -b BIN, --bin BIN     window size for the bins for coverage calling, [default: 100000.0]
+  -o OUTPUT, --output OUTPUT
+                        output pdf file name, [default: Interactome_view.pdf]</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">part1, part2 BAM files are the ones generated from <a class="reference internal" href="Analysis_pipeline.html#step5"><em>Step5:Stitch-seq_Aligner.py</em></a> of the pipeline; Interaction txt file is the output of <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Step6:Select_strongInteraction_pp.py</em></a>.</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>Example of result graph</h2>
+<p><em>Example code:</em></p>
+<div class="highlight-python"><pre>Rscript Plot_Circos.R GGCG_interaction_clusters.txt
+  sort_Paired1_fragment_GGCG.bam sort_Paired2_fragment_GGCG.bam
+  -b 100000 -o Interactome_GGCG.pdf</pre>
+</div>
+<p><em>Result figure:</em></p>
+<img alt="_images/GGCG-MEF_interactome.jpg" src="_images/GGCG-MEF_interactome.jpg" />
+<p><em>Explanation:</em></p>
+<ul>
+<li>The <font color="#763a7a"> purple </font>track right inside chromatin cytoband ideogram is the coverage of part1 (the first genomic regions connected with linker sequences) of this sample.</li>
+<li>The <font color="#0288ad"> light blue </font>track next is the coverage of part2 (the other genomic regions connected with linkers). </li>
+<li>The inner links are the strong interactions after removing rRNA. colors represent different types of interactions and the transparency represents the confidence of the interaction (the ones with lower p-values are stronger) </li>
+</ul></div>
+</div>
+<div class="section" id="visualization-of-interaction-types-enrichment">
+<span id="visualizationenrich"></span><h1>Visualization of interaction types enrichment</h1>
+<div class="section" id="id6">
+<h2>Prerequirement</h2>
+<p>Required R packages (our program will check for the presence of these packages and install/load them automatically if not present):</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;argparse&#8221;,&#8221;ggplot2&#8221;,&#8221;scales&#8221;</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions">
+<h2>Run the program to generate visualization for enrichment of different types of interactions</h2>
+<p id="index-3">We will use the script &#8220;Interaction_type_enrichment.R&#8221; for this purpose.</p>
+<div class="highlight-python"><pre>usage: ../../bin/Interaction_type_enrichment.R [-h] [-n NUM [NUM ...]]
+                                                [-o OUTPUT]
+                                                interaction
+
+ plot the statistical significance for enrichment of different interaction
+ types
+
+ positional arguments:
+   interaction           the strong interaction file,[required]
+
+ optional arguments:
+   -h, --help            show this help message and exit
+   -n NUM [NUM ...], --num NUM [NUM ...]
+                         Column numbers for the type name in two part,[default:
+                         [4, 11]]
+   -o OUTPUT, --output OUTPUT
+                         output pdf figure file, [default:
+                         interaction_type.pdf]</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Interaction txt file is the output of <a class="reference internal" href="Analysis_pipeline.html#step6"><em>Step6:Select_strongInteraction_pp.py</em></a>.</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>Example of result graph</h2>
+<p><em>Example code:</em></p>
+<div class="highlight-python"><pre>Rscript Interaction_type_enrichment.R ACCT_interaction_clusters.txt
+  -n 4 11 -o ACCT_interaction_type.pdf</pre>
+</div>
+<p><em>Result figure:</em></p>
+<img alt="_images/ES1_interaction_type.jpg" src="_images/ES1_interaction_type.jpg" />
+<p><em>Explanation:</em></p>
+<p>For each interaction types (Type1_in_Part1&lt;-&gt;Type2_in_Part2), we calculated the number of Type1 in Part1 from all intereactions <tt class="docutils literal"><span class="pre">n1</span></tt> and number of Type2 in Part2 from all interactions <tt class="docutils literal"><span class="pre">n2</span></tt>. Then we calculate the number of interactions with this type: Type1_in_Part1&lt;-&gt;Type2_in_Part2 <tt class="docutils literal"><span class="pre">n12</span></tt>. The p-value for each interacction type is calculated based on the hypergeometric distribution with R command: <tt class="docutils literal"><span class="pre">phyper(n12,</span> <span class="pre">n1,</span> <span class="pre">total_n</span> <span class="pre">-</span> <span class="pre">n1,</span> <span class="pre">n2,</span> <span class="pre">lower.tail=F)</span></tt>. Here <tt class="docutils literal"><span class="pre">total_n</span></tt> is the total number of strong interactions. The color for each cell (each interaction type) are coded based on the value of &#8220;-ln(p-value)&#8221;.</p>
+</div>
+</div>
+
+
+
+
+  
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'stitchseqtools'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2014, Zhong lab.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+
+
+
+<div id="editor-trap">
+      <h3>Edit this document!</h3>
+
+      <p>
+        This file can be edited directly through the Web. Anyone can
+        update and fix errors in this document with few clicks --
+        no downloads needed.
+      <p>
+
+      <ol>
+
+        <li>
+          Go to
+        <a href="https://github.com/yu68/RNA-Hi-C/blob/master/Visualization.rst">
+          Visualization of local RNA-RNA interactions
+        </a> on GitHub.
+      </li>
+
+        <li>
+        <b>Edit</b> files using GitHub's text editor in your web browser (see the 'Edit' tab on the top right of the file)
+      </li>
+
+      <li>
+        Fill in the <b>Commit message</b> text box at the bottom of the page describing <i>why</i>
+        you made the changes. Press the <b>Propose file change</b> button next to it when done.
+      </li>
+
+      <li>
+        Then click <b>Send a pull request</b>.
+      </li>
+
+      <li>
+        Your changes are now queued for review under the project's <a href="https://github.com/yu68/RNA-Hi-C/pulls">Pull requests</a> tab on GitHub!
+      </li>
+      </ol>
+
+      <p>
+        For an introduction to the documentation format please see <a href="http://docutils.sourceforge.net/docs/user/rst/quickstart.html">the reST primer</a>.
+      </p>
+
+  </div>
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', ]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </body>
+</html>

@@ -365,7 +365,7 @@ The input of the script is the output of Step 5 (``ACCT_fragment_paired_align.tx
 
 Here is a example: ::
 
-  Select_strongInteraction.py -i ACCT_fragment_paired_align.txt -o ACCT_interaction_clusters.txt
+  Select_strongInteraction_pp.py -i ACCT_fragment_paired_align.txt -o ACCT_interaction_clusters.txt
 
 The column description for output file ``ACCT_interaction_clusters.txt`` is:
 
@@ -382,6 +382,18 @@ The column description for output file ``ACCT_interaction_clusters.txt`` is:
     15           # of interactions between these two clusters
     16           log(p-value) of the hypergeometric testing
   =========  =====================================
+
+We also have a set of scripts within the package to call strong interactions based on either clusters or RNA annotations, see the following table for detail:
+
+  ============================  ===================  ===============
+  Call interaction based on     Consider Left/Right  Script
+  ============================  ===================  ===============
+  Clusters (interaction sites)  Yes                  Select_strongInteraction_pp.py
+  Clusters (interaction sites)  No                   Select_strongInteraction_pp_noLeftRight.py
+  RNA annotations               Yes                  Select_strongInteraction_RNA.py
+  RNA annotations               No                   Select_strongInteraction_RNA_noLeftRight.py
+  ============================  ===================  ===============
+
 
 .. _step7:
 

@@ -1,0 +1,67 @@
+\begin{theindex}
+\def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
+
+  \bigletter {Symbols}
+  \item \_\_init\_\_() (RNAstructure.RNAstructure method), \hyperpage{36}
+  \item \_\_init\_\_() (data\_structure.annotated\_bed method), \hyperpage{35}
+  \item \_\_lt\_\_() (data\_structure.annotated\_bed method), \hyperpage{35}
+  \item \_\_str\_\_() (data\_structure.annotated\_bed method), \hyperpage{35}
+
+  \indexspace
+  \bigletter A
+  \item annotated\_bed (class in data\_structure), \hyperpage{34}
+  \item Annotation (module), \hyperpage{33}
+  \item annotation() (in module Annotation), \hyperpage{33}
+
+  \indexspace
+  \bigletter C
+  \item Cluster() (data\_structure.annotated\_bed method), \hyperpage{34}
+
+  \indexspace
+  \bigletter D
+  \item dot2block() (in module RNAstructure), \hyperpage{37}
+  \item DuplexFold() (RNAstructure.RNAstructure method), \hyperpage{35}
+
+  \indexspace
+  \bigletter F
+  \item Fold() (RNAstructure.RNAstructure method), \hyperpage{36}
+
+  \indexspace
+  \bigletter I
+  \item Interaction\_type\_enrichment.R, \hyperpage{31}
+  \item intersectInteraction.py, \hyperpage{17}
+  \item intersectInteraction\_genePair.R, \hyperpage{17}
+
+  \indexspace
+  \bigletter O
+  \item overlap() (data\_structure.annotated\_bed method), \hyperpage{35}
+  \item overlap() (in module Annotation), \hyperpage{33}
+
+  \indexspace
+  \bigletter P
+  \item Plot\_Circos.R, \hyperpage{29}
+  \item Plot\_interaction.py, \hyperpage{23}
+  \item Plot\_interaction\_heatmap.py, \hyperpage{25}
+
+  \indexspace
+  \bigletter R
+  \item recoverFragment, \hyperpage{10}
+  \item remove\_dup\_PE.py, \hyperpage{9}
+  \item RNA\_structure\_prediction.py, \hyperpage{18}
+  \item RNAstructure (class in RNAstructure), \hyperpage{35}
+  \item RNAstructure (module), \hyperpage{37}
+
+  \indexspace
+  \bigletter S
+  \item scorer() (RNAstructure.RNAstructure method), \hyperpage{36}
+  \item Select\_strongInteraction\_pp.py, \hyperpage{15}
+  \item split\_library\_pairend.py, \hyperpage{9}
+  \item split\_partner.py, \hyperpage{12}
+  \item Stitch-seq\_Aligner.py, \hyperpage{14}
+  \item Subtype() (in module Annotation), \hyperpage{33}
+
+  \indexspace
+  \bigletter U
+  \item Update() (data\_structure.annotated\_bed method), \hyperpage{34}
+
+\end{theindex}

@@ -61,8 +61,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'RNA-Hi-C-tools'
-copyright = u'2013, Pengfei Yu'
+project = u'RNA-HiC-tools'
+copyright = u'2014, Zhong lab'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -195,7 +195,7 @@ html_style = 'labibi.css'
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'RNA-Hi-C-toolsdoc'
+htmlhelp_basename = 'RNA-HiC-tools-doc'
 
 ##
 # Various settings to pass to templates:
@@ -224,8 +224,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Stitch-seq-tools.tex', u'RNA-Hi-C-tools Documentation',
-   u'Pengfei Yu', 'manual'),
+  ('index', 'RNA-HiC-tools.tex', u'RNA-HiC-tools Documentation',
+   u'Zhong lab', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -254,8 +254,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'stitch-seq-tools', u'Stitch-seq-tools Documentation',
-     [u'Pengfei Yu'], 1)
+    ('index', 'RNA-HiC-tools', u'RNA-HiC-tools Documentation',
+     [u'Zhong lab'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -268,8 +268,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'Stitch-seq-tools', u'Stitch-seq-tools Documentation',
-   u'Pengfei Yu', 'Stitch-seq-tools', 'One line description of project.',
+  ('index', 'RNA-HiC-tools', u'RNA-HiC-tools Documentation',
+   u'Zhong lab', 'RNA-HiC-tools', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -290,9 +290,9 @@ texinfo_documents = [
 
 # Bibliographic Dublin Core info.
 epub_title = u'RNA-Hi-C-tools'
-epub_author = u'Pengfei Yu'
-epub_publisher = u'Pengfei Yu'
-epub_copyright = u'2013, Pengfei Yu'
+epub_author = u'Zhong lab'
+epub_publisher = u'Zhong lab'
+epub_copyright = u'2014, Zhong lab'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

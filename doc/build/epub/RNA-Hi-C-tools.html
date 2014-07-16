@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>RNA-Hi-C-tools 0.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/labibi.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+<script src="_static/labibi.js"></script>
+
+
+
+<!-- Google Analytics JS is disabled; set google_analytics_id -->
+
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Analysis_pipeline.html" title="Analysis pipeline"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to RNA Hi-C tools’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">RNA-HiC-tools 0.3.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="rna-hi-c-tools-version-documentation">
+<h1>RNA-Hi-C-tools 0.3 documentation</h1>
+<div class="section" id="overview">
+<h2>Overview</h2>
+<p><strong>RNA-Hi-C-tools</strong> is a set of bioinformatic tools for analysis of a novel DNA sequencing based technology to detect RNA-RNA interactome and RNA-chromatin interactome (RNA-chromatin interactome is coming soon).</p>
+<p>RNA-HiC-tools automated all the analysis steps, including removing PCR duplicates, splitting multiplexed samples, identifying the linker sequence, splitting junction reads, calling interacting RNAs, statistical assessments, categorizing RNA interaction types, calling interacting sites, and RNA structure analysis, as well as visualization tools for the RNA interactome (<a class="reference internal" href="Visualization.html#visualizationglobal"><em>Visualization of global interactome</em></a>) and the proximal sites within an RNA (<a class="reference internal" href="Visualization.html#visualizationheatmap"><em>Heatmap for Intra-RNA interactions</em></a>).</p>
+<p>Below is a illustration for the experimental design of this new technology. This procedure crosslinks RNAs with their bound proteins, and ligates the RNAs co-bound by the same protein into a chimeric RNA. The chimeric RNA is interspersed by a predesigned biotinylated RNA linker, in the form of RNA1-Linker-RNA2. These linker-containing chimeric RNAs are selected by streptavidin and then subjected to pair-end sequencing</p>
+<img alt="_images/exp.jpg" class="align-center" src="_images/exp.jpg" />
+<p>The RNA Hi-C method offers several advantages for mapping RNA-RNA interactions. First, the one-to-one pairing of interacting RNAs is experimentally captured. Second, by using the biotinylated linker as a selection marker, it circumvents the requirement for either a protein-specific antibody or expressing a tagged protein, allowing for an as unbiased mapping of the entire RNA interactome as possible. Third, false positive interactions, produced by ligation of random RNAs that happened to be proximal in space, are minimized by performing RNA ligation on streptavidin beads in a dilute condition. Fourth, the predesigned RNA linker provides a clear boundary to split any sequencing read that spans across the ligation spot, thus avoids ambiguities in mapping the sequencing reads. Fifth, RNA Hi-C directly analyzes the endogenous cellular condition without introducing any exogenous nucleotides or protein-coding genes before crosslinking. Sixth, potential PCR amplification biases were removed by attaching a random 6nt barcode to each chimeric RNA before PCR amplification, where the completely overlapping sequencing reads with identical barcodes are counted only once.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p>Offline documentation.</p>
+<p>Download a copy of RNA-Hi-C-tools documentation:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/_sources/RNA-HiC-tools.pdf">PDF</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/_sources/RNA-HiC-tools.pdf]</span></li>
+<li><a class="reference external" href="https://media.readthedocs.org/epub/stitch-seq-tools/latest/stitch-seq-tools.epub">Epub</a><span class="link-target"> [https://media.readthedocs.org/epub/stitch-seq-tools/latest/stitch-seq-tools.epub]</span></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="installation">
+<h2>Installation</h2>
+<div class="section" id="step-1-install-the-dependent-prerequisites">
+<h3>step 1: Install the dependent prerequisites:</h3>
+<ol class="arabic simple">
+<li>Python libraries [for python 2.x]:</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://biopython.org/wiki/Main_Page">Biopython</a><span class="link-target"> [http://biopython.org/wiki/Main_Page]</span></li>
+<li><a class="reference external" href="https://code.google.com/p/pysam/">Pysam</a><span class="link-target"> [https://code.google.com/p/pysam/]</span></li>
+<li><a class="reference external" href="http://bam2xwiki.appspot.com/Welcome">BAM2X</a><span class="link-target"> [http://bam2xwiki.appspot.com/Welcome]</span></li>
+<li><a class="reference external" href="http://www.numpy.org/">Numpy</a><span class="link-target"> [http://www.numpy.org/]</span>, <a class="reference external" href="http://www.scipy.org/scipylib/index.html">Scipy</a><span class="link-target"> [http://www.scipy.org/scipylib/index.html]</span></li>
+<li><a class="reference external" href="http://www.parallelpython.com/">Parallel python</a><span class="link-target"> [http://www.parallelpython.com/]</span> (Only for <tt class="docutils literal"><span class="pre">Select_strongInteraction_pp.py</span></tt>)</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>The <a class="reference external" href="http://www.boost.org/doc/libs/1_54_0/libs/python/doc/index.html">Boost.Python</a><span class="link-target"> [http://www.boost.org/doc/libs/1_54_0/libs/python/doc/index.html]</span> C++ library</li>
+<li>Other softwares needed:</li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://bowtie-bio.sourceforge.net/index.shtml">Bowtie</a><span class="link-target"> [http://bowtie-bio.sourceforge.net/index.shtml]</span> (or Bowtie 2 if you set Bowtie2 option in <tt class="docutils literal"><span class="pre">Stitch-seq_Aligner.py</span></tt>)</li>
+<li><a class="reference external" href="http://samtools.sourceforge.net/">samtools</a><span class="link-target"> [http://samtools.sourceforge.net/]</span></li>
+<li><a class="reference external" href="ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/">NCBI blast+</a><span class="link-target"> [ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/]</span> (use blastn)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="step-2-download-the-package">
+<h3>Step 2: Download the package</h3>
+<p>Clone the package from GitHub:</p>
+<div class="highlight-python"><pre>git clone http://github.com/yu68/RNA-Hi-C.git</pre>
+</div>
+</div>
+<div class="section" id="step-3-add-library-source-to-your-python-path">
+<h3>Step 3: Add library source to your python path</h3>
+<p>Add these lines into your ~/.bash_profile or ~/.profile</p>
+<div class="highlight-python"><pre>Location="/path/of/RNA-Hi-C-tools" # change accordingly
+export PYTHONPATH="$Location/src:$PYTHONPATH"
+export PATH="$PATH:$Location/bin"
+Loc_lib="/path/of/boost_1_xx_0/lib/"  # change accordingly
+export LD_LIBRARY_PATH="$Loc_lib:$LD_LIBRARY_PATH"</pre>
+</div>
+</div>
+</div>
+<div class="section" id="support">
+<h2>Support</h2>
+<p>For issues related to the use of RNA-Hi-C-tools, or if you want to <strong>report a bug or request a feature</strong>, please contact Pengfei Yu &lt;p3yu at ucsd dot edu&gt;</p>
+</div>
+</div>
+
+
+
+
+  
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'stitchseqtools'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2014, Zhong lab.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+
+
+
+<div id="editor-trap">
+      <h3>Edit this document!</h3>
+
+      <p>
+        This file can be edited directly through the Web. Anyone can
+        update and fix errors in this document with few clicks --
+        no downloads needed.
+      <p>
+
+      <ol>
+
+        <li>
+          Go to
+        <a href="https://github.com/yu68/RNA-Hi-C/blob/master/RNA-Hi-C-tools.rst">
+          RNA-Hi-C-tools 0.3 documentation
+        </a> on GitHub.
+      </li>
+
+        <li>
+        <b>Edit</b> files using GitHub's text editor in your web browser (see the 'Edit' tab on the top right of the file)
+      </li>
+
+      <li>
+        Fill in the <b>Commit message</b> text box at the bottom of the page describing <i>why</i>
+        you made the changes. Press the <b>Propose file change</b> button next to it when done.
+      </li>
+
+      <li>
+        Then click <b>Send a pull request</b>.
+      </li>
+
+      <li>
+        Your changes are now queued for review under the project's <a href="https://github.com/yu68/RNA-Hi-C/pulls">Pull requests</a> tab on GitHub!
+      </li>
+      </ol>
+
+      <p>
+        For an introduction to the documentation format please see <a href="http://docutils.sourceforge.net/docs/user/rst/quickstart.html">the reST primer</a>.
+      </p>
+
+  </div>
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', ]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </body>
+</html>

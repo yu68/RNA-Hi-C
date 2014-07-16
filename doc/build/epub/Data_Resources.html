@@ -1,0 +1,468 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Resources of strong interactions from two mouse cell types</title>
+    
+    <link rel="stylesheet" href="_static/labibi.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+<script src="_static/labibi.js"></script>
+
+
+
+<!-- Google Analytics JS is disabled; set google_analytics_id -->
+
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Other_api.html" title="Python APIs created for this project"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">RNA-HiC-tools 0.3.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="resources-of-strong-interactions-from-two-mouse-cell-types">
+<span id="resource"></span><h1>Resources of strong interactions from two mouse cell types</h1>
+<div class="section" id="description-of-different-samples">
+<h2>Description of different samples</h2>
+<div class="section" id="e14-1">
+<h3>E14-1</h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Cell line:</th><td class="field-body">ESC E14</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Barcode:</th><td class="field-body">ACCT</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Experimental Details:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Actively growing E14 cells were UV irradiated (254 nm) at 200mJ/cm
+to crosslink proteins to interacting RNAs. After cell lysis, we trim down RNAs into
+1000-2000 nt using RNase I and remove DNA by TURBO DNase. To recover RNAs bound to
+RNA-binding proteins, we biotin-labeled them with EZ-Link Iodoacetyl-PEG2-Biotin from
+Pierce. RNA-protein complexes were next immobilized on Streptavidin-coated beads. The
+beads are then saturated with free biotin, preventing it from interfering with following
+ligation with biotin-tagged linker. A biotin-tagged RNA linker was ligated to the 5’-end
+of immobilized RNAs. Proximity ligation was then carried out under diluted conditions
+while the RNA-protein complexes are still bound on bead. After RNA purification by
+Proteinase K and phenol-chloroform extraction, we specifically removed the unligated
+biotin by first anneal a complementary DNA oligo to the biotin-tagged linker by using
+the annealing protocol: 70oC for 5 min, 25oC for 20 min, T7 Exo for 30 min. Exonuclease
+T7 was added to remove terminal unligated biotin at the double-stranded RNAlinker-DNAoligo
+hybrid. T7 Exonuclease acts in the 5&#8217; to 3&#8217; direction, catalyzing the removal of 5&#8217;
+mononucleotides from duplex DNA and RNA/DNA hybrids in the 5’ to 3’ direction. The resulted
+RNAs were fragmented again into ~200 nt using RNase III RNA Fragmentation Module from NEB
+(1ul of RNase III in 6 min at 37C). The RNAs were purified by column and ligated with
+sequencing adapter, then reverse-transcribed and PCR for library construction. We applied
+an rRNA removal step after constructing cDNA by using an rRNA removal protocol based on
+the Duplex-Specific thermostable nuclease (DSN) enzyme using the protocol recommended by
+<a class="reference external" href="http://supportres.illumina.com/documents/myillumina/7836bd3e-3358-4834-b2f7-80f80acb4e3f/dsn_normalization_sampleprep_application_note_15014673_c.pdf">Illumina</a><span class="link-target"> [http://supportres.illumina.com/documents/myillumina/7836bd3e-3358-4834-b2f7-80f80acb4e3f/dsn_normalization_sampleprep_application_note_15014673_c.pdf]</span>.
+The constructed cDNAs were quality-checked by Bioanalyzer. The cDNAs were next
+subjected paired-end sequencing on HiSeq-2500 platform.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Linker:</th><td class="field-body"><em>mL5</em>: 5&#8217; - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="e14-2">
+<h3>E14-2</h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Cell line:</th><td class="field-body">ESC E14</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Barcode:</th><td class="field-body">GGCG</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Experimental Details:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Same as E14_WP_1 but this time rRNA removal was performed right after
+Proteinase K and phenol-chloroform treatment using the GeneRead rRNA Depletion Kit by
+Qiagen. Furthermore, the annealing of RNA linker and complementary DNA oligo was changed
+into: denature for 90 s at 90°C, and then anneal at -0.1°C/s to 25 °C and then incubate
+for 25 min at 25 °C. Since after rRNA depletion the amount of RNA remained was less than
+that obtained from E14 #1, we reduced the duration of RNA fragmentation by RNase III from
+6 min to 3 min. However, this reduction in RNase III treatment led to large fragments than
+desirable.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Linker:</th><td class="field-body"><em>mL5</em>: 5&#8217; - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="e14-indirect">
+<h3>E14-indirect</h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Cell line:</th><td class="field-body"><p class="first">ESC E14</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Barcode:</th><td class="field-body"><p class="first">AATG</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Experimental Details:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><p class="first">To detect interactions between RNAs that are not bound to the same protein
+but to interacting proteins, we used formaldehyde in conjunction with a second crosslinker, EGS.
+The combination of formaldehyde and EGS crosslinks both RNA-protein and protein-protein
+interactions thereby maximize the detection of RNA-RNA interactions that are facilitated by
+interacting proteins. Actively grown E14 cells was crosslinked with 1.5 mM of freshly prepared
+EthylGlycol bis(SuccinimidylSuccinate) (EGS)) for 45 minutes at room temperature and then 1% of
+formaldehyde for 10 minutes also at room temperature. Since crosslinking by formaldehyde makes
+the cells very rigid and less amenable to be broken down lysis buffer. Therefore, we utilized
+sonication to fragment the protein-bound RNA into ~1000 nt size range. The remaining steps were
+performed similarly to E14_WP_2.</p>
+<p>Another main difference between this sample and other samples is that we didn&#8217;t remove the nuclei,
+thus effectively including RNA-RNA interactions inside the nucleus into the sample. In other
+samples, only the cytoplasm was enriched.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Linker:</th><td class="field-body"><p class="first last"><em>mL5</em>: 5&#8217; - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3&#8217;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="mef">
+<h3>MEF</h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Cell line:</th><td class="field-body">MEF</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Barcode:</th><td class="field-body">GGCG</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Experimental Details:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">We irradiated actively grown 1E8 MEF cells (254 nm). This time, the RNAs
+were fragmented into 300nt size range. RNase III fragmentation was also modified accordingly
+to adjust for smaller amount of RNAs: instead of adding 1ul of RNase III, we added only 0.5uL
+of RNase III and then incubated at 37C for 5 min. The subsequent steps were performed using
+the same procedure as E14_WP_2.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Linker:</th><td class="field-body"><em>mL5</em>: 5&#8217; - rCrUrA rG/iBiodT/rA rGrCrC rCrArU rGrCrA rArUrG rCrGrA rGrGrA - 3&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="resources-of-strong-interactions">
+<h2>Resources of Strong Interactions</h2>
+<div class="section" id="from-merged-data-of-e14-1-and-e14-2">
+<h3>From merged data of E14-1 and E14-2:</h3>
+<div class="section" id="strong-interactions-based-on-clustering-of-genomic-locations">
+<h4>Strong interactions based on clustering of genomic locations</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Genome:</th><td class="field-body"><p class="first">mm9</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Explanation:</th><td class="field-body"><ul class="first last simple">
+<li>First seven column is for information of cluster in Part1 of interaction (5&#8217;side of linker); second seven column is for information of cluster in Part2 of interaction (3&#8217;side of linker)</li>
+<li><strong>Type</strong>: RNA types or repeat types; <strong>Name</strong>: RNA or repeat names; <strong>Subtype</strong>: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; <strong>Count</strong>: number of supported reads in that cluster</li>
+<li>Second last column is the number of mapped pairs that support this interaction.</li>
+<li>Last column is the &#8220;ln(p_value)&#8221; for the significance of interaction. P_value is based on a hypergeometric test</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters.xlsx">Strong interactions (ES_UV)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters.xlsx]</span> (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_cluster_total_sort.xlsx">List of clusters (ES_UV)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_cluster_total_sort.xlsx]</span> (Removing rRNA/rRNA_repeats)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_noLeftRight.xlsx">Strong interactions noLeftRight (ES_UV)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_noLeftRight.xlsx]</span> (Clusters are generated by merging RNA1 and RNA2, The directions of RNA1 and RNA2 are ignored)</p>
+</div>
+<div class="section" id="strong-interactions-based-on-annotation-of-rnas">
+<h4>Strong interactions based on annotation of RNAs</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Genome:</th><td class="field-body"><p class="first">mm9</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Explanation:</th><td class="field-body"><ul class="first last simple">
+<li>First six column is for information of RNA in Part1 of interaction (5&#8217;side of linker); second six column is for information of RNA in Part2 of interaction (3&#8217;side of linker)</li>
+<li><strong>Type</strong>: RNA or repeat types; <strong>Name</strong>: RNA or repeat names; <strong>Count</strong>: number of supported reads in that RNA</li>
+<li>Second last column is the number of mapped pairs that support this interaction.</li>
+<li>Last column is the &#8220;ln(p_value)&#8221; for the significance of interaction. P_value is based on a hypergeometric test</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_RNA.xlsx">Strong interactions RNA (ES_UV)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_RNA.xlsx]</span></p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_RNA_noLeftRight.xlsx">Strong interactions RNA noLeftRight (ES_UV)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_RNA_noLeftRight.xlsx]</span> (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted)</p>
+</div>
+<div class="section" id="strong-interactions-based-on-annotation-of-rnas-fdr-and-using-es-indirect-as-control">
+<span id="sifdr"></span><h4>Strong interactions based on annotation of RNAs (FDR and using ES-indirect as control)</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Genome:</th><td class="field-body"><p class="first">mm9</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Explanation:</th><td class="field-body"><ul class="first last simple">
+<li>First six column is for information of RNA in Part1 of interaction (5&#8217;side of linker); second six column is for information of RNA in Part2 of interaction (3&#8217;side of linker)</li>
+<li><strong>Type</strong>: RNA or repeat types; <strong>Name</strong>: RNA or repeat names; <strong>Count</strong>: number of supported reads in that RNA</li>
+<li>Column 15 is the number of mapped pairs that support this interaction.</li>
+<li>Column 16 is the &#8220;ln(p_value)&#8221; for the significance of interaction. P_value is based on a hypergeometric test, column 17 is p-value</li>
+<li>Column 18 is the FDR. FDR is calculated using the Benjamini–Hochberg procedure</li>
+<li>Column 19 is the fold change between merged data of ES14-1 and ES14-2 and dual crosslink data. The fold change is the ratio (# of interaction in merged data + 0.5)/(# of interaction in dual crosslink data + 0.5)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_cluster_noLeftRight_RNA_DualCrosslinkControl_significant.xlsx">Strong interactions RNA noLeftRight FDR and using ES-indirect as control (ES_UV)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_cluster_noLeftRight_RNA_DualCrosslinkControl_significant.xlsx]</span> (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted, using FDR cutoff and using ES-indirect as control)</p>
+</div>
+</div>
+<div class="section" id="from-e14-indirect-dual-crosslinking">
+<h3>From E14-indirect dual crosslinking:</h3>
+<div class="section" id="id1">
+<h4>Strong interactions based on clustering of genomic locations</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Genome:</th><td class="field-body"><p class="first">mm9</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Explanation:</th><td class="field-body"><ul class="first last simple">
+<li>First seven column is for information of cluster in Part1 of interaction (5&#8217;side of linker); second seven column is for information of cluster in Part2 of interaction (3&#8217;side of linker)</li>
+<li><strong>Type</strong>: RNA types or repeat types; <strong>Name</strong>: RNA or repeat names; <strong>Subtype</strong>: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; <strong>Count</strong>: number of supported reads in that cluster</li>
+<li>Second last column is the number of mapped pairs that support this interaction.</li>
+<li>Last column is the &#8220;ln(p_value)&#8221; for the significance of interaction. P_value is based on a hypergeometric test</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters.xlsx">Strong interactions (ES_indirect)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters.xlsx]</span> (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_cluster_total_sort.xlsx">List of clusters (ES_indirect)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_cluster_total_sort.xlsx]</span> (Removing rRNA/rRNA_repeats)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_noLeftRight.xlsx">Strong interactions noLeftRight (ES_indirect)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_noLeftRight.xlsx]</span> (Clusters are generated by merging RNA1 and RNA2, The directions of RNA1 and RNA2 are ignored)</p>
+</div>
+<div class="section" id="id2">
+<h4>Strong interactions based on annotation of RNAs</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Genome:</th><td class="field-body"><p class="first">mm9</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Explanation:</th><td class="field-body"><ul class="first last simple">
+<li>First six column is for information of RNA in Part1 of interaction (5&#8217;side of linker); second six column is for information of RNA in Part2 of interaction (3&#8217;side of linker)</li>
+<li><strong>Type</strong>: RNA or repeat types; <strong>Name</strong>: RNA or repeat names; <strong>Count</strong>: number of supported reads in that RNA</li>
+<li>Second last column is the number of mapped pairs that support this interaction.</li>
+<li>Last column is the &#8220;ln(p_value)&#8221; for the significance of interaction. P_value is based on a hypergeometric test</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_RNA.xlsx">Strong interactions RNA (ES_indirect)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_RNA.xlsx]</span></p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_RNA_noLeftRight.xlsx">Strong interactions RNA noLeftRight (ES_indirect)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_RNA_noLeftRight.xlsx]</span> (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted)</p>
+</div>
+</div>
+<div class="section" id="from-mef-sample">
+<h3>From MEF sample:</h3>
+<div class="section" id="id3">
+<h4>Strong interactions based on clustering of genomic locations</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Genome:</th><td class="field-body"><p class="first">mm9</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Explanation:</th><td class="field-body"><ul class="first last simple">
+<li>First seven column is for information of cluster in Part1 of interaction (5&#8217;side of linker); second seven column is for information of cluster in Part2 of interaction (3&#8217;side of linker)</li>
+<li><strong>Type</strong>: RNA types or repeat types; <strong>Name</strong>: RNA or repeat names; <strong>Subtype</strong>: intron/utr3/utr5/exon for mRNA, intron/utr for lincRNA or repeat family; <strong>Count</strong>: number of supported reads in that cluster</li>
+<li>Second last column is the number of mapped pairs that support this interaction.</li>
+<li>Last column is the &#8220;ln(p_value)&#8221; for the significance of interaction. P_value is based on a hypergeometric test</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters.xlsx">Strong interactions (MEF)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters.xlsx]</span> (Include two sheets, one for all interactions, and another one for the interactions that are not involving rRNA)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_cluster_total_sort.xlsx">List of clusters (MEF)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_cluster_total_sort.xlsx]</span> (Removing rRNA/rRNA_repeats)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters_noLeftRight.xlsx">Strong interactions noLeftRight (MEF)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters_noLeftRight.xlsx]</span> (Clusters are generated by merging RNA1 and RNA2, The directions of RNA1 and RNA2 are ignored)</p>
+</div>
+<div class="section" id="id4">
+<h4>Strong interactions based on annotation of RNAs</h4>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Genome:</th><td class="field-body"><p class="first">mm9</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Explanation:</th><td class="field-body"><ul class="first last simple">
+<li>First six column is for information of RNA in Part1 of interaction (5&#8217;side of linker); second six column is for information of RNA in Part2 of interaction (3&#8217;side of linker)</li>
+<li><strong>Type</strong>: RNA or repeat types; <strong>Name</strong>: RNA or repeat names; <strong>Count</strong>: number of supported reads in that RNA</li>
+<li>Second last column is the number of mapped pairs that support this interaction.</li>
+<li>Last column is the &#8220;ln(p_value)&#8221; for the significance of interaction. P_value is based on a hypergeometric test</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters_RNA.xlsx">Strong interactions RNA (MEF)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters_RNA.xlsx]</span></p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters_RNA_noLeftRight.xlsx">Strong interactions RNA noLeftRight (MEF)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/GGCG_MEF_interaction_clusters_RNA_noLeftRight.xlsx]</span> (The directions of RNA1 and RNA2 are ignored, and interactions involving introns are deleted)</p>
+</div>
+</div>
+<div class="section" id="number-of-different-types-of-interactions">
+<h3>Number of different types of interactions:</h3>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment.htm">Strong interactions based on clusters of genomic locations</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment.htm]</span> (There are three sheets, &#8220;All_interactions&#8221;, &#8220;Inter-RNA_interactions&#8221;, &#8220;Intra-RNA interactions&#8221;)</p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment_wholeRNA.htm">Strong interactions based on annotations of RNAs</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment_wholeRNA.htm]</span></p>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment_wholeRNA_noLeftRight.htm">Strong interactions based on annotations of RNAs noLeftRight no Intron</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/Count_types_interaction_fragment_wholeRNA_noLeftRight.htm]</span></p>
+<blockquote>
+<div><ul class="simple">
+<li>For each cell type, there are two columns,</li>
+<li>The first column gives the number of strong interactions with this interaction type,</li>
+<li>the second column gives the number of mapped pairs that support this interaction type.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="target-of-mirna-in-mir-290-295-clusters-and-mmu-mir-703">
+<h2>Target of miRNA in mir-290-295 clusters and mmu-mir-703</h2>
+<ul class="simple">
+<li>The information of miRNAs are in columns 1-5;</li>
+<li>The information of target locations are in columns 6-11;</li>
+<li>The the last column gives the count of supported mapped pairs.</li>
+</ul>
+<div class="section" id="id5">
+<h3>From merged data of E14-1 and E14-2:</h3>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_miRNA.xlsx">Target of miRNA in mir-290-295 clusters and mmu-mir-703 (ES_UV)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/ACCT_GGCG_interaction_clusters_miRNA.xlsx]</span></p>
+</div>
+<div class="section" id="id6">
+<h3>From E14-indirect dual crosslinking:</h3>
+<p><a class="reference external" href="http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_miRNA.xlsx">Target of miRNA in mir-290-295 clusters and mmu-mir-703 (ES_dual)</a><span class="link-target"> [http://systemsbio.ucsd.edu/RNA-Hi-C/Data/AATG_interaction_clusters_miRNA.xlsx]</span></p>
+</div>
+</div>
+</div>
+
+
+
+
+  
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'stitchseqtools'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2014, Zhong lab.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+
+
+
+<div id="editor-trap">
+      <h3>Edit this document!</h3>
+
+      <p>
+        This file can be edited directly through the Web. Anyone can
+        update and fix errors in this document with few clicks --
+        no downloads needed.
+      <p>
+
+      <ol>
+
+        <li>
+          Go to
+        <a href="https://github.com/yu68/RNA-Hi-C/blob/master/Data_Resources.rst">
+          Resources of strong interactions from two mouse cell types
+        </a> on GitHub.
+      </li>
+
+        <li>
+        <b>Edit</b> files using GitHub's text editor in your web browser (see the 'Edit' tab on the top right of the file)
+      </li>
+
+      <li>
+        Fill in the <b>Commit message</b> text box at the bottom of the page describing <i>why</i>
+        you made the changes. Press the <b>Propose file change</b> button next to it when done.
+      </li>
+
+      <li>
+        Then click <b>Send a pull request</b>.
+      </li>
+
+      <li>
+        Your changes are now queued for review under the project's <a href="https://github.com/yu68/RNA-Hi-C/pulls">Pull requests</a> tab on GitHub!
+      </li>
+      </ol>
+
+      <p>
+        For an introduction to the documentation format please see <a href="http://docutils.sourceforge.net/docs/user/rst/quickstart.html">the reST primer</a>.
+      </p>
+
+  </div>
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', ]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </body>
+</html>

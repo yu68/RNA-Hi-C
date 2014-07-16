@@ -1,0 +1,446 @@
+<?xml version="1.0"?>
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+  <head>
+    <meta name="dtb:uid" content="unknown"/>
+    <meta name="dtb:depth" content="3"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>RNA-Hi-C-tools</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="navPoint1" playOrder="1">
+      <navLabel>
+        <text>Welcome to RNA Hi-C tools&#39;s documentation!</text>
+      </navLabel>
+      <content src="index.html" />
+    </navPoint>
+    <navPoint id="navPoint2" playOrder="2">
+      <navLabel>
+        <text>RNA-Hi-C-tools 0.3 documentation</text>
+      </navLabel>
+      <content src="RNA-Hi-C-tools.html" />
+      <navPoint id="navPoint3" playOrder="2">
+        <navLabel>
+          <text>RNA-Hi-C-tools 0.3 documentation</text>
+        </navLabel>
+        <content src="RNA-Hi-C-tools.html" />
+      </navPoint>
+      <navPoint id="navPoint4" playOrder="3">
+        <navLabel>
+          <text>Overview</text>
+        </navLabel>
+        <content src="RNA-Hi-C-tools.html#overview" />
+      </navPoint>
+      <navPoint id="navPoint5" playOrder="4">
+        <navLabel>
+          <text>Installation</text>
+        </navLabel>
+        <content src="RNA-Hi-C-tools.html#installation" />
+        <navPoint id="navPoint6" playOrder="4">
+          <navLabel>
+            <text>Installation</text>
+          </navLabel>
+          <content src="RNA-Hi-C-tools.html#installation" />
+        </navPoint>
+        <navPoint id="navPoint7" playOrder="5">
+          <navLabel>
+            <text>step 1: Install the dependent prerequisites:</text>
+          </navLabel>
+          <content src="RNA-Hi-C-tools.html#step-1-install-the-dependent-prerequisites" />
+        </navPoint>
+        <navPoint id="navPoint8" playOrder="6">
+          <navLabel>
+            <text>Step 2: Download the package</text>
+          </navLabel>
+          <content src="RNA-Hi-C-tools.html#step-2-download-the-package" />
+        </navPoint>
+        <navPoint id="navPoint9" playOrder="7">
+          <navLabel>
+            <text>Step 3: Add library source to your python path</text>
+          </navLabel>
+          <content src="RNA-Hi-C-tools.html#step-3-add-library-source-to-your-python-path" />
+        </navPoint>
+      </navPoint>
+      <navPoint id="navPoint10" playOrder="8">
+        <navLabel>
+          <text>Support</text>
+        </navLabel>
+        <content src="RNA-Hi-C-tools.html#support" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint11" playOrder="9">
+      <navLabel>
+        <text>Analysis pipeline</text>
+      </navLabel>
+      <content src="Analysis_pipeline.html" />
+      <navPoint id="navPoint12" playOrder="9">
+        <navLabel>
+          <text>Analysis pipeline</text>
+        </navLabel>
+        <content src="Analysis_pipeline.html" />
+      </navPoint>
+      <navPoint id="navPoint13" playOrder="10">
+        <navLabel>
+          <text>Overview</text>
+        </navLabel>
+        <content src="Analysis_pipeline.html#overview" />
+      </navPoint>
+      <navPoint id="navPoint14" playOrder="11">
+        <navLabel>
+          <text>Pipeline</text>
+        </navLabel>
+        <content src="Analysis_pipeline.html#pipeline" />
+        <navPoint id="navPoint15" playOrder="11">
+          <navLabel>
+            <text>Pipeline</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#pipeline" />
+        </navPoint>
+        <navPoint id="navPoint16" playOrder="12">
+          <navLabel>
+            <text>Step 1: Remove PCR duplicates.</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#step-1-remove-pcr-duplicates" />
+        </navPoint>
+        <navPoint id="navPoint17" playOrder="13">
+          <navLabel>
+            <text>Step 2: Split library based on barcode.txt.</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#step-2-split-library-based-on-barcode-txt" />
+        </navPoint>
+        <navPoint id="navPoint18" playOrder="14">
+          <navLabel>
+            <text>Step 3: Recover fragments for each library.</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#step-3-recover-fragments-for-each-library" />
+        </navPoint>
+        <navPoint id="navPoint19" playOrder="15">
+          <navLabel>
+            <text>Step 4: Split partners and classify different types of fragments.</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#step-4-split-partners-and-classify-different-types-of-fragments" />
+        </navPoint>
+        <navPoint id="navPoint20" playOrder="16">
+          <navLabel>
+            <text>Step 5: Align both parts of &#8220;Paired&#8221; fragment to the genome.</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#step-5-align-both-parts-of-paired-fragment-to-the-genome" />
+        </navPoint>
+        <navPoint id="navPoint21" playOrder="17">
+          <navLabel>
+            <text>Step 6: Determine strong interactions.</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#step-6-determine-strong-interactions" />
+        </navPoint>
+        <navPoint id="navPoint22" playOrder="18">
+          <navLabel>
+            <text>Step 7: Visualization of interactions and coverages.</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#step-7-visualization-of-interactions-and-coverages" />
+        </navPoint>
+      </navPoint>
+      <navPoint id="navPoint23" playOrder="19">
+        <navLabel>
+          <text>Other functions</text>
+        </navLabel>
+        <content src="Analysis_pipeline.html#other-functions" />
+        <navPoint id="navPoint24" playOrder="19">
+          <navLabel>
+            <text>Other functions</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#other-functions" />
+        </navPoint>
+        <navPoint id="navPoint25" playOrder="20">
+          <navLabel>
+            <text>Determine the RNA types of different parts within fragments.</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#determine-the-rna-types-of-different-parts-within-fragments" />
+        </navPoint>
+        <navPoint id="navPoint26" playOrder="21">
+          <navLabel>
+            <text>Find linker sequences within the library.</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#find-linker-sequences-within-the-library" />
+        </navPoint>
+        <navPoint id="navPoint27" playOrder="22">
+          <navLabel>
+            <text>Find intersections between two different interaction sets based on genomic locations</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#find-intersections-between-two-different-interaction-sets-based-on-genomic-locations" />
+        </navPoint>
+        <navPoint id="navPoint28" playOrder="23">
+          <navLabel>
+            <text>Find intersections between two different interaction sets based on annotation</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#find-intersections-between-two-different-interaction-sets-based-on-annotation" />
+        </navPoint>
+        <navPoint id="navPoint29" playOrder="24">
+          <navLabel>
+            <text>RNA structure prediction by adding digestion site information</text>
+          </navLabel>
+          <content src="Analysis_pipeline.html#rna-structure-prediction-by-adding-digestion-site-information" />
+        </navPoint>
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint30" playOrder="25">
+      <navLabel>
+        <text>Visualization of local RNA-RNA interactions</text>
+      </navLabel>
+      <content src="Visualization.html" />
+      <navPoint id="navPoint31" playOrder="25">
+        <navLabel>
+          <text>Visualization of local RNA-RNA interactions</text>
+        </navLabel>
+        <content src="Visualization.html" />
+      </navPoint>
+      <navPoint id="navPoint32" playOrder="26">
+        <navLabel>
+          <text>Prerequirement</text>
+        </navLabel>
+        <content src="Visualization.html#prerequirement" />
+      </navPoint>
+      <navPoint id="navPoint33" playOrder="27">
+        <navLabel>
+          <text>Run the program to generate visualization</text>
+        </navLabel>
+        <content src="Visualization.html#run-the-program-to-generate-visualization" />
+      </navPoint>
+      <navPoint id="navPoint34" playOrder="28">
+        <navLabel>
+          <text>Example of result graph</text>
+        </navLabel>
+        <content src="Visualization.html#example-of-result-graph" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint35" playOrder="29">
+      <navLabel>
+        <text>Visualization of intra-RNA interactions by heatmap</text>
+      </navLabel>
+      <content src="Visualization.html#visualization-of-intra-rna-interactions-by-heatmap" />
+      <navPoint id="navPoint36" playOrder="29">
+        <navLabel>
+          <text>Visualization of intra-RNA interactions by heatmap</text>
+        </navLabel>
+        <content src="Visualization.html#visualization-of-intra-rna-interactions-by-heatmap" />
+      </navPoint>
+      <navPoint id="navPoint37" playOrder="30">
+        <navLabel>
+          <text>Prerequirement</text>
+        </navLabel>
+        <content src="Visualization.html#id1" />
+      </navPoint>
+      <navPoint id="navPoint38" playOrder="31">
+        <navLabel>
+          <text>Run the program to generate heatmap for interactions within RNA molecule</text>
+        </navLabel>
+        <content src="Visualization.html#run-the-program-to-generate-heatmap-for-interactions-within-rna-molecule" />
+      </navPoint>
+      <navPoint id="navPoint39" playOrder="32">
+        <navLabel>
+          <text>Example of result graph</text>
+        </navLabel>
+        <content src="Visualization.html#id2" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint40" playOrder="33">
+      <navLabel>
+        <text>Visualization of global RNA-RNA interactome</text>
+      </navLabel>
+      <content src="Visualization.html#visualization-of-global-rna-rna-interactome" />
+      <navPoint id="navPoint41" playOrder="33">
+        <navLabel>
+          <text>Visualization of global RNA-RNA interactome</text>
+        </navLabel>
+        <content src="Visualization.html#visualization-of-global-rna-rna-interactome" />
+      </navPoint>
+      <navPoint id="navPoint42" playOrder="34">
+        <navLabel>
+          <text>Prerequirement</text>
+        </navLabel>
+        <content src="Visualization.html#id3" />
+      </navPoint>
+      <navPoint id="navPoint43" playOrder="35">
+        <navLabel>
+          <text>Run the program to generate visualization</text>
+        </navLabel>
+        <content src="Visualization.html#id4" />
+      </navPoint>
+      <navPoint id="navPoint44" playOrder="36">
+        <navLabel>
+          <text>Example of result graph</text>
+        </navLabel>
+        <content src="Visualization.html#id5" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint45" playOrder="37">
+      <navLabel>
+        <text>Visualization of interaction types enrichment</text>
+      </navLabel>
+      <content src="Visualization.html#visualization-of-interaction-types-enrichment" />
+      <navPoint id="navPoint46" playOrder="37">
+        <navLabel>
+          <text>Visualization of interaction types enrichment</text>
+        </navLabel>
+        <content src="Visualization.html#visualization-of-interaction-types-enrichment" />
+      </navPoint>
+      <navPoint id="navPoint47" playOrder="38">
+        <navLabel>
+          <text>Prerequirement</text>
+        </navLabel>
+        <content src="Visualization.html#id6" />
+      </navPoint>
+      <navPoint id="navPoint48" playOrder="39">
+        <navLabel>
+          <text>Run the program to generate visualization for enrichment of different types of interactions</text>
+        </navLabel>
+        <content src="Visualization.html#run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions" />
+      </navPoint>
+      <navPoint id="navPoint49" playOrder="40">
+        <navLabel>
+          <text>Example of result graph</text>
+        </navLabel>
+        <content src="Visualization.html#id7" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint50" playOrder="41">
+      <navLabel>
+        <text>Python APIs created for this project</text>
+      </navLabel>
+      <content src="Other_api.html" />
+      <navPoint id="navPoint51" playOrder="41">
+        <navLabel>
+          <text>Python APIs created for this project</text>
+        </navLabel>
+        <content src="Other_api.html" />
+      </navPoint>
+      <navPoint id="navPoint52" playOrder="42">
+        <navLabel>
+          <text>Annotation module</text>
+        </navLabel>
+        <content src="Other_api.html#module-Annotation" />
+      </navPoint>
+      <navPoint id="navPoint53" playOrder="43">
+        <navLabel>
+          <text>&#8220;annotated_bed&#8221; data class</text>
+        </navLabel>
+        <content src="Other_api.html#annotated-bed-data-class" />
+      </navPoint>
+      <navPoint id="navPoint54" playOrder="44">
+        <navLabel>
+          <text>&#8220;RNAstructure&#8221; class</text>
+        </navLabel>
+        <content src="Other_api.html#rnastructure-class" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint55" playOrder="45">
+      <navLabel>
+        <text>Resources of strong interactions from two mouse cell types</text>
+      </navLabel>
+      <content src="Data_Resources.html" />
+      <navPoint id="navPoint56" playOrder="45">
+        <navLabel>
+          <text>Resources of strong interactions from two mouse cell types</text>
+        </navLabel>
+        <content src="Data_Resources.html" />
+      </navPoint>
+      <navPoint id="navPoint57" playOrder="46">
+        <navLabel>
+          <text>Description of different samples</text>
+        </navLabel>
+        <content src="Data_Resources.html#description-of-different-samples" />
+        <navPoint id="navPoint58" playOrder="46">
+          <navLabel>
+            <text>Description of different samples</text>
+          </navLabel>
+          <content src="Data_Resources.html#description-of-different-samples" />
+        </navPoint>
+        <navPoint id="navPoint59" playOrder="47">
+          <navLabel>
+            <text>E14-1</text>
+          </navLabel>
+          <content src="Data_Resources.html#e14-1" />
+        </navPoint>
+        <navPoint id="navPoint60" playOrder="48">
+          <navLabel>
+            <text>E14-2</text>
+          </navLabel>
+          <content src="Data_Resources.html#e14-2" />
+        </navPoint>
+        <navPoint id="navPoint61" playOrder="49">
+          <navLabel>
+            <text>E14-indirect</text>
+          </navLabel>
+          <content src="Data_Resources.html#e14-indirect" />
+        </navPoint>
+        <navPoint id="navPoint62" playOrder="50">
+          <navLabel>
+            <text>MEF</text>
+          </navLabel>
+          <content src="Data_Resources.html#mef" />
+        </navPoint>
+      </navPoint>
+      <navPoint id="navPoint63" playOrder="51">
+        <navLabel>
+          <text>Resources of Strong Interactions</text>
+        </navLabel>
+        <content src="Data_Resources.html#resources-of-strong-interactions" />
+        <navPoint id="navPoint64" playOrder="51">
+          <navLabel>
+            <text>Resources of Strong Interactions</text>
+          </navLabel>
+          <content src="Data_Resources.html#resources-of-strong-interactions" />
+        </navPoint>
+        <navPoint id="navPoint65" playOrder="52">
+          <navLabel>
+            <text>From merged data of E14-1 and E14-2:</text>
+          </navLabel>
+          <content src="Data_Resources.html#from-merged-data-of-e14-1-and-e14-2" />
+        </navPoint>
+        <navPoint id="navPoint66" playOrder="53">
+          <navLabel>
+            <text>From E14-indirect dual crosslinking:</text>
+          </navLabel>
+          <content src="Data_Resources.html#from-e14-indirect-dual-crosslinking" />
+        </navPoint>
+        <navPoint id="navPoint67" playOrder="54">
+          <navLabel>
+            <text>From MEF sample:</text>
+          </navLabel>
+          <content src="Data_Resources.html#from-mef-sample" />
+        </navPoint>
+        <navPoint id="navPoint68" playOrder="55">
+          <navLabel>
+            <text>Number of different types of interactions:</text>
+          </navLabel>
+          <content src="Data_Resources.html#number-of-different-types-of-interactions" />
+        </navPoint>
+      </navPoint>
+      <navPoint id="navPoint69" playOrder="56">
+        <navLabel>
+          <text>Target of miRNA in mir-290-295 clusters and mmu-mir-703</text>
+        </navLabel>
+        <content src="Data_Resources.html#target-of-mirna-in-mir-290-295-clusters-and-mmu-mir-703" />
+        <navPoint id="navPoint70" playOrder="56">
+          <navLabel>
+            <text>Target of miRNA in mir-290-295 clusters and mmu-mir-703</text>
+          </navLabel>
+          <content src="Data_Resources.html#target-of-mirna-in-mir-290-295-clusters-and-mmu-mir-703" />
+        </navPoint>
+        <navPoint id="navPoint71" playOrder="57">
+          <navLabel>
+            <text>From merged data of E14-1 and E14-2:</text>
+          </navLabel>
+          <content src="Data_Resources.html#id5" />
+        </navPoint>
+        <navPoint id="navPoint72" playOrder="58">
+          <navLabel>
+            <text>From E14-indirect dual crosslinking:</text>
+          </navLabel>
+          <content src="Data_Resources.html#id6" />
+        </navPoint>
+      </navPoint>
+    </navPoint>
+  </navMap>
+</ncx>

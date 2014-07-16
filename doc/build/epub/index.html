@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to RNA Hi-C tools’s documentation!</title>
+    
+    <link rel="stylesheet" href="_static/labibi.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+
+<script src="_static/labibi.js"></script>
+
+
+
+<!-- Google Analytics JS is disabled; set google_analytics_id -->
+
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="RNA-Hi-C-tools.html" title="RNA-Hi-C-tools 0.3 documentation"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">RNA-HiC-tools 0.3.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="welcome-to-rna-hi-c-tools-s-documentation">
+<h1>Welcome to RNA Hi-C tools&#8217;s documentation!</h1>
+<p><strong>Contents:</strong></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="RNA-Hi-C-tools.html">RNA-Hi-C-tools 0.3 documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="RNA-Hi-C-tools.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RNA-Hi-C-tools.html#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="RNA-Hi-C-tools.html#step-1-install-the-dependent-prerequisites">step 1: Install the dependent prerequisites:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RNA-Hi-C-tools.html#step-2-download-the-package">Step 2: Download the package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="RNA-Hi-C-tools.html#step-3-add-library-source-to-your-python-path">Step 3: Add library source to your python path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="RNA-Hi-C-tools.html#support">Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Analysis_pipeline.html">Analysis pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Analysis_pipeline.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Analysis_pipeline.html#pipeline">Pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#step-1-remove-pcr-duplicates">Step 1: Remove PCR duplicates.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#step-2-split-library-based-on-barcode-txt">Step 2: Split library based on barcode.txt.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#step-3-recover-fragments-for-each-library">Step 3: Recover fragments for each library.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#step-4-split-partners-and-classify-different-types-of-fragments">Step 4: Split partners and classify different types of fragments.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#step-5-align-both-parts-of-paired-fragment-to-the-genome">Step 5: Align both parts of &#8220;Paired&#8221; fragment to the genome.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#step-6-determine-strong-interactions">Step 6: Determine strong interactions.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#step-7-visualization-of-interactions-and-coverages">Step 7: Visualization of interactions and coverages.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Analysis_pipeline.html#other-functions">Other functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#determine-the-rna-types-of-different-parts-within-fragments">Determine the RNA types of different parts within fragments.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-linker-sequences-within-the-library">Find linker sequences within the library.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-intersections-between-two-different-interaction-sets-based-on-genomic-locations">Find intersections between two different interaction sets based on genomic locations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#find-intersections-between-two-different-interaction-sets-based-on-annotation">Find intersections between two different interaction sets based on annotation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Analysis_pipeline.html#rna-structure-prediction-by-adding-digestion-site-information">RNA structure prediction by adding digestion site information</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html">Visualization of local RNA-RNA interactions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#prerequirement">Prerequirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#run-the-program-to-generate-visualization">Run the program to generate visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#example-of-result-graph">Example of result graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html#visualization-of-intra-rna-interactions-by-heatmap">Visualization of intra-RNA interactions by heatmap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id1">Prerequirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#run-the-program-to-generate-heatmap-for-interactions-within-rna-molecule">Run the program to generate heatmap for interactions within RNA molecule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id2">Example of result graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html#visualization-of-global-rna-rna-interactome">Visualization of global RNA-RNA interactome</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id3">Prerequirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id4">Run the program to generate visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id5">Example of result graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Visualization.html#visualization-of-interaction-types-enrichment">Visualization of interaction types enrichment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id6">Prerequirement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#run-the-program-to-generate-visualization-for-enrichment-of-different-types-of-interactions">Run the program to generate visualization for enrichment of different types of interactions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Visualization.html#id7">Example of result graph</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Other_api.html">Python APIs created for this project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Other_api.html#module-Annotation">Annotation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Other_api.html#annotated-bed-data-class">&#8220;annotated_bed&#8221; data class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Other_api.html#rnastructure-class">&#8220;RNAstructure&#8221; class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Data_Resources.html">Resources of strong interactions from two mouse cell types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Data_Resources.html#description-of-different-samples">Description of different samples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Data_Resources.html#e14-1">E14-1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Data_Resources.html#e14-2">E14-2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Data_Resources.html#e14-indirect">E14-indirect</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Data_Resources.html#mef">MEF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Data_Resources.html#resources-of-strong-interactions">Resources of Strong Interactions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Data_Resources.html#from-merged-data-of-e14-1-and-e14-2">From merged data of E14-1 and E14-2:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Data_Resources.html#from-e14-indirect-dual-crosslinking">From E14-indirect dual crosslinking:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Data_Resources.html#from-mef-sample">From MEF sample:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Data_Resources.html#number-of-different-types-of-interactions">Number of different types of interactions:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Data_Resources.html#target-of-mirna-in-mir-290-295-clusters-and-mmu-mir-703">Target of miRNA in mir-290-295 clusters and mmu-mir-703</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Data_Resources.html#id5">From merged data of E14-1 and E14-2:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Data_Resources.html#id6">From E14-indirect dual crosslinking:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">RNA Hi-C tools benifits a lot from BAM2X, a convenient python interface for most common NGS datatypes. <a class="reference external" href="http://www.bam2x.net/">Try BAM2X now</a><span class="link-target"> [http://www.bam2x.net/]</span>!</p>
+</div>
+<div class="section" id="updates">
+<h2>Updates</h2>
+<dl class="docutils">
+<dt>2014-7-15:</dt>
+<dd><ul class="first last simple">
+<li>Update &#8220;<a class="reference internal" href="Analysis_pipeline.html#structure"><em>RNA_structure_prediction.py</em></a>&#8221; function to allow output of JSON files for predicted structure and refined structure (predicted structure after providing single-strand offset information). The JSON output can be uploaded into <a class="reference external" href="http://circos.zhu.land/">RNA2D-browser</a><span class="link-target"> [http://circos.zhu.land/]</span> (developed by <a class="reference external" href="https://github.com/nimezhu">Xiaopeng Zhu</a><span class="link-target"> [https://github.com/nimezhu]</span> ) to show the Circos view of secondary structure and digested location distribution.</li>
+<li>Add an API function to convert dot format of RNA secondary structure into several linked blocks. see &#8220;<a class="reference internal" href="Other_api.html#dot2block"><em>dot2block</em></a>&#8220;</li>
+</ul>
+</dd>
+<dt>2014-6-27:</dt>
+<dd><ul class="first last simple">
+<li>new strong interaction list added based on whole RNA annotation using a FDR cutoff, and using ES-indirect (dual crosslinking) sample as control. See: <a class="reference internal" href="Data_Resources.html#sifdr"><em>resources</em></a>, update in &#8220;<a class="reference internal" href="Analysis_pipeline.html#step6"><em>Select_strongInteraction_pp.py</em></a>&#8221; as well.</li>
+</ul>
+</dd>
+<dt>2014-5-15:</dt>
+<dd><ul class="first last simple">
+<li>Add result <a class="reference internal" href="Data_Resources.html#resource"><em>resources</em></a> for identified strong interactions in mouse E14 cells and MEF cells.</li>
+<li>New function to generate heatmap for intra-RNA interactions: <a class="reference internal" href="Visualization.html#visualizationheatmap"><em>Plot_interaction_heatmap.py</em></a>.</li>
+</ul>
+</dd>
+<dt>2014-05-14:</dt>
+<dd><ul class="first last simple">
+<li>Add new function to find overlap between two interaction sets based on their RNA annotations, see: <a class="reference internal" href="Analysis_pipeline.html#intersectiongene"><em>intersectInteraction_genePair.R</em></a>.</li>
+<li>Allow input of two genomic regions to visualize local interactions using <tt class="docutils literal"><span class="pre">-r</span></tt> option in &#8220;<a class="reference internal" href="Visualization.html#plotinteraction"><em>Plot_interaction.py</em></a>&#8221; function</li>
+</ul>
+</dd>
+<dt>2014-05-11:</dt>
+<dd><ul class="first last simple">
+<li>Add new function to show enrichment of different types of interactions: <a class="reference internal" href="Visualization.html#visualizationenrich"><em>Interaction_type_enrichment.R</em></a>.</li>
+</ul>
+</dd>
+<dt>Version 0.3.2 (2014-05-07):</dt>
+<dd><ul class="first last simple">
+<li>change the name into RNA-Hi-C</li>
+</ul>
+</dd>
+<dt>2014-05-06:</dt>
+<dd><ul class="first last simple">
+<li>In &#8220;<a class="reference internal" href="Analysis_pipeline.html#step6"><em>Select_strongInteraction_pp.py</em></a>&#8221; function, now annotations are updated after doing clustering and for strong interaction. The indexing of annotation files may take some time.</li>
+<li>New &#8220;<a class="reference internal" href="Analysis_pipeline.html#structure"><em>RNA_structure_prediction.py</em></a>&#8221; function to refine RNA structure prediction based on empirical offset of free energies for single strand nucleotide.</li>
+</ul>
+</dd>
+<dt>New features in 0.3.1 (2014-05-02):</dt>
+<dd><ul class="first last simple">
+<li>Add &#8220;&#8211;release&#8221; option in &#8220;<a class="reference internal" href="Analysis_pipeline.html#step4"><em>split_partner.py</em></a>&#8221; function. Allow a Type3 read-pair considered to be a &#8220;Paired&#8221; chimeric fragment even linker does not show up.</li>
+<li>Fix bugs in &#8220;<a class="reference internal" href="Analysis_pipeline.html#step6"><em>Select_strongInteraction_pp.py</em></a>&#8221; function when the number of mapped pairs is low and some chromosomes don&#8217;t have any mapped read in part1 or part2.</li>
+<li>Add bowtie 2 option and Unique-align option in &#8220;<a class="reference internal" href="Analysis_pipeline.html#step5"><em>Stitch-seq_Aligner.py</em></a>&#8221; function.</li>
+<li>Different colors for different types of interactions in the <a class="reference internal" href="Visualization.html#visualizationglobal"><em>visualization of interactome</em></a>.</li>
+<li>New API for folding energies of two RNA molecules, see &#8220;<a class="reference internal" href="Other_api.html#rnafold"><em>RNAstructure</em></a>&#8221;.</li>
+<li>Allow permutation-based strategies to calculate the p-value for the overlap between two independent interaction sets in &#8220;<a class="reference internal" href="Analysis_pipeline.html#intersection"><em>intersectInteraction.py</em></a>&#8221; function</li>
+</ul>
+</dd>
+<dt>New features in 0.2.2:</dt>
+<dd><ul class="first last simple">
+<li>&#8220;<a class="reference internal" href="Visualization.html#plotinteraction"><em>Plot_interaction.py</em></a>&#8221; function to plot local RNA-RNA interactions.</li>
+<li>&#8220;<a class="reference internal" href="Analysis_pipeline.html#intersection"><em>intersectInteraction.py</em></a>&#8221; function to call overlap between two independent interaction sets.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables</h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+
+
+  
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'stitchseqtools'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+
+
+    <div class="footer">
+        &copy; Copyright 2014, Zhong lab.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b2.
+    </div>
+
+
+
+<div id="editor-trap">
+      <h3>Edit this document!</h3>
+
+      <p>
+        This file can be edited directly through the Web. Anyone can
+        update and fix errors in this document with few clicks --
+        no downloads needed.
+      <p>
+
+      <ol>
+
+        <li>
+          Go to
+        <a href="https://github.com/yu68/RNA-Hi-C/blob/master/index.rst">
+          Welcome to RNA Hi-C tools&#8217;s documentation!
+        </a> on GitHub.
+      </li>
+
+        <li>
+        <b>Edit</b> files using GitHub's text editor in your web browser (see the 'Edit' tab on the top right of the file)
+      </li>
+
+      <li>
+        Fill in the <b>Commit message</b> text box at the bottom of the page describing <i>why</i>
+        you made the changes. Press the <b>Propose file change</b> button next to it when done.
+      </li>
+
+      <li>
+        Then click <b>Send a pull request</b>.
+      </li>
+
+      <li>
+        Your changes are now queued for review under the project's <a href="https://github.com/yu68/RNA-Hi-C/pulls">Pull requests</a> tab on GitHub!
+      </li>
+      </ol>
+
+      <p>
+        For an introduction to the documentation format please see <a href="http://docutils.sourceforge.net/docs/user/rst/quickstart.html">the reST primer</a>.
+      </p>
+
+  </div>
+
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', ]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+  </body>
+</html>

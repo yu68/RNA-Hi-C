@@ -30,6 +30,7 @@ Updates
 -------
 
 2014-7-15:
+  * Update ":ref:`RNA_structure_prediction.py<Structure>`" function to allow output of JSON files for predicted structure and refined structure (predicted structure after providing single-strand offset information). The JSON output can be uploaded into `RNA2D-browser <http://circos.zhu.land/>`_ (developed by `Xiaopeng Zhu <https://github.com/nimezhu>`_ ) to show the Circos view of secondary structure and digested location distribution.
   * Add an API function to convert dot format of RNA secondary structure into several linked blocks. see ":ref:`dot2block<dot2block>`"
 
 2014-6-27:

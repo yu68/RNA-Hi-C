@@ -3,7 +3,7 @@ import sys,os,argparse
 import string
 import json
 import numpy as np
-from RNAstructure import RNAstructure
+from RNAstructure import RNAstructure,dot2block
 import math
 import matplotlib
 matplotlib.use('Agg')
@@ -79,8 +79,9 @@ def generateJSON(geneDot,count,name,out_file_name):
     RNA = {}
     count=[int(x) for x in count]
     RNA["ideograms"]=[{"id":name,"length":len(geneDot),"color":"grey"}]
-    RNA["plottracks"]=[{"name":"coverage","color":"blue","values":[{"chr":name,"values":count}]}]
-    RNA["structs"]=[{"chr":name,"struct":geneDot}]
+    RNA["tracks"]=[{"name":"coverage","color":"blue","type":"plot","values":[{"chr":name,"values":count}]}]
+    stems = dot2block(geneDot,name)
+    RNA["tracks"].append({"name":"stems","color":"green","type":"links","values":stems})
     out = open(out_file_name,'w')
     print >>out, json.dumps(RNA, indent=2)
 

@@ -226,7 +226,7 @@ def dot2block(dot_string,name="Default"):
     pairRegister=[]
     stems=[]
     def dumpPairRegister(pairRegister,stems,name):
-        print "source:%d-%d; target:%d-%d"%(pairRegister[-1][0],pairRegister[0][0],pairRegister[-1][1],pairRegister[0][1])
+        #print "source:%d-%d; target:%d-%d"%(pairRegister[-1][0],pairRegister[0][0],pairRegister[-1][1],pairRegister[0][1])
         stems.append({"source":{"chr":name,"start":pairRegister[-1][0],"end":pairRegister[0][0]},"target":{"chr":name,"start":pairRegister[0][1],"end":pairRegister[-1][1]}})
         pairRegister=[]
         return pairRegister,stems

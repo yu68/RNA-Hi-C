@@ -20,7 +20,7 @@ def ParseArg():
     p.add_argument("input",type=str,help="the input fastq/fasta file containing reads sequences")
     p.add_argument("-e","--evalue",dest="evalue",type=float,default=0.00001,help="cutoff evalues, only choose alignment with evalue less than this cutoffs (default: 1e-5).")
     p.add_argument("--linker_db",dest="linker_db",type=str,help="BLAST database of linker sequences",default="~/Stitch-seq/blast_db/linker.fa")
-    p.add_argument("--blast_path",dest="blast_path",type=str,help="path for the local blast program",default="~/Softwares/ncbi-blast-2.2.27+/bin/blastn")
+    p.add_argument("--blast_path",dest="blast_path",type=str,help="path for the local blast program",default="/home/yu68/Softwares/ncbi-blast-2.2.27+/bin/blastn")
     p.add_argument("-o","--output",dest="output",type=str,help="output file contains sequences with both linker alignment")
     if len(sys.argv)==1:
         print >>sys.stderr,p.print_help()

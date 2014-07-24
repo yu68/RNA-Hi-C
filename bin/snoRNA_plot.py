@@ -96,6 +96,7 @@ def Main():
         y = min(max(y,0),geneLen-1)
         matrix[x,y] +=1
         i=i+1
+    print i
     cax2=ax2.matshow(matrix,norm=LogNorm(vmin=0.01, vmax=matrix.max()))
     fig.colorbar(cax2)
     plt.savefig(args.output)

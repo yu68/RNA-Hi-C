@@ -9,9 +9,12 @@
 
 import sys,argparse
 from bx.bbi.bigwig_file import BigWigFile
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import random
+
 
 def ParseArg():
     p=argparse.ArgumentParser( description = 'plot average conservation score near linker connection point',epilog="library denpenddency: bx-python, matplotlib,numpy")

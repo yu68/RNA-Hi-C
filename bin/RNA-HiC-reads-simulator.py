@@ -17,6 +17,7 @@ def ParseArg():
     p.add_argument('barcode',type=str,metavar='barcode',help='file contianing barcode sequences')
     p.add_argument('-n','--number',type=int,dest='num',help='number of simulated sequences,default:10000',default=10000)
     p.add_argument('-p','--parameter',nargs='+',type=float,help='parameters for percentage of LinkerOnly, Nolinker, RNA1-linker, linker-RNA2, RNA1-linker-RNA2,default:[.1,.3,.1,.3,.2]',default=[.1,.3,.1,.3,.2])
+    p.add_argument("-e","--errorRate",type=float,help="sequencing error rate (per base pair), default:0.01",default=0.01)
     p.add_argument('-l','--length',type=int,dest='len',help='length of generated reads',default=100)
     p.add_argument('-g',"--genomeFa",type=str,default="/home/yu68/Software/bowtie-0.12.7/indexes/mm9.fa",help="genomic sequence,need to be fadix-ed")
     p.add_argument('-s','--samtool_path',dest='spath', type=str,metavar='samtool_path',help="path for the samtool program",default='samtools')
@@ -59,7 +60,16 @@ def fetchSeq(chro,start,end,strand,fasta,s_path):
         seq = revcomp(seq,rev_table)
     return seq      
 
-def generatePairs(fragment,read_len):
+def AddError(read,errorRate):
+    ''' add sequencing error to simulated read pairs '''
+    pos = random.randrange(0,len(read))
+    nuc = read[pos]  # nucleotide to be replaced
+    temp = list(read)
+    if random.random()<errorRate*len(read):
+        temp[pos]=random.choice("ACGT".replace(nuc,""))
+    return "".join(temp)
+
+def generatePairs(fragment,read_len,errorRate):
     ''' generate pair-end read pairs based on fragment sequences and read length  '''
     P7 = "AGATCGGAAGAGCGGTTCAGCAGGAATGCCGAGACCGAT" 
     P5 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCT" 
@@ -74,6 +84,8 @@ def generatePairs(fragment,read_len):
         N_num = read_len - len(fragment) - 2*len(P7)
         read1 = fragment+P7*2+'N'*N_num
         read2 = fragment+P5*2+'N'*N_num
+    read1 = AddError(read1,errorRate)
+    read2 = AddError(read2,errorRate)
     return read1,read2 
     
 
@@ -178,7 +190,7 @@ def Main():
                 fragment = barcode+RNA1_seq+linker+RNA2_seq
                 print >> out, pair_id+"\t%d\tRNA1-linker-RNA2\t%d"%(len(fragment),linker_n)+"\t"+RNA1_str+"\t"+RNA2_str
 
-        read1,read2 = generatePairs(fragment,args.len)
+        read1,read2 = generatePairs(fragment,args.len,args.errorRate)
         score=[]
         for j in range(0, args.len):
             score.append(random.randrange(10,40))

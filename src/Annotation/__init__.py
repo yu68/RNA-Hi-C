@@ -143,8 +143,8 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
         subtype="exon"
     if typ in ["snoRNA","snRNA","miRNA","miscRNA"]:
         subtype='.'
-    if typ=="pseudogene":
-        subtype="."
+    #if typ=="pseudogene":
+      #  subtype="."
     if typ=="SINE" and subtype=="Alu":
         subtype="B1"
     return [typ,name,subtype]

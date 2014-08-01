@@ -21,8 +21,8 @@ def ParseArg():
     p.add_argument("type3_1",type=str,help="read_1 for evenlong (type3) fastq file")
     p.add_argument("type3_2",type=str,help="read_2 for evenlong (type3) fastq file")
     p.add_argument("-e","--evalue",dest="evalue",type=float,default=0.00001,help="cutoff evalues, only choose alignment with evalue less than this cutoffs (default: 1e-5).")
-    p.add_argument("--linker_db",dest="linker_db",type=str,help="BLAST database of linker sequences",default="~/Stitch-seq/blast_db/linker.fa")
-    p.add_argument("--blast_path",dest="blast_path",type=str,help="path for the local blast program",default="~/Softwares/ncbi-blast-2.2.27+/bin/blastn")
+    p.add_argument("--linker_db",dest="linker_db",type=str,help="BLAST database of linker sequences",default="/home/yu68/Stitch-seq/blast_db/linker.fa")
+    p.add_argument("--blast_path",dest="blast_path",type=str,help="path for the local blast program",default="/home/yu68/Softwares/ncbi-blast-2.2.27+/bin/blastn")
     p.add_argument("-o","--output",dest="output",type=str,help="output file containing sequences of two sepatated parts")
     p.add_argument("-t","--trim",type=int,default=10,help="trim off the first this number of nt as index, default:10")
     p.add_argument("-b","--batch",type=int,default=200000,help="batch this number of fragments for BLAST at a time. default: 200000")
@@ -106,6 +106,13 @@ def main():
   
     blast_path=args.blast_path
     linker_db=args.linker_db
+
+    # create blast database if not yet
+    if not os.path.isfile(linker_db+".nhr"):
+        print >> sys.stderr, "  ## blast database not detected, making blast db for seq"
+        blastdir,_ = os.path.split(blast_path)
+        os.system(blastdir+"/makeblastdb -in "+linker_db+" -dbtype 'nucl' -title "+os.path.splitext(linker_db)[0])
+
     
     # E-values
     evalue=float(args.evalue)

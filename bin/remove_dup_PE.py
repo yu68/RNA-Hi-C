@@ -5,7 +5,7 @@ from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
 import itertools
 import os,sys, argparse
-
+import time
 
 def ParseArg():
     p=argparse.ArgumentParser( description = 'Remove duplicated reads which have same sequences for both forward and reverse reads. Choose the one appears first.', epilog = 'Library dependency: Bio, itertools')
@@ -22,6 +22,8 @@ def Main():
     http://bytesizebio.net/index.php/2011/08/25/short-bioinformatics-hacks-merging-fastq-files/
     http://stackoverflow.com/questions/1215208/how-might-i-remove-duplicate-lines-from-a-file
     '''
+    import time
+    t0=time.time()
     count=0
     unique=0
     Unique_seqs=set()
@@ -42,7 +44,9 @@ def Main():
             unique=unique+1
     outfile1.close()
     outfile2.close()
+    time=time.time()-t0
     print "from %i pair-end read pairs, there are %i unique pairs, %i PCR duplictes removed." %(count, unique, count-unique)
+    print "Time cost: %.2f s"%(time)
 
 if __name__ == '__main__':
     Main()

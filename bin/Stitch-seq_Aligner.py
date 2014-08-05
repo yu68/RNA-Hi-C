@@ -57,7 +57,7 @@ def bowtie_align(b_path,read,ref,s_path,bowtie2):
         os.system("rm "+read+".log")
         os.system(b_path+"-build "+ref+" "+base+" >> "+read+".log 2>&1")
         if not bowtie2:
-            os.system(b_path+ foption+" -n 1 -l 15 -e 200 -p 9 -S "+base+" "+read+" "+sam+" >> "+read+".log 2>&1")
+            os.system(b_path+ foption+" --best -n 1 -l 15 -e 200 -p 9 -S "+base+" "+read+" "+sam+" >> "+read+".log 2>&1")
         else:
             os.system(b_path+ " -x "+base+foption+" -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read+".log 2>&1")
     else:

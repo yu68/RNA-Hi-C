@@ -13,14 +13,15 @@
 
 import sys, os, argparse
 import pysam
-import itertools
+import itertools,string
 from Bio import SeqIO
 from xplib import TableIO
 from xplib import DBI
 from xplib.Annotation import Bed
 from Annotation import *
-from cogent.db.ensembl import HostAccount, Genome
-
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+from Bio.Alphabet import IUPAC
 
 def ParseArg():
     p=argparse.ArgumentParser( description = 'Align miRNA-mRNA pairs for Stitch-seq. print the alignable miRNA-mRNA pairs with coordinates', epilog = 'Library dependency: Bio, pysam, itertools')
@@ -42,6 +43,10 @@ def ParseArg():
         exit(0)
     return p.parse_args()
 
+rev_table=string.maketrans('ACGTacgtN', 'TGCAtgcaN')
+def revcomp(seq, rev_table):
+    return seq.translate(rev_table)[::-1]
+
 def bowtie_align(b_path,read,ref,s_path,bowtie2):
     # b_path: bowtie path;
     # s_path: samtools path;
@@ -52,20 +57,22 @@ def bowtie_align(b_path,read,ref,s_path,bowtie2):
         foption=" -f"
     else:
         foption=""
+
+
     if ref.split(".")[-1] in ["fa","fasta"]:
         base=ref.split("/")[-1].split(".")[0]
         os.system("rm "+read+".log")
         os.system(b_path+"-build "+ref+" "+base+" >> "+read+".log 2>&1")
         if not bowtie2:
-            os.system(b_path+ foption+" --best -n 1 -l 15 -e 200 -p 9 -S "+base+" "+read+" "+sam+" >> "+read+".log 2>&1")
+            os.system(b_path+ foption+" --best -n 1 -l 15 -e 200 -p 9 -S "+base+" "+read+" "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
         else:
-            os.system(b_path+ " -x "+base+foption+" -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read+".log 2>&1")
+            os.system(b_path+ " -x "+base+foption+" -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
     else:
         os.system("rm "+read+".log")
         if not bowtie2:
-            os.system(b_path+ foption+" -n 1 -l 15 -e 200 -p 9 -S "+ref+" "+read+" "+sam+" >> "+read+".log 2>&1")
+            os.system(b_path+ foption+" --best -n 1 -l 15 -e 200 -p 9 -S "+ref+" "+read+" "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
         else:
-            os.system(b_path+ " -x "+ref+foption+" -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read+".log 2>&1")
+            os.system(b_path+ " -x "+ref+foption+" -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
     bam=read.split("/")[-1].split(".")[0]+".bam"
     os.system(s_path+ " view -Sb -o "+bam +" "+sam)
     os.system("rm "+sam)
@@ -95,6 +102,15 @@ def Main():
 
     miRNA_align=bowtie_align(args.bowtie_path,args.input1,args.miRNA_ref,args.spath,args.bowtie2)
     mRNA_align=bowtie_align(args.bowtie_path,args.input2,args.mRNA_ref,args.spath,args.bowtie2)
+
+    # unmapped read file
+    tmp = args.input1.split(".")
+    unmap_read1 = ".".join(tmp[:-1])+"_unmap."+tmp[-1]
+    unmap_read1_file = open(unmap_read1.split("/")[-1],'w')
+    tmp = args.input2.split(".")
+    unmap_read2 = ".".join(tmp[:-1])+"_unmap."+tmp[-1]
+    unmap_read2_file = open(unmap_read2.split("/")[-1],'w')
+
     
     if args.annotation:
         dbi1=DBI.init(args.annotation,"bed")
@@ -124,6 +140,19 @@ def Main():
                 print '\t'.join(str(f) for f in [miRNA_align.getrname(record1.tid),record1.pos,record1.aend,strand1,record1.seq,name1,typ1,subtype1,record1.qname,mRNA_align.getrname(record2.tid),record2.pos,record2.aend,strand2,record2.seq,name2,typ2,subtype2])
             else:
                 print '\t'.join(str(f) for f in [miRNA_align.getrname(record1.tid),record1.aend-record1.alen+1,record1.aend,strand1,record1.seq,record1.qname,mRNA_align.getrname(record2.tid),record2.aend-record2.alen+1,record2.aend,strand2,record2.seq])
+        else:
+            # output all pairs that cannot be mapped on both sides as unmaped pairs into two fasta file
+            seq1=record1.seq
+            seq2=record2.seq
+            if record1.is_reverse:
+                seq1=revcomp(record1.seq,rev_table)
+            if record2.is_reverse:
+                seq2=revcomp(record2.seq,rev_table)
+            unmap_rec1 = SeqRecord(Seq(seq1,IUPAC.unambiguous_dna),id=record1.qname)
+            unmap_rec2 = SeqRecord(Seq(seq2,IUPAC.unambiguous_dna),id=record2.qname)
+            SeqIO.write(unmap_rec1,unmap_read1_file,"fasta")
+            SeqIO.write(unmap_rec2,unmap_read2_file,"fasta")
+
     miRNA_align.close()
     mRNA_align.close()
 

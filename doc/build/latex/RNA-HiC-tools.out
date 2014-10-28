@@ -1,36 +1,36 @@
-\BOOKMARK [0][-]{chapter.1}{RNA-Hi-C-tools 0.3 documentation}{}
-\BOOKMARK [1][-]{section.1.1}{Overview}{chapter.1}
-\BOOKMARK [1][-]{section.1.2}{Installation}{chapter.1}
-\BOOKMARK [1][-]{section.1.3}{Support}{chapter.1}
-\BOOKMARK [0][-]{chapter.2}{Analysis pipeline}{}
-\BOOKMARK [1][-]{section.2.1}{Overview}{chapter.2}
-\BOOKMARK [1][-]{section.2.2}{Pipeline}{chapter.2}
-\BOOKMARK [1][-]{section.2.3}{Other functions}{chapter.2}
-\BOOKMARK [0][-]{chapter.3}{Visualization of local RNA-RNA interactions}{}
-\BOOKMARK [1][-]{section.3.1}{Prerequirement}{chapter.3}
-\BOOKMARK [1][-]{section.3.2}{Run the program to generate visualization}{chapter.3}
-\BOOKMARK [1][-]{section.3.3}{Example of result graph}{chapter.3}
-\BOOKMARK [0][-]{chapter.4}{Visualization of intra-RNA interactions by heatmap}{}
-\BOOKMARK [1][-]{section.4.1}{Prerequirement}{chapter.4}
-\BOOKMARK [1][-]{section.4.2}{Run the program to generate heatmap for interactions within RNA molecule}{chapter.4}
-\BOOKMARK [1][-]{section.4.3}{Example of result graph}{chapter.4}
-\BOOKMARK [0][-]{chapter.5}{Visualization of global RNA-RNA interactome}{}
-\BOOKMARK [1][-]{section.5.1}{Prerequirement}{chapter.5}
-\BOOKMARK [1][-]{section.5.2}{Run the program to generate visualization}{chapter.5}
-\BOOKMARK [1][-]{section.5.3}{Example of result graph}{chapter.5}
-\BOOKMARK [0][-]{chapter.6}{Visualization of interaction types enrichment}{}
-\BOOKMARK [1][-]{section.6.1}{Prerequirement}{chapter.6}
-\BOOKMARK [1][-]{section.6.2}{Run the program to generate visualization for enrichment of different types of interactions}{chapter.6}
-\BOOKMARK [1][-]{section.6.3}{Example of result graph}{chapter.6}
-\BOOKMARK [0][-]{chapter.7}{Python APIs created for this project}{}
-\BOOKMARK [1][-]{section.7.1}{Annotation module}{chapter.7}
-\BOOKMARK [1][-]{section.7.2}{``annotated\137bed'' data class}{chapter.7}
-\BOOKMARK [1][-]{section.7.3}{``RNAstructure'' class}{chapter.7}
-\BOOKMARK [0][-]{chapter.8}{Resources of strong interactions from two mouse cell types}{}
-\BOOKMARK [1][-]{section.8.1}{Description of different samples}{chapter.8}
-\BOOKMARK [1][-]{section.8.2}{Resources of Strong Interactions}{chapter.8}
-\BOOKMARK [1][-]{section.8.3}{Target of miRNA in mir-290-295 clusters and mmu-mir-703}{chapter.8}
-\BOOKMARK [0][-]{chapter.9}{Updates}{}
-\BOOKMARK [0][-]{chapter.10}{Indices and tables}{}
-\BOOKMARK [0][-]{section*.29}{Python Module Index}{}
-\BOOKMARK [0][-]{section*.30}{Index}{}
+\BOOKMARK [0][-]{chapter.1}{RNA-Hi-C-tools 0.3 documentation}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Overview}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Installation}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Support}{chapter.1}% 4
+\BOOKMARK [0][-]{chapter.2}{Analysis pipeline}{}% 5
+\BOOKMARK [1][-]{section.2.1}{Overview}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.2}{Pipeline}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.3}{Other functions}{chapter.2}% 8
+\BOOKMARK [0][-]{chapter.3}{Visualization of local RNA-RNA interactions}{}% 9
+\BOOKMARK [1][-]{section.3.1}{Prerequirement}{chapter.3}% 10
+\BOOKMARK [1][-]{section.3.2}{Run the program to generate visualization}{chapter.3}% 11
+\BOOKMARK [1][-]{section.3.3}{Example of result graph}{chapter.3}% 12
+\BOOKMARK [0][-]{chapter.4}{Visualization of intra-RNA interactions by heatmap}{}% 13
+\BOOKMARK [1][-]{section.4.1}{Prerequirement}{chapter.4}% 14
+\BOOKMARK [1][-]{section.4.2}{Run the program to generate heatmap for interactions within RNA molecule}{chapter.4}% 15
+\BOOKMARK [1][-]{section.4.3}{Example of result graph}{chapter.4}% 16
+\BOOKMARK [0][-]{chapter.5}{Visualization of global RNA-RNA interactome}{}% 17
+\BOOKMARK [1][-]{section.5.1}{Prerequirement}{chapter.5}% 18
+\BOOKMARK [1][-]{section.5.2}{Run the program to generate visualization}{chapter.5}% 19
+\BOOKMARK [1][-]{section.5.3}{Example of result graph}{chapter.5}% 20
+\BOOKMARK [0][-]{chapter.6}{Visualization of interaction types enrichment}{}% 21
+\BOOKMARK [1][-]{section.6.1}{Prerequirement}{chapter.6}% 22
+\BOOKMARK [1][-]{section.6.2}{Run the program to generate visualization for enrichment of different types of interactions}{chapter.6}% 23
+\BOOKMARK [1][-]{section.6.3}{Example of result graph}{chapter.6}% 24
+\BOOKMARK [0][-]{chapter.7}{Python APIs created for this project}{}% 25
+\BOOKMARK [1][-]{section.7.1}{Annotation module}{chapter.7}% 26
+\BOOKMARK [1][-]{section.7.2}{``annotated\137bed'' data class}{chapter.7}% 27
+\BOOKMARK [1][-]{section.7.3}{``RNAstructure'' class}{chapter.7}% 28
+\BOOKMARK [0][-]{chapter.8}{Resources of strong interactions from two mouse cell types}{}% 29
+\BOOKMARK [1][-]{section.8.1}{Description of different samples}{chapter.8}% 30
+\BOOKMARK [1][-]{section.8.2}{Resources of Strong Interactions}{chapter.8}% 31
+\BOOKMARK [1][-]{section.8.3}{Target of miRNA in mir-290-295 clusters and mmu-mir-703}{chapter.8}% 32
+\BOOKMARK [0][-]{chapter.9}{Updates}{}% 33
+\BOOKMARK [0][-]{chapter.10}{Indices and tables}{}% 34
+\BOOKMARK [0][-]{section*.29}{Python Module Index}{}% 35
+\BOOKMARK [0][-]{section*.30}{Index}{}% 36

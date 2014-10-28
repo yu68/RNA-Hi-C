@@ -1,13 +1,12 @@
 import sys,argparse,os
 from xplib import DBI
-import numpy as np
 import subprocess
 
 
 def ParseArg():
-    p=argparse.ArgumentParser(description="Statistics for snoRNA-mRNA interactions, percentage of splicing intermediates within all snoRNA-mRNA interactions",epilog="Require: matplotlib, numpy")
+    p=argparse.ArgumentParser(description="Statistics for snoRNA-mRNA interactions, percentage of splicing intermediates within all snoRNA-mRNA interactions",epilog="Require: xplib, subprocess")
     p.add_argument("interaction",type=str,help="Interaction file from output of 'Select_strongInteraction_pp.py', or linked fragment pair file from output of 'Stitch-seq_Aligner.py'")
-    p.add_argument("-A","--Annotation",type=str,help="Annotation bed file for locations of mRNA genes")
+    p.add_argument("-A","--Annotation",type=str,help="Annotation bed file for locations of mRNA genes, can be gziped")
     p.add_argument('-s','--start',type=int,default=7,help='start column number of the second region in interaction file, default=7')
     p.add_argument('-o','--output',type=str,help="Set to output all snoRNA-mRNA interactions as splicing intermediates, not output if not set")
     if len(sys.argv)==1:
@@ -74,7 +73,10 @@ def Main():
         else:
             continue
         if bed1.chr!=bed2.chr: continue
-        geneBed = subprocess.check_output("grep %s %s"%(mRNA.name,annotation),shell=True)
+        if annotation.endswith('gz'):
+            geneBed = subprocess.check_output("zcat %s | grep %s"%(annotation,mRNA.name),shell=True)
+        else:
+            geneBed = subprocess.check_output("grep %s %s"%(mRNA.name,annotation),shell=True)
         gene_region = Bed(geneBed.split("\t")[0:3])
         if gene_region.overlap(snoRNA,1):
             n_splicingIntermediate+=1

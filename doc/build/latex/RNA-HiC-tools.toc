@@ -22,6 +22,7 @@
 \contentsline {subsection}{\numberline {2.3.3}Find intersections between two different interaction sets based on genomic locations}{17}{subsection.2.3.3}
 \contentsline {subsection}{\numberline {2.3.4}Find intersections between two different interaction sets based on annotation}{17}{subsection.2.3.4}
 \contentsline {subsection}{\numberline {2.3.5}RNA structure prediction by adding digestion site information}{18}{subsection.2.3.5}
+\contentsline {subsection}{\numberline {2.3.6}splicing intermediates detection within snoRNA-mRNA interactions}{21}{subsection.2.3.6}
 \contentsline {chapter}{\numberline {3}Visualization of local RNA-RNA interactions}{23}{chapter.3}
 \contentsline {section}{\numberline {3.1}Prerequirement}{23}{section.3.1}
 \contentsline {section}{\numberline {3.2}Run the program to generate visualization}{23}{section.3.2}

@@ -55,6 +55,7 @@
   \bigletter S
   \item scorer() (RNAstructure.RNAstructure method), \hyperpage{36}
   \item Select\_strongInteraction\_pp.py, \hyperpage{15}
+  \item snoRNA\_mRNA\_statistics.py, \hyperpage{21}
   \item split\_library\_pairend.py, \hyperpage{9}
   \item split\_partner.py, \hyperpage{12}
   \item Stitch-seq\_Aligner.py, \hyperpage{14}

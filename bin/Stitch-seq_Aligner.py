@@ -61,14 +61,14 @@ def bowtie_align(b_path,read,ref,s_path,bowtie2):
 
     if ref.split(".")[-1] in ["fa","fasta"]:
         base=ref.split("/")[-1].split(".")[0]
-        os.system("rm "+read+".log")
+        os.system("rm "+read.split("/")[-1]+".log")
         os.system(b_path+"-build "+ref+" "+base+" >> "+read+".log 2>&1")
         if not bowtie2:
             os.system(b_path+ foption+" --best -n 1 -l 15 -e 200 -p 9 -S "+base+" "+read+" "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
         else:
             os.system(b_path+ " -x "+base+foption+" -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
     else:
-        os.system("rm "+read+".log")
+        os.system("rm "+read.split("/")[-1]+".log")
         if not bowtie2:
             os.system(b_path+ foption+" --best -n 1 -l 15 -e 200 -p 9 -S "+ref+" "+read+" "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
         else:
@@ -118,7 +118,7 @@ def Main():
         dbi3=DBI.init("/home/yu68/bharat-interaction/new_lincRNA_data/mouse.repeat.txt","bed")
           
     for record1, record2 in itertools.izip(miRNA_align, mRNA_align):
-        
+        print >> sys.stderr, record1.qname, record2.qname
         if record1.qname.split(" ")[0]!=record2.qname.split(" ")[0]:
             print record1.qname.split(" ")[0]
             print record2.qname.split(" ")[0]
@@ -148,8 +148,8 @@ def Main():
                 seq1=revcomp(record1.seq,rev_table)
             if record2.is_reverse:
                 seq2=revcomp(record2.seq,rev_table)
-            unmap_rec1 = SeqRecord(Seq(seq1,IUPAC.unambiguous_dna),id=record1.qname)
-            unmap_rec2 = SeqRecord(Seq(seq2,IUPAC.unambiguous_dna),id=record2.qname)
+            unmap_rec1 = SeqRecord(Seq(seq1,IUPAC.unambiguous_dna),id=record1.qname,description='')
+            unmap_rec2 = SeqRecord(Seq(seq2,IUPAC.unambiguous_dna),id=record2.qname,description='')
             SeqIO.write(unmap_rec1,unmap_read1_file,"fasta")
             SeqIO.write(unmap_rec2,unmap_read2_file,"fasta")
 

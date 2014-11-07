@@ -310,8 +310,8 @@ All of these are implemented using script ``Stitch-seq_Aligner.py``. ::
    
 An annotation file for different types of RNAs in mm9 genome (bed format, 'all_RNAs-rRNA_repeat.txt.gz') was included in Data folder. The annotation bed12 file for lincRNA and mRNA ('Ensembl_mm9.genebed.gz') was also included in Data folder. One can use the option ``-a ../Data/all_RNAs-rRNA_repeat.txt.gz -A ../Data/Ensembl_mm9.genebed.gz`` for annotation.
 
-Transcript reference requirements:
-   Transcript references should be downloaded from Ensembl (preferably with BioMart) with the following header information:
+**Transcript reference requirements.** Transcript references should be downloaded from Ensembl (preferably with BioMart) with the following header information separated by '|':
+   
   =============  =========================================
   Order          Header information
   =============  =========================================
@@ -326,6 +326,7 @@ Transcript reference requirements:
     9            Associated gene name [#f2]_
     10           Transcript biotype 
   =============  =========================================
+  
 .. [#f1] Or other ID
 .. [#f2] Or other name annotation
 

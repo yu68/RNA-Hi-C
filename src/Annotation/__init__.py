@@ -29,6 +29,29 @@ def overlap(bed1,bed2):
     except: # in case for "NonType" of bed2
         return False
 
+def IsProperStrand(bed1, bed2):
+    """
+    This function determines whether the two Bed object is at the same strand
+    :param bed1: A Bed object from `xplib.Annotation.Bed <http://bam2xwiki.appspot.com/bed>`_ (BAM2X)
+    :param bed2: A Bed object from `xplib.Annotation.Bed <http://bam2xwiki.appspot.com/bed>`_ (BAM2X)
+    :returns: boolean -- True or False
+
+    Example:
+    
+    >>> from xplib.Annotation import Bed
+    >>> from Annotation import overlap
+    >>> bed1=Bed(["chr1",10000,12000])
+    >>> bed2=Bed(["chr1",9000,13000])
+    >>> print overlap(bed1,bed2)
+    True
+
+    """
+    try:
+        return (bed1.strand == bed2.strand) or (bed1.strand == '.') or (bed2.strand == '.')
+    except:
+        return True
+
+
 def Subtype(bed1,genebed):
     """
     This function determines intron or exon or utr from a BED12 file.
@@ -74,7 +97,7 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
     :param ref_allRNA: the `DBI.init <http://bam2xwiki.appspot.com/DBI>`_ object (from BAM2X) for bed6 file of all kinds of RNA
     :param ref_detail: the `DBI.init <http://bam2xwiki.appspot.com/DBI>`_ object for bed12 file of lincRNA and mRNA with intron, exon, UTR
     :param ref_detail: the `DBI.init <http://bam2xwiki.appspot.com/DBI>`_ object for bed6 file of mouse repeat
-    :returns: list of str -- [type,name,subtype]
+    :returns: list of str -- [type,name,subtype, strandcolumn]
 
     Example:
 
@@ -86,13 +109,14 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
     >>> ref_detail=DBI.init("../../Data/Ensembl_mm9.genebed.gz","bed")
     >>> ref_repeat=DBI.init("../../Data/mouse.repeat.txt.gz","bed")
     >>> print annotation(bed,ref_allRNA,ref_detail,ref_repeat)
-    ["protein_coding","gcnt2","intron"]
+    ["protein_coding","gcnt2","intron","ProperStrand"]
 
     """
     flag=0
     typ="non"
     name="."
     subtype="."
+    strandcol = "ProperStrand"
     max_overlap = 0  # find annotation with largest overlap
     for hit in ref_allRNA.query(bed):
         overlap = min(hit.stop,bed.stop)-max(hit.start,bed.start)
@@ -100,6 +124,8 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
             name=hit.id.split(".")[1]
             typ=hit.id.split(".")[0]
             max_overlap = overlap
+            if not IsProperStrand(hit, bed):
+                strandcol = "NonProperStrand"
         if typ=="tRNA" or typ=="snoRNA":  #annotated as snoRNA if region covers whole snoRNA
             break
     if (typ=="lincRNA" or typ=="protein_coding" or typ=="non"):
@@ -128,6 +154,8 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
             name = tempname[0]
             typ = tempname[1]
             subtype = tempname[2]
+            if not IsProperStrand(hit, bed):
+                strandcol = "NonProperStrand"
             break
         '''
         try:
@@ -147,6 +175,6 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
       #  subtype="."
     if typ=="SINE" and subtype=="Alu":
         subtype="B1"
-    return [typ,name,subtype]
+    return [typ,name,subtype,strandcol]
                     
            

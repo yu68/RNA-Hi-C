@@ -29,6 +29,11 @@ Welcome to RNA Hi-C tools's documentation!
 Updates
 -------
 
+2014-11-7:
+  * Changed the mapping mechanism of RNA pairs: RNA pairs are now decoupled first, and mapped to several references (order specified from the parameters) including miRNA, genome, transcripts and other sequences, in current workflow, the order is miRNA->transcripts->other RNA sequences->genome. After mapping the two fragments from the same RNA pair are linked back and pairs with both fragments mapped will be reported. ":ref:`Stitch-seq_Aligner.py`"
+  * Mapping parameters has been changed so that if one or both fragment is mapped to multiple sequencing in one reference, all match from the best stratum will be reported with a "multimap" tag attached in the result.
+  * If the RNA fragment is mapped to the reverse-complement strand of a sequence in the reference (e.g. mapped to the reverse-complement strand of an RNA sequence), this mapping will be discarded. A parameter is added to allow such mapping results be retained and marked out in the final result.
+
 2014-10-27:
   * Add new script to detect potential splicing intermediates from snoRNA-mRNA interactions ":ref:`snoRNA_mRNA_statistics.py<snoRNA_mRNA>`"
 

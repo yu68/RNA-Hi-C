@@ -35,7 +35,7 @@ def ParseArg():
     p.add_argument('-s','--samtool_path',dest='spath', type=str,metavar='samtool_path',help="path for the samtool program",default='samtools')
     p.add_argument('--ref',type=str,metavar='rr',default="mm9",help="Reference seq for both parts (or the first part if --ref2 is specified), references will be used in the order specified",nargs="*")
 
-    # noticce that rna.fa file should be fetched from Ensembl with the following attributes specified in the following order:
+    # notice that rna.fa file should be fetched from Ensembl with the following attributes specified in the following order:
     # Ensembl Transcript ID
     # cDNA sequences (this is the actual sequence and is not in header)
     # Transcript start (bp)
@@ -53,7 +53,7 @@ def ParseArg():
     p.add_argument('--ref2type',type=str,metavar='rt',default="none",help="Reference types: (miRNA, genome, transcript, other)",nargs="*")
     p.add_argument('-a','--annotation',type=str,help='If specified, include the RNA type annotation for each aligned pair, need to give bed annotation RNA file')
     p.add_argument("-A","--annotationGenebed",dest="db_detail",type=str,help="annotation bed12 file for lincRNA and mRNA with intron and exon")
-    p.add_argument("-nostr", "--ignore_strand", dest="nostr", action = "store_true", help="Reads mapped onto the wrong strand will be considered as not mapped by default. Set this flag to ignore strand information.)")
+    p.add_argument("-nostr", "--ignore_strand", dest="nostr", action = "store_true", help="Reads mapped onto the wrong strand will be considered as not mapped by default. Set this flag to ignore strand information.")
 
 
     if len(sys.argv)==1:
@@ -140,7 +140,7 @@ def blat_annotation(outputfilename, typename, readfilename, unmapfilename, anno 
         strand = (tokens[8] == '+')
         if (not strandenforced) or strand == posstrand:
             # correct strand or strand not enforced
-            if (not strandenforced) and strand != posstrand:
+            if strand != posstrand:
                 # incorrect strand, but not enforced
                 # add the 21th column saying that strand is wrong
                 strandcol = 'NonProperStrand'
@@ -184,14 +184,10 @@ def blat_annotation(outputfilename, typename, readfilename, unmapfilename, anno 
                             newdict[readname] = [newdict[readname]]
                         seq = newdict[readname][0].split()[4]
                         if anno:
-                            curr_anno_arr = [tokens[13], tokens[15], tokens[16], tokens[8], seq, typename, typename, tokens[13], '.']
-                            if not strandenforced:
-                                curr_anno_arr.append(strandcol)
+                            curr_anno_arr = [tokens[13], tokens[15], tokens[16], tokens[8], seq, typename, typename, tokens[13], '.', strandcol]
                             newdict[readname].append('\t'.join(curr_anno_arr))
                         else:
-                            curr_anno_arr = [tokens[13], tokens[15], tokens[16], tokens[8], seq, typename]
-                            if not strandenforced:
-                                curr_anno_arr.append(strandcol)
+                            curr_anno_arr = [tokens[13], tokens[15], tokens[16], tokens[8], seq, typename, strandcol]
                             newdict[readname].append('\t'.join(curr_anno_arr))
 
     fres.close()
@@ -338,15 +334,11 @@ def otherlib_annotation(outputbam, anno, readfilename, unmapfilename, annotation
                     rnaid = rnaensembl.transID
                     [rnatype, rnaname, rnasubtype] = rnaensembl.getAnnotation(record.aend - record.alen + 1, record.aend)
 
-                curr_anno_arr = list(str(f) for f in [rnaid, record.aend - record.alen + 1, record.aend, strand, record.seq, annotationfile.split("/")[-1], rnatype, rnaname, rnasubtype])
-                if not strandenforced:
-                    curr_anno_arr.append(strandcol)
+                curr_anno_arr = (str(f) for f in [rnaid, record.aend - record.alen + 1, record.aend, strand, record.seq, annotationfile.split("/")[-1], rnatype, rnaname, rnasubtype, strandcol])
                 newdict[name] = '\t'.join(curr_anno_arr)
 
             else:
-                curr_anno_arr = list(str(f) for f in [rnaid, record.aend - record.alen + 1, record.aend, strand, record.seq, annotationfile.split("/")[-1]])
-                if not strandenforced:
-                    curr_anno_arr.append(strandcol)
+                curr_anno_arr = (str(f) for f in [rnaid, record.aend - record.alen + 1, record.aend, strand, record.seq, annotationfile.split("/")[-1], strandcol])
                 newdict[name] = '\t'.join(curr_anno_arr)
 
         elif record.is_unmapped:
@@ -433,14 +425,10 @@ def genome_annotation(outputbam, annotationfile, detail, readfilename, unmapfile
             if annotationfile:
                 bed=Bed([outputbam.getrname(record.tid), record.pos, record.aend])
                 [typ, name, subtype, strandcol] = annotation(bed,dbi1,dbi2,dbi3)
-                curr_anno_arr = list(str(f) for f in [outputbam.getrname(record.tid), record.pos, record.aend, strand, record.seq, 'genome', typ, name, subtype])
-                if not strandenforced:
-                    curr_anno_arr.append(strandcol)
+                curr_anno_arr = (str(f) for f in [outputbam.getrname(record.tid), record.pos, record.aend, strand, record.seq, 'genome', typ, name, subtype, strandcol])
                 newdict[record.qname] = '\t'.join(curr_anno_arr)
             else:
-                curr_anno_arr = list(str(f) for f in [outputbam.getrname(record.tid), record.aend - record.alen + 1, record.aend, strand, record.seq, 'genome'])
-                if not strandenforced:
-                    curr_anno_arr.append(strandcol)
+                curr_anno_arr = (str(f) for f in [outputbam.getrname(record.tid), record.aend - record.alen + 1, record.aend, strand, record.seq, 'genome', strandcol])
                 newdict[record.qname] = '\t'.join(curr_anno_arr)
         else:
             # output all pairs that cannot be mapped on both sides as unmaped pairs into two fasta file

@@ -260,9 +260,11 @@ In this step, we will use the Paired1* and Paired2* fasta files output from the 
 All of these are implemented using script ``Stitch-seq_Aligner.py``. ::
 
   usage: Stitch-seq_Aligner.py [-h] [-s samtool_path] [-a ANNOTATION]
-                               [-A DB_DETAIL]
-                               miRNA_reads mRNA_reads bowtie_path miRNA_ref
-                               mRNA_ref
+                               [-A DB_DETAIL] [options]
+                               part1_reads part2_reads bowtie_path blat_path 
+                               --ref reference_file1 ... --reftype reference_type1 ...
+                               [--ref2 reference2_file1 ... --reftype2 reference2_type1 ...]
+                               
 
   Align miRNA-mRNA pairs for Stitch-seq. print the alignable miRNA-mRNA pairs
   with coordinates
@@ -271,14 +273,30 @@ All of these are implemented using script ``Stitch-seq_Aligner.py``. ::
     part1_reads           paired RNA1 fasta file
     part2_reads           paired RNA2 fasta file
     bowtie_path           path for the bowtie program
-    part1_ref             reference genomic seq for RNA1
-    part2_ref             reference genomic seq for RNA2
+    blat_path             path for the blat program
+    reference_file1 ...   reference seq for RNA1, in the order that RNA1 will be mapped against
+                          unmapped reads will be passed to the next reference for mapping
+    reference_type1 ...   reference types for the previously mentioned references, 
+                          there should be one type for each reference file 
+                          and the type should be one of the following values:
+                          genome       for reference genome
+                          transcript   for transcripts (see below for transcript format and header requirement)
+                          miRNA        for miRNA sequences
+                          other        for all other types of references
+    reference2_file1 ...  (optional) separate reference set for RNA2, if omitted, the reference set
+                          for RNA1 will be used
+    reference2_type1 ...  (optional) types for the second reference set
 
   optional arguments:
     -h, --help            show this help message and exit
     -b, --bowtie2         set to use bowtie2 (--sensitive-local) for alignment,
                           need to change reference index and bowtie_path
     -u, --unique          set to only allow unique alignment
+    -nostr, --ignore_strand
+                          Reads mapped onto the wrong strand will be considered as not mapped by default. 
+                          Set this flag to ignore strand information.
+    -f, --fastq_to_fasta_path
+                          path for the fastq_to_fasta program (needed if mapping fastq files to miRNA references)
     -s samtool_path, --samtool_path samtool_path
                           path for the samtool program
     -a ANNOTATION, --annotation ANNOTATION
@@ -292,30 +310,55 @@ All of these are implemented using script ``Stitch-seq_Aligner.py``. ::
    
 An annotation file for different types of RNAs in mm9 genome (bed format, 'all_RNAs-rRNA_repeat.txt.gz') was included in Data folder. The annotation bed12 file for lincRNA and mRNA ('Ensembl_mm9.genebed.gz') was also included in Data folder. One can use the option ``-a ../Data/all_RNAs-rRNA_repeat.txt.gz -A ../Data/Ensembl_mm9.genebed.gz`` for annotation.
 
+Transcript reference requirements:
+   Transcript references should be downloaded from Ensembl (preferably with BioMart) with the following header information:
+  =============  =========================================
+  Order          Header information
+  =============  =========================================
+    1            Ensembl Transcript ID [#f1]_
+    2            Transcript start (bp)
+    3            Transcript end (bp)
+    4            Strand
+    5            5' UTR start
+    6            5' UTR end
+    7            3' UTR start
+    8            3' UTR end
+    9            Associated gene name [#f2]_
+    10           Transcript biotype 
+  =============  =========================================
+.. [#f1] Or other ID
+.. [#f2] Or other name annotation
+
 Here is a example: ::
 
   Stitch-seq_Aligner.py Paired1_fragment_ACCT.fasta Paired2_fragment_ACCT.fasta 
-      ~/Software/bowtie-0.12.7/bowtie mm9 mm9 -s samtools 
+      /usr/bin/bowtie /usr/bin/blat --ref mm9_transcripts.fa mm9 
+      --reftype transcript genome -s samtools -nostr
       -a ../Data/all_RNAs-rRNA_repeat.txt.gz -A ../Data/Ensembl_mm9.genebed.gz 
       > ACCT_fragment_paired_align.txt
 
 The format for the output file ``ACCT_fragment_paired_align.txt`` will be:
 
-  =============  ===========================
-  Column [#f1]_   Description
-  =============  ===========================
+  =============  =========================================
+  Column [#f3]_   Description
+  =============  =========================================
     1            chromosome name of RNA1
    2,3           start/end position of RNA1
     4            strand information of RNA1
     5            sequence of RNA1
-    6            RNA type for RNA1
-    7            RNA name for RNA1
-    8            RNA subtype [#f2]_ for RNA1
-    9            name of the pair
-  =============  ===========================
+    6            The reference type RNA1 is mapped to
+    7            RNA type for RNA1
+    8            RNA name for RNA1
+    9            RNA subtype [#f4]_ for RNA1
+    10           Whether strand agrees to reference [#f5]_ 
+    11           name of the pair
+    22 [#f6]_    'multimap' if the pair has multiple hits
+  =============  =========================================
 
-.. [#f1] column 10-17 are the same as column 1-8 except they are for RNA2 instead of RNA1.
-.. [#f2] subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), '.' for others
+.. [#f3] column 12-21 are the same as column 1-10 except they are for RNA2 instead of RNA1.
+.. [#f4] subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), '.' for others
+.. [#f5] 'ProperStrand' if the strand of the read agrees to the reference, 'NonProperStrand' if not.
+.. [#f6] if there is only one hit for the row or --unique is specified, there will be no 22nd column for this row.
 
 .. note::
   Bowtie2 ("--sensitive-local" mode) option is added in version 0.3.1 for the user to choose, the ``reference index`` and ``bowtie_path`` need to be changed accordingly if you use bowtie2 instead of bowtie. User can also choose unique aligned reads or not by setting ``--unique`` option.

@@ -370,9 +370,11 @@ HWI-ST1001:238:H0NYEADXX:1:1101:4620:2609       L1:2 28,46;47,79     Paired  L1;
 <p id="index-4">In this step, we will use the Paired1* and Paired2* fasta files output from the previous step. The sequences of part1 and part2 are aligned to the mouse genome mm9 with Bowtie and the pairs with both part1 and part2 mappable are selected as output. We also annotate the RNA types of each part in this step.
 All of these are implemented using script <tt class="docutils literal"><span class="pre">Stitch-seq_Aligner.py</span></tt>.</p>
 <div class="highlight-python"><pre>usage: Stitch-seq_Aligner.py [-h] [-s samtool_path] [-a ANNOTATION]
-                             [-A DB_DETAIL]
-                             miRNA_reads mRNA_reads bowtie_path miRNA_ref
-                             mRNA_ref
+                             [-A DB_DETAIL] [options]
+                             part1_reads part2_reads bowtie_path blat_path
+                             --ref reference_file1 ... --reftype reference_type1 ...
+                             [--ref2 reference2_file1 ... --reftype2 reference2_type1 ...]
+
 
 Align miRNA-mRNA pairs for Stitch-seq. print the alignable miRNA-mRNA pairs
 with coordinates
@@ -381,14 +383,30 @@ positional arguments:
   part1_reads           paired RNA1 fasta file
   part2_reads           paired RNA2 fasta file
   bowtie_path           path for the bowtie program
-  part1_ref             reference genomic seq for RNA1
-  part2_ref             reference genomic seq for RNA2
+  blat_path             path for the blat program
+  reference_file1 ...   reference seq for RNA1, in the order that RNA1 will be mapped against
+                        unmapped reads will be passed to the next reference for mapping
+  reference_type1 ...   reference types for the previously mentioned references,
+                        there should be one type for each reference file
+                        and the type should be one of the following values:
+                        genome       for reference genome
+                        transcript   for transcripts (see below for transcript format and header requirement)
+                        miRNA        for miRNA sequences
+                        other        for all other types of references
+  reference2_file1 ...  (optional) separate reference set for RNA2, if omitted, the reference set
+                        for RNA1 will be used
+  reference2_type1 ...  (optional) types for the second reference set
 
 optional arguments:
   -h, --help            show this help message and exit
   -b, --bowtie2         set to use bowtie2 (--sensitive-local) for alignment,
                         need to change reference index and bowtie_path
   -u, --unique          set to only allow unique alignment
+  -nostr, --ignore_strand
+                        Reads mapped onto the wrong strand will be considered as not mapped by default.
+                        Set this flag to ignore strand information.
+  -f, --fastq_to_fasta_path
+                        path for the fastq_to_fasta program (needed if mapping fastq files to miRNA references)
   -s samtool_path, --samtool_path samtool_path
                         path for the samtool program
   -a ANNOTATION, --annotation ANNOTATION
@@ -401,9 +419,68 @@ optional arguments:
 Library dependency: Bio, pysam, itertools</pre>
 </div>
 <p>An annotation file for different types of RNAs in mm9 genome (bed format, &#8216;all_RNAs-rRNA_repeat.txt.gz&#8217;) was included in Data folder. The annotation bed12 file for lincRNA and mRNA (&#8216;Ensembl_mm9.genebed.gz&#8217;) was also included in Data folder. One can use the option <tt class="docutils literal"><span class="pre">-a</span> <span class="pre">../Data/all_RNAs-rRNA_repeat.txt.gz</span> <span class="pre">-A</span> <span class="pre">../Data/Ensembl_mm9.genebed.gz</span></tt> for annotation.</p>
+<p><strong>Transcript reference requirements.</strong> Transcript references should be downloaded from Ensembl (preferably with BioMart) with the following header information separated by &#8216;|&#8217;:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Order</th>
+<th class="head">Header information</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>Ensembl Transcript ID <a class="footnote-reference" href="#f1" id="id1">[1]</a></td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>Transcript start (bp)</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>Transcript end (bp)</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>Strand</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>5&#8217; UTR start</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>5&#8217; UTR end</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>3&#8217; UTR start</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>3&#8217; UTR end</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>Associated gene name <a class="footnote-reference" href="#f2" id="id2">[2]</a></td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>Transcript biotype</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Or other ID</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>Or other name annotation</td></tr>
+</tbody>
+</table>
 <p>Here is a example:</p>
 <div class="highlight-python"><pre>Stitch-seq_Aligner.py Paired1_fragment_ACCT.fasta Paired2_fragment_ACCT.fasta
-    ~/Software/bowtie-0.12.7/bowtie mm9 mm9 -s samtools
+    /usr/bin/bowtie /usr/bin/blat --ref mm9_transcripts.fa mm9
+    --reftype transcript genome -s samtools -nostr
     -a ../Data/all_RNAs-rRNA_repeat.txt.gz -A ../Data/Ensembl_mm9.genebed.gz
     &gt; ACCT_fragment_paired_align.txt</pre>
 </div>
@@ -411,11 +488,11 @@ Library dependency: Bio, pysam, itertools</pre>
 <blockquote>
 <div><table border="1" class="docutils">
 <colgroup>
-<col width="33%" />
-<col width="68%" />
+<col width="24%" />
+<col width="76%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head">Column <a class="footnote-reference" href="#f1" id="id1">[1]</a></th>
+<tr class="row-odd"><th class="head">Column <a class="footnote-reference" href="#f3" id="id3">[3]</a></th>
 <th class="head">Description</th>
 </tr>
 </thead>
@@ -433,30 +510,51 @@ Library dependency: Bio, pysam, itertools</pre>
 <td>sequence of RNA1</td>
 </tr>
 <tr class="row-even"><td>6</td>
-<td>RNA type for RNA1</td>
+<td>The reference type RNA1 is mapped to</td>
 </tr>
 <tr class="row-odd"><td>7</td>
-<td>RNA name for RNA1</td>
+<td>RNA type for RNA1</td>
 </tr>
 <tr class="row-even"><td>8</td>
-<td>RNA subtype <a class="footnote-reference" href="#f2" id="id2">[2]</a> for RNA1</td>
+<td>RNA name for RNA1</td>
 </tr>
 <tr class="row-odd"><td>9</td>
+<td>RNA subtype <a class="footnote-reference" href="#f4" id="id4">[4]</a> for RNA1</td>
+</tr>
+<tr class="row-even"><td>10</td>
+<td>Whether strand agrees to reference <a class="footnote-reference" href="#f5" id="id5">[5]</a></td>
+</tr>
+<tr class="row-odd"><td>11</td>
 <td>name of the pair</td>
+</tr>
+<tr class="row-even"><td>22 <a class="footnote-reference" href="#f6" id="id6">[6]</a></td>
+<td>&#8216;multimap&#8217; if the pair has multiple hits</td>
 </tr>
 </tbody>
 </table>
 </div></blockquote>
-<table class="docutils footnote" frame="void" id="f1" rules="none">
+<table class="docutils footnote" frame="void" id="f3" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>column 10-17 are the same as column 1-8 except they are for RNA2 instead of RNA1.</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>column 12-21 are the same as column 1-10 except they are for RNA2 instead of RNA1.</td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="f2" rules="none">
+<table class="docutils footnote" frame="void" id="f4" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), &#8216;.&#8217; for others</td></tr>
+<tr><td class="label"><a class="fn-backref" href="#id4">[4]</a></td><td>subtype can be intron/exon/utr5/utr3 for lincRNA and mRNA (protein-coding), &#8216;.&#8217; for others</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[5]</a></td><td>&#8216;ProperStrand&#8217; if the strand of the read agrees to the reference, &#8216;NonProperStrand&#8217; if not.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[6]</a></td><td>if there is only one hit for the row or &#8211;unique is specified, there will be no 22nd column for this row.</td></tr>
 </tbody>
 </table>
 <div class="admonition note">

@@ -238,7 +238,7 @@
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of str &#8211; [type,name,subtype]</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">list of str &#8211; [type,name,subtype, strandcolumn]</p>
 </td>
 </tr>
 </tbody>
@@ -252,7 +252,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ref_detail</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/Ensembl_mm9.genebed.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ref_repeat</span><span class="o">=</span><span class="n">DBI</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">&quot;../../Data/mouse.repeat.txt.gz&quot;</span><span class="p">,</span><span class="s">&quot;bed&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">annotation</span><span class="p">(</span><span class="n">bed</span><span class="p">,</span><span class="n">ref_allRNA</span><span class="p">,</span><span class="n">ref_detail</span><span class="p">,</span><span class="n">ref_repeat</span><span class="p">)</span>
-<span class="go">[&quot;protein_coding&quot;,&quot;gcnt2&quot;,&quot;intron&quot;]</span>
+<span class="go">[&quot;protein_coding&quot;,&quot;gcnt2&quot;,&quot;intron&quot;,&quot;ProperStrand&quot;]</span>
 </pre></div>
 </div>
 </dd></dl>

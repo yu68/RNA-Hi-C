@@ -424,7 +424,7 @@ def genome_annotation(outputbam, annotationfile, detail, readfilename, unmapfile
             if record.is_reverse:
                 strand = ("-" if posstrand else "+")
             if annotationfile:
-                bed=Bed([outputbam.getrname(record.tid), record.pos, record.aend,'.',0.0,strand])i
+                bed=Bed([outputbam.getrname(record.tid), record.pos, record.aend,'.',0.0,strand])
                 [typ, name, subtype, strandcol] = annotation(bed,dbi1,dbi2,dbi3)
                 if (not strandenforced) or strandcol == 'ProperStrand':
                     curr_anno_arr = (str(f) for f in [outputbam.getrname(record.tid), record.pos, record.aend, strand, record.seq, 'genome', typ, name, subtype, strandcol])

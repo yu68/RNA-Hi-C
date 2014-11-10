@@ -403,7 +403,7 @@ def Included(record,RequireUnique):
         unique=True # not consider unique
     return (not record.is_unmapped)&unique
 
-def genome_annotation(outputbam, annotationfile, detail, readfilename, unmapfilename, strandenforced = False, requireUnique = False, results_dict = dict()):
+def genome_annotation(outputbam, annotationfile, detail, readfilename, unmapfilename, strandenforced = False, posstrand = True, requireUnique = False, results_dict = dict()):
     # annotationfile is annotation file
     # detail is db_detail file
 
@@ -417,20 +417,25 @@ def genome_annotation(outputbam, annotationfile, detail, readfilename, unmapfile
 
     for record in outputbam:
         # print >> sys.stderr, record.qname
+        IsMapped = False
 
         if Included(record, requireUnique):
-            strand = "+"
+            strand = ("+" if posstrand else "-")
             if record.is_reverse:
-                strand = "-"
+                strand = ("-" if posstrand else "+")
             if annotationfile:
-                bed=Bed([outputbam.getrname(record.tid), record.pos, record.aend])
+                bed=Bed([outputbam.getrname(record.tid), record.pos, record.aend,'.',0.0,strand])i
                 [typ, name, subtype, strandcol] = annotation(bed,dbi1,dbi2,dbi3)
-                curr_anno_arr = (str(f) for f in [outputbam.getrname(record.tid), record.pos, record.aend, strand, record.seq, 'genome', typ, name, subtype, strandcol])
-                newdict[record.qname] = '\t'.join(curr_anno_arr)
+                if (not strandenforced) or strandcol == 'ProperStrand':
+                    curr_anno_arr = (str(f) for f in [outputbam.getrname(record.tid), record.pos, record.aend, strand, record.seq, 'genome', typ, name, subtype, strandcol])
+                    newdict[record.qname] = '\t'.join(curr_anno_arr)
+                    IsMapped = True
             else:
                 curr_anno_arr = (str(f) for f in [outputbam.getrname(record.tid), record.aend - record.alen + 1, record.aend, strand, record.seq, 'genome', strandcol])
                 newdict[record.qname] = '\t'.join(curr_anno_arr)
-        else:
+                IsMapped = True
+
+        if not IsMapped:
             # output all pairs that cannot be mapped on both sides as unmaped pairs into two fasta file
             seq = record.seq
             if record.is_reverse:
@@ -487,12 +492,12 @@ def Main():
             else:
                 outputbam = bowtie_align(args.bowtie_path, readfile, reffile, args.spath, args.bowtie2)
                 if reftype.lower() == "genome":
-                    annodictlist[i] = genome_annotation(outputbam, args.annotation, args.db_detail, readfile, unmap_read, strandenforced, args.unique, annodictlist[i])
+                    annodictlist[i] = genome_annotation(outputbam, args.annotation, args.db_detail, readfile, unmap_read, strandenforced, strand, args.unique, annodictlist[i])
                 else:
                     if reftype.lower() == 'other':
                         annofile = 'misc'
                     else:
-                        annofile = reffile
+                        annofile = reffile.split('/')[-1]
                     annodictlist[i] = otherlib_annotation(outputbam, args.annotation, readfile, unmap_read, annofile, args.unique, strand, strandenforced, annodictlist[i])
 
             readfile = unmap_read
@@ -502,17 +507,17 @@ def Main():
             # this is a pair
             if type(value) is str:
                 if type(annodictlist[1][entry]) is str:
-                    print '\t'.join(str(f) for f in [value, entry, annodictlist[1][entry]])
+                    print '\t'.join(str(f) for f in [value, entry, annodictlist[1][entry],'OneToOne'])
                 else:
                     for item2 in annodictlist[1][entry]:
-                        print '\t'.join(str(f) for f in [value, entry, item2, 'multimap'])
+                        print '\t'.join(str(f) for f in [value, entry, item2, 'OneToMany'])
             else:
                 for item1 in value:
                     if type(annodictlist[1][entry]) is str:
-                        print '\t'.join(str(f) for f in [item1, entry, annodictlist[1][entry], 'multimap'])
+                        print '\t'.join(str(f) for f in [item1, entry, annodictlist[1][entry], 'ManyToOne'])
                     else:
                         for item2 in annodictlist[1][entry]:
-                            print '\t'.join(str(f) for f in [item1, entry, item2, 'multimap'])
+                            print '\t'.join(str(f) for f in [item1, entry, item2, 'ManyToMany'])
                     
 if __name__ == '__main__':
     Main()

@@ -19,15 +19,22 @@ class annotated_bed():
         if x is not None:
             if type(x)==type("str"):
                 x=x.split("\t")
-            self.chr=str(x[0]).strip()
-            self.start=int(x[1])
-            self.end=int(x[2])
+            self.chr=str(x[0])
+            if "," not in x[1]:
+                self.start=int(x[1])
+                self.end=int(x[2])
+            else:
+                self.start=[int(f) for f in x[1].split(",")]
+                self.end=[int(f) for f in x[2].split(",")]
             self.strand=str(x[3]).strip()
             try:
                 self.seq=str(x[4]).strip()
-                self.type=str(x[5]).strip()
-                self.name=str(x[6]).strip()
-                self.subtype=str(x[7]).strip()
+                self.source=str(x[5]).strip()
+                self.type=str(x[6]).strip()
+                self.name=str(x[7]).strip()
+                self.subtype=str(x[8]).strip()
+                self.proper=str(x[9]).strip()
+#                self.source=str(x[5]).strip()
             except:
                 pass
         for key in kwargs.keys():
@@ -40,6 +47,7 @@ class annotated_bed():
         :returns: boolean
 
         """
+          
         return ((self.chr==other.chr)&(self.end>other.start)&(self.start<other.end))
 
     def __lt__(self, other): # for the purpose of ordering clusters

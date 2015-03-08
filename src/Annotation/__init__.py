@@ -40,16 +40,38 @@ def IsProperStrand(bed1, bed2):
     
     >>> from xplib.Annotation import Bed
     >>> from Annotation import overlap
-    >>> bed1=Bed(["chr1",10000,12000])
-    >>> bed2=Bed(["chr1",9000,13000])
-    >>> print overlap(bed1,bed2)
-    True
+    >>> bed1=Bed(["chr1",10000,12000,'-'])
+    >>> bed2=Bed(["chr1",9000,13000,'+'])
+    >>> print IsProperStrand(bed1,bed2)
+    False
 
     """
     try:
         return (bed1.strand == bed2.strand) or (bed1.strand == '.') or (bed2.strand == '.')
     except:
         return True
+
+def IsPartOf(bed1, bed2):
+    """
+    This function determines whether bed1 is part of bed2
+    :param bed1: A Bed object from `xplib.Annotation.Bed <http://bam2xwiki.appspot.com/bed>`_ (BAM2X)
+    :param bed2: A Bed object from `xplib.Annotation.Bed <http://bam2xwiki.appspot.com/bed>`_ (BAM2X)
+    :returns: boolean -- True or False
+
+    Example:
+    
+    >>> from xplib.Annotation import Bed
+    >>> from Annotation import overlap
+    >>> bed1=Bed(["chr1",10000,12000])
+    >>> bed2=Bed(["chr1",9000,13000])
+    >>> print IsPartOf(bed1,bed2)
+    True
+
+    """
+    try:
+        return (bed1.stop <= bed2.stop) and (bed1.start >= bed2.start)
+    except:
+        return False
 
 
 def Subtype(bed1,genebed):
@@ -83,7 +105,7 @@ def Subtype(bed1,genebed):
                 subtype="utr5"
     else:
         for i in genebed.Exons():
-            if overlap(bed1,i):
+            if IsPartOf(bed1,i):
                 subtype="exon"
                 break
     return subtype
@@ -126,6 +148,8 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
             max_overlap = overlap
             if not IsProperStrand(hit, bed):
                 strandcol = "NonProperStrand"
+            else:
+                strandcol = "ProperStrand"
         if typ=="tRNA" or typ=="snoRNA":  #annotated as snoRNA if region covers whole snoRNA
             break
     if (typ=="lincRNA" or typ=="protein_coding" or typ=="non"):
@@ -148,6 +172,9 @@ def annotation(bed,ref_allRNA,ref_detail,ref_repeat):
             name=tran.Symbol
         except: pass
         '''
+    if (typ=="protein_coding" and subtype=="."):        # this means the hit is actually in a intergenic region (rare)
+        typ = "non"
+        name = "."
     if typ=="non" or subtype=="intron":
         for hit in ref_repeat.query(bed):
             tempname=hit.id.split("&")

@@ -11,7 +11,7 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 
-import sys, os, argparse
+import sys, os, argparse, gc, json, copy
 import pysam
 import itertools,string
 from Bio import SeqIO
@@ -22,6 +22,12 @@ from Annotation import *
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
+
+def check_negative(value):
+    ivalue = int(value)
+    if ivalue < 0:
+        raise argparse.ArgumentTypeError("%s is an invalid positive int value" % value)
+    return ivalue
 
 def ParseArg():
     p=argparse.ArgumentParser( description = 'Align miRNA-mRNA pairs for Stitch-seq. print the alignable miRNA-mRNA pairs with coordinates', epilog = 'Library dependency: Bio, pysam, itertools')
@@ -54,6 +60,9 @@ def ParseArg():
     p.add_argument('-a','--annotation',type=str,help='If specified, include the RNA type annotation for each aligned pair, need to give bed annotation RNA file')
     p.add_argument("-A","--annotationGenebed",dest="db_detail",type=str,help="annotation bed12 file for lincRNA and mRNA with intron and exon")
     p.add_argument("-nostr", "--ignore_strand", dest="nostr", action = "store_true", help="Reads mapped onto the wrong strand will be considered as not mapped by default. Set this flag to ignore strand information.")
+    p.add_argument('-p','--threads', type=check_negative, dest='nthreads', default=1, help="Number of threads used in bowtie mapping.")
+    p.add_argument('-r', '--resume', action="store_true", dest="recover", help="Set to let Stitch-seq recover from previous files. Parameters other than number of threads need to be exactly the same for recovery. This may be useful if Stitch-seq crashes for CPU/memory/storage reasons.")
+#    p.add_argument('-o', '--offrate', type=check_negative, dest="offrate", default=5, help="Set the offrate for bowtie2 to use. Increase this value if bowtie2 crashes due to memory.")
 
 
     if len(sys.argv)==1:
@@ -66,7 +75,7 @@ rev_table=string.maketrans('ACGTacgtN', 'TGCAtgcaN')
 def revcomp(seq, rev_table):
     return seq.translate(rev_table)[::-1]
 
-def blat_align(b_path, read, ref, fastqToFasta):
+def blat_align(b_path, read, ref, fastqToFasta, recovering):
     # this is used for miRNA mapping only
     # b_path: blat path;
     # fastqToFasta: fastq_to_fasta path;
@@ -88,7 +97,11 @@ def blat_align(b_path, read, ref, fastqToFasta):
 
     output = "./" + "/".join(tmp[:-1]) + "/" + ".".join(filenametmp[:-1]) + ".blatresult"
 
-    os.system(b_path+ " -stepSize=2 -minScore=15 -tileSize=6 "+ref+" "+read+" "+output)
+    if not recovering or (not os.path.isfile(output)) or os.stat(output).st_size <= 0:
+        # a new file is definitely required
+        os.system(b_path+ " -stepSize=2 -minScore=15 -tileSize=6 "+ref+" "+read+" "+output+" >> /dev/null")
+        # otherwise just return the file name and use the old file
+        # notice that this function will not handle whether the parameters are the same
 
     return output
 
@@ -229,6 +242,9 @@ class ensemblSeq:
     def getAnnotation(self, start, end):
         return [self.biotype, self.genename, self.getSubType(start, end)]
 
+    #def getGeneID(self):
+    #    return self.geneID
+
     def __init__(self, name, seq):
         # notice that the ">" in name is chopped
         self.longname = name.strip()
@@ -240,6 +256,9 @@ class ensemblSeq:
         self.genename = tokens[8]
         if not self.genename:
             self.genename = self.transID
+        #self.geneID = tokens[9]
+        #if not self.geneID:
+        #    self.geneID = self.transID
         self.biotype = tokens[9]
 
         utrstarts5 = (tokens[4] if self.strand else tokens[5]).split(";")
@@ -273,6 +292,9 @@ def otherlib_annotation(outputbam, anno, readfilename, unmapfilename, annotation
 
     if anno and annotationfile != 'misc':
         refdic = dict()
+        if not 'fa' in annotationfile:
+            annotationfile += ".fa"
+
         # this will be a dictionary of ensembl entries
         fref = open(annotationfile, 'r')
         refname = ''
@@ -284,7 +306,7 @@ def otherlib_annotation(outputbam, anno, readfilename, unmapfilename, annotation
                 if refkey:
                     # there is an old ref there
                     if refkey in refdic:
-                        print sys.stderr, refkey
+                        print >> sys.stderr, refkey
                     refdic[refkey] = ensemblSeq(refname, refseq)
                     refseq = ''
                     refkey = ''
@@ -296,7 +318,7 @@ def otherlib_annotation(outputbam, anno, readfilename, unmapfilename, annotation
 
         if refkey:
             if refkey in refdic:
-                print sys.stderr, refkey
+                print >> sys.stderr, refkey
             refdic[refkey] = ensemblSeq(refname, refseq)
         fref.close()
 
@@ -332,14 +354,25 @@ def otherlib_annotation(outputbam, anno, readfilename, unmapfilename, annotation
                 else:
                     rnaensembl = refdic[outputbam.getrname(record.tid).split("|")[0]]
                     rnaid = rnaensembl.transID
+                    #geneid = rnaensembl.getGeneID()
                     [rnatype, rnaname, rnasubtype] = rnaensembl.getAnnotation(record.aend - record.alen + 1, record.aend)
 
                 curr_anno_arr = (str(f) for f in [rnaid, record.aend - record.alen + 1, record.aend, strand, record.seq, annotationfile.split("/")[-1], rnatype, rnaname, rnasubtype, strandcol])
-                newdict[name] = '\t'.join(curr_anno_arr)
+                if not name in newdict:
+                    newdict[name] = '\t'.join(curr_anno_arr)
+                else:
+                    if type(newdict[name]) is str:
+                        newdict[name] = [newdict[name]]
+                    newdict[name].append('\t'.join(curr_anno_arr))
 
             else:
                 curr_anno_arr = (str(f) for f in [rnaid, record.aend - record.alen + 1, record.aend, strand, record.seq, annotationfile.split("/")[-1], strandcol])
-                newdict[name] = '\t'.join(curr_anno_arr)
+                if not name in newdict:
+                    newdict[name] = '\t'.join(curr_anno_arr)
+                else:
+                    if type(newdict[name]) is str:
+                        newdict[name] = [newdict[name]]
+                    newdict[name].append('\t'.join(curr_anno_arr))
 
         elif record.is_unmapped:
             # write unmapped reads
@@ -354,40 +387,53 @@ def otherlib_annotation(outputbam, anno, readfilename, unmapfilename, annotation
     newanno = dict(results_dict.items() + newdict.items())
     return newanno
 
-def bowtie_align(b_path,read,ref,s_path,bowtie2):
+def bowtie_align(b_path,read,ref,s_path,bowtie2,numOfThreads,nOffrate,reftype,recovering):
     # b_path: bowtie path;
     # s_path: samtools path;
     # bowtie2: logic, true/false
+    # offrate is not used due to bowtie2 bug
     
     sam=read.split("/")[-1].split(".")[0]+".sam"
-    if read.split(".")[-1] in ["fa","fasta"]:   # allow fasta and fastq for read
-        foption=" -f"
-    else:
-        foption=""
 
+    hasFile = False
 
-    if ref.split(".")[-1] in ["fa","fasta"]:
-        base=ref.split("/")[-1].split(".")[0]
-        os.system("rm "+read.split("/")[-1]+".log")
-        os.system(b_path+"-build "+ref+" "+base+" >> "+read+".log 2>&1")
-        if not bowtie2:
-            os.system(b_path+ foption+" -a --best --strata -n 1 -l 15 -e 200 -p 9 -S "+base+" "+read+" "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
+    if recovering and os.path.isfile("sort_" + read.split("/")[-1].split(".")[0] + ".bam"):
+        # old file exists
+        try:
+            align = pysam.Samfile("sort_" + read.split("/")[-1].split(".")[0] + ".bam", "rb")
+            hasFile = True
+        except:
+            hasFile = False
+
+    if (not recovering) or (not hasFile):
+
+        if read.split(".")[-1] in ["fa","fasta"]:   # allow fasta and fastq for read
+            foption=" -f"
         else:
-            os.system(b_path+ " -x "+base+foption+" -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
-    else:
-        os.system("rm "+read.split("/")[-1]+".log")
-        if not bowtie2:
-            os.system(b_path+ foption+" -a --best --strata -n 1 -l 15 -e 200 -p 9 -S "+ref+" "+read+" "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
+            foption=""
+
+        if ref.split(".")[-1] in ["fa","fasta"]:
+            base=ref.split("/")[-1].split(".")[0]
+            os.system("rm "+read.split("/")[-1].strip()+".log")
+            os.system(b_path+"-build "+ref+" "+base+" >> "+read+".log 2>&1")
+            if not bowtie2:
+                os.system(b_path+ foption+" -a --best --strata -n 1 -l 15 -e 200 -p " + str(numOfThreads) + " -S "+base+" "+read+" "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
+            else:
+                os.system(b_path+ " -x "+base+foption+" -U "+read+ " -p " + str(numOfThreads) + " -i S,1,0.50 0R 3 -L 15 -D 20 -t " + ("-a " if reftype != "genome" else "") + "-S "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
         else:
-            os.system(b_path+ " -x "+ref+foption+" -U "+read+" --sensitive-local -p 8 --reorder -t -S "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
-    bam=read.split("/")[-1].split(".")[0]+".bam"
-    os.system(s_path+ " view -Sb -o "+bam +" "+sam)
-    os.system("rm "+sam)
-    pysam.sort("-n",bam,"temp")
-    align=pysam.Samfile("temp.bam","rb")
-    os.system("rm temp.bam")
-    os.system(s_path+ " sort "+bam+ " "+"sort_"+read.split("/")[-1].split(".")[0])
-    os.system("rm "+bam)
+            os.system("rm "+read.split("/")[-1].strip()+".log")
+            if not bowtie2:
+                os.system(b_path+ foption+" -a --best --strata -n 1 -l 15 -e 200 -p " + str(numOfThreads) + " -S "+ref+" "+read+" "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
+            else:
+                os.system(b_path+ " -x "+ref+foption+" -U "+read + " -p " + str(numOfThreads) + " -L 15 -D 20 -t " + ("-a " if reftype != "genome" else "") + "-S "+sam+" >> "+read.split("/")[-1]+".log 2>&1")
+        bam=read.split("/")[-1].split(".")[0]+".bam"
+        os.system(s_path+ " view -Sb -o "+bam +" "+sam)
+        os.system("rm "+sam)
+        pysam.sort("-n",bam,"temp")
+        align=pysam.Samfile("temp.bam","rb")
+        os.system("rm temp.bam")
+        os.system(s_path+ " sort "+bam+ " "+"sort_"+read.split("/")[-1].split(".")[0])
+        os.system("rm "+bam)
     return align
 
 def Included(record,RequireUnique):
@@ -420,19 +466,38 @@ def genome_annotation(outputbam, annotationfile, detail, readfilename, unmapfile
         IsMapped = False
 
         if Included(record, requireUnique):
-            strand = ("+" if posstrand else "-")
+            strandactual = ("+" if posstrand else "-")
+            strand = "+"
             if record.is_reverse:
-                strand = ("-" if posstrand else "+")
+                strandactual = ("-" if posstrand else "+")
+                strand = "-"
             if annotationfile:
-                bed=Bed([outputbam.getrname(record.tid), record.pos, record.aend,'.',0.0,strand])
+                bed=Bed([outputbam.getrname(record.tid), record.pos, record.aend,'.',0.0,strandactual])
                 [typ, name, subtype, strandcol] = annotation(bed,dbi1,dbi2,dbi3)
                 if (not strandenforced) or strandcol == 'ProperStrand':
                     curr_anno_arr = (str(f) for f in [outputbam.getrname(record.tid), record.pos, record.aend, strand, record.seq, 'genome', typ, name, subtype, strandcol])
-                    newdict[record.qname] = '\t'.join(curr_anno_arr)
+                    if not record.qname in newdict:
+                        newdict[record.qname] = '\t'.join(curr_anno_arr)
+                        if not Included(record, True):
+                            # not unique
+                            newdict[record.qname] = [newdict[record.qname]]
+                    else:
+                        if type(newdict[record.qname]) is str:
+                            newdict[record.qname] = [newdict[record.qname]]
+                        newdict[record.qname].append('\t'.join(curr_anno_arr))
                     IsMapped = True
             else:
+                strandcol = '.'
                 curr_anno_arr = (str(f) for f in [outputbam.getrname(record.tid), record.aend - record.alen + 1, record.aend, strand, record.seq, 'genome', strandcol])
-                newdict[record.qname] = '\t'.join(curr_anno_arr)
+                if not record.qname in newdict:
+                    newdict[record.qname] = '\t'.join(curr_anno_arr)
+                    if not Included(record, True):
+                        # not unique
+                        newdict[record.qname] = [newdict[record.qname]]
+                else:
+                    if type(newdict[record.qname]) is str:
+                        newdict[record.qname] = [newdict[record.qname]]
+                    newdict[record.qname].append('\t'.join(curr_anno_arr))
                 IsMapped = True
 
         if not IsMapped:
@@ -452,6 +517,65 @@ def genome_annotation(outputbam, annotationfile, detail, readfilename, unmapfile
 def Main():
     args=ParseArg()
 
+    inRecovery = False
+
+    nThreads = args.nthreads
+    needRecover = args.recover
+    #nOffrate = args.offrate
+    nOffrate = 5
+
+    del args.nthreads
+    del args.recover
+    #del args.offrate
+    paramDict = vars(args)
+
+    annotation = args.annotation
+    db_detail = args.db_detail
+
+    del args.annotation
+    del args.db_detail
+
+    newpar = json.dumps(paramDict, sort_keys = True)
+
+    paramDictClean = copy.deepcopy(paramDict)
+    del paramDictClean['ref']
+    del paramDictClean['ref2']
+    del paramDictClean['reftype']
+    del paramDictClean['ref2type']
+
+    newparClean = json.dumps(paramDictClean, sort_keys = True)
+
+    oldreflist = [None, None]
+    oldreftypelist = [None, None]
+
+    if needRecover and os.path.isfile('.StitchSeqParameters'):
+        fpar = open('.StitchSeqParameters', 'r')
+        oldpar = fpar.read()
+
+        oldDict = json.loads(oldpar)
+        oldDictClean = copy.deepcopy(oldDict)
+        del oldDictClean['ref']
+        del oldDictClean['ref2']
+        del oldDictClean['reftype']
+        del oldDictClean['ref2type']
+
+        oldparClean = json.dumps(oldDictClean, sort_keys = True)
+
+        if oldparClean == newparClean:
+            print >> sys.stderr, "Same old parameters found, resuming ..."
+            oldreflist = [oldDict['ref'], oldDict['ref']]
+            oldreftypelist = [oldDict['reftype'], oldDict['reftype']]
+            if (not type(oldDict['ref2']) is str and not type(oldDict['ref2']) is unicode) or oldDict['ref2'] != 'none':
+                oldreflist[1] = oldDict['ref2']
+                oldreftypelist[1] = oldDict['ref2type']
+                        
+        fpar.close()
+        inRecovery = True
+
+    fpar = open('.StitchSeqParameters', 'w')
+    fpar.write(newpar)
+    fpar.close()
+
     reflist = [args.ref, args.ref]
     reftypelist = [args.reftype, args.reftype]
     readfilelist = [args.input1, args.input2]
@@ -467,8 +591,13 @@ def Main():
         reftypelist[1] = args.ref2type
 
     for i in xrange(len(reflist)):
+        inRecoveryFrag = inRecovery
         reflistentry = reflist[i]
         reftypelistentry = reftypelist[i]
+
+        oldreflistentry = oldreflist[i]
+        oldreftypelistentry = oldreftypelist[i]
+
         rawreadfile = readfilelist[i]
         strand = strandslist[i]
         # mapping for every single ends
@@ -477,30 +606,41 @@ def Main():
         # then try to match all the annotations
 
         readfile = rawreadfile
-        print >> sys.stderr, 'Mapping ' + str(i) + ' ' + rawreadfile + ' ...'
+        print >> sys.stderr, 'Mapping ' + str(i) + ' ' + rawreadfile + ' ...' + (' (Recovery possible)' if inRecovery else '')
 
-        for reffile, reftype in itertools.izip(reflistentry, reftypelistentry):
-        
+        for iref in xrange(len(reflistentry)):
+            reffile = reflistentry[iref]
+            reftype = reftypelistentry[iref]
+
+            if inRecoveryFrag:
+                inRecoveryFrag = False
+                try:
+                    if reffile == oldreflistentry[iref] and reftype == oldreftypelistentry[iref]:
+                        inRecoveryFrag = True
+                except:
+                    pass
+
             # unmapped read file
-            print >> sys.stderr, reftype
+            print >> sys.stderr, 'Mapping ' + readfile + ' with ref: ' + reftype + (' (Recovering from old reads)' if inRecoveryFrag else '')
             tmp = readfile.split(".")
             unmap_read = ".".join(tmp[:-1])+"_unmap."+tmp[-1]
 
             if reftype.lower() == "mirna":
-                outputfile = blat_align(args.blat_path, readfile, reffile, args.f2fpath)
-                annodictlist[i] = blat_annotation(outputfile, reftype, readfile, unmap_read, args.annotation, args.unique, strand, strandenforced, 2, annodictlist[i])
+                outputfile = blat_align(args.blat_path, readfile, reffile, args.f2fpath, inRecoveryFrag)
+                annodictlist[i] = blat_annotation(outputfile, reftype, readfile, unmap_read, annotation, args.unique, strand, strandenforced, 2, annodictlist[i])
             else:
-                outputbam = bowtie_align(args.bowtie_path, readfile, reffile, args.spath, args.bowtie2)
+                outputbam = bowtie_align(args.bowtie_path, readfile, reffile, args.spath, args.bowtie2, nThreads, nOffrate, reftype.lower(), inRecoveryFrag)
                 if reftype.lower() == "genome":
-                    annodictlist[i] = genome_annotation(outputbam, args.annotation, args.db_detail, readfile, unmap_read, strandenforced, strand, args.unique, annodictlist[i])
+                    annodictlist[i] = genome_annotation(outputbam, annotation, db_detail, readfile, unmap_read, strandenforced, strand, args.unique, annodictlist[i])
                 else:
                     if reftype.lower() == 'other':
                         annofile = 'misc'
                     else:
                         annofile = reffile.split('/')[-1]
-                    annodictlist[i] = otherlib_annotation(outputbam, args.annotation, readfile, unmap_read, annofile, args.unique, strand, strandenforced, annodictlist[i])
+                    annodictlist[i] = otherlib_annotation(outputbam, annotation, readfile, unmap_read, annofile, args.unique, strand, strandenforced, annodictlist[i])
 
             readfile = unmap_read
+            gc.collect()
 
     for entry, value in annodictlist[0].iteritems():
         if entry in annodictlist[1]:
@@ -518,6 +658,21 @@ def Main():
                     else:
                         for item2 in annodictlist[1][entry]:
                             print '\t'.join(str(f) for f in [item1, entry, item2, 'ManyToMany'])
+
+    for iFrag in xrange(2):
+        tmp = readfilelist[iFrag].split(".")
+        fragoutfile = ".".join(tmp[:-1]) + ".pairOutput"
+        fReadOut = open(fragoutfile, 'w')
+
+        annodictlistentry = annodictlist[iFrag]
+        for entry, value in annodictlistentry.iteritems():
+            if type(value) is str:
+                fReadOut.write('\t'.join(str(f) for f in [value, entry, 'One']) + os.linesep)
+            else:
+                for item in value:
+                    fReadOut.write('\t'.join(str(f) for f in [item, entry, 'Many']) + os.linesep)
+
+        fReadOut.close()
                     
 if __name__ == '__main__':
     Main()

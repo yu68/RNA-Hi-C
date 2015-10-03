@@ -59,10 +59,11 @@ def ParseArg():
     p.add_argument('--ref2type',type=str,metavar='rt',default="none",help="Reference types: (miRNA, genome, transcript, other)",nargs="*")
     p.add_argument('-a','--annotation',type=str,help='If specified, include the RNA type annotation for each aligned pair, need to give bed annotation RNA file')
     p.add_argument("-A","--annotationGenebed",dest="db_detail",type=str,help="annotation bed12 file for lincRNA and mRNA with intron and exon")
+    p.add_argument("-R","--annotationRepeat",dest="db_repeat",type=str,help="annotation bed6 file from repeatMasker")
     p.add_argument("-nostr", "--ignore_strand", dest="nostr", action = "store_true", help="Reads mapped onto the wrong strand will be considered as not mapped by default. Set this flag to ignore strand information.")
     p.add_argument('-p','--threads', type=check_negative, dest='nthreads', default=1, help="Number of threads used in bowtie mapping.")
     p.add_argument('-r', '--resume', action="store_true", dest="recover", help="Set to let Stitch-seq recover from previous files. Parameters other than number of threads need to be exactly the same for recovery. This may be useful if Stitch-seq crashes for CPU/memory/storage reasons.")
-#    p.add_argument('-o', '--offrate', type=check_negative, dest="offrate", default=5, help="Set the offrate for bowtie2 to use. Increase this value if bowtie2 crashes due to memory.")
+    p.add_argument('-l', '--mirnalen', type=check_negative, dest="mirnalen", default=35, help="Set the maximum length allow for a miRNA alignment (default = 35), a higher value may recover more miRNA alignments if there are references at such length but will be slower.")
 
 
     if len(sys.argv)==1:
@@ -75,7 +76,7 @@ rev_table=string.maketrans('ACGTacgtN', 'TGCAtgcaN')
 def revcomp(seq, rev_table):
     return seq.translate(rev_table)[::-1]
 
-def blat_align(b_path, read, ref, fastqToFasta, recovering):
+def blat_align(b_path, read, ref, fastqToFasta, recovering, unmapfile, mirnalen):
     # this is used for miRNA mapping only
     # b_path: blat path;
     # fastqToFasta: fastq_to_fasta path;
@@ -95,15 +96,66 @@ def blat_align(b_path, read, ref, fastqToFasta, recovering):
     else:
         fastafile = read
 
+    fastatoblat = "./" + "/".join(tmp[:-1]) + "/" + ".".join(filenametmp[:-1]) + "_blat.fasta"
+
     output = "./" + "/".join(tmp[:-1]) + "/" + ".".join(filenametmp[:-1]) + ".blatresult"
 
     if not recovering or (not os.path.isfile(output)) or os.stat(output).st_size <= 0:
         # a new file is definitely required
-        os.system(b_path+ " -stepSize=2 -minScore=15 -tileSize=6 "+ref+" "+read+" "+output+" >> /dev/null")
+        # first write file to blat
+        fseq = open(fastafile, 'r')
+        fseqblat = open(fastatoblat, 'w')
+        fsequnmap = open(unmapfile, 'w')
+        seqname = ''
+        oldseq = ''
+
+        for line in fseq:
+            if line.startswith('>') or line.startswith('@'):
+                if oldseq and seqname:
+                    if len(oldseq) <= mirnalen:
+                        fseqblat.write(">" + seqname + os.linesep)
+                        fseqblat.write(oldseq + os.linesep)
+                    else:
+                        fsequnmap.write(">" + seqname + os.linesep)
+                        fsequnmap.write(oldseq + os.linesep)
+                seqname = line.strip('>@').split(" ")[0].strip()
+                oldseq = ''
+            elif line.startswith('+'):
+                # fastq
+                if oldseq and seqname:
+                    if len(oldseq) <= mirnalen:
+                        fseqblat.write(">" + seqname + os.linesep)
+                        fseqblat.write(oldseq + os.linesep)
+                    else:
+                        fsequnmap.write(">" + seqname + os.linesep)
+                        fsequnmap.write(oldseq + os.linesep)
+                seqname = ''
+                oldseq = ''
+            elif seqname:
+                oldseq += line.strip()
+
+        if oldseq and seqname:
+            if len(oldseq) <= mirnalen:
+                fseqblat.write(">" + seqname + os.linesep)
+                fseqblat.write(oldseq + os.linesep)
+            else:
+                fsequnmap.write(">" + seqname + os.linesep)
+                fsequnmap.write(oldseq + os.linesep)
+
+        fseq.close()
+        fseqblat.close()
+        fsequnmap.close()
+        print >> sys.stderr, 'Start mapping ...',
+        #os.system("awk 'BEGIN {RS = \">\" ; ORS = \"\\n\"; FS = \"\\n\"; OFS=\"\\n\"} length($2) >= " + str(mirnalen) + " && NR > 1 {split($1, name, \" \"); print \">\"name[1], $2}' " + fastafile + " > " + unmapfile)
+        # then write file to unmap
+        os.system(b_path+ " -stepSize=2 -minScore=15 -tileSize=6 "+ref+" "+fastatoblat+" "+output+" >> /dev/null")
+        print >> sys.stderr, 'done.'
         # otherwise just return the file name and use the old file
         # notice that this function will not handle whether the parameters are the same
+    else:
+        print >> sys.stderr, 'Old file exists, recovery in process.'
 
-    return output
+    return (output, fastatoblat)
 
 def get_readdict(readfilename):
     seqdict = dict()
@@ -116,7 +168,7 @@ def get_readdict(readfilename):
         if line.startswith('>') or line.startswith('@'):
             if oldseq and seqname:
                 seqdict[seqname] = oldseq
-            seqname = line.strip('>@').split(" ")[0]
+            seqname = line.strip('>@').split(" ")[0].strip()
             oldseq = ''
         elif line.startswith('+'):
             # fastq
@@ -208,8 +260,8 @@ def blat_annotation(outputfilename, typename, readfilename, unmapfilename, anno 
     # merge annotation
     newanno = dict(results_dict.items() + newdict.items())
 
-    # write unmapped reads
-    funmap = open(unmapfilename, 'w')
+    # write (append to) unmapped reads
+    funmap = open(unmapfilename, 'a')
     for key in seqdict:
         funmap.write(">" + key + os.linesep)
         funmap.write(seqdict[key] + os.linesep)
@@ -406,6 +458,8 @@ def bowtie_align(b_path,read,ref,s_path,bowtie2,numOfThreads,nOffrate,reftype,re
             hasFile = False
 
     if (not recovering) or (not hasFile):
+        
+        print >> sys.stderr, 'Start mapping.'
 
         if read.split(".")[-1] in ["fa","fasta"]:   # allow fasta and fastq for read
             foption=" -f"
@@ -434,6 +488,9 @@ def bowtie_align(b_path,read,ref,s_path,bowtie2,numOfThreads,nOffrate,reftype,re
         os.system("rm temp.bam")
         os.system(s_path+ " sort "+bam+ " "+"sort_"+read.split("/")[-1].split(".")[0])
         os.system("rm "+bam)
+        print >> sys.stderr, 'Mapping completed.'
+    else:
+        print >> sys.stderr, 'Old file exists, recovery in process.'
     return align
 
 def Included(record,RequireUnique):
@@ -449,14 +506,14 @@ def Included(record,RequireUnique):
         unique=True # not consider unique
     return (not record.is_unmapped)&unique
 
-def genome_annotation(outputbam, annotationfile, detail, readfilename, unmapfilename, strandenforced = False, posstrand = True, requireUnique = False, results_dict = dict()):
+def genome_annotation(outputbam, annotationfile, detail, annotationRepeat, readfilename, unmapfilename, strandenforced = False, posstrand = True, requireUnique = False, results_dict = dict()):
     # annotationfile is annotation file
     # detail is db_detail file
 
     if annotationfile:
         dbi1=DBI.init(annotationfile,"bed")
         dbi2=DBI.init(detail,"bed")
-        dbi3=DBI.init("/home/yu68/bharat-interaction/new_lincRNA_data/mouse.repeat.txt","bed")
+        dbi3=DBI.init(annotationRepeat,"bed")
     
     newdict = dict()
     funmap = open(unmapfilename, 'w')
@@ -531,10 +588,12 @@ def Main():
 
     annotation = args.annotation
     db_detail = args.db_detail
+    db_repeat = args.db_repeat
 
     del args.annotation
     del args.db_detail
-
+    del args.db_repeat
+    
     newpar = json.dumps(paramDict, sort_keys = True)
 
     paramDictClean = copy.deepcopy(paramDict)
@@ -579,7 +638,7 @@ def Main():
     reflist = [args.ref, args.ref]
     reftypelist = [args.reftype, args.reftype]
     readfilelist = [args.input1, args.input2]
-    annodictlist = [dict(), dict()]
+    #annodictlist = [dict(), dict()]
     strandslist = [True, False]
     strandenforced = True
 
@@ -600,6 +659,9 @@ def Main():
 
         rawreadfile = readfilelist[i]
         strand = strandslist[i]
+
+        annodictentry = dict()
+        gc.collect()
         # mapping for every single ends
         # also put the annotations to the file
         # then merge all the annotations from every single step
@@ -626,51 +688,61 @@ def Main():
             unmap_read = ".".join(tmp[:-1])+"_unmap."+tmp[-1]
 
             if reftype.lower() == "mirna":
-                outputfile = blat_align(args.blat_path, readfile, reffile, args.f2fpath, inRecoveryFrag)
-                annodictlist[i] = blat_annotation(outputfile, reftype, readfile, unmap_read, annotation, args.unique, strand, strandenforced, 2, annodictlist[i])
+                outputfile, readused = blat_align(args.blat_path, readfile, reffile, args.f2fpath, inRecoveryFrag, unmap_read, args.mirnalen)
+                annodictentry = blat_annotation(outputfile, reftype, readused, unmap_read, annotation, args.unique, strand, strandenforced, 2, annodictentry)
             else:
                 outputbam = bowtie_align(args.bowtie_path, readfile, reffile, args.spath, args.bowtie2, nThreads, nOffrate, reftype.lower(), inRecoveryFrag)
                 if reftype.lower() == "genome":
-                    annodictlist[i] = genome_annotation(outputbam, annotation, db_detail, readfile, unmap_read, strandenforced, strand, args.unique, annodictlist[i])
+                    annodictentry = genome_annotation(outputbam, annotation, db_detail, db_repeat, readfile, unmap_read, strandenforced, strand, args.unique, annodictentry)
                 else:
                     if reftype.lower() == 'other':
                         annofile = 'misc'
                     else:
-                        annofile = reffile.split('/')[-1]
-                    annodictlist[i] = otherlib_annotation(outputbam, annotation, readfile, unmap_read, annofile, args.unique, strand, strandenforced, annodictlist[i])
+                        annofile = reffile
+                    annodictentry = otherlib_annotation(outputbam, annotation, readfile, unmap_read, annofile, args.unique, strand, strandenforced, annodictentry)
 
             readfile = unmap_read
             gc.collect()
 
-    for entry, value in annodictlist[0].iteritems():
-        if entry in annodictlist[1]:
+    #for entry, value in annodictlist[0].iteritems():
+    #    if entry in annodictlist[1]:
             # this is a pair
-            if type(value) is str:
-                if type(annodictlist[1][entry]) is str:
-                    print '\t'.join(str(f) for f in [value, entry, annodictlist[1][entry],'OneToOne'])
-                else:
-                    for item2 in annodictlist[1][entry]:
-                        print '\t'.join(str(f) for f in [value, entry, item2, 'OneToMany'])
-            else:
-                for item1 in value:
-                    if type(annodictlist[1][entry]) is str:
-                        print '\t'.join(str(f) for f in [item1, entry, annodictlist[1][entry], 'ManyToOne'])
-                    else:
-                        for item2 in annodictlist[1][entry]:
-                            print '\t'.join(str(f) for f in [item1, entry, item2, 'ManyToMany'])
+    #        if type(value) is str:
+    #            if type(annodictlist[1][entry]) is str:
+    #                print '\t'.join(str(f) for f in [value, entry, annodictlist[1][entry],'OneToOne'])
+    #            else:
+    #                for item2 in annodictlist[1][entry]:
+    #                    print '\t'.join(str(f) for f in [value, entry, item2, 'OneToMany'])
+    #        else:
+    #            for item1 in value:
+    #                if type(annodictlist[1][entry]) is str:
+    #                    print '\t'.join(str(f) for f in [item1, entry, annodictlist[1][entry], 'ManyToOne'])
+    #                else:
+    #                    for item2 in annodictlist[1][entry]:
+    #                        print '\t'.join(str(f) for f in [item1, entry, item2, 'ManyToMany'])
 
-    for iFrag in xrange(2):
-        tmp = readfilelist[iFrag].split(".")
+    #for iFrag in xrange(2):
+        tmp = readfilelist[i].split(".")
         fragoutfile = ".".join(tmp[:-1]) + ".pairOutput"
         fReadOut = open(fragoutfile, 'w')
 
-        annodictlistentry = annodictlist[iFrag]
-        for entry, value in annodictlistentry.iteritems():
+        # annodictlistentry = annodictlist[iFrag]
+        print >> sys.stderr, "====== Mapping result, Pair ", i + 1, " ======"
+        print >> sys.stderr, "Number of Unique LinkerIDs: ", len(annodictentry)
+        numOfOnes = 0
+        totalLines = 0
+        for entry, value in annodictentry.iteritems():
             if type(value) is str:
+                numOfOnes += 1
+                totalLines += 1
                 fReadOut.write('\t'.join(str(f) for f in [value, entry, 'One']) + os.linesep)
             else:
+                totalLines += len(value)
                 for item in value:
                     fReadOut.write('\t'.join(str(f) for f in [item, entry, 'Many']) + os.linesep)
+
+        print >> sys.stderr, "Number of 'One's: ", numOfOnes
+        print >> sys.stderr, "Number of lines: ", totalLines
 
         fReadOut.close()
                     

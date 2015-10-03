@@ -34,6 +34,7 @@ class annotated_bed():
                 self.name=str(x[7]).strip()
                 self.subtype=str(x[8]).strip()
                 self.proper=str(x[9]).strip()
+                self.id=''
 #                self.source=str(x[5]).strip()
             except:
                 pass
@@ -147,4 +148,22 @@ class annotated_bed():
         "chr13\t40975700\t40975800\tprotein_coding\tgcnt2\tintron\t3"
         """
         return "\t".join(str(f) for f in [self.chr,self.start,self.end,self.type,self.name,self.subtype,self.cluster])
+    # self.cluster become number of regions within cluster for cluster_pool object
+
+class annotated_bed_proper(annotated_bed):
+
+    def __str__(self):
+        """
+        Use print function to output the cluster information (chr, start, end, type, name, subtype,cluster)
+        
+        Example:
+        
+        >>> str="chr13\t40975747\t40975770\t+\tATTAAG...TGA\tprotein_coding\tgcnt2\tintron"
+        >>> a=annotated_bed(str)
+        >>> a.Cluster(3)
+        >>> a.Update(40975700,40975800)
+        >>> print a
+        "chr13\t40975700\t40975800\tprotein_coding\tgcnt2\tintron\t3"
+        """
+        return "\t".join(str(f) for f in [self.chr,self.start,self.end,self.type,self.name,self.subtype,self.id,self.proper,self.cluster])
     # self.cluster become number of regions within cluster for cluster_pool object

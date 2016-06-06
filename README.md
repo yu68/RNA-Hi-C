@@ -4,7 +4,7 @@ RNA Hi-C
 ## program for RNA-RNA interactome and RNA-chromatin interactome ##
 
 ### Documentation ###
-[HTML](http://systemsbio.ucsd.edu/RNA-Hi-C/)
+[HTML](http://pengfeiyu.net/RNA-HiC-tools/)
 
 ### pipeline (start from pair-end fastq file): ###
 1. Remove duplicates  `rm_dup\remove_dup_PE.py`
